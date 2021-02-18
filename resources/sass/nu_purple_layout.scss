@@ -1,0 +1,157 @@
+// Make sure this gets loaded AFTER bootstrap -- it depends on the Bootstrap variables.
+.bg-dark-purple {
+    background-color: $purple-dark;
+}
+
+.btn-primary {
+    @include button-variant(
+        $background: $primary,
+        $border: $primary,
+        $hover-background: #b6acd1,
+        $hover-border: #b6acd1
+    );
+
+    font-family: "Akkurat Pro Bold", "Arial Black", sans-serif;
+
+    &:hover {
+        color: white;
+    }
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    background-color: #fafafa;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.navbar-brand img {
+    width: 358px;
+    height: 42px;
+}
+
+div.main-content {
+    padding-top: 1em;
+    padding-bottom: 1em;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 2em;
+    margin-bottom: 2em;
+    background-color: #fff;
+}
+
+// General links part of dd and paragraphs
+dd a,
+p a {
+    font-family: "Akkurat Pro Bold", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+// Footer stuff
+footer {
+    width: 100%;
+    min-height: 350px;
+    background-color: $purple;
+    color: $white;
+    font-size: 14px;
+    padding-top: 3em;
+    padding-bottom: 2em;
+}
+
+footer a {
+    color: $white;
+    text-decoration: underline;
+}
+
+footer a:hover {
+    text-decoration: none;
+    color: $white;
+}
+
+footer .nu-branding {
+    max-width: 170px;
+    padding-bottom: 1rem;
+}
+
+footer ul li {
+    padding-bottom: .8rem;
+}
+
+/* Footer pins */
+@mixin pin-sizing {
+    background-size: 18px 24px;
+    height: 24px;
+    width: 18px;
+    margin-right: 1rem;
+    margin-left: 1rem;
+}
+
+.address-pin {
+    background: url("https://common.northwestern.edu/v8/css/images/icons/pin-drop.svg") no-repeat;
+    @include pin-sizing;
+}
+
+.phone-pin {
+    background: url("https://common.northwestern.edu/v8/css/images/icons/mobile-phone.svg") no-repeat;
+    @include pin-sizing;
+}
+
+.email-pin {
+    background: url("https://common.northwestern.edu/v8/css/images/icons/email.svg") no-repeat;
+    @include pin-sizing;
+}
+
+/* Utilities */
+.head-section {
+    border-bottom: 1px solid $purple;
+    padding-bottom: 3px;
+}
+
+.tabular-number {
+    font-feature-settings: "tnum";
+    font-variant-numeric: tabular-nums;
+}
+
+.img-circle {
+    border-radius: 50%;
+}
+
+// Slashes for a heading, ripped off from the Research Portal
+h2.slashes {
+    text-align: center;
+    font-weight: bold;
+}
+
+h2.slashes::before,
+h2.slashes::after {
+    background: url("https://common.northwestern.edu/v8/css/images/icons/grey-slash.svg") no-repeat 50%/17px 21px;
+    padding: 0 20px;
+    content: " ";
+}
+
+.required:before {
+    content: "* ";
+    font-weight: bold;
+    color: $purple-dark;
+}
+
+h4.head-section .btn-sm {
+    line-height: 1.3;
+}
+
+.overflow-scroll {
+    word-wrap: break-word;
+}
+
+.block-hover-pointer {
+    cursor: pointer;
+}
+
+//class to disabled hyperlinks
+.disabled-a {
+    pointer-events: none;
+}

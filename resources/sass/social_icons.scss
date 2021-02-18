@@ -1,0 +1,39 @@
+// Stolen from the NU stylesheet.
+.social {
+    border: 1px solid #fff;
+    display: inline-block;
+    font-size: 0;
+    height: 39px;
+    margin: 4px;
+    overflow: hidden;
+    text-indent: -9999px;
+    transition: background 0.3s ease 0s;
+    vertical-align: bottom;
+    width: 39px;
+}
+
+.facebook {
+  background: url("https://common.northwestern.edu/v8/css/images/icons/social-media-icons.png");
+  background-position: 0 0;
+}
+.facebook:hover {
+  background-position: 0 39px;
+}
+
+.twitter {
+  background-image: url("https://common.northwestern.edu/v8/css/images/icons/social-media-icons.png");
+  background-position: -39px 0;
+}
+
+.twitter:hover {
+  background-position: -39px 39px;
+}
+
+.instagram {
+  background-image: url("https://common.northwestern.edu/v8/css/images/icons/social-media-icons.png");
+  background-position: -78px 0;
+}
+
+.instagram:hover {
+  background-position: -78px 39px;
+}
