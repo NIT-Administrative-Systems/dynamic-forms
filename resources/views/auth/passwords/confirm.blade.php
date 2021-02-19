@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('northwestern::purple-container')
 
 @section('content')
 <div class="container">
