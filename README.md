@@ -5,3 +5,10 @@ In practice, this is used for undergraduate research grants.
 
 ## Running the App
 todo
+
+```sh
+
+# You can run this to generate a file that'll give your IDE auto-complete data for columns on your ELoquent models
+# Your DB needs to be set up & you need an IDE that supports _ide_helper_models.php (VS Code with PHP Intelliphense works)
+$ php artisan ide-helper:models -N
+```
