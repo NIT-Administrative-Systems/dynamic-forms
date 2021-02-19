@@ -22,7 +22,7 @@ Route::group(['prefix' => 'auth'], function () {
     Route::get('logout', [Controllers\Auth\TypeController::class, 'logout'])->name('logout-type');
 
     Route::group(['prefix' => 'local'], function () {
-        Auth::routes();
+        Auth::routes(['register' => false]); // @TODO disabled for now, until it gets set up properly for non-NU sponsors
     });
 
     Route::group(['prefix' => 'sso'], function () {
