@@ -14,6 +14,7 @@
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.12",
         "laravel/tinker": "^2.5",
+        "northwestern-sysdev/laravel-soa": "^7.0",
         "northwestern-sysdev/northwestern-laravel-ui": "^1.4"
     },
     "require-dev": {

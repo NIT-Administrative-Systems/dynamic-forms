@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "897f6b5a9dae411302ba509aec9d274d",
+    "content-hash": "48f99d31eec79dcf500fcf45cc3b4f0b",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1682,6 +1682,113 @@
                 "source": "https://github.com/nikic/PHP-Parser/tree/v4.10.4"
             },
             "time": "2020-12-20T10:01:03+00:00"
+        },
+        {
+            "name": "northwestern-sysdev/event-hub-php-sdk",
+            "version": "v2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/NIT-Administrative-Systems/SysDev-EventHub-PHP-SDK.git",
+                "reference": "a5986a3d1e002c2358767206ec33922b97eccd50"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/NIT-Administrative-Systems/SysDev-EventHub-PHP-SDK/zipball/a5986a3d1e002c2358767206ec33922b97eccd50",
+                "reference": "a5986a3d1e002c2358767206ec33922b97eccd50",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^7.0",
+                "php": ">=7.4"
+            },
+            "require-dev": {
+                "phpstan/phpstan": "^0.12",
+                "phpunit/phpunit": "^9"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Northwestern\\SysDev\\SOA\\EventHub\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nicholas Evans",
+                    "email": "nick.evans@northwestern.edu"
+                }
+            ],
+            "description": "PHP SDK for the Northwestern EventHub",
+            "keywords": [
+                "northwestern",
+                "northwestern university"
+            ],
+            "support": {
+                "source": "https://github.com/NIT-Administrative-Systems/SysDev-EventHub-PHP-SDK/tree/v2.0.0"
+            },
+            "time": "2021-02-15T18:55:44+00:00"
+        },
+        {
+            "name": "northwestern-sysdev/laravel-soa",
+            "version": "v7.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/NIT-Administrative-Systems/SysDev-laravel-soa.git",
+                "reference": "0d36658baf32a57664e3fe559bc2002504e9619d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/NIT-Administrative-Systems/SysDev-laravel-soa/zipball/0d36658baf32a57664e3fe559bc2002504e9619d",
+                "reference": "0d36658baf32a57664e3fe559bc2002504e9619d",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^7.0",
+                "laravel/ui": "^3.0|^2.0",
+                "northwestern-sysdev/event-hub-php-sdk": "^2.0"
+            },
+            "require-dev": {
+                "orchestra/testbench": "~6.0",
+                "php-coveralls/php-coveralls": "^2.4",
+                "phpunit/phpunit": "^9.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Northwestern\\SysDev\\SOA\\Providers\\NuSoaServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Northwestern\\SysDev\\SOA\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nicholas Evans",
+                    "email": "nick.evans@northwestern.edu"
+                }
+            ],
+            "description": "Laravel bindings for popular Northwestern SOA services.",
+            "keywords": [
+                "laravel",
+                "northwestern",
+                "northwestern university"
+            ],
+            "support": {
+                "issues": "https://github.com/NIT-Administrative-Systems/SysDev-laravel-soa/issues",
+                "source": "https://github.com/NIT-Administrative-Systems/SysDev-laravel-soa/tree/v7.0.0"
+            },
+            "time": "2021-02-15T20:08:35+00:00"
         },
         {
             "name": "northwestern-sysdev/northwestern-laravel-ui",

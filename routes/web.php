@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,10 +15,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::group(['prefix' => 'auth'], function () {
+    Route::get('login', [Controllers\Auth\TypeController::class, 'login'])->name('login-type');
+    Route::get('logout', [Controllers\Auth\TypeController::class, 'logout'])->name('logout-type');
+
+    Route::group(['prefix' => 'local'], function () {
+        Auth::routes();
+    });
+
+    Route::group(['prefix' => 'sso'], function () {
+        Route::get('login', [Controllers\Auth\WebSSOController::class, 'login'])->name('login-sso');
+        Route::get('logout', [Controllers\Auth\WebSSOController::class, 'logout'])->name('logout-sso');
+    });
 });
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
