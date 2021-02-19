@@ -15,10 +15,33 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
+            $table->enum('auth_type', ['sso', 'local']);
+            $table->string('username')->unique();
+            $table->string('email');
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
+            $table->string('password')->nullable();
+
+            $table->datetime('last_directory_sync_at')->nullable();
+            $table->string('employee_id', 7)->nullable();
+            $table->string('phone')->nullable();
+
+            /**
+             * Preferred vs. legal, for folks with professional names/deadnames/etc.
+             * We will need legal name for the award contract, but no reason to plaster
+             * it all over the app if it isn't what people know them by.
+             */
+            $table->string('first_name')->nullable();
+            $table->string('last_name')->nullable();
+            $table->string('legal_first_name')->nullable();
+            $table->string('legal_last_name')->nullable();
+
+            $table->enum('primary_affiliation', ['outside-sponsor', 'staff', 'faculty', 'student', 'emeritus']);
+            $table->boolean('is_outside_sponsor')->default(false);
+            $table->boolean('is_staff')->default(false);
+            $table->boolean('is_faculty')->default(false);
+            $table->boolean('is_student')->default(false);
+            $table->boolean('is_emeritus')->default(false);
+
             $table->rememberToken();
             $table->timestamps();
         });

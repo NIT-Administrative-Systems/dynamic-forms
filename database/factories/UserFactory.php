@@ -8,34 +8,33 @@ use Illuminate\Support\Str;
 
 class UserFactory extends Factory
 {
-    /**
-     * The name of the factory's corresponding model.
-     *
-     * @var string
-     */
     protected $model = User::class;
 
-    /**
-     * Define the model's default state.
-     *
-     * @return array
-     */
     public function definition()
     {
         return [
-            'name' => $this->faker->name,
-            'email' => $this->faker->unique()->safeEmail,
+            'auth_type' => User::AUTH_TYPE_NETID,
+            'username' => $this->faker->unique()->userName,
+            'email' => $this->faker->companyEmail,
             'email_verified_at' => now(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'password' => null,
             'remember_token' => Str::random(10),
+            'last_directory_sync_at' => now(),
+            'employee_id' => $this->faker->numerify('#######'),
+            'phone' => $this->faker->phoneNumber(),
+            'first_name' => $this->faker->firstName(),
+            'last_name' => $this->faker->lastName(),
+            'legal_first_name' => $this->faker->optional(0.1)->firstName(),
+            'legal_last_name' => $this->faker->optional(0.1)->lastName(),
+            'primary_affiliation' => $this->faker->randomElement(['staff', 'faculty', 'student', 'emeritus']),
+            'is_outside_sponsor' => false,
+            'is_staff' => $this->faker->boolean(),
+            'is_faculty' => $this->faker->boolean(),
+            'is_student' => $this->faker->boolean(),
+            'is_emeritus' => $this->faker->boolean(),
         ];
     }
 
-    /**
-     * Indicate that the model's email address should be unverified.
-     *
-     * @return \Illuminate\Database\Eloquent\Factories\Factory
-     */
     public function unverified()
     {
         return $this->state(function (array $attributes) {

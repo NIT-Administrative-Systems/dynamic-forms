@@ -11,16 +11,10 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
+    const AUTH_TYPE_NETID = 'sso';
+    const AUTH_TYPE_LOCAL = 'local';
+
+    protected $guarded = [];
 
     /**
      * The attributes that should be hidden for arrays.
