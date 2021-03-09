@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Domains\User\ACL\SystemRole;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
@@ -25,6 +26,9 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        // Platform admins have all permissions, always.
+        Gate::before(function ($user, $ability) {
+            return $user->hasRole(SystemRole::PLATFORM_ADMINISTRATOR) ? true : null;
+        });
     }
 }

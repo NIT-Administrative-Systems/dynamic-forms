@@ -11,7 +11,7 @@
     <ul class="navbar-nav mr-auto">
         @auth
         <li class='nav-item'>
-            <span class='nav-link'>{{ auth()->user()->getNetId() }}</span>
+            <span class='nav-link'>{{ auth()->user()->full_name }}</span>
         </li>
         <li class='nav-item'>
             <a class="nav-link" href="{{  route('logout-type') }}">Logout</a>
