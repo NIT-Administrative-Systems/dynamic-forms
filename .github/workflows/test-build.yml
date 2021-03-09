@@ -9,12 +9,6 @@ on:
 jobs:
   php-tests:
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        php: [8.0]
-        node-version: [12.x]
-
     services:
       postgres:
         image: postgres:10
@@ -26,27 +20,37 @@ jobs:
           - 5432:5432
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
 
-    name: PHP ${{ matrix.php }}, NodeJS ${{ matrix.node-version }}
-
     steps:
     - uses: actions/checkout@v2
 
     - name: Setup PHP 🐘
       uses: shivammathur/setup-php@v2
       with:
-          php-version: ${{ matrix.php }}
+          php-version: 8.0
           extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv
           coverage: xdebug
 
     - name: Setup NodeJS 😞
       uses: actions/setup-node@v1
       with:
-        node-version: ${{ matrix.node-version }}
+        node-version: 12.x
 
     - name: Install dependencies 🔧
       run: |
         composer install --no-interaction --no-suggest
+        cp .env.ci .env
+        php artisan key:generate
         yarn install
+
+    - uses: actions/cache@v2
+      with:
+        path: 'vendor'
+        key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+
+    - uses: actions/cache@v2
+      with:
+        path: 'node_modules'
+        key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
 
     - name: Build frontend 💅
       run: yarn run prod
