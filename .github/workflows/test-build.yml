@@ -35,13 +35,6 @@ jobs:
       with:
         node-version: 12.x
 
-    - name: Install dependencies 🔧
-      run: |
-        composer install --no-interaction
-        cp .env.ci .env
-        php artisan key:generate
-        yarn install
-
     - uses: actions/cache@v2
       with:
         path: 'vendor'
@@ -52,13 +45,20 @@ jobs:
         path: 'node_modules'
         key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
 
+    - name: Install dependencies 🔧
+      run: |
+        composer install --no-interaction
+        cp .env.ci .env
+        php artisan key:generate
+        yarn install
+
     - name: Build frontend 💅
       run: yarn run prod
 
     - name: PHPUnit 📝
       run: vendor/bin/phpunit --log-junit=.build/junit.xml
 
-    - uses: EnricoMi/publish-unit-test-result-action@v1
+    - uses: docker://ghcr.io/enricomi/publish-unit-test-result-action:v1
       if: always()
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
