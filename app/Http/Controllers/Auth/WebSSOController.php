@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Domains\User\NetID\SyncUserFromDirectory;
+use App\Exceptions\ServiceDownError;
 use App\Http\Controllers\Controller;
+use App\Repositories\UserRepository;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Northwestern\SysDev\SOA\Auth\WebSSOAuthentication;
+use Northwestern\SysDev\SOA\DirectorySearch;
 
 class WebSSOController extends Controller
 {
@@ -16,16 +20,19 @@ class WebSSOController extends Controller
         $this->logout_route_name = 'logout-sso';
     }
 
-    protected function findUserByNetID(string $netid): ?Authenticatable
+    protected function findUserByNetID(UserRepository $repo, DirectorySearch $directoryApi, SyncUserFromDirectory $netidSync, string $netid): ?Authenticatable
     {
-        // Retrieve a user model for a given netID.
+        // @TODO I don't think laravel-soa does this ... it should!
+        $netid = strtolower($netid);
 
-        // This is an opportunity to create a user in your DB, if needed.
+        $user = $repo->findByNetid($netid);
 
-        // If you do not have a user store, a plain-old PHP object implementing
-        // the Illuminate\Contracts\Auth\Authenticatable interface is sufficient.
+        $directoryData = $directoryApi->lookupByNetId($netid);
+        throw_unless($directoryData, new ServiceDownError(ServiceDownError::API_DIRECTORY_SEARCH));
 
-        // You *CAN* use dependency injection in this method.
+        $user = $netidSync($user, $directoryData);
+
+        return $repo->saveWithRoles($user, []);
     }
 
     /*
