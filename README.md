@@ -1,4 +1,4 @@
-# ADO Competitive Applications [![Test Suite](https://github.com/NIT-Administrative-Systems/competitive-applications/actions/workflows/test-build.yml/badge.svg)](https://github.com/NIT-Administrative-Systems/competitive-applications/actions/workflows/test-build.yml)
+# ADO Competitive Applications [![Dev Deployment](https://github.com/NIT-Administrative-Systems/competitive-applications/actions/workflows/deploy.yml/badge.svg)](https://github.com/NIT-Administrative-Systems/competitive-applications/actions/workflows/deploy.yml)
 The Competitive Applications system is a workflow system for running contests: people apply to receive a finite resource, their applications are rated, and the best applications win.
 
 In practice, this is used for undergraduate research grants.
