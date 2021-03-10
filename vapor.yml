@@ -1,0 +1,26 @@
+id: 19011
+name: competitive-applications
+environments:
+    develop:
+        memory: 1024
+        cli-memory: 512
+        domain: competitive-applications-dev.northwestern.edu
+        database: competitive-applications-dev
+        runtime: 'php-8.0:al2'
+        build:
+            - 'COMPOSER_MIRROR_PATH_REPOS=1 composer install --no-dev'
+            - 'php artisan event:cache'
+            - 'yarn install && yarn run prod && rm -rf node_modules'
+    push:
+        build:
+            - 'COMPOSER_MIRROR_PATH_REPOS=1 composer install --no-dev'
+    qa:
+        memory: 1024
+        cli-memory: 512
+        domain: competitive-applications-qa.northwestern.edu
+        database: competitive-applications-qa
+        runtime: 'php-8.0:1l2'
+        build:
+            - 'COMPOSER_MIRROR_PATH_REPOS=1 composer install'
+            - 'php artisan event:cache'
+            - 'yarn install && yarn run prod && rm -rf node_modules'

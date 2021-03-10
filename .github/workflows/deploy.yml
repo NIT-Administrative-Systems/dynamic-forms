@@ -23,6 +23,12 @@ jobs:
       with:
         ref: ${{ github.head_ref }}
 
+      - name: Extract branch name
+        if: github.event_name != 'pull_request'
+        shell: bash
+        run: echo "::set-env name=BRANCH_NAME::$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch
+
     - name: Setup PHP 🐘
       uses: shivammathur/setup-php@v2
       with:
@@ -64,10 +70,7 @@ jobs:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         files: .build/junit.xml
 
-    - name: Sync Vapor env & Secrets 🕵️
-      run: |
-        echo "TODO"
-
     - name: Deploy 🚀
       run: |
-        echo "TODO"
+        vendor/bin/vapor env:push $BRANCH_NAME
+        vendor/bin/vapor deploy --no-ansi ${BRANCH_NAME} --commit='${GITHUB_SHA}'

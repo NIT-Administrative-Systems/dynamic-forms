@@ -47,6 +47,7 @@ return [
 
         'ses' => [
             'transport' => 'ses',
+            'region' => env('AWS_SES_REGION', 'us-east-1'),
         ],
 
         'mailgun' => [
