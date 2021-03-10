@@ -54,9 +54,6 @@ jobs:
         php artisan key:generate
         yarn install
 
-    - name: Build frontend 💅
-      run: yarn run prod
-
     - name: PHPUnit 📝
       run: vendor/bin/phpunit --log-junit=.build/junit.xml
 
