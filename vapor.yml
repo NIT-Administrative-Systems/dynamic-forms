@@ -11,9 +11,8 @@ environments:
             - 'COMPOSER_MIRROR_PATH_REPOS=1 composer install --no-dev'
             - 'php artisan event:cache'
             - 'yarn install && yarn run prod && rm -rf node_modules'
-    push:
-        build:
-            - 'COMPOSER_MIRROR_PATH_REPOS=1 composer install --no-dev'
+        deploy:
+            - 'php artisan migrate --force'
     qa:
         memory: 1024
         cli-memory: 512
@@ -24,3 +23,5 @@ environments:
             - 'COMPOSER_MIRROR_PATH_REPOS=1 composer install'
             - 'php artisan event:cache'
             - 'yarn install && yarn run prod && rm -rf node_modules'
+        deploy:
+            - 'php artisan migrate --force'
