@@ -15,6 +15,7 @@
         "laravel/framework": "^8.12",
         "laravel/tinker": "^2.5",
         "laravel/vapor-core": "^2.10",
+        "laravel/vapor-ui": "^1.0",
         "northwestern-sysdev/laravel-soa": "^7.0",
         "northwestern-sysdev/northwestern-laravel-ui": "^1.4",
         "spatie/laravel-permission": "^4.0"
