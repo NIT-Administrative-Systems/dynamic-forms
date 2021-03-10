@@ -35,6 +35,13 @@ jobs:
       with:
         node-version: 12.x
 
+    - name: Run php-cs-fixer
+      uses: docker://oskarstark/php-cs-fixer-ga
+
+    - uses: stefanzweifel/git-auto-commit-action@v4
+      with:
+          commit_message: Apply php-cs-fixer changes
+
     - uses: actions/cache@v2
       with:
         path: 'vendor'
