@@ -11,7 +11,7 @@
     },
     "devDependencies": {
         "@fortawesome/fontawesome-free": "^5.13.0",
-        "@sentry/browser": "^5.11.0",
+        "@sentry/browser": "^6.2.0",
         "axios": "^0.21",
         "bootstrap": "^4.0.0",
         "jquery": "^3.2",
