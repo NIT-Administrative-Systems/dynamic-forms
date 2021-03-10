@@ -27,7 +27,7 @@ class FormVersionFactory extends Factory
     }
 
     /**
-     * Holds a big string of Form.io definition JSON
+     * Holds a big string of Form.io definition JSON.
      */
     private function formio(): string
     {

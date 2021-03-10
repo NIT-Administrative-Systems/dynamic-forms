@@ -15,7 +15,7 @@ class ProgramController extends Controller
      */
     public function index()
     {
-        return view ('admin.program.index')->with([
+        return view('admin.program.index')->with([
             'programs' => Program::with('organization')->orderBy('name')->get(),
         ]);
     }
