@@ -217,7 +217,7 @@ class SyncUserFromDirectoryTest extends TestCase
                     'nuAllStudentCurrentPhone' => [],
                     'nuStudentGivenName' => '',
                     'nuStudentSn' => '',
-                    'nuStudentLegalGivenName' => '',
+                    'nuStudentLegalGivenName' => "",
                     'nuStudentLegalSn' => '',
                 ],
                 [
