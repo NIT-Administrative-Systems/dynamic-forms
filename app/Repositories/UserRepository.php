@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 class UserRepository
 {
     /**
-     * Finds a user by the netID, or returns a fresh User stub if they do not yet exist
+     * Finds a user by the netID, or returns a fresh User stub if they do not yet exist.
      */
     public function findByNetid(string $netid): User
     {

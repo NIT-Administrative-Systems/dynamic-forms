@@ -15,7 +15,7 @@ class TypeController extends Controller
 
     public function logout(Request $request)
     {
-        if (!$request->user()) {
+        if (! $request->user()) {
             return redirect(RouteServiceProvider::HOME);
         }
 

@@ -3,8 +3,8 @@
 namespace Database\Seeders;
 
 use App\Domains\User\ACL\SystemRole;
-use App\Models\User;
 use App\Models\Role;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class RoleSeeder extends Seeder

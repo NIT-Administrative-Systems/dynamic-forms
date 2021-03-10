@@ -6,7 +6,7 @@ use App\Models\User;
 use Illuminate\Support\Carbon;
 
 /**
- * Takes DirectorySearch results and puts the fields onto their User model
+ * Takes DirectorySearch results and puts the fields onto their User model.
  */
 class SyncUserFromDirectory
 {
@@ -64,8 +64,7 @@ class SyncUserFromDirectory
         $phone = ['telephoneNumber'];
 
         // Student data fields should have priority over less-specific fields when this is a student
-        if ($user->primary_affiliation === User::AFF_STUDENT)
-        {
+        if ($user->primary_affiliation === User::AFF_STUDENT) {
             array_unshift($givenName, 'nuStudentGivenName');
             array_unshift($surname, 'nuStudentSn');
             array_unshift($legalGiven, 'nuStudentLegalGivenName');
