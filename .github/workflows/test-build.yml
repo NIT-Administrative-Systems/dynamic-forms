@@ -61,5 +61,5 @@ jobs:
     - uses: docker://ghcr.io/enricomi/publish-unit-test-result-action:v1
       if: always()
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
+        github_token: ${{ secrets.EACD_BOT_PAT_FOR_GH_ACTIONS }}
         files: .build/junit.xml
