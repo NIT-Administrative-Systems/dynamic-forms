@@ -1,11 +1,11 @@
-name: Test Suite
+name: Deploy
 
 on:
-  pull_request:
+  push:
     branches: [ develop ]
 
 jobs:
-  php-tests:
+  test-and-deploy:
     runs-on: ubuntu-latest
     services:
       postgres:
@@ -35,13 +35,6 @@ jobs:
       with:
         node-version: 12.x
 
-    - name: Run php-cs-fixer
-      uses: docker://oskarstark/php-cs-fixer-ga
-
-    - uses: stefanzweifel/git-auto-commit-action@v4
-      with:
-          commit_message: Apply php-cs-fixer changes
-
     - uses: actions/cache@v2
       with:
         path: 'vendor'
@@ -70,3 +63,11 @@ jobs:
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         files: .build/junit.xml
+
+    - name: Sync Vapor env & Secrets 🕵️
+      run: |
+        echo "TODO"
+
+    - name: Deploy 🚀
+      run: |
+        echo "TODO"
