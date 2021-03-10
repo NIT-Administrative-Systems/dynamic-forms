@@ -68,4 +68,4 @@ jobs:
         VAPOR_API_TOKEN: ${{ secrets.NONPROD_VAPOR_API_TOKEN }}
       run: |
         vendor/bin/vapor env:push $BRANCH_NAME
-        vendor/bin/vapor deploy --no-ansi ${BRANCH_NAME} --commit='${GITHUB_SHA}'
+        vendor/bin/vapor deploy --no-ansi ${BRANCH_NAME} --commit=${{GITHUB_SHA}}
