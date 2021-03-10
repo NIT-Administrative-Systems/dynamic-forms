@@ -12,7 +12,7 @@ class Form extends Model
 
     public function type()
     {
-        return $this->hasOne(FormType::class);
+        return $this->belongsTo(FormType::class, 'form_type_id');
     }
 
     public function versions()
