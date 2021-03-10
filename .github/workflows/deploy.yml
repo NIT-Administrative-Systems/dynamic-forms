@@ -24,10 +24,10 @@ jobs:
         ref: ${{ github.head_ref }}
 
     - name: Extract branch name
-        if: github.event_name != 'pull_request'
-        shell: bash
-        run: echo "::set-env name=BRANCH_NAME::$(echo ${GITHUB_REF#refs/heads/})"
-        id: extract_branch
+      if: github.event_name != 'pull_request'
+      shell: bash
+      run: echo "::set-env name=BRANCH_NAME::$(echo ${GITHUB_REF#refs/heads/})"
+      id: extract_branch
 
     - name: Setup PHP 🐘
       uses: shivammathur/setup-php@v2
