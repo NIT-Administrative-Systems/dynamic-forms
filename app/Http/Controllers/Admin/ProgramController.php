@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Program;
 use Illuminate\Http\Request;
 
 class ProgramController extends Controller
@@ -14,7 +15,9 @@ class ProgramController extends Controller
      */
     public function index()
     {
-        //
+        return view ('admin.program.index')->with([
+            'programs' => Program::with('organization')->orderBy('name')->get(),
+        ]);
     }
 
     /**
@@ -57,7 +60,16 @@ class ProgramController extends Controller
      */
     public function edit($id)
     {
-        //
+        $program = Program::findOrFail($id);
+        $app_form = $program->forms->first();
+
+        // @TODO this doesn't belong heeeeeeeeeeeeeeere
+
+        return view('admin.form.edit')->with([
+            'program' => $program,
+            'form' => $app_form,
+            'definition' => $app_form->published_version->definition ?? '{ components: [] }',
+        ]);
     }
 
     /**

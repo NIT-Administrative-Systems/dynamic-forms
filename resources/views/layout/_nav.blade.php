@@ -5,6 +5,10 @@
         <a class="nav-link" href="/">Home</a>
     </li>
 
+    <li class="nav-item {{ Route::is('admin/program.*') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('program.index') }}">Programs</a>
+    </li>
+
 </ul>
 
 <div class='mt-2 mt-md-0 ml-auto'>

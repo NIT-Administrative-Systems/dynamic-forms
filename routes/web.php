@@ -30,3 +30,7 @@ Route::group(['prefix' => 'auth'], function () {
         Route::get('logout', [Controllers\Auth\WebSSOController::class, 'logout'])->name('logout-sso');
     });
 });
+
+Route::group(['prefix' => 'admin'], function () {
+    Route::resource('program', Controllers\Admin\ProgramController::class, ['only' => ['index', 'edit', 'update']]);
+});
