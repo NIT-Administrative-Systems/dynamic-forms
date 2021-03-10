@@ -66,6 +66,7 @@ jobs:
     - name: Deploy 🚀
       env:
         VAPOR_API_TOKEN: ${{ secrets.NONPROD_VAPOR_API_TOKEN }}
+        SHA: ${{ github.sha }}
       run: |
         vendor/bin/vapor env:push $BRANCH_NAME
-        vendor/bin/vapor deploy --no-ansi ${BRANCH_NAME} --commit=${{GITHUB_SHA}}
+        vendor/bin/vapor deploy --no-ansi ${BRANCH_NAME} --commit=${SHA}
