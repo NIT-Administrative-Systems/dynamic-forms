@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/', [Controllers\HomeController::class, 'index'])->name('home');
 
 Route::group(['prefix' => 'auth'], function () {
     Route::get('login', [Controllers\Auth\TypeController::class, 'login'])->name('login-type');
@@ -30,6 +30,16 @@ Route::group(['prefix' => 'auth'], function () {
         Route::get('logout', [Controllers\Auth\WebSSOController::class, 'logout'])->name('logout-sso');
     });
 });
+
+/**
+ * The org/prog can be inferred from the cycle ID, but this URL is part of the UI,
+ * so we want it to be a nice SEO-y URL.
+ *
+ * Program admins will be paying close attention to it when they post it on their
+ * site or send it out in their newsletters.
+ */
+Route::get('apply/{organization:slug}/{program:slug}/{program_cycle}', Controllers\Applicant\FormController::class)->name('application-form');
+Route::get('apply', Controllers\Applicant\DiscoverController::class)->name('application-discover');
 
 Route::group(['prefix' => 'admin'], function () {
     Route::resource('organization', Controllers\Admin\OrganizationController::class, ['only' => ['index', 'show', 'create', 'store']]);
