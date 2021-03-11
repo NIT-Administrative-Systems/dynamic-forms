@@ -12,6 +12,7 @@ environments:
             - 'php artisan event:cache'
             - 'yarn install && yarn run prod && rm -rf node_modules'
         deploy:
+            - 'php artisan db:wake'
             - 'php artisan migrate --force'
     qa:
         memory: 1024
@@ -24,4 +25,5 @@ environments:
             - 'php artisan event:cache'
             - 'yarn install && yarn run prod && rm -rf node_modules'
         deploy:
+            - 'php artisan db:wake'
             - 'php artisan migrate --force'
