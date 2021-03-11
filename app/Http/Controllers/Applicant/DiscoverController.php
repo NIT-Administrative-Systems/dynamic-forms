@@ -3,9 +3,7 @@
 namespace App\Http\Controllers\Applicant;
 
 use App\Http\Controllers\Controller;
-use App\Models\Organization;
 use App\Models\ProgramCycle;
-use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 
 class DiscoverController extends Controller
@@ -28,6 +26,5 @@ class DiscoverController extends Controller
         return view('applicant.discover')->with([
             'cycles' => $cycles,
         ]);
-
     }
 }

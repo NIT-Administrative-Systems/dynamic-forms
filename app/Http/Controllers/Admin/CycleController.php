@@ -50,6 +50,7 @@ class CycleController extends Controller
         $cycle = ProgramCycle::create($data);
 
         $request->session()->flash('status', 'The cycle has been created.');
+
         return redirect(route('program.show', ['program' => $cycle->program]));
     }
 
