@@ -10,6 +10,11 @@ class Form extends Model
 {
     use HasFactory, SoftDeletes;
 
+    public function program()
+    {
+        return $this->belongsTo(Program::class);
+    }
+
     public function type()
     {
         return $this->belongsTo(FormType::class, 'form_type_id');

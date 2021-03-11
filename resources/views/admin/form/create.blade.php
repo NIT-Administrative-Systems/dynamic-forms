@@ -3,13 +3,14 @@
 @section('heading')
 <div class="row">
     <div class="col-12 col-md-8">
-        <h2>{{ $form->program->name }} &mdash; {{ $form->type->name }}</h2>
+        <h2>{{ $program->name }} &mdash; {{ $form_type->name }}</h2>
     </div>
 
     <div class="col-12 col-md-4 text-right">
-        <form method="post" action="{{ route('form.update', ['form' => $form->id]) }}">
+        <form method="post" action="{{ route('form.store') }}">
             @csrf
-            @method('put')
+            <input type="hidden" name="program_id" value="{{ $program->id }}">
+            <input type="hidden" name="form_type_id" value="{{ $form_type->id }}">
             <input type="hidden" name="definition" id="definition" value="">
 
             <button type="submit" class="btn btn-outline-primary">
@@ -35,15 +36,13 @@
         Formio.icons = 'fontawesome';
         new Formio.builder(
             document.getElementById('formio-builder'),
-            {!! $definition !!},
+            {},
             {
                 builder: {
                     // @TODO
                 }
             }
         ).then(function(builder) {
-            document.getElementById('definition').value = JSON.stringify(builder.schema);
-
             builder.on('change', function (e) {
                 document.getElementById('definition').value = JSON.stringify(builder.schema);
             })

@@ -2,10 +2,23 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
+use App\Http\Requests\CreateFormRequest;
+use App\Models\Form;
+use App\Models\FormType;
+use App\Models\FormVersion;
+use App\Models\Program;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Carbon;
 
 class FormController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -21,9 +34,17 @@ class FormController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $params = $request->validate([
+            'program' => 'required|numeric|exists:programs,id',
+            'type' => 'required|numeric|exists:form_types,id',
+        ]);
+
+        return view('admin.form.create', [
+            'program' => Program::findOrFail($params['program']),
+            'form_type' => FormType::findOrFail($params['type']),
+        ]);
     }
 
     /**
@@ -32,9 +53,21 @@ class FormController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateFormRequest $request)
     {
-        //
+        $data = $request->validated();
+
+        // @TODO this belongs in a repo lol
+        $form = Form::create(Arr::only($data, ['program_id', 'form_type_id']));
+        FormVersion::create([
+            'form_id' => $form->id,
+            'definition' => $data['definition'],
+            'published_at' => Carbon::now(),
+        ]);
+
+        $request->session()->flash('status', 'The form was created.');
+
+        return redirect(route('program.show', ['program' => $form->program->id]));
     }
 
     /**
@@ -56,7 +89,12 @@ class FormController extends Controller
      */
     public function edit($id)
     {
-        //
+        $form = Form::findOrFail($id);
+
+        return view('admin.form.edit')->with([
+            'form' => $form,
+            'definition' => $form->published_version->definition ?? '{ components: [] }',
+        ]);
     }
 
     /**
@@ -68,7 +106,21 @@ class FormController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = $request->validate([
+            'definition' => 'required|json',
+        ]);
+
+        // @TODO this belongs in a repo lol
+        $form = Form::findOrFail($id);
+        FormVersion::create([
+            'form_id' => $form->id,
+            'definition' => $data['definition'],
+            'published_at' => Carbon::now(),
+        ]);
+
+        $request->session()->flash('status', 'The form was updated.');
+
+        return redirect(route('program.show', ['program' => $form->program->id]));
     }
 
     /**

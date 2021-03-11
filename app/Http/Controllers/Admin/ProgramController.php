@@ -3,11 +3,19 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CreateProgramRequest;
+use App\Models\FormType;
+use App\Models\Organization;
 use App\Models\Program;
 use Illuminate\Http\Request;
 
 class ProgramController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -27,7 +35,11 @@ class ProgramController extends Controller
      */
     public function create()
     {
-        //
+        $orgs = Organization::orderBy('name')->get();
+
+        return view('admin.program.create')->with([
+            'organizations' => $orgs->pluck('name', 'id'),
+        ]);
     }
 
     /**
@@ -36,9 +48,12 @@ class ProgramController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateProgramRequest $request)
     {
-        //
+        $program = Program::create($request->validated());
+        $request->session()->flash('status', 'Program created.');
+
+        return redirect(route('program.show', ['program' => $program->id]));
     }
 
     /**
@@ -49,7 +64,24 @@ class ProgramController extends Controller
      */
     public function show($id)
     {
-        //
+        $program = Program::with(['forms', 'forms.type'])->findOrFail($id);
+        $cycles = $program->cycles()->orderBy('starts_at');
+        $forms = $program->forms;
+        $types_with_forms = [];
+
+        $form_types = FormType::orderBy('name')->get();
+        foreach ($form_types as $type) {
+            $types_with_forms[] = [
+                'type' => $type,
+                'form' => $forms->where('type', $type)->first(),
+            ];
+        }
+
+        return view('admin.program.show')->with([
+            'program' => $program,
+            'types_with_forms' => $types_with_forms,
+            'cycles' => $cycles,
+        ]);
     }
 
     /**
@@ -60,16 +92,7 @@ class ProgramController extends Controller
      */
     public function edit($id)
     {
-        $program = Program::findOrFail($id);
-        $app_form = $program->forms->first();
-
-        // @TODO this doesn't belong heeeeeeeeeeeeeeere
-
-        return view('admin.form.edit')->with([
-            'program' => $program,
-            'form' => $app_form,
-            'definition' => $app_form->published_version->definition ?? '{ components: [] }',
-        ]);
+        //
     }
 
     /**

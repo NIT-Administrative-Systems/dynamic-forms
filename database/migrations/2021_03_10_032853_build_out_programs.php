@@ -20,13 +20,11 @@ class BuildOutPrograms extends Migration
         Schema::create('programs', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('organization_id')->index();
-            $table->string('slug');
+            $table->string('slug')->unique();
             $table->string('name');
 
             $table->timestamps();
             $table->softDeletes();
-
-            $table->unique(['organization_id', 'slug']);
         });
 
         Schema::create('program_cycles', function (Blueprint $table) {

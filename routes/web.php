@@ -32,5 +32,7 @@ Route::group(['prefix' => 'auth'], function () {
 });
 
 Route::group(['prefix' => 'admin'], function () {
-    Route::resource('program', Controllers\Admin\ProgramController::class, ['only' => ['index', 'edit', 'update']]);
+    Route::resource('organization', Controllers\Admin\OrganizationController::class, ['only' => ['index', 'show', 'create', 'store']]);
+    Route::resource('program', Controllers\Admin\ProgramController::class, ['only' => ['index', 'show', 'create', 'store']]);
+    Route::resource('form', Controllers\Admin\FormController::class, ['except' => ['destroy', 'index', 'show']]);
 });

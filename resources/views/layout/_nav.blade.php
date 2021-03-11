@@ -5,10 +5,15 @@
         <a class="nav-link" href="/">Home</a>
     </li>
 
-    <li class="nav-item {{ Route::is('admin/program.*') ? 'active' : '' }}">
-        <a class="nav-link" href="{{ route('program.index') }}">Programs</a>
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="adminDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Admin
+        </a>
+        <div class="dropdown-menu" aria-labelledby="adminDropdown">
+            <a class="dropdown-item" href="{{ route('organization.index') }}">Organizations</a>
+            <a class="dropdown-item" href="{{ route('program.index') }}">Programs</a>
+        </div>
     </li>
-
 </ul>
 
 <div class='mt-2 mt-md-0 ml-auto'>

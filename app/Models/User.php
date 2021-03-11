@@ -23,8 +23,6 @@ class User extends Authenticatable
      */
     const AFF_EMERITUS = 'emeritus';
 
-    protected $guarded = [];
-
     /**
      * The attributes that should be hidden for arrays.
      *
