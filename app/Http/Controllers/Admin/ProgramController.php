@@ -65,7 +65,7 @@ class ProgramController extends Controller
     public function show($id)
     {
         $program = Program::with(['forms', 'forms.type'])->findOrFail($id);
-        $cycles = $program->cycles()->orderBy('starts_at');
+        $cycles = $program->cycles()->orderBy('opens_at')->get();
         $forms = $program->forms;
         $types_with_forms = [];
 

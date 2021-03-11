@@ -35,4 +35,5 @@ Route::group(['prefix' => 'admin'], function () {
     Route::resource('organization', Controllers\Admin\OrganizationController::class, ['only' => ['index', 'show', 'create', 'store']]);
     Route::resource('program', Controllers\Admin\ProgramController::class, ['only' => ['index', 'show', 'create', 'store']]);
     Route::resource('form', Controllers\Admin\FormController::class, ['except' => ['destroy', 'index', 'show']]);
+    Route::resource('cycle', Controllers\Admin\CycleController::class, ['only' => ['create', 'store']]);
 });
