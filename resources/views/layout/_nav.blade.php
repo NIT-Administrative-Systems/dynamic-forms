@@ -5,13 +5,26 @@
         <a class="nav-link" href="/">Home</a>
     </li>
 
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('application-discover') }}">Apply</a>
+    </li>
+
     <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="adminDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <a class="nav-link dropdown-toggle" href="#" id="programAdminDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Admin
         </a>
-        <div class="dropdown-menu" aria-labelledby="adminDropdown">
+        <div class="dropdown-menu" aria-labelledby="programAdminDropdown">
             <a class="dropdown-item" href="{{ route('organization.index') }}">Organizations</a>
             <a class="dropdown-item" href="{{ route('program.index') }}">Programs</a>
+        </div>
+    </li>
+
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="platformAdminDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Platform Admin
+        </a>
+        <div class="dropdown-menu" aria-labelledby="platformAdminDropdown">
+            <a class="dropdown-item" href="{{ route('vapor-ui') }}">Vapor UI</a>
         </div>
     </li>
 </ul>
