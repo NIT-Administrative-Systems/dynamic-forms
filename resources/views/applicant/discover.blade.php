@@ -11,7 +11,7 @@
         $link = route('application-form', [
             'organization' => $cycle->program->organization,
             'program' => $cycle->program,
-            'program_cycle' => $cycle->id,
+            'cycle' => $cycle->id,
         ]);
         @endphp
 

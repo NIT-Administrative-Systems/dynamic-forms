@@ -38,7 +38,7 @@ Route::group(['prefix' => 'auth'], function () {
  * Program admins will be paying close attention to it when they post it on their
  * site or send it out in their newsletters.
  */
-Route::get('apply/{organization:slug}/{program:slug}/{program_cycle}', Controllers\Applicant\FormController::class)->name('application-form');
+Route::get('apply/{organization:slug}/{program:slug}/{cycle}', Controllers\Applicant\FormController::class)->name('application-form');
 Route::get('apply', Controllers\Applicant\DiscoverController::class)->name('application-discover');
 
 Route::group(['prefix' => 'admin'], function () {
