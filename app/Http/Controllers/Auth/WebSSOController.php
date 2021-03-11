@@ -28,7 +28,7 @@ class WebSSOController extends Controller
         $user = $repo->findByNetid($netid);
 
         $directoryData = $directoryApi->lookupByNetId($netid);
-        throw_unless($directoryData, new ServiceDownError(ServiceDownError::API_DIRECTORY_SEARCH));
+        throw_unless($directoryData, new ServiceDownError(ServiceDownError::API_DIRECTORY_SEARCH, $directoryApi->getLastError()));
 
         $user = $netidSync($user, $directoryData);
 
