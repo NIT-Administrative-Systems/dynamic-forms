@@ -9,6 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.0",
+        "fakerphp/faker": "^1.13",
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
@@ -23,7 +24,6 @@
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.9",
         "facade/ignition": "^2.5",
-        "fakerphp/faker": "^1.9.1",
         "friendsofphp/php-cs-fixer": "^2.18",
         "laravel/sail": "^1.0.1",
         "laravel/vapor-cli": "^1.12",
