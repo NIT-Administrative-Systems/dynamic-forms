@@ -13,7 +13,7 @@ environments:
             - 'yarn install && yarn run prod && rm -rf node_modules'
         deploy:
             - 'php artisan db:wake'
-            - 'php artisan migrate:fresh --force'
+            - 'php artisan migrate:fresh --seed --force'
             - 'php artisan db:seed --class=DemoSeeder --force'
     qa:
         memory: 1024
