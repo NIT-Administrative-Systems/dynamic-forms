@@ -38,11 +38,11 @@ Route::group(['prefix' => 'auth'], function () {
  * Program admins will be paying close attention to it when they post it on their
  * site or send it out in their newsletters. That's why it gets to be special.
  */
-Route::get('apply/{organization:slug}/{program:slug}/{cycle}', Controllers\Applicant\DisplayFormController::class)->name('application-form');
+Route::get('apply/{organization:slug}/{program:slug}/{cycle}', Controllers\Applicant\StartApplicationController::class)->name('application-form');
 Route::get('apply', Controllers\Applicant\DiscoverController::class)->name('application-discover');
 
-Route::group(['prefix' => 'applicant'], function () {
-    Route::resource('submission', Controllers\Applicant\SubmissionController::class, ['as' => 'applicant', 'only' => ['create', 'store']]);
+Route::prefix('applicant')->name('applicant.')->group(function () {
+    Route::resource('submission', Controllers\Applicant\SubmissionController::class, ['only' => ['edit', 'update']]);
 });
 
 Route::group(['prefix' => 'admin'], function () {

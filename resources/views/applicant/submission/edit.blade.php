@@ -6,7 +6,9 @@
         <h2>Apply for {{ $program->name }}</h2>
     </div>
     <div class="col-12 col-md-4 text-right">
-        <form method="post" action="#">
+        <form method="post" action="{{ route('applicant.submission.update', ['submission' => $submission]) }}">
+            @csrf
+            @method('put')
             <input type="hidden" name="data" id="data">
 
             <button class="btn btn-outline-primary">
@@ -28,6 +30,10 @@
 window.onload = function() {
     Formio.icons = 'fontawesome'; // @TODO move this
     Formio.createForm(document.getElementById('formio-form'), {!! $definition !!}).then(function (form) {
+        form.submission = {
+            data: {!! $data !!},
+        };
+
         form.on('change', function (submission) {
             document.getElementById('data').value = JSON.stringify(submission.data);
         });

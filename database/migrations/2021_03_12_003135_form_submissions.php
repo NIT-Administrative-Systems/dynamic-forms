@@ -23,7 +23,7 @@ class FormSubmissions extends Migration
             $table->bigInteger('form_version_id')->index();
             $table->bigInteger('application_id')->index();
 
-            $table->json('data');
+            $table->json('data')->nullable();
 
             $table->timestamps();
             $table->softDeletes();
