@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Applicant;
 
 use App\Http\Controllers\Controller;
 use App\Models\ApplicationSubmission;
-use App\Models\FormVersion;
 use Illuminate\Http\Request;
 
 class SubmissionController extends Controller

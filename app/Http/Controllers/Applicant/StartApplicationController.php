@@ -20,7 +20,7 @@ class StartApplicationController extends Controller
     }
 
     /**
-     * responsible for lots of things (TODO):
+     * responsible for lots of things (TODO):.
      *
      *  - eligibility (is cycle open, right role, etc)
      *  - making an Application row
@@ -38,7 +38,7 @@ class StartApplicationController extends Controller
         $form = $cycle->program->forms()->where('form_type_id', $form_type->id)->first();
         throw_unless($form, new InvalidConfigurationError("No form. Create an Application Form under Admin -> Programs -> {$cycle->program->name} -> Application Form"));
 
-        if (!$cycle->isOpen()) {
+        if (! $cycle->isOpen()) {
             // @TODO
             throw new \Exception('this cycle is not open');
         }
