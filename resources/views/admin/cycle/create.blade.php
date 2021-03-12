@@ -7,7 +7,7 @@
 @section('content')
 @include('northwestern::errors')
 
-<form method="post" action="{{ route('cycle.store') }}">
+<form method="post" action="{{ route('admin.cycle.store') }}">
     @csrf
     <input type="hidden" name="program_id" value="{{ $program->id }}">
 

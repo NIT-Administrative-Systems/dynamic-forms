@@ -43,7 +43,7 @@ class OrganizationController extends Controller
 
         $request->session()->flash('status', 'The organization has been created');
 
-        return redirect(route('organization.index'));
+        return redirect(route('admin.organization.index'));
     }
 
     /**

@@ -67,7 +67,7 @@ class FormController extends Controller
 
         $request->session()->flash('status', 'The form was created.');
 
-        return redirect(route('program.show', ['program' => $form->program->id]));
+        return redirect(route('admin.program.show', ['program' => $form->program->id]));
     }
 
     /**
@@ -120,7 +120,7 @@ class FormController extends Controller
 
         $request->session()->flash('status', 'The form was updated.');
 
-        return redirect(route('program.show', ['program' => $form->program->id]));
+        return redirect(route('admin.program.show', ['program' => $form->program->id]));
     }
 
     /**

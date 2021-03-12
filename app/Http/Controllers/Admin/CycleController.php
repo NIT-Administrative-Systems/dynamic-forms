@@ -51,7 +51,7 @@ class CycleController extends Controller
 
         $request->session()->flash('status', 'The cycle has been created.');
 
-        return redirect(route('program.show', ['program' => $cycle->program]));
+        return redirect(route('admin.program.show', ['program' => $cycle->program]));
     }
 
     /**

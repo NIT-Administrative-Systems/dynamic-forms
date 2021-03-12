@@ -7,7 +7,7 @@
 @section('content')
 @include('northwestern::errors')
 
-<form method="post" action="{{ route('organization.store') }}">
+<form method="post" action="{{ route('admin.organization.store') }}">
     @csrf
     <div class="form-group">
         <label for="name">Organization Name</label>

@@ -53,7 +53,7 @@ class ProgramController extends Controller
         $program = Program::create($request->validated());
         $request->session()->flash('status', 'Program created.');
 
-        return redirect(route('program.show', ['program' => $program->id]));
+        return redirect(route('admin.program.show', ['program' => $program->id]));
     }
 
     /**

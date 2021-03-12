@@ -6,7 +6,7 @@
         <h2>Organizations</h2>
     </div>
     <div class="col-12 col-md-6 text-right">
-        <a class="btn btn-outline-primary" href="{{ route('organization.create') }}">
+        <a class="btn btn-outline-primary" href="{{ route('admin.organization.create') }}">
             <i class="fas fa-plus" aria-hidden="true"></i>
             Create
         </a>
@@ -24,7 +24,7 @@
     <tbody>
         @forelse ($organizations as $org)
             <tr>
-                <td>{{-- <a href="{{ route('organization.show', ['organization' => $org->id]) }}">{{ $org->name }}</a> --}} {{ $org->name }}</td>
+                <td>{{-- <a href="{{ route('admin.organization.show', ['organization' => $org->id]) }}">{{ $org->name }}</a> --}} {{ $org->name }}</td>
             </tr>
         @empty
         <tr>

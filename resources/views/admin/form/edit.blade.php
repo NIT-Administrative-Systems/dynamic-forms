@@ -7,7 +7,7 @@
     </div>
 
     <div class="col-12 col-md-4 text-right">
-        <form method="post" action="{{ route('form.update', ['form' => $form->id]) }}">
+        <form method="post" action="{{ route('admin.form.update', ['form' => $form->id]) }}">
             @csrf
             @method('put')
             <input type="hidden" name="definition" id="definition" value="">

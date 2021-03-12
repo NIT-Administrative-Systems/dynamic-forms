@@ -14,8 +14,8 @@
             Admin
         </a>
         <div class="dropdown-menu" aria-labelledby="programAdminDropdown">
-            <a class="dropdown-item" href="{{ route('organization.index') }}">Organizations</a>
-            <a class="dropdown-item" href="{{ route('program.index') }}">Programs</a>
+            <a class="dropdown-item" href="{{ route('admin.organization.index') }}">Organizations</a>
+            <a class="dropdown-item" href="{{ route('admin.program.index') }}">Programs</a>
         </div>
     </li>
 

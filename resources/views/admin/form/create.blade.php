@@ -7,7 +7,7 @@
     </div>
 
     <div class="col-12 col-md-4 text-right">
-        <form method="post" action="{{ route('form.store') }}">
+        <form method="post" action="{{ route('admin.form.store') }}">
             @csrf
             <input type="hidden" name="program_id" value="{{ $program->id }}">
             <input type="hidden" name="form_type_id" value="{{ $form_type->id }}">

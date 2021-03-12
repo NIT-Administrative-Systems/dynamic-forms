@@ -43,9 +43,10 @@ Route::get('apply', Controllers\Applicant\DiscoverController::class)->name('appl
 
 Route::prefix('applicant')->name('applicant.')->group(function () {
     Route::resource('submission', Controllers\Applicant\SubmissionController::class, ['only' => ['edit', 'update']]);
+    Route::resource('application', Controllers\Applicant\ApplicationController::class, ['only' => ['index', 'show']]);
 });
 
-Route::group(['prefix' => 'admin'], function () {
+Route::prefix('admin')->name('admin.')->group(function () {
     Route::resource('organization', Controllers\Admin\OrganizationController::class, ['only' => ['index', 'show', 'create', 'store']]);
     Route::resource('program', Controllers\Admin\ProgramController::class, ['only' => ['index', 'show', 'create', 'store']]);
     Route::resource('form', Controllers\Admin\FormController::class, ['except' => ['destroy', 'index', 'show']]);

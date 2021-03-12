@@ -14,7 +14,7 @@
                 <h4>Program Cycles</h4>
             </div>
             <div class="col-md-4 text-right">
-                <a href="{{ route('cycle.create', ['program_id' => $program->id]) }}" class="btn btn-sm btn-outline-primary">
+                <a href="{{ route('admin.cycle.create', ['program_id' => $program->id]) }}" class="btn btn-sm btn-outline-primary">
                     <i class="fas fa-recycle" aria-hidden="true"></i>
                     New Cycle
                 </a>
@@ -59,9 +59,9 @@
                         <td>{{ $pair['type']->name }}</td>
                         <td>
                             @if($pair['form'])
-                                <a href="{{ route('form.edit', ['form' => $pair['form']->id]) }}">Edit</a>
+                                <a href="{{ route('admin.form.edit', ['form' => $pair['form']->id]) }}">Edit</a>
                             @else
-                                <a href="{{ route('form.create', ['program' => $program->id, 'type' => $pair['type']->id]) }}">Create</a>
+                                <a href="{{ route('admin.form.create', ['program' => $program->id, 'type' => $pair['type']->id]) }}">Create</a>
                             @endif
                         </td>
                     </tr>
