@@ -14,7 +14,9 @@ class FormFactory extends Factory
     public function definition()
     {
         return [
-            // 'form_type_id' =>
+            'form_type_id' => function (array $attributes) {
+                return FormType::where('slug', FormType::APPLICATION)->value('id');
+            },
             'program_id' => Program::factory(),
         ];
     }

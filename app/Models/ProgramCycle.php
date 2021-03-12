@@ -18,6 +18,11 @@ class ProgramCycle extends Model
         return $this->belongsTo(Program::class);
     }
 
+    public function applications()
+    {
+        return $this->hasMany(Application::class);
+    }
+
     /**
      * Attribute form always uses the current time.
      */
