@@ -5,8 +5,14 @@
         <a class="nav-link" href="/">Home</a>
     </li>
 
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('application-discover') }}">Apply</a>
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="applicantDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Applicant
+        </a>
+        <div class="dropdown-menu" aria-labelledby="applicantDropdown">
+            <a class="dropdown-item" href="{{ route('application-discover') }}">Discover Opportunities &amp; Apply</a>
+            <a class="dropdown-item" href="{{ route('applicant.application.index') }}">My Applicantions</a>
+        </div>
     </li>
 
     <li class="nav-item dropdown">

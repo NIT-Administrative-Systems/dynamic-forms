@@ -43,6 +43,21 @@ class SubmissionController extends Controller
         return redirect(route('application-discover'));
     }
 
+    public function show(int $id)
+    {
+        $submission = $this->find($id);
+        $program = $submission->form_version->form->program;
+
+        return view('applicant.submission.show')->with([
+            'submission' => $submission,
+            'organization' => $program->organization,
+            'program' => $program,
+            'cycle' => $submission->application->cycle,
+            'definition' => $submission->form_version->form->published_version->definition,
+            'data' => $submission->data ?? '{}',
+        ]);
+    }
+
     /**
      * @TODO move to repo
      */

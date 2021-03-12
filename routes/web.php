@@ -42,7 +42,7 @@ Route::get('apply/{organization:slug}/{program:slug}/{cycle}', Controllers\Appli
 Route::get('apply', Controllers\Applicant\DiscoverController::class)->name('application-discover');
 
 Route::prefix('applicant')->name('applicant.')->group(function () {
-    Route::resource('submission', Controllers\Applicant\SubmissionController::class, ['only' => ['edit', 'update']]);
+    Route::resource('submission', Controllers\Applicant\SubmissionController::class, ['only' => ['edit', 'update', 'show']]);
     Route::resource('application', Controllers\Applicant\ApplicationController::class, ['only' => ['index', 'show']]);
 });
 
