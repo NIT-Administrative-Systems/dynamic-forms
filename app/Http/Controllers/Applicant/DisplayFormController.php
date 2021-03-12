@@ -9,7 +9,7 @@ use App\Models\Program;
 use App\Models\ProgramCycle;
 use Illuminate\Http\Request;
 
-class FormController extends Controller
+class DisplayFormController extends Controller
 {
     public function __construct()
     {

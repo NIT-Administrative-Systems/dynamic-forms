@@ -36,10 +36,14 @@ Route::group(['prefix' => 'auth'], function () {
  * so we want it to be a nice SEO-y URL.
  *
  * Program admins will be paying close attention to it when they post it on their
- * site or send it out in their newsletters.
+ * site or send it out in their newsletters. That's why it gets to be special.
  */
-Route::get('apply/{organization:slug}/{program:slug}/{cycle}', Controllers\Applicant\FormController::class)->name('application-form');
+Route::get('apply/{organization:slug}/{program:slug}/{cycle}', Controllers\Applicant\DisplayFormController::class)->name('application-form');
 Route::get('apply', Controllers\Applicant\DiscoverController::class)->name('application-discover');
+
+Route::group(['prefix' => 'applicant'], function () {
+    Route::resource('submission', Controllers\Applicant\SubmissionController::class, ['as' => 'applicant', 'only' => ['create', 'store']]);
+});
 
 Route::group(['prefix' => 'admin'], function () {
     Route::resource('organization', Controllers\Admin\OrganizationController::class, ['only' => ['index', 'show', 'create', 'store']]);
