@@ -42,13 +42,16 @@ Route::get('apply/{organization:slug}/{program:slug}/{cycle}', Controllers\Appli
 Route::get('apply', Controllers\Applicant\DiscoverController::class)->name('application-discover');
 
 Route::prefix('applicant')->name('applicant.')->group(function () {
-    Route::resource('submission', Controllers\Applicant\SubmissionController::class, ['only' => ['edit', 'update', 'show']]);
-    Route::resource('application', Controllers\Applicant\ApplicationController::class, ['only' => ['index', 'show']]);
+    // Create needs the cycle ID, so it's got its own route outside the resource group
+    Route::resource('application', Controllers\Applicant\ApplicationController::class)->only(['index', 'show']);
+    Route::get('application/create/{cycle}', [Controllers\Applicant\ApplicationController::class, 'create'])->name('application.create');
+
+    Route::resource('submission', Controllers\Applicant\SubmissionController::class)->only(['edit', 'update', 'show']);
 });
 
 Route::prefix('admin')->name('admin.')->group(function () {
-    Route::resource('organization', Controllers\Admin\OrganizationController::class, ['only' => ['index', 'show', 'create', 'store']]);
-    Route::resource('program', Controllers\Admin\ProgramController::class, ['only' => ['index', 'show', 'create', 'store']]);
-    Route::resource('form', Controllers\Admin\FormController::class, ['except' => ['destroy', 'index', 'show']]);
-    Route::resource('cycle', Controllers\Admin\CycleController::class, ['only' => ['create', 'store']]);
+    Route::resource('organization', Controllers\Admin\OrganizationController::class)->only(['index', 'show', 'create', 'store']);
+    Route::resource('program', Controllers\Admin\ProgramController::class)->only(['index', 'show', 'create', 'store']);
+    Route::resource('form', Controllers\Admin\FormController::class)->only(['destroy', 'index', 'show']);
+    Route::resource('cycle', Controllers\Admin\CycleController::class)->only(['create', 'store']);
 });
