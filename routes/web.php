@@ -52,6 +52,6 @@ Route::prefix('applicant')->name('applicant.')->group(function () {
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::resource('organization', Controllers\Admin\OrganizationController::class)->only(['index', 'show', 'create', 'store']);
     Route::resource('program', Controllers\Admin\ProgramController::class)->only(['index', 'show', 'create', 'store']);
-    Route::resource('form', Controllers\Admin\FormController::class)->only(['destroy', 'index', 'show']);
+    Route::resource('form', Controllers\Admin\FormController::class)->except(['destroy', 'index', 'show']);
     Route::resource('cycle', Controllers\Admin\CycleController::class)->only(['create', 'store']);
 });
