@@ -48,7 +48,7 @@ class SubmissionRepositoryTest extends TestCase
     }
 
     /**
-     * Returns a fresh repository object
+     * Returns a fresh repository object.
      */
     private function repo(): SubmissionRepository
     {

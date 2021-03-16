@@ -9,14 +9,14 @@ use App\Models\ProgramCycle;
 use Illuminate\Support\Carbon;
 
 /**
- * Factory helper methods to produce commonly-needed org/program/form setups
+ * Factory helper methods to produce commonly-needed org/program/form setups.
  *
  * This is like an on-demand seeder DemoSeeder for individual tests.
  */
 trait MakesOrganizationConfig
 {
     /**
-     * Makes an office, program, open cycle, and form definitions
+     * Makes an office, program, open cycle, and form definitions.
      */
     protected function makeCycle(): ProgramCycle
     {
