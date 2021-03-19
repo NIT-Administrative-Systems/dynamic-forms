@@ -30,24 +30,5 @@
 @endsection
 
 @push('scripts')
-<script lang="text/javascript">
-    window.onload = function() {
-        Formio.icons = 'fontawesome';
-        new Formio.builder(
-            document.getElementById('formio-builder'),
-            {!! $definition !!},
-            {
-                builder: {
-                    // @TODO
-                }
-            }
-        ).then(function(builder) {
-            document.getElementById('definition').value = JSON.stringify(builder.schema);
-
-            builder.on('change', function (e) {
-                document.getElementById('definition').value = JSON.stringify(builder.schema);
-            })
-        });
-    };
-</script>
+@include('admin.form._formio-script')
 @endpush

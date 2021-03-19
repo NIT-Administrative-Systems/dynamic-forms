@@ -133,11 +133,14 @@ h2.slashes::after {
     content: " ";
 }
 
+/*
+* Disabled, since Form.io provides its own required class
 .required:before {
     content: "* ";
     font-weight: bold;
     color: $purple-dark;
 }
+*/
 
 h4.head-section .btn-sm {
     line-height: 1.3;
