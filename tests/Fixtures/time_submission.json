@@ -1,0 +1,15 @@
+{
+    "day1": "02/20/1999",
+    "dateTime1": "2021-04-01T14:00:00-05:00",
+    "textArea": "\nI am ready!\n",
+    "radio": "quantum",
+    "survey": {
+        "earthScience": "b",
+        "physics": "a",
+        "maths": "a"
+    },
+    "time": "01:55:00",
+    "submit": true,
+    "currency1": 1000,
+    "currency2": 1000
+}

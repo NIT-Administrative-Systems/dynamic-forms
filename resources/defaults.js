@@ -74,6 +74,7 @@ export default {
                 key: 'data',
                 ignore: false,
                 components: [
+                    { key: 'dataType', ignore: true },
                     { key: 'persistent', ignore: true },
                     { key: 'protected', ignore: true },
                     { key: 'dbIndex', ignore: true },
@@ -166,6 +167,30 @@ export default {
                     { key: 'customOptions', ignore: true },
                     { key: 'defaultDate', ignore: true }, // depends on JS eval. it can work (this JS is client-side-only), but it seems dangerous.
                 ]
+            }
+        ],
+        select: [
+            {
+                key: 'data',
+                ignore: false,
+                components: [
+                    { key: 'dataSrc', defaultValue: 'values', disabled: true },
+                    { key: 'idPath', ignore: true },
+                    { key: 'template', ignore: true },
+                    { key: 'refreshOn', ignore: true },
+                    { key: 'refreshOnBlur', ignore: true },
+                    { key: 'clearOnRefresh', ignore: true },
+                    { key: 'customOptions', ignore: true },
+                ],
+            }
+        ],
+        time: [
+            {
+                key: 'data',
+                ignore: false,
+                components: [
+                    { key: 'dataFormat', ignore: true },
+                ],
             }
         ],
     },
