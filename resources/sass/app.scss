@@ -16,3 +16,19 @@
     font-size: 1.04rem;
 }
 */
+
+@import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
+
+.comic-heading {
+    font-family: 'Bangers', display;
+    color: #ffe475 !important;
+    letter-spacing: 2px;
+    text-shadow: 0.04em 0.04em 0em #000000;
+    -webkit-text-stroke: 2px #000;
+    transition: all 1s;
+    font-size: 600%;
+}
+
+.comic-text {
+    font-family: 'Bangers',display;
+}
