@@ -134,6 +134,7 @@ $finder = Finder::create()
         $project_path . '/database',
         $project_path . '/routes',
         $project_path . '/tests',
+        $project_path . '/dynamic-forms',
     ])
     ->name('*.php')
     ->notName('*.blade.php')

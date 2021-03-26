@@ -46,12 +46,13 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/",
-            "Northwestern\\SysDev\\FormIO\\": "formio-src/"
+            "Northwestern\\SysDev\\DynamicForms\\": "dynamic-forms/src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\": "tests/"
+            "Tests\\": "tests/",
+            "Northwestern\\SysDev\\DynamicForms\\Tests\\": "dynamic-forms/tests"
         }
     },
     "minimum-stability": "dev",
