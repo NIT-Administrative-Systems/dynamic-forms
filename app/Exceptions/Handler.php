@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
 
@@ -36,6 +37,15 @@ class Handler extends ExceptionHandler
         if (app()->bound('sentry')) {
             $this->reportable(function (Throwable $e) {
                 app('sentry')->captureException($e);
+            });
+        }
+
+        // For non-prod environments, display a special error page w/ explanation when the DB is asleep.
+        if (config('app.env') !== 'production') {
+            $this->renderable(function (QueryException $e, $request) {
+                if (str_contains($e->getMessage(), 'timeout expired')) {
+                    return response()->view('errors.database-paused', [], 500);
+                }
             });
         }
     }
