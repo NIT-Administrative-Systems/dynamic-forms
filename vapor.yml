@@ -2,7 +2,6 @@ id: 19011
 name: competitive-applications
 environments:
     develop:
-        timeout: 20 # time for RDS to wake up
         memory: 1024
         cli-memory: 512
         domain: competitive-applications-dev.northwestern.edu
