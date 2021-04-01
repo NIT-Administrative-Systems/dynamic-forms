@@ -54,56 +54,59 @@ export default {
     /**
      * Global defaults applied to all field types
      */
-    global: _.mapValues(Formio.Components.components, function () {
-        return [
-            { key: 'api', ignore: true },
-            { key: 'logic', ignore: true },
-            { key: 'layout', ignore: true },
-            {
-                key: 'display',
-                ignore: false,
-                components: [
-                    { key: 'customClass', ignore: true },
-                    { key: 'hidden', ignore: true },
-                    { key: 'mask', ignore: true }, // this is the 'Hide Input' checkbox, NOT the input mask field
-                    { key: 'tableView', ignore: true }, // specific to how you view this in the Form.io server admin UI
-                    { key: 'modalEdit', ignore: true }, // specific to how you view this in the Form.io server admin UI (I think)
-                ],
-            },
-            {
-                key: 'data',
-                ignore: false,
-                components: [
-                    { key: 'dataType', ignore: true },
-                    { key: 'persistent', ignore: true },
-                    { key: 'protected', ignore: true },
-                    { key: 'dbIndex', ignore: true },
-                    { key: 'encrypted', ignore: true },
-                    { key: 'redrawOn', ignore: true },
-                    { key: 'customDefaultValuePanel', ignore: true },
-                    { key: 'calculateValuePanel', ignore: true },
-                    { key: 'calculateServer', ignore: true },
-                    { key: 'allowCalculateOverride', ignore: true },
-                ],
-            },
-            {
-                key: 'validation',
-                ignore: false,
-                components: [
-                    { key: 'unique', ignore: true },
-                    { key: 'custom-validation-js', ignore: true },
-                    { key: 'json-validation-json', ignore: true },
-                ]
-            },
-            {
-                key: 'conditional',
-                ignore: false,
-                components: [
-                    { key: 'customConditionalPanel', ignore: true },
-                ],
-            }
-        ];
-    }),
+    global: function () {
+        return _.mapValues(Formio.Components.components, function () {
+            return [
+                {key: 'api', ignore: true},
+                {key: 'logic', ignore: true},
+                {key: 'layout', ignore: true},
+                {
+                    key: 'display',
+                    ignore: false,
+                    components: [
+                        {key: 'customClass', ignore: true},
+                        {key: 'hidden', ignore: true},
+                        {key: 'mask', ignore: true}, // this is the 'Hide Input' checkbox, NOT the input mask field
+                        {key: 'tableView', ignore: true}, // specific to how you view this in the Form.io server admin UI
+                        {key: 'modalEdit', ignore: true}, // specific to how you view this in the Form.io server admin UI (I think)
+                    ],
+                },
+                {
+                    key: 'data',
+                    ignore: false,
+                    components: [
+                        {key: 'dataType', ignore: true},
+                        {key: 'persistent', ignore: true},
+                        {key: 'protected', ignore: true},
+                        {key: 'dbIndex', ignore: true},
+                        {key: 'encrypted', ignore: true},
+                        {key: 'redrawOn', ignore: true},
+                        {key: 'customDefaultValuePanel', ignore: true},
+                        {key: 'calculateValuePanel', ignore: true},
+                        {key: 'calculateServer', ignore: true},
+                        {key: 'allowCalculateOverride', ignore: true},
+                        {key: 'inputFormat', ignore: true},
+                    ],
+                },
+                {
+                    key: 'validation',
+                    ignore: false,
+                    components: [
+                        {key: 'unique', ignore: true},
+                        {key: 'custom-validation-js', ignore: true},
+                        {key: 'json-validation-json', ignore: true},
+                    ]
+                },
+                {
+                    key: 'conditional',
+                    ignore: false,
+                    components: [
+                        {key: 'customConditionalPanel', ignore: true},
+                    ],
+                }
+            ];
+        })
+    },
 
     /**
      * Defaults for specific field types
