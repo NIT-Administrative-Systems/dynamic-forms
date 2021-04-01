@@ -2,7 +2,8 @@
 $definition string|null    Form definition
 --}}
 <script lang="text/javascript">
-    window.onload = function() {
+    window.onload = function () {
+        {{-- Formio.setBaseUrl('{{ route('dynamic-forms.index') }}'); --}}
         new Formio.builder(
             document.getElementById('formio-builder'),
             @if(isset($definition)) {!! $definition !!} @else {} @endif,
@@ -38,6 +39,23 @@ $definition string|null    Form definition
                             currency: true,
                             survey: true,
                             signature: true,
+                            nuDirectoryLookup: true,
+                            /*
+                            directorySearch: {
+                                title: 'NU Directory',
+                                key: 'directorySearch',
+                                icon: 'graduation-cap',
+                                schema: {
+                                    label: 'NU Directory Search',
+                                    type: 'select',
+                                    key: 'nuDirectorySearch',
+                                    widget: 'choicesjs',
+                                    dataSrc: 'resource',
+                                    input: true,
+                                    // can lock widget type?
+                                },
+                            },
+                            */
                         },
                     },
                     customLayout: {

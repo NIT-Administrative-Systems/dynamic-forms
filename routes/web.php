@@ -55,3 +55,14 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::resource('form', Controllers\Admin\FormController::class)->except(['destroy', 'index', 'show']);
     Route::resource('cycle', Controllers\Admin\CycleController::class)->only(['create', 'store']);
 });
+
+// @TODO FormIO routes, move them into the package!
+Route::prefix('dynamic-forms')->name('dynamic-forms.')->group(function () {
+    // Dummy route so we can use the route() helper to give formiojs the base path for this group
+    // Route::get('/')->name('index');
+
+    Route::get('directory/{search}', Controllers\DirectoryLookupController::class);
+
+    // Route::get('form', [Controllers\DynamicForms::class, 'index']);
+    // Route::get('form/{type}', [Controllers\DynamicForms::class, 'show']);
+});

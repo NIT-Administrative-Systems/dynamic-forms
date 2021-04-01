@@ -47,13 +47,15 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/",
-            "Northwestern\\SysDev\\DynamicForms\\": "dynamic-forms/src"
+            "Northwestern\\SysDev\\DynamicForms\\": "dynamic-forms/src",
+            "Northwestern\\SysDev\\DirectoryLookupComponent\\": "directory-lookup-component/src"
         }
     },
     "autoload-dev": {
         "psr-4": {
             "Tests\\": "tests/",
-            "Northwestern\\SysDev\\DynamicForms\\Tests\\": "dynamic-forms/tests"
+            "Northwestern\\SysDev\\DynamicForms\\Tests\\": "dynamic-forms/tests",
+            "Northwestern\\SysDev\\DirectoryLookupComponent\\Tests\\": "directory-lookup-component/tests"
         }
     },
     "minimum-stability": "dev",

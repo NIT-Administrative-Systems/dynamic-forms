@@ -1,5 +1,7 @@
 import 'formiojs';
 import Defaults from './defaults';
+import NuDirectoryLookup from "../nu-directory-lookup";
+import NuDirectoryEditForm from "../nu-directory-lookup/form";
 
 /*
 * We explicitly do NOT support JS evaluation stuff, so disable all of it.
@@ -7,6 +9,10 @@ import Defaults from './defaults';
 * need to run server-side too, to ensure the client isn't doing shenanigans.
 */
 FormioUtils.Evaluator.noeval = true;
+
+// Enable custom modules
+Formio.use(NuDirectoryLookup);
+Formio.Components.components.nuDirectoryLookup.editForm = NuDirectoryEditForm;
 
 /**
  * Disable editForm (the modal that pops up when you add/edit a field in the Builder) options that
@@ -26,7 +32,7 @@ Formio.builder = function (element, form, options) {
     options = options || { editForm: {} };
 
     options.editForm = Defaults.configMerge(
-        Defaults.configMerge(Defaults.global, Defaults.specificFields),
+        Defaults.configMerge(Defaults.global(), Defaults.specificFields),
         options.editForm
     );
 
