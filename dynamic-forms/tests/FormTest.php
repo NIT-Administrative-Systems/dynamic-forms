@@ -47,13 +47,13 @@ class FormTest extends TestCase
      * @covers ::validate
      * @dataProvider submissionDataProvider
      */
-    public function testValidate(string $definition, string $submission, bool $passes): void
+    public function testValidate(string $definition, string $submission, bool $passes, int $componentCount): void
     {
         $form = new Form($definition, $submission);
         $bag = $form->validate();
 
+        $this->assertEquals($componentCount, count($form->flatComponents()));
         $this->assertEquals($passes, $bag->isEmpty());
-        // dump($bag->messages());
     }
 
     public function submissionDataProvider(): array
@@ -65,22 +65,34 @@ class FormTest extends TestCase
                 $json('simple_definition.json'),
                 '{"textField": "a"}',
                 true,
+                1,
             ],
             'simple form fails' => [
                 $json('simple_definition.json'),
                 '{"textField": ""}',
                 false,
+                1,
             ],
             'complex form passes' => [
                 $json('complex_definition.json'),
                 $json('complex_submission.json'),
                 true,
+                19,
             ],
             'form with times passes' => [
                 $json('time_definition.json'),
                 $json('time_submission.json'),
                 true,
+                14,
             ],
+            /*
+            'form with conditional fields passes' => [
+                $json('conditional_definition.json'),
+                $json('conditional_submission.json'),
+                true,
+                5,
+            ]
+            */
         ];
     }
 }

@@ -16,7 +16,8 @@ class DirectoryLookup extends BaseComponent
 
     public function __construct(string $key, ?string $label, array $components, array $validations, bool $hasMultipleValues, array $additional)
     {
-        parent::__construct($key, $label, $components, $validations, $hasMultipleValues, $additional);
+        // Components are discarded; these are manual mode fields, which is not supported.
+        parent::__construct($key, $label, [], $validations, $hasMultipleValues, $additional);
 
         $this->setDirectorySearch(app()->make(DirectorySearch::class));
     }
