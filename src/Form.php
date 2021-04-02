@@ -112,8 +112,6 @@ class Form
 
         $components = [];
         foreach ($componentJson['components'] as $definition) {
-            $definition = $definition;
-
             if (! Arr::has($definition, ['key', 'type'])) {
                 $path .= '.components';
                 throw new InvalidDefinitionError('Unable to find required component props "key" & "type"', $path);
@@ -121,11 +119,11 @@ class Form
 
             $class = $this->componentRegistry->get($definition['type']);
 
-            // Some components (Columns is the only one so far) don't keep children in 'components' like they ought to
+            // Some components (columns + tables) don't keep children in 'components' like they ought to
             if (is_subclass_of($class, CustomSubcomponentDeserialization::class)) {
                 $children = $this->getCustomChildren($class, $definition, $path);
             } else {
-                $children = $this->processComponentDefinition($definition, $path.$definition['key'].'components');
+                $children = $this->processComponentDefinition($definition, $path.'.'.$definition['key'].'.components');
             }
 
             $component = new $class(
@@ -156,7 +154,7 @@ class Form
 
         $children = collect();
         foreach ($paths as $path) {
-            $children->concat($this->processComponentDefinition(Arr::get($definition, $path), $basePath.'.'.$path));
+            $children = $children->concat($this->processComponentDefinition(Arr::get($definition, $path), $basePath.''.$path));
         }
 
         return $children->all();
