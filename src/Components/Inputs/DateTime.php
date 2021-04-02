@@ -18,24 +18,32 @@ class DateTime extends BaseComponent
     const TYPE = 'datetime';
 
     /**
-     * @param bool $userTimezone Set true if you want this in its original timezone.
-     * @return CarbonInterface|null DateTime in UTC (unless userTimezone = true)
+     * @return CarbonInterface|null|CarbonInterface[] DateTime in UTC
      */
-    public function submissionValue(bool $userTimezone = false): ?CarbonInterface
+    public function submissionValue(): CarbonInterface | null | array
     {
-        if (! $this->submissionValue) {
-            return null;
-        }
+        $cleaner = function ($datetime) {
+            if (! $datetime) {
+                return null;
+            }
 
-        try {
-            return (new Carbon($this->submissionValue))->utc();
-        } catch (InvalidFormatException) {
-            return null;
-        }
+            try {
+                return (new Carbon($datetime))->utc();
+            } catch (InvalidFormatException) {
+                return null;
+            }
+        };
+
+        return $this->hasMultipleValues()
+            ? collect($this->submissionValue)->map($cleaner)->all()
+            : $cleaner($this->submissionValue);
     }
 
-    public function processValidations(string $fieldKey, Factory $validator): MessageBag
+    public function processValidations(string $fieldKey, mixed $submissionValue, Factory $validator): MessageBag
     {
+        // Turn this back into a string so it works w/ the Laravel validators
+        $submissionValue = $submissionValue?->toAtomString();
+
         $rules = new RuleBag($fieldKey, ['date']);
 
         $disableWeekends = Arr::get($this->additional, 'datePicker.disableWeekends');
@@ -53,8 +61,7 @@ class DateTime extends BaseComponent
         }
 
         return $validator->make(
-            // Note: we're using the raw submissionValue here; the method transforms this, which is undesirable!
-            [$fieldKey => $this->submissionValue],
+            [$fieldKey => $submissionValue],
             $rules->rules(),
         )->messages();
     }

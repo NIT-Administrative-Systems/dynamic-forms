@@ -34,6 +34,7 @@ abstract class BaseComponentTestCase extends TestCase
      * @covers ::label
      * @covers ::type
      * @covers ::components
+     * @covers ::hasMultipleValues
      */
     public function testGetters(): void
     {
@@ -44,6 +45,7 @@ abstract class BaseComponentTestCase extends TestCase
         $this->assertEquals($component->label(), 'Test');
         $this->assertEquals($component->type(), $ref->getConstant('TYPE'));
         $this->assertEquals($component->components(), []);
+        $this->assertEquals($component->hasMultipleValues(), false);
     }
 
     /**
@@ -57,10 +59,11 @@ abstract class BaseComponentTestCase extends TestCase
         array $components = [],
         array $validations = [],
         ?array $additional = [],
+        bool $hasMultipleValues = false,
         mixed $submissionValue = null
     ): ComponentInterface {
         /** @var ComponentInterface $component */
-        $component = new ($this->componentClass)($key, $label, $components, $validations, array_merge($this->defaultAdditional, $additional));
+        $component = new ($this->componentClass)($key, $label, $components, $validations, $hasMultipleValues, array_merge($this->defaultAdditional, $additional));
         $component->setSubmissionValue($submissionValue);
 
         return $component;

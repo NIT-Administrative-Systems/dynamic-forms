@@ -18,6 +18,7 @@ interface ComponentInterface
      * @param string|null $label
      * @param array $components
      * @param array $validations
+     * @param bool $hasMultipleValues
      * @param array $additional Other fields from the component definition (catch-all)
      */
     public function __construct(
@@ -25,6 +26,7 @@ interface ComponentInterface
         ?string $label,
         array $components,
         array $validations,
+        bool $hasMultipleValues,
         array $additional,
     );
 
@@ -71,4 +73,12 @@ interface ComponentInterface
      * Run validations for the component.
      */
     public function validate(): MessageBag;
+
+    /**
+     * Whether or not this field is set for multiple values.
+     *
+     * Multi-value fields will wrap their typical ::submissionValue()s in
+     * an array. There are potentially an unlimited quantity of values.
+     */
+    public function hasMultipleValues(): bool;
 }

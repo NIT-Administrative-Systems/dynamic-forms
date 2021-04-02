@@ -11,7 +11,7 @@ class Number extends BaseComponent
 {
     const TYPE = 'number';
 
-    protected function processValidations(string $fieldKey, Factory $validator): MessageBag
+    protected function processValidations(string $fieldKey, mixed $submissionValue, Factory $validator): MessageBag
     {
         $fieldKey = $this->label() ?? $this->key();
 
@@ -21,7 +21,7 @@ class Number extends BaseComponent
         $rules->addIfNotNull(sprintf('max:%s', $this->validation('max')), $this->validation('max'));
 
         $validator = app()->make('validator')->make(
-            [$fieldKey => $this->submissionValue()],
+            [$fieldKey => $submissionValue],
             $rules->rules(),
         );
 

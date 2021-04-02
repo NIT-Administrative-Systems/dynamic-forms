@@ -30,8 +30,8 @@ class FormTest extends TestCase
 
     public function definitionDataProvider(): array
     {
-        $textfield = new Textfield('textField', 'Sample Field', [], ['required' => true], []);
-        $panel = new Panel('page1', 'Page 1', [$textfield], [], ['title' => 'Panel Container', 'collapsible' => false]);
+        $textfield = new Textfield('textField', 'Sample Field', [], ['required' => true], false, []);
+        $panel = new Panel('page1', 'Page 1', [$textfield], [], false, ['title' => 'Panel Container', 'collapsible' => false]);
 
         return [
             // ["json string", [components], [flattened components]],

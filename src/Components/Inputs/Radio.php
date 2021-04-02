@@ -15,9 +15,9 @@ class Radio extends BaseComponent
 
     protected array $radioChoices;
 
-    public function __construct(string $key, ?string $label, array $components, array $validations, array $additional)
+    public function __construct(string $key, ?string $label, array $components, array $validations, bool $hasMultipleValues, array $additional)
     {
-        parent::__construct($key, $label, $components, $validations, $additional);
+        parent::__construct($key, $label, $components, $validations, $hasMultipleValues, $additional);
 
         $this->radioChoices = collect(Arr::get($this->additional, 'values'))->map->value->all();
     }
@@ -30,7 +30,7 @@ class Radio extends BaseComponent
         return $this->radioChoices;
     }
 
-    public function processValidations(string $fieldKey, Factory $validator): MessageBag
+    public function processValidations(string $fieldKey, mixed $submissionValue, Factory $validator): MessageBag
     {
         $rules = new RuleBag($fieldKey, ['string']);
 
@@ -44,7 +44,7 @@ class Radio extends BaseComponent
         $rules->add(Rule::in($this->radioChoices()));
 
         return $validator->make(
-            [$fieldKey => $this->submissionValue()],
+            [$fieldKey => $submissionValue],
             $rules->rules(),
         )->messages();
     }

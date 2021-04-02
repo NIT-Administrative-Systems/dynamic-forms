@@ -20,6 +20,7 @@ class SelectBoxesTest extends InputComponentTestCase
 
     /**
      * @covers ::validate
+     * @covers ::submissionValue
      */
     public function testInvalidOptionsAreExcluded(): void
     {
@@ -39,6 +40,41 @@ class SelectBoxesTest extends InputComponentTestCase
         $bag = $component->validate();
         $this->assertTrue($bag->isNotEmpty());
         $this->assertEquals(['foo' => false, 'bar' => false], $component->submissionValue());
+    }
+
+    /**
+     * @covers ::submissionValue
+     */
+    public function testMultipleSubmissionValues(): void
+    {
+        $component = $this->getComponent(
+            hasMultipleValues: true,
+            submissionValue: [
+                [
+                    'foo' => false,
+                    'bar' => false,
+                    'dog' => true,
+                ],
+                [
+                    'foo' => true,
+                    'bar' => true,
+                    'dog' => true,
+                ],
+            ]
+        );
+
+        $expected = [
+            [
+                'foo' => false,
+                'bar' => false,
+            ],
+            [
+                'foo' => true,
+                'bar' => true,
+            ],
+        ];
+
+        $this->assertEquals($expected, $component->submissionValue());
     }
 
     public function validationsProvider(): array
