@@ -15,9 +15,9 @@ class Survey extends BaseComponent
     protected array $questions;
     protected array $validChoices;
 
-    public function __construct(string $key, ?string $label, array $components, array $validations, array $additional)
+    public function __construct(string $key, ?string $label, array $components, array $validations, bool $hasMultipleValues, array $additional)
     {
-        parent::__construct($key, $label, $components, $validations, $additional);
+        parent::__construct($key, $label, $components, $validations, $hasMultipleValues, $additional);
 
         $this->questions = collect(Arr::get($this->additional, 'questions'))->map->value->all();
         $this->validChoices = collect(Arr::get($this->additional, 'values'))->map->value->all();
@@ -44,12 +44,14 @@ class Survey extends BaseComponent
      */
     public function submissionValue(): array
     {
-        return collect($this->submissionValue)
-            ->only($this->questions())
-            ->all();
+        $cleaner = fn ($values) => collect($values)->only($this->questions())->all();
+
+        return $this->hasMultipleValues()
+            ? collect($this->submissionValue)->map($cleaner)->all()
+            : $cleaner($this->submissionValue);
     }
 
-    public function processValidations(string $fieldKey, Factory $validator): MessageBag
+    public function processValidations(string $fieldKey, mixed $submissionValue, Factory $validator): MessageBag
     {
         // This isn't a scalar, so our typical RuleBag pattern does not apply here.
         $rules = [];
@@ -67,7 +69,7 @@ class Survey extends BaseComponent
         }
 
         return $validator->make(
-            [$fieldKey => $this->submissionValue()],
+            [$fieldKey => $submissionValue],
             $rules
         )->messages();
     }

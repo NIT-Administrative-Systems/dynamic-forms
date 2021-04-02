@@ -21,9 +21,9 @@ class Address extends BaseComponent
         self::PROVIDER_OPENSTREETMAP,
     ];
 
-    public function __construct(string $key, ?string $label, array $components, array $validations, array $additional)
+    public function __construct(string $key, ?string $label, array $components, array $validations, bool $hasMultipleValues, array $additional)
     {
-        parent::__construct($key, $label, $components, $validations, $additional);
+        parent::__construct($key, $label, $components, $validations, $hasMultipleValues, $additional);
 
         $provider = Arr::get($this->additional, 'provider');
         if (! in_array($provider, self::SUPPORTED_PROVIDERS)) {
@@ -37,7 +37,7 @@ class Address extends BaseComponent
         }
     }
 
-    protected function processValidations(string $fieldKey, Factory $validator): MessageBag
+    protected function processValidations(string $fieldKey, mixed $submissionValue, Factory $validator): MessageBag
     {
         // This isn't a scalar, so our typical RuleBag pattern does not work here.
 
@@ -48,7 +48,7 @@ class Address extends BaseComponent
         }
 
         return $validator->make(
-            [$fieldKey => $this->submissionValue()],
+            [$fieldKey => $submissionValue],
             $rules,
         )->messages();
     }

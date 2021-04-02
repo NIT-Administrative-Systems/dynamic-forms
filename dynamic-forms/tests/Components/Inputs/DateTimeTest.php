@@ -37,7 +37,7 @@ class DateTimeTest extends InputComponentTestCase
         return [
             'passes with blank' => [[], '', true, null],
             'passes with valid date' => [[], '2021-03-25T12:00:00-05:00', true, null],
-            'fails with bad date' => [[], 'garbage', false, null],
+            'fails with bad date' => [['required' => true], 'garbage', false, null],
             'required passes' => [['required' => true], '2021-03-25T12:00:00-05:00', true, null],
             'required fails' => [['required' => true], '', false, null],
             'passes with blank when week days & ends disabled' => [[], '', true, null, ['datePicker' => ['disableWeekends' => true, 'disableWeekDays' => true]]],

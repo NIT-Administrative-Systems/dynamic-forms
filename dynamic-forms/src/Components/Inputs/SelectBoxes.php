@@ -14,9 +14,9 @@ class SelectBoxes extends BaseComponent
 
     protected array $options;
 
-    public function __construct(string $key, ?string $label, array $components, array $validations, array $additional)
+    public function __construct(string $key, ?string $label, array $components, array $validations, bool $hasMultipleValues, array $additional)
     {
-        parent::__construct($key, $label, $components, $validations, $additional);
+        parent::__construct($key, $label, $components, $validations, $hasMultipleValues, $additional);
 
         $this->options = collect($this->additional['values'])->map->value->all();
     }
@@ -35,9 +35,11 @@ class SelectBoxes extends BaseComponent
      */
     public function submissionValue(): array
     {
-        return collect($this->submissionValue)
-            ->only($this->getOptionValues())
-            ->all();
+        $cleaner = fn ($boxes) => collect($boxes)->only($this->getOptionValues())->all();
+
+        return $this->hasMultipleValues()
+            ? collect($this->submissionValue)->map($cleaner)->all()
+            : $cleaner($this->submissionValue);
     }
 
     /**
@@ -45,12 +47,16 @@ class SelectBoxes extends BaseComponent
      *
      * The typical RuleBag pattern isn't very useful here -- we're not operating on a scalar,
      * and Illuminate's validator expects to be doing so.
+     * @param string $fieldKey
+     * @param mixed $submissionValue
+     * @param Factory $validator
+     * @return MessageBag
      */
-    protected function processValidations(string $fieldKey, Factory $validator): MessageBag
+    protected function processValidations(string $fieldKey, mixed $submissionValue, Factory $validator): MessageBag
     {
         $bag = new MessageBagImpl;
 
-        $checkedNum = collect($this->submissionValue())->sum(fn ($value) => $value ? 1 : 0);
+        $checkedNum = collect($submissionValue)->sum(fn ($value) => $value ? 1 : 0);
         $minSelected = $this->validation('minSelectedCount');
         $maxSelected = $this->validation('maxSelectedCount');
 

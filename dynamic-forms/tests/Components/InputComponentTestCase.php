@@ -24,18 +24,29 @@ class InputComponentTestCase extends BaseComponentTestCase
     {
         $component = $this->getComponent(
             validations: $validations,
+            additional: $additional,  // some components put validation fields in here
             submissionValue: $submissionValue,
-            additional: $additional, // some components put validation fields in here
         );
 
         $bag = $component->validate($component->key(), app()->make('validator'));
         $this->assertEquals($passes, $bag->isEmpty(), $bag);
+    }
 
-        /*
-        if ($message) {
+    /**
+     * @covers ::processValidations
+     * @covers ::validate
+     * @dataProvider validationsProvider
+     */
+    public function testValidationsOnMultipleValues(array $validations, mixed $submissionValue, bool $passes, ?string $message = null, array $additional = [])
+    {
+        $component = $this->getComponent(
+            validations: $validations,
+            additional: $additional,
+            hasMultipleValues: true,
+            submissionValue: [$submissionValue], // wrap the value from the single-value provider w/ an array
+        );
 
-        }
-        dump($bag);
-         */
+        $bag = $component->validate($component->key(), app()->make('validator'));
+        $this->assertEquals($passes, $bag->isEmpty(), $bag);
     }
 }

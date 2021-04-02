@@ -14,9 +14,9 @@ class DirectoryLookup extends BaseComponent
 
     protected DirectorySearch $api;
 
-    public function __construct(string $key, ?string $label, array $components, array $validations, array $additional)
+    public function __construct(string $key, ?string $label, array $components, array $validations, bool $hasMultipleValues, array $additional)
     {
-        parent::__construct($key, $label, $components, $validations, $additional);
+        parent::__construct($key, $label, $components, $validations, $hasMultipleValues, $additional);
 
         $this->setDirectorySearch(app()->make(DirectorySearch::class));
     }
@@ -26,10 +26,8 @@ class DirectoryLookup extends BaseComponent
         $this->api = $api;
     }
 
-    protected function processValidations(string $fieldKey, Factory $validator): MessageBag
+    protected function processValidations(string $fieldKey, mixed $submissionValue, Factory $validator): MessageBag
     {
-        $value = $this->submissionValue();
-
         $singleFieldRules = ['nullable', 'string'];
         if ($this->validation('required')) {
             $singleFieldRules = ['string', 'required'];
@@ -44,18 +42,18 @@ class DirectoryLookup extends BaseComponent
         ];
 
         // Make sure the fields we expect to find are actually here
-        $errorBag = $validator->make($value, $rules)->messages();
+        $errorBag = $validator->make($submissionValue, $rules)->messages();
 
         if (! $errorBag->isEmpty()) {
             return $errorBag;
         }
 
         // Don't try to validate against DS if the person isn't filled in
-        if (! Arr::get($value, 'person')) {
+        if (! Arr::get($submissionValue, 'person')) {
             return $errorBag;
         }
 
-        $directory = $this->api->lookup($value['display'], $value['searchMode'], 'basic');
+        $directory = $this->api->lookup($submissionValue['display'], $submissionValue['searchMode'], 'basic');
         if (! $directory) {
             $errorBag->add('display', 'Person not found in directory.');
 
@@ -63,10 +61,10 @@ class DirectoryLookup extends BaseComponent
         }
 
         if (
-            $directory['uid'] != $value['person']['netid']
-            || $directory['mail'] != $value['person']['email']
-            || $directory['displayName'][0] != $value['person']['name']
-            || $directory['nuAllTitle'][0] != $value['person']['title']
+            $directory['uid'] != $submissionValue['person']['netid']
+            || $directory['mail'] != $submissionValue['person']['email']
+            || $directory['displayName'][0] != $submissionValue['person']['name']
+            || $directory['nuAllTitle'][0] != $submissionValue['person']['title']
         ) {
             $errorBag->add('display', 'Internal error: directory data mismatch');
         }

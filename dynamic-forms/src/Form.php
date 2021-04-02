@@ -133,6 +133,7 @@ class Form
                 Arr::get($definition, 'label'),
                 $children,
                 Arr::get($definition, 'validate', []),
+                Arr::get($definition, 'multiple', false),
                 Arr::except($definition, ['key', 'label', 'components', 'validate', 'type', 'input', 'tableView']),
             );
 

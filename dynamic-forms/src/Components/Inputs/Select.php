@@ -37,9 +37,9 @@ class Select extends BaseComponent
      */
     protected array $optionValues;
 
-    public function __construct(string $key, ?string $label, array $components, array $validations, array $additional)
+    public function __construct(string $key, ?string $label, array $components, array $validations, bool $hasMultipleValues, array $additional)
     {
-        parent::__construct($key, $label, $components, $validations, $additional);
+        parent::__construct($key, $label, $components, $validations, $hasMultipleValues, $additional);
 
         // formiojs omits the dataSrc prop when it's 'values'; assume that's the mode when not present
         $this->dataSource = Arr::get($this->additional, 'dataSrc', self::DATA_SRC_VALUES);
@@ -50,7 +50,7 @@ class Select extends BaseComponent
         };
     }
 
-    protected function processValidations(string $fieldKey, Factory $validator): MessageBag
+    protected function processValidations(string $fieldKey, mixed $submissionValue, Factory $validator): MessageBag
     {
         $rules = new RuleBag($fieldKey, ['string']);
 
@@ -61,7 +61,7 @@ class Select extends BaseComponent
         $rules->addIf(Rule::in($this->optionValues()), $this->dataSource === self::DATA_SRC_VALUES);
 
         return $validator->make(
-            [$fieldKey => $this->submissionValue()],
+            [$fieldKey => $submissionValue],
             $rules->rules(),
         )->messages();
     }

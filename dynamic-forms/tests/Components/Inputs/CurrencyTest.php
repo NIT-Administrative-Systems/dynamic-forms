@@ -25,9 +25,9 @@ class CurrencyTest extends InputComponentTestCase
      * @dataProvider submissionValueDataProvider
      * @covers ::submissionValue
      */
-    public function testSubmissionValue(int | float $submissionValue, int | float $expected): void
+    public function testSubmissionValue(int | float | array $submissionValue, bool $hasMultipleValues, array | int | float $expected): void
     {
-        $currency = $this->getComponent(submissionValue: $submissionValue);
+        $currency = $this->getComponent(hasMultipleValues: $hasMultipleValues, submissionValue: $submissionValue);
 
         $this->assertEquals($expected, $currency->submissionValue());
     }
@@ -35,9 +35,10 @@ class CurrencyTest extends InputComponentTestCase
     public function submissionValueDataProvider(): array
     {
         return [
-            'integer is untouched' => [100, 100],
-            'two digit float, untouched' => [100.01, 100.01],
-            'truncated at two digits' => [100.991, 100.99],
+            'integer is untouched' => [100, false, 100],
+            'two digit float, untouched' => [100.01, false, 100.01],
+            'truncated at two digits' => [100.991, false, 100.99],
+            'multiple works' => [[100, 100.01, 100.991], true, [100, 100.01, 100.99]],
         ];
     }
 }

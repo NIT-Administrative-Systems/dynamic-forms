@@ -12,7 +12,7 @@ class Time extends BaseComponent
 {
     const TYPE = 'time';
 
-    public function processValidations(string $fieldKey, Factory $validator): MessageBag
+    public function processValidations(string $fieldKey, mixed $submissionValue, Factory $validator): MessageBag
     {
         $rules = new RuleBag($fieldKey, ['string']);
 
@@ -20,7 +20,7 @@ class Time extends BaseComponent
         $rules->add(new TimeFormat);
 
         return $validator->make(
-            [$fieldKey => $this->submissionValue()],
+            [$fieldKey => $submissionValue],
             $rules->rules(),
         )->messages();
     }

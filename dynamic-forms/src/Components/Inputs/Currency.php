@@ -11,14 +11,14 @@ class Currency extends BaseComponent
 {
     const TYPE = 'currency';
 
-    public function processValidations(string $fieldKey, Factory $validator): MessageBag
+    public function processValidations(string $fieldKey, mixed $submissionValue, Factory $validator): MessageBag
     {
         $rules = new RuleBag($fieldKey, ['numeric']);
 
         $rules->addIfNotNull('required', $this->validation('required'));
 
         return $validator->make(
-            [$fieldKey => $this->submissionValue()],
+            [$fieldKey => $submissionValue],
             $rules->rules(),
         )->messages();
     }
@@ -28,8 +28,10 @@ class Currency extends BaseComponent
      */
     public function submissionValue(): mixed
     {
-        return is_float($this->submissionValue)
-            ? sprintf('%.2f', $this->submissionValue)
-            : $this->submissionValue;
+        $cleaner = fn ($num) => is_float($num) ? sprintf('%.2f', $num) : $num;
+
+        return $this->hasMultipleValues()
+            ? collect($this->submissionValue)->map($cleaner)->all()
+            : $cleaner($this->submissionValue);
     }
 }

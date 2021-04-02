@@ -12,9 +12,9 @@ class Day extends BaseComponent
 {
     const TYPE = 'day';
 
-    public function processValidations(string $fieldKey, Factory $validator): MessageBag
+    public function processValidations(string $fieldKey, mixed $submissionValue, Factory $validator): MessageBag
     {
-        $dateParts = $this->getDateParts($this->submissionValue());
+        $dateParts = $this->getDateParts($submissionValue);
 
         // required is done on each part, so this can be nullable
         $dateRules = new RuleBag($fieldKey, [
@@ -65,7 +65,7 @@ class Day extends BaseComponent
         )->messages();
 
         $dateBag = $validator->make(
-            [$fieldKey => $this->submissionValue()],
+            [$fieldKey => $submissionValue],
             $dateRules->rules(),
         )->messages();
 
