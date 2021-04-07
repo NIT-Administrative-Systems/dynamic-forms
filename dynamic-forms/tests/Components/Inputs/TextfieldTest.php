@@ -28,6 +28,7 @@ class TextfieldTest extends InputComponentTestCase
             'regex handles bars' => [['pattern' => '|'], 're|bar', true],
             'regex handles slashes' => [['pattern' => '/'], 'http://', true],
             'regex fails' => [['pattern' => '^[0-9]$'], '111 Dog', false],
+            'customMessage respected' => [['required' => true, 'minWords' => 2, 'customMessage' => 'message!'], '', false, 'message!'],
         ];
     }
 
