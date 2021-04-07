@@ -30,6 +30,10 @@ class InputComponentTestCase extends BaseComponentTestCase
 
         $bag = $component->validate($component->key(), app()->make('validator'));
         $this->assertEquals($passes, $bag->isEmpty(), $bag);
+
+        if ($message) {
+            $this->assertEquals($message, $bag->first());
+        }
     }
 
     /**

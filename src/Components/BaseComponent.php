@@ -117,7 +117,7 @@ abstract class BaseComponent implements ComponentInterface
 
         if ($this->hasMultipleValues()) {
             foreach ($this->submissionValue() as $index => $submissionValue) {
-                $bag->merge($this->processValidations(
+                $bag = $this->mergeErrorBags($bag, $this->processValidations(
                     sprintf('%s %s', $fieldKey, $index),
                     $submissionValue,
                     $validator
@@ -127,7 +127,30 @@ abstract class BaseComponent implements ComponentInterface
             return $bag->merge($this->postProcessValidationsForMultiple($fieldKey));
         }
 
-        return $this->processValidations($fieldKey, $this->submissionValue(), $validator);
+        return $this->mergeErrorBags(
+            new MessageBagImpl,
+            $this->processValidations($fieldKey, $this->submissionValue(), $validator)
+        );
+    }
+
+    /**
+     * Handles merging validation error MessageBags together, accounting for custom error messages.
+     *
+     * A custom error message overwrites all other error messages, so any number of errors in the
+     * $mergeFrom bag will be consolidated down into one error using the custom message.
+     *
+     * If no custom message is set for the component, this just merges the two bags together without
+     * any other modification.
+     */
+    protected function mergeErrorBags(MessageBag $mergeInto, MessageBag $mergeFrom): MessageBag
+    {
+        if ($this->validation('customMessage') && $mergeFrom->isNotEmpty()) {
+            $mergeFrom = new MessageBagImpl([
+                Arr::first($mergeFrom->keys()) => $this->validation('customMessage'),
+            ]);
+        }
+
+        return $mergeInto->merge($mergeFrom);
     }
 
     public function transformations(): array
