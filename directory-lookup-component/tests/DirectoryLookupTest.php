@@ -13,7 +13,7 @@ class DirectoryLookupTest extends InputComponentTestCase
 
     const VALID_DATA = [
         'display' => 'test',
-        'searchMode' => 'netid',
+        'searchType' => 'netid',
         'person' => [
             'netid' => 'test',
             'email' => 'test@example.org',

@@ -177,6 +177,7 @@ return [
         App\Providers\VaporUiServiceProvider::class,
 
         \Northwestern\SysDev\DynamicForms\DynamicFormsProvider::class, // @TODO remove me
+        \Northwestern\SysDev\DirectoryLookupComponent\DirectoryLookupComponentProvider::class, // @TODO remove me
     ],
 
     /*

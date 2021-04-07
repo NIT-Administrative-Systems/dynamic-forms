@@ -116,7 +116,7 @@ class ValidatedForm implements Validator
      */
     public function fails()
     {
-        return !$this->isValid();
+        return ! $this->isValid();
     }
 
     /**

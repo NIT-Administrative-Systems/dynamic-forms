@@ -29,7 +29,7 @@ class Form
 
     public function __construct(string $definitionJson)
     {
-        $this->componentRegistry = new ComponentRegistry();
+        $this->componentRegistry = resolve(ComponentRegistry::class);
         $this->setDefinition($definitionJson);
     }
 

@@ -10,7 +10,7 @@ use Northwestern\SysDev\SOA\DirectorySearch;
 
 class DirectoryLookup extends BaseComponent
 {
-    const TYPE = 'directoryLookup';
+    const TYPE = 'nuDirectoryLookup';
 
     protected DirectorySearch $api;
 
@@ -46,7 +46,7 @@ class DirectoryLookup extends BaseComponent
 
         $rules = [
             'display' => $singleFieldRules,
-            'searchMode' => array_merge($singleFieldRules, ['in:netid,email,emplid']),
+            'searchType' => array_merge($singleFieldRules, ['in:netid,email,emplid']),
             'person.netid' => $singleFieldRules,
             'person.email' => $singleFieldRules,
             'person.name' => $singleFieldRules,
@@ -64,7 +64,7 @@ class DirectoryLookup extends BaseComponent
             return $errorBag;
         }
 
-        $directory = $this->api->lookup($submissionValue['display'], $submissionValue['searchMode'], 'basic');
+        $directory = $this->api->lookup($submissionValue['display'], $submissionValue['searchType'], 'basic');
         if (! $directory) {
             $errorBag->add('display', 'Person not found in directory.');
 

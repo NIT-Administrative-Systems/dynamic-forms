@@ -81,7 +81,6 @@ class ValidatedFormTest extends TestCase
         $this->assertTrue($validatedForm->errors()->isEmpty());
     }
 
-
     /**
      * @covers ::__construct
      * @covers ::validatableComponents

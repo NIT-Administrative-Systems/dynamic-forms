@@ -5,7 +5,6 @@ namespace Northwestern\SysDev\DynamicForms;
 use Illuminate\Http\Request;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\ValidationException;
-use Northwestern\SysDev\DirectoryLookupComponent\DirectoryLookup;
 use Northwestern\SysDev\DynamicForms\Forms\Form;
 
 class DynamicFormsProvider extends ServiceProvider
@@ -19,13 +18,10 @@ class DynamicFormsProvider extends ServiceProvider
 
     public function boot()
     {
-        // @TODO move me
-
         /** @var ComponentRegistry $registry */
         $registry = $this->app->make(ComponentRegistry::class);
-        $registry->register(DirectoryLookup::class);
 
-        Request::macro('validateDynamicForm', function (string $definitionJson, string $submissionJson) use ($registry) {
+        Request::macro('validateDynamicForm', function (string $definitionJson, string $submissionJson) {
             $formDefinition = new Form($definitionJson); // @TODO pass registry
             $validator = $formDefinition->validate($submissionJson);
 

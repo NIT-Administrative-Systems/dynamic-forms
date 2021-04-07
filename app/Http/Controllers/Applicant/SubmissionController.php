@@ -5,8 +5,6 @@ namespace App\Http\Controllers\Applicant;
 use App\Http\Controllers\Controller;
 use App\Models\ApplicationSubmission;
 use Illuminate\Http\Request;
-use Illuminate\Validation\ValidationException;
-use Northwestern\SysDev\DynamicForms\Forms\Form;
 
 class SubmissionController extends Controller
 {
