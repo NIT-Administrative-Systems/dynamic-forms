@@ -47,6 +47,42 @@ class ValidatedFormTest extends TestCase
     }
 
     /**
+     * @covers ::getMessageBag
+     * @covers ::validated
+     * @covers ::fails
+     * @covers ::failed
+     * @covers ::errors
+     */
+    public function testInterfaceGetters(): void
+    {
+        $components = [
+            'testField' => new Textfield(
+                'testField',
+                'Test Field',
+                null,
+                [],
+                ['required' => true],
+                false,
+                null,
+                null,
+                'mixed',
+                [],
+            ),
+        ];
+
+        $values = ['testField' => 'Hello'];
+
+        $validatedForm = new ValidatedForm($components, $values);
+
+        $this->assertEmpty($validatedForm->getMessageBag());
+        $this->assertEquals($values, $validatedForm->validated());
+        $this->assertFalse($validatedForm->fails());
+        $this->assertEmpty($validatedForm->failed());
+        $this->assertTrue($validatedForm->errors()->isEmpty());
+    }
+
+
+    /**
      * @covers ::__construct
      * @covers ::validatableComponents
      * @dataProvider  validationDataProvider

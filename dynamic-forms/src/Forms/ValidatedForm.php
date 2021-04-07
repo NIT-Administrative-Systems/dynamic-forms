@@ -3,11 +3,12 @@
 namespace Northwestern\SysDev\DynamicForms\Forms;
 
 use Illuminate\Contracts\Support\MessageBag;
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\MessageBag as MessageBagImpl;
 use Northwestern\SysDev\DynamicForms\Components\ComponentInterface;
 
-class ValidatedForm
+class ValidatedForm implements Validator
 {
     protected Collection $values;
     protected MessageBag $messages;
@@ -84,5 +85,69 @@ class ValidatedForm
         }
 
         return $components->all();
+    }
+
+    /**
+     * @internal
+     */
+    public function getMessageBag()
+    {
+        return $this->messages();
+    }
+
+    /**
+     * @internal
+     */
+    public function validate()
+    {
+        throw new \Exception('Not implemented');
+    }
+
+    /**
+     * @internal
+     */
+    public function validated()
+    {
+        return $this->values();
+    }
+
+    /**
+     * @internal
+     */
+    public function fails()
+    {
+        return !$this->isValid();
+    }
+
+    /**
+     * @internal
+     */
+    public function failed()
+    {
+        return $this->messages->keys();
+    }
+
+    /**
+     * @internal
+     */
+    public function sometimes($attribute, $rules, callable $callback)
+    {
+        throw new \Exception('Not implemented');
+    }
+
+    /**
+     * @internal
+     */
+    public function after($callback)
+    {
+        throw new \Exception('Not implemented');
+    }
+
+    /**
+     * @internal
+     */
+    public function errors()
+    {
+        return $this->messages();
     }
 }
