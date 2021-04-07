@@ -29,6 +29,7 @@ class TextfieldTest extends InputComponentTestCase
             'regex handles slashes' => [['pattern' => '/'], 'http://', true],
             'regex fails' => [['pattern' => '^[0-9]$'], '111 Dog', false],
             'customMessage respected' => [['required' => true, 'minWords' => 2, 'customMessage' => 'message!'], '', false, 'message!'],
+            'error label respected' => [['required' => true], '', false, 'The special error label field is required.', [], 'special error label'],
         ];
     }
 

@@ -20,11 +20,18 @@ class InputComponentTestCase extends BaseComponentTestCase
      * @covers ::validate
      * @dataProvider validationsProvider
      */
-    public function testValidations(array $validations, mixed $submissionValue, bool $passes, ?string $message = null, array $additional = []): void
-    {
+    public function testValidations(
+        array $validations,
+        mixed $submissionValue,
+        bool $passes,
+        ?string $message = null,
+        array $additional = [],
+        ?string $errorLabel = null
+    ): void {
         $component = $this->getComponent(
+            errorLabel: $errorLabel,
             validations: $validations,
-            additional: $additional,  // some components put validation fields in here
+            additional: $additional, // some components put validation fields in here
             submissionValue: $submissionValue,
         );
 
@@ -41,9 +48,16 @@ class InputComponentTestCase extends BaseComponentTestCase
      * @covers ::validate
      * @dataProvider validationsProvider
      */
-    public function testValidationsOnMultipleValues(array $validations, mixed $submissionValue, bool $passes, ?string $message = null, array $additional = [])
-    {
+    public function testValidationsOnMultipleValues(
+        array $validations,
+        mixed $submissionValue,
+        bool $passes,
+        ?string $message = null,
+        array $additional = [],
+        ?string $errorLabel = null
+    ) {
         $component = $this->getComponent(
+            errorLabel: $errorLabel,
             validations: $validations,
             additional: $additional,
             hasMultipleValues: true,
@@ -52,6 +66,10 @@ class InputComponentTestCase extends BaseComponentTestCase
 
         $bag = $component->validate($component->key(), app()->make('validator'));
         $this->assertEquals($passes, $bag->isEmpty(), $bag);
+
+        if ($message) {
+            $this->assertEquals($message, $bag->first());
+        }
     }
 
     /**

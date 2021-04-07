@@ -27,6 +27,7 @@ abstract class BaseComponent implements ComponentInterface
     public function __construct(
         protected string $key,
         protected ?string $label,
+        protected ?string $errorLabel,
         protected array $components,
         protected array $validations,
         protected bool $hasMultipleValues,
@@ -51,6 +52,11 @@ abstract class BaseComponent implements ComponentInterface
     public function label(): ?string
     {
         return $this->label;
+    }
+
+    public function errorLabel(): ?string
+    {
+        return $this->errorLabel;
     }
 
     public function components(): array
@@ -107,7 +113,7 @@ abstract class BaseComponent implements ComponentInterface
 
     public function validate(): MessageBag
     {
-        $fieldKey = $this->label() ?? $this->key();
+        $fieldKey = $this->errorLabel() ?? $this->label() ?? $this->key();
         $validator = app()->make('validator');
         $bag = new MessageBagImpl;
 
@@ -118,7 +124,7 @@ abstract class BaseComponent implements ComponentInterface
         if ($this->hasMultipleValues()) {
             foreach ($this->submissionValue() as $index => $submissionValue) {
                 $bag = $this->mergeErrorBags($bag, $this->processValidations(
-                    sprintf('%s %s', $fieldKey, $index),
+                    $this->errorLabel ?? sprintf('%s %s', $fieldKey, $index),
                     $submissionValue,
                     $validator
                 ));

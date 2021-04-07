@@ -20,6 +20,7 @@ interface ComponentInterface
     public function __construct(
         string $key,
         ?string $label,
+        ?string $errorLabel,
         array $components,
         array $validations,
         bool $hasMultipleValues,
@@ -40,6 +41,11 @@ interface ComponentInterface
      * Component label, if available.
      */
     public function label(): ?string;
+
+    /**
+     * Label to use in error messages, if available.
+     */
+    public function errorLabel(): ?string;
 
     /**
      * Get child components.

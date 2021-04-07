@@ -25,7 +25,7 @@ class DayTest extends InputComponentTestCase
 
         $this->assertEquals(
             $expected,
-            $method->invokeArgs($this->getDay('', false, []), [$value])
+            $method->invokeArgs($this->getDay('', false, [], null), [$value])
         );
     }
 
@@ -57,9 +57,10 @@ class DayTest extends InputComponentTestCase
         mixed $submissionValue,
         bool $passes,
         ?string $message = null,
-        array $additional = []
+        array $additional = [],
+        ?string $errorLabel = null
     ): void {
-        $component = $this->getDay($submissionValue, false, $validations);
+        $component = $this->getDay($submissionValue, false, $validations, $errorLabel);
 
         $bag = $component->validate();
         $this->assertEquals($passes, $bag->isEmpty(), $bag);
@@ -70,9 +71,15 @@ class DayTest extends InputComponentTestCase
      * @covers ::validate
      * @dataProvider validationsProvider
      */
-    public function testValidationsOnMultipleValues(array $validations, mixed $submissionValue, bool $passes, ?string $message = null, array $additional = [])
-    {
-        $component = $this->getDay([$submissionValue], true, $validations);
+    public function testValidationsOnMultipleValues(
+        array $validations,
+        mixed $submissionValue,
+        bool $passes,
+        ?string $message = null,
+        array $additional = [],
+        ?string $errorLabel = null
+    ) {
+        $component = $this->getDay([$submissionValue], true, $validations, $errorLabel);
 
         $bag = $component->validate();
         $this->assertEquals($passes, $bag->isEmpty(), $bag);
@@ -118,7 +125,7 @@ class DayTest extends InputComponentTestCase
         ];
     }
 
-    private function getDay(array | string $submissionValue, bool $hasMultipleValues, array $additional): Day
+    private function getDay(array | string $submissionValue, bool $hasMultipleValues, array $additional, ?string $errorLabel): Day
     {
         /**
          * This component does not use the 'validations' key like normal components.
@@ -126,6 +133,7 @@ class DayTest extends InputComponentTestCase
          * different key.
          */
         return $this->getComponent(
+            errorLabel: $errorLabel,
             submissionValue: $submissionValue,
             hasMultipleValues: $hasMultipleValues,
             additional: $additional,
