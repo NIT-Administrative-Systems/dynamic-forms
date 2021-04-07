@@ -26,6 +26,7 @@ class Textarea extends Textfield
     public function __construct(
         string $key,
         ?string $label,
+        ?string $errorLabel,
         array $components,
         array $validations,
         bool $hasMultipleValues,
@@ -34,7 +35,7 @@ class Textarea extends Textfield
         string $case,
         array $additional
     ) {
-        parent::__construct($key, $label, $components, $validations, $hasMultipleValues, $conditional, $customConditional, $case, $additional);
+        parent::__construct($key, $label, $errorLabel, $components, $validations, $hasMultipleValues, $conditional, $customConditional, $case, $additional);
 
         $editor = Arr::get($this->additional, 'editor');
         if (! in_array($editor, self::SUPPORTED_EDITORS)) {

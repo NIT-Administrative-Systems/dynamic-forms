@@ -45,6 +45,7 @@ class DirectoryLookupTest extends InputComponentTestCase
     protected function getComponent(
         string $key = 'test',
         ?string $label = 'Test',
+        ?string $errorLabel = null,
         array $components = [],
         array $validations = [],
         ?array $additional = [],
@@ -66,6 +67,7 @@ class DirectoryLookupTest extends InputComponentTestCase
         $component = parent::getComponent(
             $key,
             $label,
+            $errorLabel,
             $components,
             $validations,
             $additional,

@@ -18,6 +18,7 @@ class Survey extends BaseComponent
     public function __construct(
         string $key,
         ?string $label,
+        ?string $errorLabel,
         array $components,
         array $validations,
         bool $hasMultipleValues,
@@ -26,7 +27,7 @@ class Survey extends BaseComponent
         string $case,
         array $additional
     ) {
-        parent::__construct($key, $label, $components, $validations, $hasMultipleValues, $conditional, $customConditional, $case, $additional);
+        parent::__construct($key, $label, $errorLabel, $components, $validations, $hasMultipleValues, $conditional, $customConditional, $case, $additional);
 
         $this->questions = collect(Arr::get($this->additional, 'questions'))->map->value->all();
         $this->validChoices = collect(Arr::get($this->additional, 'values'))->map->value->all();

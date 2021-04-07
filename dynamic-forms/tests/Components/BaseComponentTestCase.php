@@ -37,6 +37,7 @@ abstract class BaseComponentTestCase extends TestCase
      * @covers ::hasMultipleValues
      * @covers ::hasConditional
      * @covers ::conditional
+     * @covers ::errorLabel
      */
     public function testGetters(): void
     {
@@ -50,6 +51,7 @@ abstract class BaseComponentTestCase extends TestCase
         $this->assertFalse($component->hasMultipleValues());
         $this->assertFalse($component->hasConditional());
         $this->assertNull($component->conditional());
+        $this->assertNull($component->errorLabel());
     }
 
     /**
@@ -60,6 +62,7 @@ abstract class BaseComponentTestCase extends TestCase
     protected function getComponent(
         string $key = 'test',
         ?string $label = 'Test',
+        ?string $errorLabel = null,
         array $components = [],
         array $validations = [],
         ?array $additional = [],
@@ -73,6 +76,7 @@ abstract class BaseComponentTestCase extends TestCase
         $component = new ($this->componentClass)(
             $key,
             $label,
+            $errorLabel,
             $components,
             $validations,
             $hasMultipleValues,

@@ -100,13 +100,14 @@ class Form
             $component = new $class(
                 $definition['key'],
                 Arr::get($definition, 'label'),
+                Arr::get($definition, 'errorLabel'),
                 $children,
                 Arr::get($definition, 'validate', []),
                 Arr::get($definition, 'multiple', false),
                 Arr::get($definition, 'conditional'),
                 Arr::get($definition, 'customConditional'),
                 Arr::get($definition, 'case', 'mixed'),
-                Arr::except($definition, ['key', 'label', 'components', 'validate', 'type', 'input', 'tableView', 'multiple', 'conditional', 'customConditional', 'case']),
+                Arr::except($definition, ['key', 'label', 'components', 'validate', 'type', 'input', 'tableView', 'multiple', 'conditional', 'customConditional', 'case', 'errorLabel']),
             );
 
             $components[] = $component;
