@@ -35,17 +35,21 @@ abstract class BaseComponentTestCase extends TestCase
      * @covers ::type
      * @covers ::components
      * @covers ::hasMultipleValues
+     * @covers ::hasConditional
+     * @covers ::conditional
      */
     public function testGetters(): void
     {
         $ref = new \ReflectionClass($this->componentClass);
         $component = $this->getComponent();
 
-        $this->assertEquals($component->key(), 'test');
-        $this->assertEquals($component->label(), 'Test');
-        $this->assertEquals($component->type(), $ref->getConstant('TYPE'));
-        $this->assertEquals($component->components(), []);
-        $this->assertEquals($component->hasMultipleValues(), false);
+        $this->assertEquals('test', $component->key());
+        $this->assertEquals('Test', $component->label());
+        $this->assertEquals($ref->getConstant('TYPE'), $component->type());
+        $this->assertEquals([], $component->components());
+        $this->assertFalse($component->hasMultipleValues());
+        $this->assertFalse($component->hasConditional());
+        $this->assertNull($component->conditional());
     }
 
     /**
@@ -60,10 +64,22 @@ abstract class BaseComponentTestCase extends TestCase
         array $validations = [],
         ?array $additional = [],
         bool $hasMultipleValues = false,
+        ?array $conditional = null,
+        ?string $customConditional = null,
         mixed $submissionValue = null
     ): ComponentInterface {
         /** @var ComponentInterface $component */
-        $component = new ($this->componentClass)($key, $label, $components, $validations, $hasMultipleValues, array_merge($this->defaultAdditional, $additional));
+        $component = new ($this->componentClass)(
+            $key,
+            $label,
+            $components,
+            $validations,
+            $hasMultipleValues,
+            $conditional,
+            $customConditional,
+            array_merge($this->defaultAdditional, $additional),
+        );
+
         $component->setSubmissionValue($submissionValue);
 
         return $component;

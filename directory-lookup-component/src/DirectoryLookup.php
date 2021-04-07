@@ -14,10 +14,18 @@ class DirectoryLookup extends BaseComponent
 
     protected DirectorySearch $api;
 
-    public function __construct(string $key, ?string $label, array $components, array $validations, bool $hasMultipleValues, array $additional)
-    {
+    public function __construct(
+        string $key,
+        ?string $label,
+        array $components,
+        array $validations,
+        bool $hasMultipleValues,
+        ?array $conditional,
+        ?string $customConditional,
+        array $additional
+    ) {
         // Components are discarded; these are manual mode fields, which is not supported.
-        parent::__construct($key, $label, [], $validations, $hasMultipleValues, $additional);
+        parent::__construct($key, $label, [], $validations, $hasMultipleValues, $conditional, $customConditional, $additional);
 
         $this->setDirectorySearch(app()->make(DirectorySearch::class));
     }

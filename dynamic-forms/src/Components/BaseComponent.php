@@ -6,6 +6,9 @@ use Illuminate\Contracts\Support\MessageBag;
 use Illuminate\Support\Arr;
 use Illuminate\Support\MessageBag as MessageBagImpl;
 use Illuminate\Validation\Factory;
+use Northwestern\SysDev\DynamicForms\Conditional\ConditionalInterface;
+use Northwestern\SysDev\DynamicForms\Conditional\SimpleConditional;
+use Northwestern\SysDev\DynamicForms\Errors\ConditionalNotImplemented;
 use Northwestern\SysDev\DynamicForms\Errors\InvalidDefinitionError;
 use Northwestern\SysDev\DynamicForms\Errors\ValidationNotImplementedError;
 
@@ -27,8 +30,11 @@ abstract class BaseComponent implements ComponentInterface
         protected array $components,
         protected array $validations,
         protected bool $hasMultipleValues,
+        protected ?array $conditional,
+        protected ?string $customConditional,
         protected array $additional,
     ) {
+        //
     }
 
     public function canValidate(): bool
@@ -54,6 +60,32 @@ abstract class BaseComponent implements ComponentInterface
     public function hasMultipleValues(): bool
     {
         return $this->hasMultipleValues;
+    }
+
+    public function hasConditional(): bool
+    {
+        return $this->conditional || $this->customConditional;
+    }
+
+    public function conditional(): ?ConditionalInterface
+    {
+        if (! $this->hasConditional()) {
+            return null;
+        }
+
+        if ($this->customConditional) {
+            throw new ConditionalNotImplemented($this->key(), ConditionalNotImplemented::CUSTOM_JS);
+        }
+
+        if (Arr::get($this->conditional, '')) {
+            throw new ConditionalNotImplemented($this->key(), ConditionalNotImplemented::JSON);
+        }
+
+        return new SimpleConditional(
+            Arr::get($this->conditional, 'show'),
+            Arr::get($this->conditional, 'when'),
+            Arr::get($this->conditional, 'eq'),
+        );
     }
 
     public function submissionValue(): mixed

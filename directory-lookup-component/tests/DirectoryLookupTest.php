@@ -39,6 +39,8 @@ class DirectoryLookupTest extends InputComponentTestCase
         array $validations = [],
         ?array $additional = [],
         bool $hasMultipleValues = false,
+        ?array $conditional = null,
+        ?string $customConditional = null,
         mixed $submissionValue = null,
     ): DirectoryLookup {
         $apiStub = $this->createStub(DirectorySearch::class);
@@ -50,7 +52,17 @@ class DirectoryLookupTest extends InputComponentTestCase
         ]);
 
         /** @var DirectoryLookup $component */
-        $component = parent::getComponent($key, $label, $components, $validations, $additional, $hasMultipleValues, $submissionValue);
+        $component = parent::getComponent(
+            $key,
+            $label,
+            $components,
+            $validations,
+            $additional,
+            $hasMultipleValues,
+            $conditional,
+            $customConditional,
+            $submissionValue
+        );
         $component->setDirectorySearch($apiStub);
 
         return $component;

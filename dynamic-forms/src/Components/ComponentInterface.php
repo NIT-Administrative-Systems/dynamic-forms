@@ -3,6 +3,7 @@
 namespace Northwestern\SysDev\DynamicForms\Components;
 
 use Illuminate\Contracts\Support\MessageBag;
+use Northwestern\SysDev\DynamicForms\Conditional\ConditionalInterface;
 
 interface ComponentInterface
 {
@@ -19,6 +20,8 @@ interface ComponentInterface
      * @param array $components
      * @param array $validations
      * @param bool $hasMultipleValues
+     * @param array|null $conditional
+     * @param string|null $customConditional
      * @param array $additional Other fields from the component definition (catch-all)
      */
     public function __construct(
@@ -27,6 +30,8 @@ interface ComponentInterface
         array $components,
         array $validations,
         bool $hasMultipleValues,
+        ?array $conditional,
+        ?string $customConditional,
         array $additional,
     );
 
@@ -81,4 +86,17 @@ interface ComponentInterface
      * an array. There are potentially an unlimited quantity of values.
      */
     public function hasMultipleValues(): bool;
+
+    /**
+     * Whether this field is shown conditionally, by way of a condition.
+     *
+     * This should check bot the simple/JSON logic conditions, as well as the custom conditionals
+     * with JS.
+     */
+    public function hasConditional(): bool;
+
+    /**
+     * Returns an invokable Conditional instance.
+     */
+    public function conditional(): ?ConditionalInterface;
 }

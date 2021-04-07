@@ -1,9 +1,10 @@
 <?php
 
-namespace Northwestern\SysDev\DynamicForms;
+namespace Northwestern\SysDev\DynamicForms\Forms;
 
 use Illuminate\Support\Arr;
-use Illuminate\Support\MessageBag;
+use Northwestern\SysDev\DynamicForms\ComponentRegistry;
+use Northwestern\SysDev\DynamicForms\Components\BaseComponent;
 use Northwestern\SysDev\DynamicForms\Components\ComponentInterface;
 use Northwestern\SysDev\DynamicForms\Components\CustomSubcomponentDeserialization;
 use Northwestern\SysDev\DynamicForms\Errors\InvalidDefinitionError;
@@ -24,17 +25,12 @@ class Form
      */
     protected array $flatComponents;
 
-    protected ?array $submission;
     protected ComponentRegistry $componentRegistry;
 
-    public function __construct(string $definitionJson, ?string $submissionJson = null)
+    public function __construct(string $definitionJson)
     {
         $this->componentRegistry = new ComponentRegistry();
         $this->setDefinition($definitionJson);
-
-        if ($submissionJson) {
-            $this->setSubmission($submissionJson);
-        }
     }
 
     /**
@@ -57,37 +53,12 @@ class Form
         return $this->flatComponents;
     }
 
-    public function setSubmission(string $json): void
-    {
-        $this->submission = json_decode($json, true);
-    }
-
     /**
-     * @param string|null $submissionJson Submission JSON doc, so you don't have to setSubmission() separately
+     * Runs validations & transformations, returning a ValidatedForm object.
      */
-    public function validate(?string $submissionJson = null): MessageBag
+    public function validate(string $submissionJson): ValidatedForm
     {
-        if ($submissionJson !== null) {
-            $this->setSubmission($submissionJson);
-        }
-
-        if (! $this->components || ! $this->submission) {
-            // throw something, this ain't ready
-        }
-
-        // Filter down to only keys we know about, so we can behave like $request->validate()
-        $components = $this->flatComponents();
-        $data = collect($this->submission)->only(array_keys($components));
-        $data->each(fn ($value, $key) => $components[$key]->setSubmissionValue($value));
-
-        $overallBag = new MessageBag;
-        // $processedData = [];
-        foreach ($components as $component) {
-            $overallBag->merge($component->validate());
-            // $processedData[$component->key()] = ;
-        }
-
-        return $overallBag;
+        return new ValidatedForm($this->flatComponents, json_decode($submissionJson, true));
     }
 
     protected function setDefinition(string $json): void
@@ -132,7 +103,9 @@ class Form
                 $children,
                 Arr::get($definition, 'validate', []),
                 Arr::get($definition, 'multiple', false),
-                Arr::except($definition, ['key', 'label', 'components', 'validate', 'type', 'input', 'tableView']),
+                Arr::get($definition, 'conditional'),
+                Arr::get($definition, 'customConditional'),
+                Arr::except($definition, ['key', 'label', 'components', 'validate', 'type', 'input', 'tableView', 'multiple', 'conditional', 'customConditional']),
             );
 
             $components[] = $component;

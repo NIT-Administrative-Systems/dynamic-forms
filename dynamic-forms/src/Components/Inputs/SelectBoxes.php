@@ -14,9 +14,17 @@ class SelectBoxes extends BaseComponent
 
     protected array $options;
 
-    public function __construct(string $key, ?string $label, array $components, array $validations, bool $hasMultipleValues, array $additional)
-    {
-        parent::__construct($key, $label, $components, $validations, $hasMultipleValues, $additional);
+    public function __construct(
+        string $key,
+        ?string $label,
+        array $components,
+        array $validations,
+        bool $hasMultipleValues,
+        ?array $conditional,
+        ?string $customConditional,
+        array $additional
+    ) {
+        parent::__construct($key, $label, $components, $validations, $hasMultipleValues, $conditional, $customConditional, $additional);
 
         $this->options = collect($this->additional['values'])->map->value->all();
     }

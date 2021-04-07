@@ -23,9 +23,17 @@ class Textarea extends Textfield
         self::EDITOR_CKEDITOR,
     ];
 
-    public function __construct(string $key, ?string $label, array $components, array $validations, bool $hasMultipleValues, array $additional)
-    {
-        parent::__construct($key, $label, $components, $validations, $hasMultipleValues, $additional);
+    public function __construct(
+        string $key,
+        ?string $label,
+        array $components,
+        array $validations,
+        bool $hasMultipleValues,
+        ?array $conditional,
+        ?string $customConditional,
+        array $additional
+    ) {
+        parent::__construct($key, $label, $components, $validations, $hasMultipleValues, $conditional, $customConditional, $additional);
 
         $editor = Arr::get($this->additional, 'editor');
         if (! in_array($editor, self::SUPPORTED_EDITORS)) {
