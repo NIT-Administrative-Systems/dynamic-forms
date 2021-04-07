@@ -2,6 +2,7 @@
 
 namespace Northwestern\SysDev\DynamicForms\Tests\Components\Inputs;
 
+use Northwestern\SysDev\DynamicForms\Components\CaseEnum;
 use Northwestern\SysDev\DynamicForms\Components\Inputs\SelectBoxes;
 use Northwestern\SysDev\DynamicForms\Tests\Components\InputComponentTestCase;
 
@@ -86,6 +87,17 @@ class SelectBoxesTest extends InputComponentTestCase
             'min fails' => [['minSelectedCount' => 2], ['foo' => true, 'bar' => false], false],
             'max passes' => [['maxSelectedCount' => 1], ['foo' => true, 'bar' => false], true],
             'max fails' => [['maxSelectedCount' => 1], ['foo' => true, 'bar' => true], false],
+        ];
+    }
+
+    public function submissionValueProvider(): array
+    {
+        $boxes = ['foo' => true, 'bar' => false];
+
+        return [
+            'no transformations' => [null, $boxes, $boxes],
+            'upper' => [CaseEnum::UPPER, $boxes, $boxes],
+            'lower' => [CaseEnum::LOWER, $boxes, $boxes],
         ];
     }
 }

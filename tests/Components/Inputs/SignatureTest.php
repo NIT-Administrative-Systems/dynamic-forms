@@ -2,6 +2,7 @@
 
 namespace Northwestern\SysDev\DynamicForms\Tests\Components\Inputs;
 
+use Northwestern\SysDev\DynamicForms\Components\CaseEnum;
 use Northwestern\SysDev\DynamicForms\Components\Inputs\Signature;
 use Northwestern\SysDev\DynamicForms\Tests\Components\InputComponentTestCase;
 
@@ -19,6 +20,17 @@ class SignatureTest extends InputComponentTestCase
             'valid data passes' => [[], 'data:image/png;base64,iVBORw0KG...', true],
             'required passes' => [['required' => true], 'data:image/png;base64,iVBORw0KG...', true],
             'required fails' => [['required' => true], '', false],
+        ];
+    }
+
+    public function submissionValueProvider(): array
+    {
+        $data = 'data:image/png;base64,iVBORw0KG...';
+
+        return [
+            'no transformations' => [null, $data, $data],
+            'upper' => [CaseEnum::UPPER, $data, $data],
+            'lower' => [CaseEnum::LOWER, $data, $data],
         ];
     }
 }

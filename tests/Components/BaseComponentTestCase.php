@@ -66,6 +66,7 @@ abstract class BaseComponentTestCase extends TestCase
         bool $hasMultipleValues = false,
         ?array $conditional = null,
         ?string $customConditional = null,
+        string $case = 'mixed',
         mixed $submissionValue = null
     ): ComponentInterface {
         /** @var ComponentInterface $component */
@@ -77,6 +78,7 @@ abstract class BaseComponentTestCase extends TestCase
             $hasMultipleValues,
             $conditional,
             $customConditional,
+            $case,
             array_merge($this->defaultAdditional, $additional),
         );
 

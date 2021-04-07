@@ -2,6 +2,7 @@
 
 namespace Northwestern\SysDev\DynamicForms\Tests\Components\Inputs;
 
+use Northwestern\SysDev\DynamicForms\Components\CaseEnum;
 use Northwestern\SysDev\DynamicForms\Components\Inputs\Url;
 use Northwestern\SysDev\DynamicForms\Tests\Components\InputComponentTestCase;
 
@@ -28,6 +29,17 @@ class UrlTest extends InputComponentTestCase
             'minWords passes' => [['minWords' => 1], 'http://google.com', true],
             'regex passes' => [['pattern' => 'reddit\.com'], 'https://reddit.com', true],
             'regex fails' => [['pattern' => 'reddit\.com'], 'https://google.com', false],
+        ];
+    }
+
+    public function submissionValueProvider(): array
+    {
+        $url = 'https://google.com';
+
+        return [
+            'no transformations' => [null, $url, $url],
+            'upper' => [CaseEnum::UPPER, $url, $url],
+            'lower' => [CaseEnum::LOWER, $url, $url],
         ];
     }
 }

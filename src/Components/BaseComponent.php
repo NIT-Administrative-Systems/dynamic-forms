@@ -32,6 +32,7 @@ abstract class BaseComponent implements ComponentInterface
         protected bool $hasMultipleValues,
         protected ?array $conditional,
         protected ?string $customConditional,
+        protected string $case,
         protected array $additional,
     ) {
         //
@@ -90,7 +91,13 @@ abstract class BaseComponent implements ComponentInterface
 
     public function submissionValue(): mixed
     {
-        return $this->submissionValue;
+        $value = $this->submissionValue;
+
+        foreach ($this->transformations() as $transform) {
+            $value = $transform($value);
+        }
+
+        return $value;
     }
 
     public function setSubmissionValue(mixed $value): void
@@ -121,6 +128,19 @@ abstract class BaseComponent implements ComponentInterface
         }
 
         return $this->processValidations($fieldKey, $this->submissionValue(), $validator);
+    }
+
+    public function transformations(): array
+    {
+        $transformations = [];
+
+        if ($this->case === CaseEnum::UPPER) {
+            $transformations['case'] = fn ($value) => is_string($value) ? strtoupper($value) : $value;
+        } elseif ($this->case === CaseEnum::LOWER) {
+            $transformations['case'] = fn ($value) => is_string($value) ? strtolower($value) : $value;
+        }
+
+        return $transformations;
     }
 
     /**

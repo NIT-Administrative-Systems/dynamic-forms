@@ -45,9 +45,10 @@ class Select extends BaseComponent
         bool $hasMultipleValues,
         ?array $conditional,
         ?string $customConditional,
+        string $case,
         array $additional
     ) {
-        parent::__construct($key, $label, $components, $validations, $hasMultipleValues, $conditional, $customConditional, $additional);
+        parent::__construct($key, $label, $components, $validations, $hasMultipleValues, $conditional, $customConditional, $case, $additional);
 
         // formiojs omits the dataSrc prop when it's 'values'; assume that's the mode when not present
         $this->dataSource = Arr::get($this->additional, 'dataSrc', self::DATA_SRC_VALUES);
@@ -95,5 +96,11 @@ class Select extends BaseComponent
             sprintf('Unsupported dataSrc "%s", must be [%s]', $this->dataSource, implode(', ', self::SUPPORTED_DATA_SRC)),
             'dataSrc'
         );
+    }
+
+    public function transformations(): array
+    {
+        // Field does not support transformations
+        return [];
     }
 }

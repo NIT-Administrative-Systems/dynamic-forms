@@ -2,6 +2,7 @@
 
 namespace Northwestern\SysDev\DynamicForms\Tests\Components\Inputs;
 
+use Northwestern\SysDev\DynamicForms\Components\CaseEnum;
 use Northwestern\SysDev\DynamicForms\Components\Inputs\Day;
 use Northwestern\SysDev\DynamicForms\Tests\Components\InputComponentTestCase;
 
@@ -103,6 +104,17 @@ class DayTest extends InputComponentTestCase
             'passes with minimum date' => [['minDate' => '2020-01-01', 'maxDate' => '2020-12-31'], '02/02/2020', true],
             'fails with minimum date too low' => [['minDate' => '2020-01-01', 'maxDate' => '2020-12-31'], '02/02/2019', false],
             'fails with minimum date too high' => [['minDate' => '2020-01-01', 'maxDate' => '2020-12-31'], '02/02/2022', false],
+        ];
+    }
+
+    public function submissionValueProvider(): array
+    {
+        $date = '01/01/2021';
+
+        return [
+            'no transformations' => [null, $date, $date],
+            'upper' => [CaseEnum::UPPER, $date, $date],
+            'lower' => [CaseEnum::LOWER, $date, $date],
         ];
     }
 

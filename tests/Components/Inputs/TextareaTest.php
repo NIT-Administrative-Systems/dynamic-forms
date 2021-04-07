@@ -2,6 +2,7 @@
 
 namespace Northwestern\SysDev\DynamicForms\Tests\Components\Inputs;
 
+use Northwestern\SysDev\DynamicForms\Components\CaseEnum;
 use Northwestern\SysDev\DynamicForms\Components\Inputs\Textarea;
 use Northwestern\SysDev\DynamicForms\Errors\InvalidDefinitionError;
 use Northwestern\SysDev\DynamicForms\Tests\Components\InputComponentTestCase;
@@ -36,6 +37,15 @@ class TextareaTest extends InputComponentTestCase
             'regex handles bars' => [['pattern' => '|'], 're|bar', true],
             'regex handles slashes' => [['pattern' => '/'], 'http://', true],
             'regex fails' => [['pattern' => '^[0-9]$'], '111 Dog', false],
+        ];
+    }
+
+    public function submissionValueProvider(): array
+    {
+        return [
+            'no transformations' => [null, 'foo', 'foo'],
+            'upper' => [CaseEnum::UPPER, 'foo', 'FOO'],
+            'lower' => [CaseEnum::LOWER, 'Foo', 'foo'],
         ];
     }
 }

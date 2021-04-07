@@ -2,6 +2,7 @@
 
 namespace Northwestern\SysDev\DynamicForms\Tests\Components\Inputs;
 
+use Northwestern\SysDev\DynamicForms\Components\CaseEnum;
 use Northwestern\SysDev\DynamicForms\Components\Inputs\Email;
 use Northwestern\SysDev\DynamicForms\Tests\Components\InputComponentTestCase;
 
@@ -28,6 +29,15 @@ class EmailTest extends InputComponentTestCase
             'minWords passes' => [['minWords' => 1], 'foo@bar.com', true],
             'regex passes' => [['pattern' => 'reddit\.com'], 'foo@reddit.com', true],
             'regex fails' => [['pattern' => 'reddit\.com'], 'foo@bar.com', false],
+        ];
+    }
+
+    public function submissionValueProvider(): array
+    {
+        return [
+            'no transformations' => [null, 'foo@bar.com', 'foo@bar.com'],
+            'upper' => [CaseEnum::UPPER, 'foo@bar.com', 'FOO@BAR.COM'],
+            'lower' => [CaseEnum::LOWER, 'Foo@Bar.Com', 'foo@bar.com'],
         ];
     }
 }

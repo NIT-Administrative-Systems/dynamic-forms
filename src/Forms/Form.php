@@ -105,7 +105,8 @@ class Form
                 Arr::get($definition, 'multiple', false),
                 Arr::get($definition, 'conditional'),
                 Arr::get($definition, 'customConditional'),
-                Arr::except($definition, ['key', 'label', 'components', 'validate', 'type', 'input', 'tableView', 'multiple', 'conditional', 'customConditional']),
+                Arr::get($definition, 'case', 'mixed'),
+                Arr::except($definition, ['key', 'label', 'components', 'validate', 'type', 'input', 'tableView', 'multiple', 'conditional', 'customConditional', 'case']),
             );
 
             $components[] = $component;

@@ -45,4 +45,10 @@ class Signature extends BaseComponent
             $rules->rules(),
         )->messages();
     }
+
+    public function transformations(): array
+    {
+        // Upper/lower casing this would break the image data.
+        return [];
+    }
 }

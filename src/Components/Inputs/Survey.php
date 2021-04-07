@@ -23,9 +23,10 @@ class Survey extends BaseComponent
         bool $hasMultipleValues,
         ?array $conditional,
         ?string $customConditional,
+        string $case,
         array $additional
     ) {
-        parent::__construct($key, $label, $components, $validations, $hasMultipleValues, $conditional, $customConditional, $additional);
+        parent::__construct($key, $label, $components, $validations, $hasMultipleValues, $conditional, $customConditional, $case, $additional);
 
         $this->questions = collect(Arr::get($this->additional, 'questions'))->map->value->all();
         $this->validChoices = collect(Arr::get($this->additional, 'values'))->map->value->all();

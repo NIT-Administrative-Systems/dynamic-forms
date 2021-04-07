@@ -15,13 +15,6 @@ interface ComponentInterface
     public static function type(): string;
 
     /**
-     * @param string $key
-     * @param string|null $label
-     * @param array $components
-     * @param array $validations
-     * @param bool $hasMultipleValues
-     * @param array|null $conditional
-     * @param string|null $customConditional
      * @param array $additional Other fields from the component definition (catch-all)
      */
     public function __construct(
@@ -32,6 +25,7 @@ interface ComponentInterface
         bool $hasMultipleValues,
         ?array $conditional,
         ?string $customConditional,
+        string $case,
         array $additional,
     );
 
@@ -99,4 +93,11 @@ interface ComponentInterface
      * Returns an invokable Conditional instance.
      */
     public function conditional(): ?ConditionalInterface;
+
+    /**
+     * List of transformations to apply to the value.
+     *
+     * @return callable[]
+     */
+    public function transformations(): array;
 }
