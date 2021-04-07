@@ -2,6 +2,8 @@
 
 namespace Northwestern\SysDev\DynamicForms\Tests\Components\Inputs;
 
+use Illuminate\Support\Carbon;
+use Northwestern\SysDev\DynamicForms\Components\CaseEnum;
 use Northwestern\SysDev\DynamicForms\Components\Inputs\DateTime;
 use Northwestern\SysDev\DynamicForms\Tests\Components\InputComponentTestCase;
 
@@ -26,7 +28,7 @@ class DateTimeTest extends InputComponentTestCase
     /**
      * @covers ::submissionValue
      */
-    public function testSubmissionValue(): void
+    public function testSubmissionValueHandlesDates(): void
     {
         $date = $this->getComponent(submissionValue: '2021-03-25T12:00:00-05:00');
         $this->assertEquals('2021-03-25 17:00:00', $date->submissionValue());
@@ -45,6 +47,15 @@ class DateTimeTest extends InputComponentTestCase
             'fails when weekdays disabled' => [[], '2021-03-26 12:00:00', false, null, ['datePicker' => ['disableWeekdays' => true]]],
             'passes when weekends disabled' => [[], '2021-03-26 12:00:00', true, null, ['datePicker' => ['disableWeekends' => true]]],
             'fails when weekends disabled' => [[], '2021-03-27 12:00:00', false, null, ['datePicker' => ['disableWeekends' => true]]],
+        ];
+    }
+
+    public function submissionValueProvider(): array
+    {
+        return [
+            'no transformations' => [null, '2021-03-25T12:00:00-05:00', Carbon::parse('2021-03-25T12:00:00-05:00')],
+            'upper' => [CaseEnum::UPPER, '2021-03-25T12:00:00-05:00', Carbon::parse('2021-03-25T12:00:00-05:00')],
+            'lower' => [CaseEnum::LOWER, '2021-03-25T12:00:00-05:00', Carbon::parse('2021-03-25T12:00:00-05:00')],
         ];
     }
 }

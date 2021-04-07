@@ -2,6 +2,7 @@
 
 namespace Northwestern\SysDev\DynamicForms\Tests\Forms;
 
+use Northwestern\SysDev\DynamicForms\Components\CaseEnum;
 use Northwestern\SysDev\DynamicForms\Components\Inputs\Textfield;
 use Northwestern\SysDev\DynamicForms\Forms\Form;
 use Northwestern\SysDev\DynamicForms\Forms\ValidatedForm;
@@ -30,6 +31,7 @@ class ValidatedFormTest extends TestCase
                 false,
                 null,
                 null,
+                'mixed',
                 [],
             ),
         ];
@@ -104,9 +106,12 @@ class ValidatedFormTest extends TestCase
                 true,
                 $values('conditional_submission.json'),
             ],
-            /*
-            'transformations' => [],
-            */
+            'transformations' => [
+                ['test' => new Textfield('test', 'Test', [], [], false, null, null, CaseEnum::UPPER, [])],
+                ['test' => 'lowercase'],
+                true,
+                ['test' => 'LOWERCASE'],
+            ],
         ];
     }
 }

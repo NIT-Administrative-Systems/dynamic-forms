@@ -32,4 +32,10 @@ class Url extends Textfield
 
         return $bag->merge($validator->messages());
     }
+
+    public function transformations(): array
+    {
+        // URL does not support transformations
+        return [];
+    }
 }

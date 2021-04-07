@@ -2,6 +2,7 @@
 
 namespace Northwestern\SysDev\DynamicForms\Tests\Components\Inputs;
 
+use Northwestern\SysDev\DynamicForms\Components\CaseEnum;
 use Northwestern\SysDev\DynamicForms\Components\Inputs\Survey;
 use Northwestern\SysDev\DynamicForms\Tests\Components\InputComponentTestCase;
 
@@ -65,6 +66,17 @@ class SurveyTest extends InputComponentTestCase
             'one missing - required fails' => [['required' => true], ['qa' => '', 'q2' => 'a1'], false],
             'all missing - required fails' => [['required' => true], ['qa' => '', 'q2' => ''], false],
 
+        ];
+    }
+
+    public function submissionValueProvider(): array
+    {
+        $responses = ['q1' => 'a2', 'q2' => 'a1'];
+
+        return [
+            'no transformations' => [null, $responses, $responses],
+            'upper' => [CaseEnum::UPPER, $responses, $responses],
+            'lower' => [CaseEnum::LOWER, $responses, $responses],
         ];
     }
 

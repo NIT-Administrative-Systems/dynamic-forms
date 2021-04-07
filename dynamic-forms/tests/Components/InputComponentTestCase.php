@@ -49,4 +49,16 @@ class InputComponentTestCase extends BaseComponentTestCase
         $bag = $component->validate($component->key(), app()->make('validator'));
         $this->assertEquals($passes, $bag->isEmpty(), $bag);
     }
+
+    /**
+     * @covers ::submissionValue
+     * @dataProvider submissionValueProvider
+     */
+    public function testSubmissionValue(?string $case, mixed $submissionValue, mixed $expected): void
+    {
+        $component = $this->getComponent(case: $case ?? 'mixed');
+        $component->setSubmissionValue($submissionValue);
+
+        $this->assertEquals($expected, $component->submissionValue());
+    }
 }

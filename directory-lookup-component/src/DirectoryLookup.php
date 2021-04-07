@@ -22,10 +22,11 @@ class DirectoryLookup extends BaseComponent
         bool $hasMultipleValues,
         ?array $conditional,
         ?string $customConditional,
+        string $case,
         array $additional
     ) {
         // Components are discarded; these are manual mode fields, which is not supported.
-        parent::__construct($key, $label, [], $validations, $hasMultipleValues, $conditional, $customConditional, $additional);
+        parent::__construct($key, $label, [], $validations, $hasMultipleValues, $conditional, $customConditional, $case, $additional);
 
         $this->setDirectorySearch(app()->make(DirectorySearch::class));
     }

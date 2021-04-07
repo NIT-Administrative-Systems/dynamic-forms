@@ -2,6 +2,7 @@
 
 namespace Northwestern\SysDev\DynamicForms\Tests\Components\Inputs;
 
+use Northwestern\SysDev\DynamicForms\Components\CaseEnum;
 use Northwestern\SysDev\DynamicForms\Components\Inputs\Select;
 use Northwestern\SysDev\DynamicForms\Tests\Components\InputComponentTestCase;
 
@@ -28,6 +29,15 @@ class SelectTest extends InputComponentTestCase
             'required passes' => [['required' => true], 'foo', true],
             'required fails' => [['required' => true], '', false],
             'invalid values always rejected' => [[], 'not a valid value', false],
+        ];
+    }
+
+    public function submissionValueProvider(): array
+    {
+        return [
+            'no transformations' => [null, 'foo', 'foo'],
+            'upper' => [CaseEnum::UPPER, 'foo', 'foo'],
+            'lower' => [CaseEnum::LOWER, 'foo', 'foo'],
         ];
     }
 

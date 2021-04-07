@@ -31,9 +31,10 @@ class Textarea extends Textfield
         bool $hasMultipleValues,
         ?array $conditional,
         ?string $customConditional,
+        string $case,
         array $additional
     ) {
-        parent::__construct($key, $label, $components, $validations, $hasMultipleValues, $conditional, $customConditional, $additional);
+        parent::__construct($key, $label, $components, $validations, $hasMultipleValues, $conditional, $customConditional, $case, $additional);
 
         $editor = Arr::get($this->additional, 'editor');
         if (! in_array($editor, self::SUPPORTED_EDITORS)) {
