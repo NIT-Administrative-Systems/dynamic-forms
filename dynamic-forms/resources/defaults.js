@@ -57,7 +57,21 @@ export default {
     global: function () {
         return _.mapValues(Formio.Components.components, function () {
             return [
-                {key: 'api', ignore: true},
+                /**
+                 * Ignoring the API tab stops the logic that auto-generates the field key.
+                 * This is undesirable -- you end up with a form made of textField1, textField2,
+                 * textField3, etc.
+                 */
+                {
+                    key: 'api',
+                    ignore: false,
+                    components: [
+                        {"html":"<p>This is the internal name for the field. You do not need to set this, but it may be useful to know when setting up conditional fields or building reports.</p>","label":"Content","refreshOnChange":false,"key":"content","type":"content","input":false,"tableView":false},
+                        {key: 'key', ignore: false, disabled: true},
+                        {key: 'tags', ignore: true},
+                        {key: 'properties', ignore: true},
+                    ],
+                },
                 {key: 'logic', ignore: true},
                 {key: 'layout', ignore: true},
                 {
