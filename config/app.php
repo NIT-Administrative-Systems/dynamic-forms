@@ -176,6 +176,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\VaporUiServiceProvider::class,
 
+        \Northwestern\SysDev\DynamicForms\DynamicFormsProvider::class, // @TODO remove me
     ],
 
     /*
