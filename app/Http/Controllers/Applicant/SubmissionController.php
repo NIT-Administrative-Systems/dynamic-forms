@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Applicant;
 use App\Http\Controllers\Controller;
 use App\Models\ApplicationSubmission;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
+use Northwestern\SysDev\DynamicForms\Forms\Form;
 
 class SubmissionController extends Controller
 {
@@ -15,6 +17,7 @@ class SubmissionController extends Controller
 
     public function edit(int $id)
     {
+        // @todo permissions
         $submission = $this->find($id);
         $program = $submission->form_version->form->program;
 
@@ -30,12 +33,26 @@ class SubmissionController extends Controller
 
     public function update(Request $request, int $id)
     {
+        // @todo permissions
         $submission = $this->find($id);
-        $data = $request->validate([
-            'data' => 'required|json',
-        ]);
 
-        $submission->data = $data['data'];
+        // AJAX requests are always drafts, don't need to do any processing
+        if ($request->expectsJson()) {
+            $submission->data = (string) $request->getContent();
+            $submission->save();
+
+            return response()->json([
+                'status' => 'Draft saved',
+                'updated_at' => $submission->updated_at,
+            ]);
+        }
+
+        $data = $request->validateDynamicForm(
+            $submission->form_version->definition,
+            $request->get('submissionValues')
+        );
+
+        $submission->data = $data;
         $submission->save();
 
         $request->session()->flash('status', sprintf('You have saved your application for %s', $submission->application->id));
@@ -45,6 +62,7 @@ class SubmissionController extends Controller
 
     public function show(int $id)
     {
+        // @todo permissions
         $submission = $this->find($id);
         $program = $submission->form_version->form->program;
 
@@ -59,7 +77,7 @@ class SubmissionController extends Controller
     }
 
     /**
-     * @TODO move to repo
+     * @TODO move to repo? or make it a scope?
      */
     private function find(int $id): ApplicationSubmission
     {
