@@ -1,7 +1,7 @@
 @extends('northwestern::purple-container')
 
 @section('heading')
-<h1 class="text-center comic-heading">Welcome to Grantman's latest adventure!</h1>
+<h1 class="text-center comic-heading">Grant Man's latest adventure!</h1>
 @endsection
 
 @section('content')
@@ -22,10 +22,10 @@
                 <li>
                     Check out the <a href="{{ route('admin.form.edit', ['form' => 2]) }}">form builder</a>
                     <ul>
-                        <li>Have a look at <a href="">what the applicant will see</a></li>
+                        <li>Have a look at <a href="{{ route('application-form', ['organization' => 'office-undergrad-research', 'program' => 'acyear', 'cycle' => 2]) }}">what the applicant will see</a></li>
                         <li>And <a href="https://teams.microsoft.com/l/chat/0/0?users=nick.evans@northwestern.edu">let us know what you think</a> of the tech</li>
                     </ul>
-                    <li class="mt-3">Check back later. All of the other pages are placeholders for now; we're focused on the form builder</li>
+                    <li class="mt-3">Check back later. All of the other pages are placeholders for now; we're focused on the form builder tech.</li>
                 </li>
             </ul>
         </div>
