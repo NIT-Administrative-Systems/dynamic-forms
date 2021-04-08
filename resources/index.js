@@ -2,6 +2,7 @@ import 'formiojs';
 import Defaults from './defaults';
 import NuDirectoryLookup from "../nu-directory-lookup";
 import NuDirectoryEditForm from "../nu-directory-lookup/form";
+import CustomTemplates from "./custom-templates";
 
 /*
 * We explicitly do NOT support JS evaluation stuff, so disable all of it.
@@ -19,6 +20,12 @@ Formio.Components.components.nuDirectoryLookup.editForm = NuDirectoryEditForm;
  * with the typical way of adjusting editForms.
  */
 Defaults.globalButtonCustomization();
+
+/**
+ * Apply any custom templates.
+ */
+_.forOwn(CustomTemplates, (template, name) => Formio.Templates.current[name] = template);
+
 
 /**
  * Disable editForm (the modal that pops up when you add/edit a field in the Builder) options that
