@@ -15,6 +15,12 @@ Formio.use(NuDirectoryLookup);
 Formio.Components.components.nuDirectoryLookup.editForm = NuDirectoryEditForm;
 
 /**
+ * Runs global customizations for the Button component's editForm that were not possible
+ * with the typical way of adjusting editForms.
+ */
+Defaults.globalButtonCustomization();
+
+/**
  * Disable editForm (the modal that pops up when you add/edit a field in the Builder) options that
  * we do not want to support.
  *

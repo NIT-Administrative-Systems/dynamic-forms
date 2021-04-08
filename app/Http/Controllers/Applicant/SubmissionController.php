@@ -45,6 +45,15 @@ class SubmissionController extends Controller
             ]);
         }
 
+        if ($request->get('state') === 'draft') {
+            $submission->data = $request->get('submissionValues');
+            $submission->save();
+
+            $request->session()->flash('status', sprintf('You have saved your draft application for %s', $submission->application->id));
+
+            return redirect(route('application-discover'));
+        }
+
         $data = $request->validateDynamicForm(
             $submission->form_version->definition,
             $request->get('submissionValues')
@@ -53,7 +62,7 @@ class SubmissionController extends Controller
         $submission->data = $data;
         $submission->save();
 
-        $request->session()->flash('status', sprintf('You have saved your application for %s', $submission->application->id));
+        $request->session()->flash('status', sprintf('You have submitted your application for %s', $submission->application->id));
 
         return redirect(route('application-discover'));
     }

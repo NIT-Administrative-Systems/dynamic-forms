@@ -5,11 +5,11 @@
 @endsection
 
 @section('content')
-<pre id="submission-stuff"></pre>
-<form method="post" action="{{ route('applicant.submission.update', ['submission' => $submission]) }}">
+<form id="submissionForm" method="post" action="{{ route('applicant.submission.update', ['submission' => $submission]) }}">
     @csrf
     @method('put')
-    <input type="hidden" name="submissionValues" id="submissionValues">
+    <input type="hidden" name="state">
+    <input type="hidden" name="submissionValues">
 </form>
 
 @include('northwestern::errors')
@@ -53,11 +53,17 @@ window.onload = function() {
         }, draftSaveDebounceMs));
 
         form.on('submit', function (submission) {
-            var hiddenElement = document.getElementById('submissionValues');
-            hiddenElement.value = JSON.stringify(submission.data);
-            hiddenElement.parentElement.submit();
+            var submitForm = document.getElementById('submissionForm');
+            submitForm.querySelector('input[name=state]').value = submission.state;
+            submitForm.querySelector('input[name=submissionValues]').value = JSON.stringify(submission.data);
 
-            form.emit('submitDone', submission);
+            submitForm.submit();
+
+            /**
+             * Don't need this, since we don't want the AJAX-y spinners to finish before we leave the page.
+             *
+             * form.emit('submitDone', submission);
+             */
         });
     });
 };

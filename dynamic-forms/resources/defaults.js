@@ -211,4 +211,28 @@ export default {
             }
         ],
     },
+
+    /**
+     * Builder dropdown values cannot be modified by overriding defaults.
+     *
+     * This modifies the Button editForm directly & globally, which seems to be
+     * the only approach that works.
+     *
+     * It also modifies the behaviour of the 'saveState' additional field, state,
+     * which was not possible from the overrides either.
+     */
+    globalButtonCustomization: () => {
+        var editForm = Formio.Components.components.button.editForm();
+
+        Formio.Utils.getComponent(editForm.components, 'action').data.values = [
+            {label: 'Submit', value: 'submit'},
+            {label: 'Save Draft', value: 'saveState'},
+        ];
+
+        var stateField = Formio.Utils.getComponent(editForm.components, 'state');
+        stateField.defaultValue = 'draft'
+        stateField.type = 'hidden';
+
+        Formio.Components.components.button.editForm = function() { return editForm; };
+    }
 }
