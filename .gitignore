@@ -15,11 +15,8 @@ yarn-error.log
 /public/fonts
 /public/js
 /public/mix-manifest.json
-/_ide_helper_models.php
+/_ide_helper*.php
+/.phpstorm.meta.php
 /.build
 /.php_cs.cache
 .vapor/
-.env.production
-.env.staging
-.env.delete
-.env.push
