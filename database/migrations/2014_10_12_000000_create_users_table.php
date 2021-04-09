@@ -16,7 +16,7 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->enum('auth_type', ['sso', 'local']);
-            $table->string('username')->unique();
+            $table->string('username');
             $table->string('email');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->nullable();
@@ -44,6 +44,8 @@ class CreateUsersTable extends Migration
 
             $table->rememberToken();
             $table->timestamps();
+
+            $table->unique(['auth_type', 'username']);
         });
     }
 

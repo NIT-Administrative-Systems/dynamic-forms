@@ -14,24 +14,24 @@ class SystemRoleTest extends TestCase
     /**
      * @dataProvider dpMappings
      */
-    public function testMapping(string $primaryAff, string $expectedRole): void
+    public function testMapping(string $primaryAff, ?string $expectedRole): void
     {
         $this->assertEquals($expectedRole, SystemRole::forPrimaryAffiliation($primaryAff));
     }
 
     public function testResetableRoles(): void
     {
-        $this->assertCount(3, SystemRole::resetableRoles());
+        $this->assertCount(2, SystemRole::resetableRoles());
     }
 
     public function dpMappings(): array
     {
         return [
-            'Faculty' => [User::AFF_FACULTY, SystemRole::SPONSORS],
-            'Retired faculty' => [User::AFF_EMERITUS, SystemRole::SPONSORS],
+            'Faculty' => [User::AFF_FACULTY, SystemRole::SPONSOR],
+            'Retired faculty' => [User::AFF_EMERITUS, SystemRole::SPONSOR],
             'Student' => [User::AFF_STUDENT, SystemRole::STUDENT],
-            'Staff' => [User::AFF_STAFF, SystemRole::NONE],
-            'Unknown value' => ['dog', SystemRole::NONE],
+            'Staff' => [User::AFF_STAFF, null],
+            'Unknown value' => ['dog', null],
         ];
     }
 }

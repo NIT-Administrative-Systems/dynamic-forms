@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Domains\User\ACL\SystemRole;
 use App\Domains\User\NetID\SyncUserFromDirectory;
 use App\Exceptions\ServiceDownError;
 use App\Http\Controllers\Controller;
@@ -31,8 +32,9 @@ class WebSSOController extends Controller
         throw_unless($directoryData, new ServiceDownError(ServiceDownError::API_DIRECTORY_SEARCH, $directoryApi->getLastError()));
 
         $user = $netidSync($user, $directoryData);
+        $affiliationRole = SystemRole::forPrimaryAffiliation($user->primary_affiliation);
 
-        return $repo->saveWithRoles($user, []);
+        return $repo->saveWithPrimaryAffiliationRole($user, $affiliationRole);
     }
 
     /*

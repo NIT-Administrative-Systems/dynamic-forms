@@ -9,26 +9,25 @@ class SystemRole
 {
     const PLATFORM_ADMINISTRATOR = 'platform-administrators';
     const STUDENT = 'students';
-    const SPONSORS = 'sponsors';
-    const NONE = 'no-role';
+    const SPONSOR = 'sponsors';
 
     const AFF_ROLE_MAP = [
-        User::AFF_FACULTY => self::SPONSORS,
-        User::AFF_EMERITUS => self::SPONSORS,
+        User::AFF_FACULTY => self::SPONSOR,
+        User::AFF_EMERITUS => self::SPONSOR,
+        User::AFF_OUTSIDE_SPONSOR => self::SPONSOR,
         User::AFF_STUDENT => self::STUDENT,
     ];
 
-    public static function forPrimaryAffiliation(string $affiliation): string
+    public static function forPrimaryAffiliation(string $affiliation): ?string
     {
-        return Arr::get(self::AFF_ROLE_MAP, $affiliation, self::NONE);
+        return Arr::get(self::AFF_ROLE_MAP, $affiliation);
     }
 
     public static function resetableRoles(): array
     {
         return [
             self::STUDENT,
-            self::SPONSORS,
-            self::NONE,
+            self::SPONSOR,
         ];
     }
 }

@@ -20,9 +20,9 @@ class RoleSeeder extends Seeder
                 'eligible_affiliations' => [User::AFF_STAFF, User::AFF_FACULTY],
             ],
             [
-                'name' => SystemRole::SPONSORS,
-                'eligible_primary_affiliations' => [User::AFF_FACULTY],
-                'eligible_affiliations' => [User::AFF_FACULTY, User::AFF_EMERITUS],
+                'name' => SystemRole::SPONSOR,
+                'eligible_primary_affiliations' => [User::AFF_FACULTY, User::AFF_OUTSIDE_SPONSOR],
+                'eligible_affiliations' => [User::AFF_FACULTY, User::AFF_EMERITUS, User::AFF_OUTSIDE_SPONSOR],
             ],
             [
                 'name' => SystemRole::STUDENT,

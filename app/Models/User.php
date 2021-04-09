@@ -19,6 +19,11 @@ class User extends Authenticatable
     const AFF_STAFF = 'staff';
 
     /**
+     * Primary affiliation used for non-SSO logins.
+     */
+    const AFF_OUTSIDE_SPONSOR = 'outside-sponsor';
+
+    /**
      * Never a primary affiliation; emeritus will be faculty instead.
      */
     const AFF_EMERITUS = 'emeritus';

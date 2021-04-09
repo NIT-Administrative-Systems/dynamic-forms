@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 class UserFactory extends Factory
@@ -35,7 +36,29 @@ class UserFactory extends Factory
         ];
     }
 
-    public function unverified()
+    public function localAuth(): Factory
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'auth_type' => User::AUTH_TYPE_LOCAL,
+                'email' => $this->faker->unique()->companyEmail,
+                'password' => Hash::make($this->faker->password()),
+                'last_directory_sync_at' => null,
+                'employee_id' => null,
+                'phone' => null,
+                'legal_first_name' => null,
+                'legal_last_name' => null,
+                'primary_affiliation' => User::AFF_OUTSIDE_SPONSOR,
+                'is_outside_sponsor' => true,
+                'is_staff' => false,
+                'is_faculty' => $this->faker->boolean(),
+                'is_student' => $this->faker->boolean(),
+                'is_emeritus' => $this->faker->boolean(),
+            ];
+        });
+    }
+
+    public function unverified(): Factory
     {
         return $this->state(function (array $attributes) {
             return [
