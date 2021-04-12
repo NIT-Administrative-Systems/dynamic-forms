@@ -17,6 +17,7 @@
         "laravel/tinker": "^2.5",
         "laravel/vapor-core": "^2.10",
         "laravel/vapor-ui": "^1.0",
+        "livewire/livewire": "^2.4",
         "northwestern-sysdev/laravel-soa": "^7.0",
         "northwestern-sysdev/northwestern-laravel-ui": "^1.4",
         "sentry/sentry-laravel": "^2.4",

@@ -47,19 +47,28 @@ class UserRepositoryTest extends TestCase
      * @dataProvider saveWithPrimaryAffiliationRoleProvider
      * @covers ::saveWithPrimaryAffiliationRole
      */
-    public function testSaveWithPrimaryAffiliationRole(callable $userCallback, ?string $roleName, array $expectedRoleNames): void
+    public function testSaveWithPrimaryAffiliationRole(callable $userCallback, ?string $roleName, ?array $otherRoles, array $expectedRoleNames): void
     {
-        $user = $this->repo()->saveWithPrimaryAffiliationRole($userCallback(), $roleName);
+        $user = $this->repo()->saveWithPrimaryAffiliationRole($userCallback(), $roleName, $otherRoles);
 
         $this->assertEqualsCanonicalizing($expectedRoleNames, $user->roles->map->name->all());
     }
 
     public function saveWithPrimaryAffiliationRoleProvider(): array
     {
+        $studentAndAdmin = function () {
+            /** @var User $student */
+            $student = User::factory()->create(['primary_affiliation' => User::AFF_STUDENT]);
+            $student->assignRole(SystemRole::STUDENT, SystemRole::PLATFORM_ADMINISTRATOR);
+
+            return $student->refresh();
+        };
+
         return [
             // user closure, aff role, expected role names
             'user with no roles' => [
                 fn () => User::factory()->create(),
+                null,
                 null,
                 [],
             ],
@@ -72,19 +81,28 @@ class UserRepositoryTest extends TestCase
                     return $student->refresh();
                 },
                 SystemRole::SPONSOR,
+                null,
                 [SystemRole::SPONSOR],
             ],
             'swapping only affects swappable roles' => [
-                function () {
-                    /** @var User $student */
-                    $student = User::factory()->create(['primary_affiliation' => User::AFF_STUDENT]);
-                    $student->assignRole(SystemRole::STUDENT, SystemRole::PLATFORM_ADMINISTRATOR);
-
-                    return $student->refresh();
-                },
+                $studentAndAdmin,
                 SystemRole::SPONSOR,
+                null,
                 [SystemRole::PLATFORM_ADMINISTRATOR, SystemRole::SPONSOR],
             ],
+            'adding otherRoles works' => [
+                fn () => User::factory()->create(),
+                SystemRole::SPONSOR,
+                [SystemRole::PLATFORM_ADMINISTRATOR],
+                [SystemRole::SPONSOR, SystemRole::PLATFORM_ADMINISTRATOR],
+            ],
+            'removing otherRoles does not reset system role' => [
+                $studentAndAdmin,
+                SystemRole::STUDENT,
+                [],
+                [SystemRole::STUDENT],
+            ],
+
         ];
     }
 

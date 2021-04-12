@@ -24,22 +24,22 @@ class UserRepository
     }
 
     /**
-     * Saves a user and resets their primary affiliation-based role.
+     * Saves a user and resets their primary affiliation-based role, and optionally other roles.
      *
-     * Any resettable system roles NOT passed will be removed, e.g. if this user
-     * has a Student role currently, but the Sponsor role is passed, then Student
-     * is replaced with Sponsor.
+     * If the $otherRoles array is passed, it will RESET the non-system-assigned roles to that list.
+     * This is not *adding* -- it's resetting to the specified list, removing any manually-assigned
+     * roles that are not in the list.
      *
-     * This DOES NOT touch roles that have been manually assigned, like platform admin
-     * or organization admin roles.
+     * When the $otherRoles param is null, this DOES NOT touch roles that have been manually assigned,
+     * like platform admin or organization admin roles.
      *
      * @see SystemRole::resetableRoles() for what roles are resetable.
      *
      * @param string[] $roles Role names
      */
-    public function saveWithPrimaryAffiliationRole(User $user, ?string $affiliationBasedRole): User
+    public function saveWithPrimaryAffiliationRole(User $user, ?string $affiliationBasedRole, ?array $otherRoles = null): User
     {
-        return DB::transaction(function () use ($user, $affiliationBasedRole) {
+        return DB::transaction(function () use ($user, $affiliationBasedRole, $otherRoles) {
             $resetableRoles = collect(SystemRole::resetableRoles())->reject(fn ($role) => $role === $affiliationBasedRole);
 
             $user->save();
@@ -47,6 +47,14 @@ class UserRepository
 
             if ($affiliationBasedRole) {
                 $user->assignRole($affiliationBasedRole);
+            }
+
+            if (is_array($otherRoles)) {
+                $user->roles
+                    ->reject(fn ($role) => $role->name === $affiliationBasedRole)
+                    ->each(fn ($role) => $user->removeRole($role));
+
+                collect($otherRoles)->each(fn ($role) => $user->assignRole($role));
             }
 
             return $user->refresh();

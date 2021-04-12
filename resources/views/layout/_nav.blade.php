@@ -20,11 +20,13 @@
             Admin
         </a>
         <div class="dropdown-menu" aria-labelledby="programAdminDropdown">
+            <a class="dropdown-item" href="{{ route('admin.user.index') }}">Users &amp; Roles</a>
             <a class="dropdown-item" href="{{ route('admin.organization.index') }}">Organizations</a>
             <a class="dropdown-item" href="{{ route('admin.program.index') }}">Programs</a>
         </div>
     </li>
 
+    @can('viewVaporUI')
     <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="platformAdminDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Platform Admin
@@ -33,6 +35,7 @@
             <a class="dropdown-item" href="{{ route('vapor-ui') }}">Vapor UI</a>
         </div>
     </li>
+    @endcan
 </ul>
 
 <div class='mt-2 mt-md-0 ml-auto'>

@@ -55,4 +55,13 @@ class User extends Authenticatable
     {
         return sprintf('%s %s', $this->first_name, $this->last_name);
     }
+
+    public function getFullLegalNameAttribute(): string
+    {
+        return sprintf(
+            '%s %s',
+            $this->legal_first_name ?? $this->first_name,
+            $this->legal_last_name ?? $this->last_name
+        );
+    }
 }

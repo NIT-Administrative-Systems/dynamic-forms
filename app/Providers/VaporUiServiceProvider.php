@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Domains\User\ACL\SystemPermission;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
@@ -27,10 +28,7 @@ class VaporUiServiceProvider extends ServiceProvider
     protected function gate()
     {
         Gate::define('viewVaporUI', function ($user = null) {
-            // @TODO make this good, but we need more role stuff first!
-            return in_array(optional($user)->username, [
-                'nie7321',
-            ]);
+            return optional($user)->hasPermissionTo(SystemPermission::VIEW_VAPOR_UI);
         });
     }
 

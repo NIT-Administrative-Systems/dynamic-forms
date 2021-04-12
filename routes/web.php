@@ -54,6 +54,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::resource('program', Controllers\Admin\ProgramController::class)->only(['index', 'show', 'create', 'store']);
     Route::resource('form', Controllers\Admin\FormController::class)->except(['destroy', 'index', 'show']);
     Route::resource('cycle', Controllers\Admin\CycleController::class)->only(['create', 'store']);
+    Route::resource('user', Controllers\Admin\UserController::class)->only(['index', 'create', 'edit']);
 });
 
 // @TODO FormIO routes, move them into the package!

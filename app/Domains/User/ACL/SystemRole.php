@@ -23,6 +23,25 @@ class SystemRole
         return Arr::get(self::AFF_ROLE_MAP, $affiliation);
     }
 
+    /**
+     * Names of all system-managed roles.
+     *
+     * @return string[]
+     */
+    public static function allSystemRoles(): array
+    {
+        return [
+            self::PLATFORM_ADMINISTRATOR,
+            self::STUDENT,
+            self::SPONSOR,
+        ];
+    }
+
+    /**
+     * Names of roles that the system can reset when logging in.
+     *
+     * @return string[]
+     */
     public static function resetableRoles(): array
     {
         return [
