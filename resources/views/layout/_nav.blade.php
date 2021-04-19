@@ -33,6 +33,7 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="platformAdminDropdown">
             <a class="dropdown-item" href="{{ route('vapor-ui') }}">Vapor UI</a>
+            <a class="dropdown-item" href="{{ route('telescope') }}">Telescope</a>
         </div>
     </li>
     @endcan
