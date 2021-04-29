@@ -210,6 +210,22 @@ export default {
                 ],
             }
         ],
+        file: [
+            {
+                key: 'file',
+                ignore: false,
+                components: [
+                    { key: 'storage', defaultValue: 's3', disabled: true },
+                    { key: 'dir', ignore: true },
+                    { key: 'fileNameTemplate', ignore: true },
+                    { key: 'uploadOnly', ignore: true },
+                    { key: 'fileTypes', ignore: true },
+                    { key: 'image', ignore: true },
+                    { key: 'webcam', ignore: true },
+
+                ],
+            }
+        ],
     },
 
     /**

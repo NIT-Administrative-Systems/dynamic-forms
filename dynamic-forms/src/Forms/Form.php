@@ -7,7 +7,9 @@ use Northwestern\SysDev\DynamicForms\ComponentRegistry;
 use Northwestern\SysDev\DynamicForms\Components\BaseComponent;
 use Northwestern\SysDev\DynamicForms\Components\ComponentInterface;
 use Northwestern\SysDev\DynamicForms\Components\CustomSubcomponentDeserialization;
+use Northwestern\SysDev\DynamicForms\Components\UploadInterface;
 use Northwestern\SysDev\DynamicForms\Errors\InvalidDefinitionError;
+use Northwestern\SysDev\DynamicForms\Storage\S3Driver;
 
 class Form
 {
@@ -109,6 +111,10 @@ class Form
                 Arr::get($definition, 'case', 'mixed'),
                 Arr::except($definition, ['key', 'label', 'components', 'validate', 'type', 'input', 'tableView', 'multiple', 'conditional', 'customConditional', 'case', 'errorLabel']),
             );
+
+            if (is_subclass_of($component, UploadInterface::class)) {
+                $component->setStorageDriver(new S3Driver());
+            }
 
             $components[] = $component;
         }

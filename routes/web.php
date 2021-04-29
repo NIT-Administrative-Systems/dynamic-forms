@@ -67,3 +67,7 @@ Route::prefix('dynamic-forms')->name('dynamic-forms.')->group(function () {
     // Route::get('form', [Controllers\DynamicForms::class, 'index']);
     // Route::get('form/{type}', [Controllers\DynamicForms::class, 'show']);
 });
+
+Route::post('storage/s3', [Controllers\FormStorageController::class, '__invoke']);
+Route::get('storage/s3', [Controllers\FormStorageController::class, 'getS3']);
+Route::get('storage/s3/{key}', [Controllers\FormStorageController::class, 'getS3direct']);
