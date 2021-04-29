@@ -1,4 +1,4 @@
-# Dynamic Forms for Laravel [![PHPUnit Tests](https://github.com/NIT-Administrative-Systems/dynamic-forms/actions/workflows/phpunit.yml/badge.svg)](https://github.com/NIT-Administrative-Systems/dynamic-forms/actions/workflows/phpunit.yml) 
+# Dynamic Forms for Laravel [![PHPUnit Tests](https://github.com/NIT-Administrative-Systems/dynamic-forms/actions/workflows/phpunit.yml/badge.svg)](https://github.com/NIT-Administrative-Systems/dynamic-forms/actions/workflows/phpunit.yml) [![Coverage Status](https://coveralls.io/repos/github/NIT-Administrative-Systems/dynamic-forms/badge.svg?branch=develop)](https://coveralls.io/github/NIT-Administrative-Systems/dynamic-forms?branch=develop) 
 User-defined forms are a perennial problem for developers. 
 
 Dynamic Forms for Laravel gives you an easy solution: a drag-and-drop builder, an easy way to display the forms, and back-end validation. 
