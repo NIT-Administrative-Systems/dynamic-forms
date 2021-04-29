@@ -7,7 +7,7 @@ use Illuminate\Http\JsonResponse;
 interface StorageInterface
 {
     /**
-     *  Used to see if key is stored in our bucket.
+     * Used to see if key is stored in our bucket.
      */
     public function findObject(string $key): bool;
 

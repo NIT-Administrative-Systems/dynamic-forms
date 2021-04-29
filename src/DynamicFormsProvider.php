@@ -3,9 +3,11 @@
 namespace Northwestern\SysDev\DynamicForms;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\ValidationException;
 use Northwestern\SysDev\DynamicForms\Forms\Form;
+use Northwestern\SysDev\DynamicForms\Storage\S3Driver;
 
 class DynamicFormsProvider extends ServiceProvider
 {
@@ -13,6 +15,31 @@ class DynamicFormsProvider extends ServiceProvider
     {
         $this->app->singleton(ComponentRegistry::class, function ($app) {
             return new ComponentRegistry;
+        });
+
+        $this->app->singleton(S3Driver::class, function ($app) {
+            $clientConfig = [
+                'region' => config('filesystems.disks.s3.region', $_ENV['AWS_DEFAULT_REGION']),
+                'version' => 'latest',
+            ];
+
+            $url = config('filesystems.disks.s3.endpoint', Arr::get($_ENV, 'AWS_URL'));
+
+            // When NOT running on Laravel Vapor, grab the AWS credentials:
+            if (! isset($_ENV['AWS_LAMBDA_FUNCTION_VERSION'])) {
+                $clientConfig['credentials'] = array_filter([
+                    'key' => config('filesystems.disks.s3.key', Arr::get($_ENV, 'AWS_ACCESS_KEY_ID')),
+                    'secret' => config('filesystems.disks.s3.secret', Arr::get($_ENV, 'AWS_SECRET_ACCESS_KEY')),
+                    'token' => Arr::get($_ENV, 'AWS_SESSION_TOKEN'),
+                ]);
+
+                if (! is_null($url)) {
+                    $clientConfig['url'] = $url;
+                    $clientConfig['endpoint'] = $url;
+                }
+            }
+
+            return new S3Driver($clientConfig, config('filesystems.disks.s3.bucket'));
         });
     }
 
