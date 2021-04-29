@@ -1,41 +1,19 @@
 # Dynamic Forms for Laravel
-This is broken out into its own folder & namespace because it'll be split out from this app's repo and released as a stand-alone open source package once it's ready.
+User-defined forms are a perennial problem for developers. 
 
-Any Competitive Applications-specific code should live in `app/`, e.g. the code for the netID lookup form type does not belong here.
+Dynamic Forms for Laravel gives you an easy solution: a drag-and-drop builder, an easy way to display the forms, and back-end validation. 
 
-## Purpose
-The folks at [form.io](https://form.io) have made a wonderful UI library, formiojs, that presents a powerful & user-friendly form builder, as well as rendering the forms it generates.
+![Drag-and-drop form builder](./docs/assets/builder.png)
 
-It is intended for use with their platform -- or at least the open-source backend server -- but that requires running a nodejs process and giving it its own database.
+## How does this work?
+The front-end is powered by the open source [Form.io](https://github.com/formio/formio.js) JavaScript library. This is an awesome library: the builder is user-friendly, you can adjust what's offered, and add your own custom form fields. 
 
-This library reimplements enough of the form.io backend to validate and persist forms from your Laravel application.
+On the backend, it's as simple as calling `$request->validateDynamicForm()`. It behaves just like the [`validate`](https://laravel.com/docs/8.x/validation#quick-writing-the-validation-logic) method you're used to in Laravel. 
 
-## Supported Components
-Not all Form.io components are supported. The following should work, within the confines of the config the package is setting them up with (e.g. restrictions, no JS eval):
+## Getting Started
+**todo, docs site**
 
-- textfield
-- textarea
-- number
-- checkbox
-- select
-- selectboxes
-- radio
-- file
-- button
-- url
-- email
-- phone
-- address
-- datetime
-- day
-- time
-- currency
-- survey
-- signature
-- content
-- htmlelement
-- columns
-- fieldset
-- panel
-- table
-- well
+## Contributing
+If you'd like to contribute to the library, you are welcome to submit a pull request!
+
+There is [a roadmap](https://github.com/NIT-Administrative-Systems/dynamic-forms/projects/1) under the projects tab, so if you're looking for ideas, those issues are a great place to start.
