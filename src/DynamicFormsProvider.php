@@ -19,7 +19,7 @@ class DynamicFormsProvider extends ServiceProvider
 
         $this->app->singleton(S3Driver::class, function ($app) {
             $clientConfig = [
-                'region' => config('filesystems.disks.s3.region', $_ENV['AWS_DEFAULT_REGION']),
+                'region' => config('filesystems.disks.s3.region', Arr::get($_ENV, 'AWS_DEFAULT_REGION')),
                 'version' => 'latest',
             ];
 
