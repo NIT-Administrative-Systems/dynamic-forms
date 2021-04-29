@@ -58,6 +58,21 @@ class ValidatedForm implements Validator
     }
 
     /**
+     * Returns the list of File objects in a validated request.
+     */
+    public function allFiles(): array
+    {
+        $list = [];
+        foreach ($this->values as $key => $file) {
+            if (str_starts_with($key, 'file') && isset($file[0])) {
+                $list[] = $file[0];
+            }
+        }
+
+        return $list;
+    }
+
+    /**
      * Return a flat list of components that should be validated.
      *
      * Conditional logic that excludes fields will be evaluated here
