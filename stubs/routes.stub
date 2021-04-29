@@ -1,0 +1,9 @@
+Route::prefix('dynamic-forms')->name('dynamic-forms.')->group(function () {
+    // Dummy route so we can use the route() helper to give formiojs the base path for this group
+    Route::get('/')->name('index');
+
+    Route::post('storage/s3', [Controllers\FormStorageController::class, 'store']);
+
+    Route::get('storage/s3', [Controllers\FormStorageController::class, 'show']);
+    Route::get('storage/s3/{fileKey}', [Controllers\FormStorageController::class, 'show']);
+});

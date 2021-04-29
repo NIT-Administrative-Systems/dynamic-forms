@@ -8,6 +8,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Northwestern\SysDev\DynamicForms\Storage\Concerns\HandlesDynamicFormsStorage;
 
+/**
+ * Storage/retrieval for file uploads.
+ */
 class DynamicFormsStorageController extends Controller
 {
     use HandlesDynamicFormsStorage;
