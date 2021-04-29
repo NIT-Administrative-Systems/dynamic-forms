@@ -6,7 +6,7 @@ use Northwestern\SysDev\DynamicForms\Components\CaseEnum;
 use Northwestern\SysDev\DynamicForms\Components\Inputs\Textfield;
 use Northwestern\SysDev\DynamicForms\Forms\Form;
 use Northwestern\SysDev\DynamicForms\Forms\ValidatedForm;
-use Tests\TestCase;
+use Orchestra\Testbench\TestCase;
 
 /**
  * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Forms\ValidatedForm

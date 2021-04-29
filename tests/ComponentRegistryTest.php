@@ -4,7 +4,7 @@ namespace Northwestern\SysDev\DynamicForms\Tests;
 
 use Northwestern\SysDev\DynamicForms\ComponentRegistry;
 use Northwestern\SysDev\DynamicForms\Components\Inputs\Textfield;
-use Tests\TestCase;
+use Orchestra\Testbench\TestCase;
 
 /**
  * @coversDefaultClass \Northwestern\SysDev\DynamicForms\ComponentRegistry

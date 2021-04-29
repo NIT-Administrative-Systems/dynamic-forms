@@ -3,7 +3,7 @@
 namespace Northwestern\SysDev\DynamicForms\Tests\Forms;
 
 use Northwestern\SysDev\DynamicForms\Forms\Form;
-use Tests\TestCase;
+use Orchestra\Testbench\TestCase;
 
 /**
  * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Forms\Form

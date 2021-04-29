@@ -3,7 +3,7 @@
 namespace Northwestern\SysDev\DynamicForms\Tests\Conditional;
 
 use Northwestern\SysDev\DynamicForms\Conditional\SimpleConditional;
-use Tests\TestCase;
+use Orchestra\Testbench\TestCase;
 
 /**
  * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Conditional\SimpleConditional

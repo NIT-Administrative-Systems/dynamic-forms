@@ -3,7 +3,7 @@
 namespace Northwestern\SysDev\DynamicForms\Tests\Rules;
 
 use Northwestern\SysDev\DynamicForms\Rules\NotWeekday;
-use Tests\TestCase;
+use Orchestra\Testbench\TestCase;
 
 /**
  * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Rules\NotWeekday

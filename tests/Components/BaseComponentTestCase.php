@@ -3,7 +3,7 @@
 namespace Northwestern\SysDev\DynamicForms\Tests\Components;
 
 use Northwestern\SysDev\DynamicForms\Components\ComponentInterface;
-use Tests\TestCase;
+use Orchestra\Testbench\TestCase;
 
 /**
  * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Components\BaseComponent

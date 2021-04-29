@@ -3,7 +3,7 @@
 namespace Northwestern\SysDev\DynamicForms\Tests\Errors;
 
 use Northwestern\SysDev\DynamicForms\Errors\ValidationNotImplementedError;
-use Tests\TestCase;
+use Orchestra\Testbench\TestCase;
 
 /**
  * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Errors\ValidationNotImplementedError

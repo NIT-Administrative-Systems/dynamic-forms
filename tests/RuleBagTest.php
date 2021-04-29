@@ -3,7 +3,7 @@
 namespace Northwestern\SysDev\DynamicForms\Tests;
 
 use Northwestern\SysDev\DynamicForms\RuleBag;
-use Tests\TestCase;
+use Orchestra\Testbench\TestCase;
 
 /**
  * @coversDefaultClass \Northwestern\SysDev\DynamicForms\RuleBag
