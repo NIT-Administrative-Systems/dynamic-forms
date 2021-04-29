@@ -77,7 +77,7 @@ class DynamicFormsProvider extends ServiceProvider
     {
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                __DIR__.'../dist' => resource_path('js/formio'),
+                __DIR__.'/../dist' => resource_path('js/formio'),
             ], 'dynamic-forms-js');
         }
     }

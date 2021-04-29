@@ -14,15 +14,19 @@ class Install extends GeneratorCommand
     {
         $this->comment('Publishing file upload controller...');
         parent::handle();
+        $this->newLine();
 
         $this->comment('Publishing JS assets...');
         $this->callSilent('vendor:publish', ['--tag' => 'dynamic-forms-js']);
         $this->ejectJsInclude();
+        $this->newLine();
 
         $this->comment('Publishing routes...');
         $this->ejectRoutes();
+        $this->newLine();
 
         $this->info('Dynamic Forms for Laravel has been installed!');
+
         $this->newLine();
         $this->info('Please review the new controller and implement appropriate authorization rules.');
         $this->info('And remember to run Laravel Mix!');
@@ -56,7 +60,7 @@ class Install extends GeneratorCommand
     {
         file_put_contents(
             resource_path('js/app.js'),
-            "\nrequire('./formio');",
+            "require('./formio');",
             FILE_APPEND
         );
     }
