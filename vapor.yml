@@ -6,6 +6,7 @@ environments:
         cli-memory: 512
         domain: competitive-applications-dev.northwestern.edu
         database: competitive-applications-dev
+        storage: nuit-competitive-applications-dev
         runtime: 'php-8.0:al2'
         build:
             - 'COMPOSER_MIRROR_PATH_REPOS=1 composer install --no-dev'
@@ -20,6 +21,7 @@ environments:
         cli-memory: 512
         domain: competitive-applications-qa.northwestern.edu
         database: competitive-applications-qa
+        storage: nuit-competitive-applications-qa
         runtime: 'php-8.0:1l2'
         build:
             - 'COMPOSER_MIRROR_PATH_REPOS=1 composer install'
