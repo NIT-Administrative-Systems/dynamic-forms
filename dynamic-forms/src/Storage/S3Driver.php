@@ -11,39 +11,12 @@ class S3Driver implements StorageInterface
     protected S3Client $client;
     protected string $bucket;
 
-    /**
-     * Makes an S3 client based on the S3 config.
-     *
-     * This is necessary because every aspect of Flysystem and Illuminate\Storage is
-     * designed to stop you getting the underlying S3Client. There's no way to pull that
-     * out from Storage::disk('s3') short of reflection hacks to mark several private props
-     * as public (which is not a good move in production code).
-     *
-     * The Vapor controller does something very similar, but it's only passing a handful
-     * of specific options, which does not include use_path_style_endpoint. If you want to use
-     * Minio, you need to set that flag (or do some DNS tricks that wouldn't be very easy w/
-     * Homestead).
-     */
-    public function __construct()
+    public function __construct(array $clientConfig, string $bucketName)
     {
-        $config = [
-            'region' => config('filesystems.disks.s3.region'),
-            'version' => 'latest',
-            // 'use_path_style_endpoint' => true, // minio thing
-            'url' => config('filesystems.disks.s3.endpoint'),
-            'endpoint' => config('filesystems.disks.s3.endpoint'),
-            'credentials' => [
-                'key' => config('filesystems.disks.s3.key'),
-                'secret' => config('filesystems.disks.s3.secret'),
-            ],
-        ];
-        $this->client = S3Client::factory($config);
-        $this->bucket = config('filesystems.disks.s3.bucket');
+        $this->client = new S3Client($clientConfig);
+        $this->bucket = $bucketName;
     }
 
-    /**
-     *  Used to see if key is stored in our bucket.
-     */
     public function findObject(string $key): bool
     {
         $client = $this->storageClient();
@@ -76,7 +49,7 @@ class S3Driver implements StorageInterface
                 '+50 minutes'
             );
 
-        return  $signedRequest->getUri();
+        return $signedRequest->getUri();
     }
 
     public function getDownloadLink(string $key, ?string $originalName = null): JsonResponse

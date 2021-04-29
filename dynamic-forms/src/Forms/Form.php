@@ -113,7 +113,7 @@ class Form
             );
 
             if (is_subclass_of($component, UploadInterface::class)) {
-                $component->setStorageDriver(new S3Driver());
+                $component->setStorageDriver(app()->make(S3Driver::class));
             }
 
             $components[] = $component;
