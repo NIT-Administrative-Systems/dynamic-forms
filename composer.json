@@ -1,0 +1,52 @@
+{
+    "name": "northwestern-sysdev/dynamic-forms",
+    "description": "Dynamic Forms for Laravel",
+    "type": "library",
+    "license": "MIT",
+    "keywords": [
+        "dynamic forms",
+        "form.io",
+        "laravel forms"
+    ],
+    "authors": [
+        {
+            "name": "Nick Evans",
+            "email": "nick.evans@northwestern.edu"
+        },
+        {
+            "name": "Saood Karim",
+            "email": "saood.karim@northwestern.edu"
+        }
+    ],
+    "require": {
+        "php": "^8"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^6.17",
+        "phpunit/phpunit": "^9"
+    },
+    "autoload": {
+        "psr-4": {
+            "Northwestern\\SysDev\\DynamicForms\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Northwestern\\SysDev\\DynamicForms\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Northwestern\\SysDev\\DynamicForms\\DynamicFormsProvider"
+            ]
+        }
+    },
+    "scripts": {
+        "post-autoload-dump": [
+            "@php ./vendor/bin/testbench package:discover --ansi"
+        ]
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
