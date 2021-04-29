@@ -11,9 +11,9 @@ import CustomTemplates from "./custom-templates";
 */
 FormioUtils.Evaluator.noeval = true;
 
-// Enable custom modules
-Formio.use(NuDirectoryLookup);
-Formio.Components.components.nuDirectoryLookup.editForm = NuDirectoryEditForm;
+// -------------------------------------------------------------------------
+// If you want to load custom code (like additional components), do it here!
+// -------------------------------------------------------------------------
 
 /**
  * Runs global customizations for the Button component's editForm that were not possible
