@@ -37,12 +37,12 @@ jobs:
       with:
         node-version: 12.x
 
-    - uses: actions/cache@v2.1.4
+    - uses: actions/cache@v2.1.5
       with:
         path: 'vendor'
         key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
 
-    - uses: actions/cache@v2.1.4
+    - uses: actions/cache@v2.1.5
       with:
         path: 'node_modules'
         key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
