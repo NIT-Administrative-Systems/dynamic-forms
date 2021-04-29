@@ -1,7 +1,5 @@
 import 'formiojs';
 import Defaults from './defaults';
-import NuDirectoryLookup from "../nu-directory-lookup";
-import NuDirectoryEditForm from "../nu-directory-lookup/form";
 import CustomTemplates from "./custom-templates";
 
 /*
