@@ -10,8 +10,12 @@ The front-end is powered by the open source [Form.io](https://github.com/formio/
 
 On the backend, it's as simple as calling `$request->validateDynamicForm()`. It behaves just like the [`validate`](https://laravel.com/docs/8.x/validation#quick-writing-the-validation-logic) method you're used to in Laravel. 
 
+You **do not** need to use the Form.io SaaS platform. Your Laravel application is filling that role.
+
 ## Getting Started
-**todo, docs site**
+**:heavy_exclamation_mark: This is in a pre-release state.**
+
+Stay tuned for documentation and all that jazz.
 
 ## Contributing
 If you'd like to contribute to the library, you are welcome to submit a pull request!
