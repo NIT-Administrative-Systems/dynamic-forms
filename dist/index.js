@@ -49,3 +49,17 @@ Formio.builder = function (element, form, options) {
 
     return origFormioBuilder(element, form, options);
 };
+
+/**
+ * Hijack the creation of forms so we can inject our fileService w/ the URLs set correctly.
+ */
+const origFormioCreateForm = Formio.createForm;
+Formio.createForm = function (element, form, options) {
+    options = options || {};
+
+    const fileService = new Formio();
+    fileService.formUrl = '/dynamic-forms';
+    options.fileService = fileService;
+
+    return origFormioCreateForm(element, form, options);
+}

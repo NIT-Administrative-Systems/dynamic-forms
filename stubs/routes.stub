@@ -4,6 +4,6 @@ Route::prefix('dynamic-forms')->name('dynamic-forms.')->group(function () {
 
     Route::post('storage/s3', [Controllers\FormStorageController::class, 'store']);
 
-    Route::get('storage/s3', [Controllers\FormStorageController::class, 'show']);
-    Route::get('storage/s3/{fileKey}', [Controllers\FormStorageController::class, 'show']);
+    Route::get('storage/s3', [Controllers\DynamicFormsStorageController::class, 'show'])->name('file-download');
+    Route::get('storage/s3/{fileKey}', [Controllers\DynamicFormsStorageController::class, 'show'])->name('file-redirect');
 });

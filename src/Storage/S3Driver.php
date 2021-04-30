@@ -80,7 +80,7 @@ class S3Driver implements StorageInterface
                     'Content-Type' => 'application/octet-stream',
                 ]
             ),
-            'url' => url('/storage/s3/'),
+            'url' => route('dynamic-forms.file-download'),
             'data' => [
                 'fileName' => $key,
             ],
