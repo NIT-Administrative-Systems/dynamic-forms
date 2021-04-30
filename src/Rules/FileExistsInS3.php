@@ -29,8 +29,10 @@ class FileExistsInS3 implements Rule
         if (! isset($value) || ! isset($value['name']) || ! isset($value['key']) || ! isset($value['url'])) {
             return false;
         }
-        //Check consistency of fields
-        if ($value['name'] != $value['key'] || (url('/storage/s3/').'/'.$value['name']) != $value['url']) {
+
+        // Check consistency of fields
+        $expectedUrl = route('dynamic-forms.file-redirect', ['fileKey' => $value['name']], false);
+        if ($value['name'] != $value['key'] || $expectedUrl != $value['url']) {
             return false;
         }
 
