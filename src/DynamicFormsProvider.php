@@ -65,6 +65,9 @@ class DynamicFormsProvider extends ServiceProvider
         });
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     protected function registerCommands(): void
     {
         if ($this->app->runningInConsole()) {
@@ -73,6 +76,10 @@ class DynamicFormsProvider extends ServiceProvider
             ]);
         }
     }
+
+    /**
+     * @codeCoverageIgnore
+     */
     private function registerPublishing(): void
     {
         if ($this->app->runningInConsole()) {

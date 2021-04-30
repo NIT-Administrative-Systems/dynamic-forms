@@ -4,6 +4,9 @@ namespace Northwestern\SysDev\DynamicForms\Console\Commands;
 
 use Illuminate\Console\GeneratorCommand;
 
+/**
+ * @codeCoverageIgnore
+ */
 class Install extends GeneratorCommand
 {
     protected $signature = 'dynamic-forms:install';
