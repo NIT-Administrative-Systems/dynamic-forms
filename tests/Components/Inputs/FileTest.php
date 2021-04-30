@@ -14,6 +14,15 @@ class FileTest extends InputComponentTestCase
 {
     protected string $componentClass = File::class;
 
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->app['router']
+            ->get('/dynamic-forms/storage/s3/{fileKey}')
+            ->name('dynamic-forms.file-redirect');
+    }
+
     /**
      * @covers ::processValidations
      * @covers ::validate
@@ -80,15 +89,15 @@ class FileTest extends InputComponentTestCase
     public function validationsProvider(): array
     {
         $filePASS = json_decode('[{
-        "storage": "s3",
+            "storage": "s3",
             "name": "TEST.docx",
             "key": "TEST.docx",
             "size": 10000,
             "type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-            "originalName": "TEST.docx"}]', true);
-        $filePASS[0]['url'] = fn () => (url('/storage/s3/').'/'.$filePASS[0]['name']);
-        $fileProviderFail = $filePASS;
-        $fileProviderFail[0]['storage'] = 's4';
+            "originalName": "TEST.docx"
+        }]',true);
+
+        $filePASS[0]['url'] = fn () => route('dynamic-forms.file-redirect', [$filePASS[0]['name']], false);
         $fileNameCheckFail = $filePASS;
         $fileNameCheckFail[0]['name'] = 'TEST2.docx';
         $fileKeyCheckFail = $filePASS;
@@ -102,11 +111,10 @@ class FileTest extends InputComponentTestCase
 
         return [
             'passes when no value is supplied' => [[], [], true],
-            'invalid formatted file fails' => [[], ['dog'], false],
+            'invalid formatted file fails' => [[], [['storage' => 's3', 'dog' => 1]], false],
             'valid file passes' => [[], $filePASS, true],
             'required passes' => [['required' => true], $filePASS, true],
             'required fails' => [['required' => true], [], false],
-            'FileExistsinS3 fails from provider check' => [[], $fileProviderFail, false],
             'FileExistsinS3 fails from name consistency check' => [[], $fileNameCheckFail, false],
             'FileExistsinS3 fails from key consistency check' => [[], $fileKeyCheckFail, false],
             'FileExistsinS3 fails from url consistency check' => [[], $fileURLCheckFail, false],
