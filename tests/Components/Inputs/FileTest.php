@@ -10,7 +10,7 @@ use Northwestern\SysDev\DynamicForms\Tests\Components\InputComponentTestCase;
 /**
  * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Components\Inputs\File
  */
-class S3FileTest extends InputComponentTestCase
+class FileTest extends InputComponentTestCase
 {
     protected string $componentClass = File::class;
 
