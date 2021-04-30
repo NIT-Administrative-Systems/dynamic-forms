@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\ValidationException;
+use Northwestern\SysDev\DynamicForms\Console\Commands\Install;
 use Northwestern\SysDev\DynamicForms\Forms\Form;
 use Northwestern\SysDev\DynamicForms\Storage\S3Driver;
 
@@ -45,6 +46,9 @@ class DynamicFormsProvider extends ServiceProvider
 
     public function boot()
     {
+        $this->registerCommands();
+        $this->registerPublishing();
+
         /** @var ComponentRegistry $registry */
         $registry = $this->app->make(ComponentRegistry::class);
 
@@ -60,4 +64,29 @@ class DynamicFormsProvider extends ServiceProvider
             return $validator->values();
         });
     }
+
+    /**
+     * @codeCoverageIgnore
+     */
+    protected function registerCommands(): void
+    {
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                Install::class,
+            ]);
+        }
+    }
+
+    /**
+     * @codeCoverageIgnore
+     */
+    private function registerPublishing(): void
+    {
+        if ($this->app->runningInConsole()) {
+            $this->publishes([
+                __DIR__.'/../dist' => resource_path('js/formio'),
+            ], 'dynamic-forms-js');
+        }
+    }
+
 }

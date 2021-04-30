@@ -1,0 +1,10 @@
+Route::prefix('dynamic-forms')->name('dynamic-forms.')->group(function () {
+    // Dummy route so we can use the route() helper to give formiojs the base path for this group
+    Route::get('/')->name('index');
+
+    Route::post('storage/s3', [Controllers\DynamicFormsStorageController::class, 'store'])
+        ->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);
+
+    Route::get('storage/s3', [Controllers\DynamicFormsStorageController::class, 'show'])->name('file-download');
+    Route::get('storage/s3/{fileKey}', [Controllers\DynamicFormsStorageController::class, 'show'])->name('file-redirect');
+});
