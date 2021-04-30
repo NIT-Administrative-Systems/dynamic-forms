@@ -19,7 +19,8 @@
         }
     ],
     "require": {
-        "php": "^8"
+        "php": "^8",
+        "aws/aws-sdk-php": "^3.80"
     },
     "require-dev": {
         "orchestra/testbench": "^6.17",
