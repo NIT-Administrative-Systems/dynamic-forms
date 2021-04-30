@@ -12,6 +12,7 @@ class TimeFormatTest extends TestCase
 {
     /**
      * @dataProvider passesDataProvider
+     * @covers ::__construct
      * @covers ::passes
      */
     public function testPasses(?string $format, string $value, bool $passes): void

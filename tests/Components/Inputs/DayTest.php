@@ -51,6 +51,7 @@ class DayTest extends InputComponentTestCase
      * @dataProvider validationsProvider
      * @covers ::processValidations
      * @covers ::validate
+     * @covers ::makeDateFormatString
      */
     public function testValidations(
         array $validations,

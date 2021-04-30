@@ -37,6 +37,11 @@ class S3Driver implements StorageInterface
         return $this->client;
     }
 
+    public function setStorageClient(S3Client $client): void
+    {
+        $this->client = $client;
+    }
+
     public function getDirectDownloadLink(string $key, ?string $originalName = null): string
     {
         $client = $this->storageClient();

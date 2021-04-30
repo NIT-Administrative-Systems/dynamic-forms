@@ -46,6 +46,7 @@ class RuleBagTest extends TestCase
     }
 
     /**
+     * @covers ::__construct
      * @covers ::rules
      */
     public function testRules(): void

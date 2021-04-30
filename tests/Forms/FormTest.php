@@ -17,6 +17,7 @@ class FormTest extends TestCase
      * @covers ::processComponentDefinition
      * @covers ::getCustomChildren
      * @covers ::flattenComponents
+     * @covers ::flatComponents
      */
     public function testFormDeserialization(string $definition, int $componentCount): void
     {
