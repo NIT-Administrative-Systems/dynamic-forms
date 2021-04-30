@@ -16,6 +16,7 @@ class HandlesDynamicFormsStorageTest extends TestCase
 {
     /**
      * @covers ::store
+     * @covers ::storageDriver
      */
     public function testUploadWorks(): void
     {
@@ -75,6 +76,7 @@ class HandlesDynamicFormsStorageTest extends TestCase
 
     /**
      * @covers ::show
+     * @covers ::storageDriver
      */
     public function testDownloadJsonResponse(): void
     {
@@ -97,6 +99,7 @@ class HandlesDynamicFormsStorageTest extends TestCase
 
     /**
      * @covers ::show
+     * @covers ::storageDriver
      */
     public function testDownloadRedirect(): void
     {
