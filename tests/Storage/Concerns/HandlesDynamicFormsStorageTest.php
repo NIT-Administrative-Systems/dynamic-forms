@@ -119,10 +119,10 @@ class HandlesDynamicFormsStorageTest extends TestCase
     }
 
     /**
-     * Gets a class using the HandlesDynamicFormsStorage trait w/ the authorize method implemented.
+     * Gets a class using the HandlesDynamicFormsStorage trait w/ the authorizeFileAction method implemented.
      *
      * @param callable|null $authCallback A function that throws an AuthorizationException
-     * @return object Controller w/ authorize() method implemented
+     * @return object Controller w/ authorizeFileAction() method implemented
      */
     protected function mock_controller(?callable $authCallback = null): object
     {
@@ -136,7 +136,7 @@ class HandlesDynamicFormsStorageTest extends TestCase
                 //
             }
 
-            protected function authorize(string $action, string $fileKey, Request $request): void
+            protected function authorizeFileAction(string $action, string $fileKey, Request $request): void
             {
                 ($this->authCallback)();
             }

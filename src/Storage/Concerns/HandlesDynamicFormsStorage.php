@@ -19,7 +19,7 @@ trait HandlesDynamicFormsStorage
     public function store(Request $request)
     {
         $fileKey = $request->get('name');
-        $this->authorize('upload', $fileKey, $request);
+        $this->authorizeFileAction('upload', $fileKey, $request);
 
         return $this->storageDriver()->getUploadLink($fileKey);
     }
@@ -36,7 +36,7 @@ trait HandlesDynamicFormsStorage
         $needsRedirect = $fileKey !== null;
         $fileKey = $fileKey ?: $request->get('key');
 
-        $this->authorize('download', $fileKey, $request);
+        $this->authorizeFileAction('download', $fileKey, $request);
 
         return $needsRedirect
             ? redirect($this->storageDriver()->getDirectDownloadLink($fileKey))

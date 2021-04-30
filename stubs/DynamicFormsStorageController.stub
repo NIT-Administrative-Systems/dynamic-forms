@@ -33,7 +33,7 @@ class DynamicFormsStorageController extends Controller
      *
      * @throws AuthorizationException
      */
-    protected function authorize(string $action, string $fileKey, Request $request): void
+    protected function authorizeFileAction(string $action, string $fileKey, Request $request): void
     {
         /*
         $permission = "${action}Files"; // uploadFiles, downloadFiles -- it's a convention
@@ -44,6 +44,6 @@ class DynamicFormsStorageController extends Controller
         ]);
         */
 
-        throw new AuthorizationException('Please implement the authorize method in' . __CLASS__, '403');
+        throw new AuthorizationException('Please implement the authorize method in ' . __CLASS__, '403');
     }
 }
