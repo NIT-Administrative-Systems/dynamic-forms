@@ -35,7 +35,8 @@
     },
     "autoload": {
         "psr-4": {
-            "Northwestern\\SysDev\\DynamicForms\\": "src/"
+            "Northwestern\\SysDev\\DynamicForms\\": "src/",
+            "Northwestern\\SysDev\\DynamicForms\\Tests\\Components\\TestCases\\": "tests/Components/TestCases"
         }
     },
     "autoload-dev": {

@@ -5,7 +5,7 @@ namespace Northwestern\SysDev\DynamicForms\Tests\Components\Inputs;
 use Illuminate\Support\Carbon;
 use Northwestern\SysDev\DynamicForms\Components\CaseEnum;
 use Northwestern\SysDev\DynamicForms\Components\Inputs\DateTime;
-use Northwestern\SysDev\DynamicForms\Tests\Components\InputComponentTestCase;
+use Northwestern\SysDev\DynamicForms\Tests\Components\TestCases\InputComponentTestCase;
 
 /**
  * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Components\Inputs\DateTime

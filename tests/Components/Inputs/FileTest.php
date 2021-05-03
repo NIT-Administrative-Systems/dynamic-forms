@@ -5,7 +5,7 @@ namespace Northwestern\SysDev\DynamicForms\Tests\Components\Inputs;
 use Illuminate\Support\Arr;
 use Northwestern\SysDev\DynamicForms\Components\Inputs\File;
 use Northwestern\SysDev\DynamicForms\Storage\S3Driver;
-use Northwestern\SysDev\DynamicForms\Tests\Components\InputComponentTestCase;
+use Northwestern\SysDev\DynamicForms\Tests\Components\TestCases\InputComponentTestCase;
 
 /**
  * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Components\Inputs\File
