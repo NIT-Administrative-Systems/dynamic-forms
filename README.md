@@ -15,7 +15,12 @@ You **do not** need to use the Form.io SaaS platform. Your Laravel application i
 ## Getting Started
 **:heavy_exclamation_mark: This is in a pre-release state.**
 
-Stay tuned for documentation and all that jazz.
+```
+composer require northwestern-sysdev/dynamic-forms
+php artisan dynamic-forms:install
+```
+
+Further information about usage can be [found in the docs](#).
 
 ## Contributing
 If you'd like to contribute to the library, you are welcome to submit a pull request!
