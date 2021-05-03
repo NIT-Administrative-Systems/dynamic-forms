@@ -1,6 +1,6 @@
 <?php
 
-namespace Northwestern\SysDev\DynamicForms\Tests\Components;
+namespace Northwestern\SysDev\DynamicForms\Tests\Components\TestCases;
 
 use Northwestern\SysDev\DynamicForms\Components\ComponentInterface;
 use Orchestra\Testbench\TestCase;

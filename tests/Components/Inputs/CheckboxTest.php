@@ -4,7 +4,7 @@ namespace Northwestern\SysDev\DynamicForms\Tests\Components\Inputs;
 
 use Northwestern\SysDev\DynamicForms\Components\CaseEnum;
 use Northwestern\SysDev\DynamicForms\Components\Inputs\Checkbox;
-use Northwestern\SysDev\DynamicForms\Tests\Components\InputComponentTestCase;
+use Northwestern\SysDev\DynamicForms\Tests\Components\TestCases\InputComponentTestCase;
 
 /**
  * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Components\Inputs\Checkbox
