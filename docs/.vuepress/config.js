@@ -18,6 +18,7 @@ module.exports = {
             './install',
             './usage',
             './uploads',
+            './extending',
         ],
     },
 }

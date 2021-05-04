@@ -20,7 +20,7 @@ composer require northwestern-sysdev/dynamic-forms
 php artisan dynamic-forms:install
 ```
 
-Further information about usage can be [found in the docs](#).
+Further information about usage can be [found in the docs](https://nit-administrative-systems.github.io/dynamic-forms/).
 
 ## Contributing
 If you'd like to contribute to the library, you are welcome to submit a pull request!
