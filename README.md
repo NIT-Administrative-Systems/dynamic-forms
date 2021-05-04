@@ -3,7 +3,7 @@ User-defined forms are a perennial problem for developers.
 
 Dynamic Forms for Laravel gives you an easy solution: a drag-and-drop builder, an easy way to display the forms, and back-end validation. 
 
-[![Drag-and-drop form builder](./docs/assets/builder_short.gif)](./docs/assets/builder_demo.webm)
+![Drag-and-drop form builder](./docs/assets/builder_short.gif)
 
 ## How does this work?
 The front-end is powered by the open source [Form.io](https://github.com/formio/formio.js) JavaScript library. This is an awesome library: the builder is user-friendly, you can adjust what's offered, and add your own custom form fields. 
