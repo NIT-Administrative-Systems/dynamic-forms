@@ -1,4 +1,4 @@
-# Dynamic Forms for Laravel [![PHPUnit Tests](https://github.com/NIT-Administrative-Systems/dynamic-forms/actions/workflows/phpunit.yml/badge.svg)](https://github.com/NIT-Administrative-Systems/dynamic-forms/actions/workflows/phpunit.yml) [![Coverage Status](https://coveralls.io/repos/github/NIT-Administrative-Systems/dynamic-forms/badge.svg?branch=develop)](https://coveralls.io/github/NIT-Administrative-Systems/dynamic-forms?branch=develop) 
+# Dynamic Forms for Laravel [![PHPUnit Tests](https://github.com/NIT-Administrative-Systems/dynamic-forms/actions/workflows/phpunit.yml/badge.svg)](https://github.com/NIT-Administrative-Systems/dynamic-forms/actions/workflows/phpunit.yml) [![Coverage Status](https://coveralls.io/repos/github/NIT-Administrative-Systems/dynamic-forms/badge.svg?branch=develop)](https://coveralls.io/github/NIT-Administrative-Systems/dynamic-forms?branch=develop) [![Latest Stable Version](https://poser.pugx.org/northwestern-sysdev/dynamic-forms/v)](//packagist.org/packages/northwestern-sysdev/dynamic-forms) [![Total Downloads](https://poser.pugx.org/northwestern-sysdev/dynamic-forms/downloads)](//packagist.org/packages/northwestern-sysdev/dynamic-forms) 
 User-defined forms are a perennial problem for developers. 
 
 Dynamic Forms for Laravel gives you an easy solution: a drag-and-drop builder, an easy way to display the forms, and back-end validation. 
@@ -13,8 +13,6 @@ On the backend, it's as simple as calling `$request->validateDynamicForm()`. It 
 You **do not** need to use the Form.io SaaS platform. Your Laravel application is filling that role.
 
 ## Getting Started
-**:heavy_exclamation_mark: This is in a pre-release state.**
-
 ```
 composer require northwestern-sysdev/dynamic-forms
 php artisan dynamic-forms:install
