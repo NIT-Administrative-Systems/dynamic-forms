@@ -3,14 +3,14 @@
 namespace Northwestern\SysDev\DynamicForms\Tests\Rules;
 
 use Northwestern\SysDev\DynamicForms\Errors\UnknownStorageDriverError;
-use Northwestern\SysDev\DynamicForms\Rules\FileExistsInS3;
+use Northwestern\SysDev\DynamicForms\Rules\FileExists;
 use Northwestern\SysDev\DynamicForms\Storage\StorageInterface;
 use Orchestra\Testbench\TestCase;
 
 /**
- * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Rules\FileExistsInS3
+ * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Rules\FileExists
  */
-class FileExistsInS3Test extends TestCase
+class FileExistsTest extends TestCase
 {
     /**
      * @covers ::__construct
@@ -25,25 +25,45 @@ class FileExistsInS3Test extends TestCase
             ->get('/dynamic-forms/storage/s3/{fileKey}')
             ->name('dynamic-forms.file-redirect');
 
+
+        $this->app['router']
+            ->get('/dynamic-forms/storage/url/')
+            ->name('dynamic-forms.file-download');
+
         $this->assertEquals($passes, $rule->passes('test', $file));
     }
 
     public function passesProvider(): array
     {
-        $valid = [
+        $validS3 = [
             'name' => 'foo1',
             'key' => 'foo1', // should match name
             'url' => '/dynamic-forms/storage/s3/foo1', // should match name
-            'storage' => FileExistsInS3::STORAGE_S3,
+            'storage' => FileExists::STORAGE_S3,
+        ];
+
+        $validURL = [
+            'name' => 'foo1',
+            'url' => 'http://localhost/dynamic-forms/storage/url?baseUrl=https%3A%2F%2Fapi.form.io&project=&form=/foo1', // should match name with additional data fields added on
+            'storage' => FileExists::STORAGE_URL,
+            'data' => ['baseUrl' => 'https://api.form.io',
+                        'project' => '',
+                        'form' => '',]
         ];
 
         return [
             // file, should exist in storage, passes
-            'valid' => [$valid, true, true],
-            'missing field' => [['storage' => FileExistsInS3::STORAGE_S3], true, false],
-            'unexpected url' => [array_merge($valid, ['url' => '/dog']), true, false],
-            'not consistent' => [array_merge($valid, ['name' => 'dog']), true, false],
-            'file does not exist' => [$valid, false, false],
+            'valid S3' => [$validS3, true, true],
+            'missing field S3' => [['storage' => FileExists::STORAGE_S3], true, false],
+            'unexpected url S3' => [array_merge($validS3, ['url' => '/dog']), true, false],
+            'not consistent S3' => [array_merge($validS3, ['name' => 'dog']), true, false],
+            'file does not exist S3' => [$validS3, false, false],
+
+            // file, should exist in storage, passes
+            'valid URL' => [$validURL, true, true],
+            'missing field URL' => [['storage' => FileExists::STORAGE_URL], true, false],
+            'unexpected url URL' => [array_merge($validURL, ['url' => '/dog']), true, false],
+            'file does not exist URL' => [$validURL, false, false],
         ];
     }
 
@@ -77,11 +97,11 @@ class FileExistsInS3Test extends TestCase
         $this->assertStringContainsString('not uploaded', $rule->message());
     }
 
-    public function rule(bool $shouldExist): FileExistsInS3
+    public function rule(bool $shouldExist): FileExists
     {
         $driver = $this->createStub(StorageInterface::class);
         $driver->method('findObject')->willReturn($shouldExist);
 
-        return new FileExistsInS3($driver);
+        return new FileExists($driver);
     }
 }

@@ -8,7 +8,9 @@ use Northwestern\SysDev\DynamicForms\Components\BaseComponent;
 use Northwestern\SysDev\DynamicForms\Components\ComponentInterface;
 use Northwestern\SysDev\DynamicForms\Components\CustomSubcomponentDeserialization;
 use Northwestern\SysDev\DynamicForms\Components\UploadInterface;
+use Northwestern\SysDev\DynamicForms\DynamicFormsProvider;
 use Northwestern\SysDev\DynamicForms\Errors\InvalidDefinitionError;
+use Northwestern\SysDev\DynamicForms\Storage\FileDriver;
 use Northwestern\SysDev\DynamicForms\Storage\S3Driver;
 
 class Form
@@ -113,7 +115,17 @@ class Form
             );
 
             if (is_subclass_of($component, UploadInterface::class)) {
-                $component->setStorageDriver(app()->make(S3Driver::class));
+                //will need to change based on whether using S3 or not ( can do that based on the following route)
+                // or can be doen with class_uses(DynamicFormsProvider::class) and check for HandlesDynamicFormsStorageLocal
+                if(\Route::getRoutes()->getByName('dynamic-forms.file-redirect'))
+                {
+                    $component->setStorageDriver(app()->make(S3Driver::class));
+                }
+                else
+                {
+                    $component->setStorageDriver(app()->make(FileDriver::class));
+                }
+
             }
 
             $components[] = $component;
