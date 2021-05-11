@@ -25,6 +25,13 @@ yarn run prod
 
 If you are going to use file uploads, you will want to ensure you have configured your Laravel app with a bucket name and credentials. If you are deploying to Laravel Vapor, no additional config is needed for file uploads.
 
+Alternatively if you want to install for local file uploads
+```bash
+composer require northwestern-sysdev/dynamic-forms
+php artisan dynamic-forms:install --local
+yarn run prod
+```
+
 ## Post-Installation Tasks
 The installation command creates `App\Http\Controllers\DynamicFormsStorageController`. This controller is responsible for interacting with Amazon S3 to upload & download files.
 

@@ -1,7 +1,7 @@
 # File Uploads
-File uploads are supported via Amazon S3. 
+File uploads are supported via Amazon S3 or direct uploading. 
 
-Uploads are done in a multi-step process: 
+S3 Uploads are done in a multi-step process: 
 
 1. When a user tries to upload a file, Formiojs submits an AJAX request to `App\Http\Controllers\DynamicFormsStorageController` asking for a presigned S3 upload URL.
 1. The controller communicates with AWS to create a presigned upload URL that is only valid for a few minutes, then sends this URL to Formiojs.
@@ -11,7 +11,9 @@ The uploaded file is never sent through your Laravel application -- it goes dire
 
 Requests to download or view files follows a similar multi-step approach: when a user clicks a download link, Formiojs is asking the controller for a presigned download URL that only remains valid for a few minutes, and then the browser is sent there.
 
-The AWS S3 bucket itself should be private. The presigned URLs are what provide security for objects: the Laravel app gets a request for a resource, performs its own authorization checks, and then tells S3 to prepare a link for an authorized user.  
+The AWS S3 bucket itself should be private. The presigned URLs are what provide security for objects: the Laravel app gets a request for a resource, performs its own authorization checks, and then tells S3 to prepare a link for an authorized user.
+
+Local file upload does not use presigned URL but directly uploads and downloads from local storage.
 
 ## Temporary Files
 Since file transfers are done before a form is submitted, it is possible for a user to abandon their form and leave what is essentially junk data in the S3 bucket.
