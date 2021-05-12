@@ -16,6 +16,8 @@ You **do not** need to use the Form.io SaaS platform. Your Laravel application i
 ```
 composer require northwestern-sysdev/dynamic-forms
 php artisan dynamic-forms:install
+yarn install
+yarn run prod
 ```
 
 Further information about usage can be [found in the docs](https://nit-administrative-systems.github.io/dynamic-forms/).
