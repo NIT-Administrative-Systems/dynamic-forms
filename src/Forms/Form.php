@@ -115,15 +115,18 @@ class Form
             );
 
             if (is_subclass_of($component, UploadInterface::class)) {
-                //will need to change based on whether using S3 or not ( can do that based on the following route)
-                // or can be doen with class_uses(DynamicFormsProvider::class) and check for HandlesDynamicFormsStorageLocal
-                if(\Route::getRoutes()->getByName('dynamic-forms.file-redirect'))
+                $storageType = $component->getStorageType();
+                if($storageType == \Northwestern\SysDev\DynamicForms\Rules\FileExists::STORAGE_S3)
                 {
                     $component->setStorageDriver(app()->make(S3Driver::class));
                 }
-                else
+                else if($storageType == \Northwestern\SysDev\DynamicForms\Rules\FileExists::STORAGE_URL)
                 {
                     $component->setStorageDriver(app()->make(FileDriver::class));
+                }
+                else
+                {
+                    throw new InvalidDefinitionError('Unable to find storage type', $storageType);
                 }
 
             }

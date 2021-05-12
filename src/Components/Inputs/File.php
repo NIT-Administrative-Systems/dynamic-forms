@@ -52,4 +52,12 @@ class File extends BaseComponent implements UploadInterface
 
         return parent::submissionValue()[0] ?? parent::submissionValue();
     }
+
+    /**
+     * @return string
+     */
+    public function getStorageType(): string
+    {
+        return $this->additional['storage'];
+    }
 }
