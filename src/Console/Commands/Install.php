@@ -23,49 +23,49 @@ class Install extends GeneratorCommand
 
         $this->comment('Publishing JS assets...');
         $this->callSilent('vendor:publish', ['--tag' => 'dynamic-forms-js']);
-        $this->ejectJsInclude();
+        $this->ejectJsInclude(resource_path('js/app.js'));
         $this->updatePackages(base_path('package.json'));
         $this->newLine();
 
         $this->comment('Publishing routes...');
-        $this->ejectRoutes();
+        $this->ejectRoutes(base_path('routes/web.php'),);
         $this->newLine();
 
         $this->info('Dynamic Forms for Laravel has been installed!');
 
         $this->newLine();
         $this->info('Please review the new controller and implement appropriate authorization rules.');
-        $this->info('And remember to run Laravel Mix!');
+        $this->info('And remember to run `yarn install and Laravel Mix!');
     }
 
-    protected function getNameInput()
+    protected function getNameInput(): string
     {
         return 'DynamicFormsStorageController';
     }
 
-    protected function getStub()
+    protected function getStub(): string
     {
         return __DIR__ . '/../../../stubs/DynamicFormsStorageController.stub';
     }
 
-    protected function getDefaultNamespace($rootNamespace)
+    protected function getDefaultNamespace($rootNamespace): string
     {
         return $rootNamespace . '\Http\Controllers';
     }
 
-    protected function ejectRoutes()
+    protected function ejectRoutes(string $routesFile): void
     {
         file_put_contents(
-            base_path('routes/web.php'),
+            $routesFile,
             file_get_contents(__DIR__.'/../../../stubs/routes.stub'),
             FILE_APPEND
         );
     }
 
-    protected function ejectJsInclude()
+    protected function ejectJsInclude(string $appJsFile): void
     {
         file_put_contents(
-            resource_path('js/app.js'),
+            $appJsFile,
             "require('./formio');",
             FILE_APPEND
         );
