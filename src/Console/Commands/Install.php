@@ -4,9 +4,6 @@ namespace Northwestern\SysDev\DynamicForms\Console\Commands;
 
 use Illuminate\Console\GeneratorCommand;
 
-/**
- * @codeCoverageIgnore
- */
 class Install extends GeneratorCommand
 {
     public const FORMIOJS_VERSION = '^4.12.7';
