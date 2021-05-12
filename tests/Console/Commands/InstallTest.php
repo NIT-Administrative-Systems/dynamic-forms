@@ -28,7 +28,7 @@ class InstallTest extends TestCase
     /**
      * @covers ::ejectRoutes
      */
-    public function testEjectRoutes()
+    public function testEjectRoutes(): void
     {
         $cmd = $this->installCommand();
         $file = $this->tempFile();
@@ -41,12 +41,25 @@ class InstallTest extends TestCase
     /**
      * @covers ::ejectJsInclude
      */
-    public function testEjectJsInclude()
+    public function testEjectJsInclude(): void
     {
         $cmd = $this->installCommand();
         $file = $this->tempFile();
 
         $this->invokeProtected($cmd, 'ejectJsInclude', [$file]);
+
+        $this->assertNotEmpty(file_get_contents($file));
+    }
+
+    /**
+     * @covers ::ejectCssInclude
+     */
+    public function testEjectCssInclude(): void
+    {
+        $cmd = $this->installCommand();
+        $file = $this->tempFile();
+
+        $this->invokeProtected($cmd, 'ejectCssInclude', [$file]);
 
         $this->assertNotEmpty(file_get_contents($file));
     }

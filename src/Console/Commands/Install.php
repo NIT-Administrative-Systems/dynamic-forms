@@ -18,9 +18,10 @@ class Install extends GeneratorCommand
         parent::handle();
         $this->newLine();
 
-        $this->comment('Publishing JS assets...');
+        $this->comment('Publishing JS/CSS assets...');
         $this->callSilent('vendor:publish', ['--tag' => 'dynamic-forms-js']);
         $this->ejectJsInclude(resource_path('js/app.js'));
+        $this->ejectCssInclude(resource_path('sass/app.scss'));
         $this->updatePackages(base_path('package.json'));
         $this->newLine();
 
@@ -65,6 +66,15 @@ class Install extends GeneratorCommand
             $appJsFile,
             "require('./formio');",
             FILE_APPEND
+        );
+    }
+
+    protected function ejectCssInclude(string $appCssFile): void
+    {
+        file_put_contents(
+          $appCssFile,
+          "@import '~formiojs/dist/formio.full';",
+          FILE_APPEND
         );
     }
 
