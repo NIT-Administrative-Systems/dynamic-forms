@@ -9,6 +9,8 @@ use Illuminate\Console\GeneratorCommand;
  */
 class Install extends GeneratorCommand
 {
+    public const FORMIOJS_VERSION = '^4.12.7';
+
     protected $signature = 'dynamic-forms:install';
     protected $description = 'Installs Dynamic Forms for Laravel';
     protected $type = 'Controller';
@@ -22,6 +24,7 @@ class Install extends GeneratorCommand
         $this->comment('Publishing JS assets...');
         $this->callSilent('vendor:publish', ['--tag' => 'dynamic-forms-js']);
         $this->ejectJsInclude();
+        $this->updatePackages(base_path('package.json'));
         $this->newLine();
 
         $this->comment('Publishing routes...');
@@ -65,6 +68,24 @@ class Install extends GeneratorCommand
             resource_path('js/app.js'),
             "require('./formio');",
             FILE_APPEND
+        );
+    }
+
+    protected function updatePackages(string $packageFile): void
+    {
+        if (! file_exists($packageFile)) {
+            return;
+        }
+
+        $packages = json_decode(file_get_contents($packageFile), true);
+
+        $packages['devDependencies']['formiojs'] = self::FORMIOJS_VERSION;
+
+        ksort($packages['devDependencies']);
+
+        file_put_contents(
+            $packageFile,
+            json_encode($packages, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT).PHP_EOL
         );
     }
 }
