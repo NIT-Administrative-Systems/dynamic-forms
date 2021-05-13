@@ -77,6 +77,35 @@ class BuilderController extends Controller
 </script>
 ```
 
+### Customizing the Components Menu
+Dynamic Forms comes with a set of defaults for the builder's sidebar, which contains the library of available components. This default disables unsupported components and organizes them into better groupings.
+
+You can review and adjust these defaults in the `resources/js/formio/builder-sidebar.js` file.
+
+If you need to customize an individual builder, you can do so by passing the `builder` object in the options param. Doing so gives you complete control over the sidebar. For more details on how this config option works, see the [Formiojs example](https://formio.github.io/formio.js/app/examples/custombuilder.html). 
+
+```html
+<script lang="text/javascript">
+    /**
+     * The defaults from builder-sidebar.js are published 
+     * as window.DynamicFormsBuilderSidebar.
+     * 
+     * You can adjust this object, or make a similar object yourself:
+     */
+    console.log(DynamicFormsBuilderSidebar);
+    
+    window.onload = function () {
+        new Formio.builder(
+            document.getElementById('formio-builder'),
+            @if(isset($definition)) {!! $definition !!} @else {} @endif,
+            {
+                builder: DynamicFormsBuilderSidebar,
+            },
+        );
+    };
+</script>
+```
+
 ## Form
 The Formiojs library will render a form definition from the builder, so users can fill out your forms.
 
