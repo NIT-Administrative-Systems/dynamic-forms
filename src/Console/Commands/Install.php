@@ -12,6 +12,9 @@ class Install extends GeneratorCommand
     protected $description = 'Installs Dynamic Forms for Laravel';
     protected $type = 'Controller';
 
+    /**
+     * @codeCoverageIgnore
+     */
     public function handle()
     {
         $this->comment('Publishing file upload controller...');
