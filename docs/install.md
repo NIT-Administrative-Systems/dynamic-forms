@@ -20,6 +20,7 @@ Install the package, run the installation command, and build your frontend asset
 ```bash
 composer require northwestern-sysdev/dynamic-forms
 php artisan dynamic-forms:install
+yarn install
 yarn run prod
 ```
 
