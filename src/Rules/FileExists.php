@@ -31,7 +31,7 @@ class FileExists implements Rule
             }
 
             // Check consistency of fields
-            $expectedUrl = route('dynamic-forms.file-redirect', ['fileKey' => $value['name']], false);
+            $expectedUrl = route('dynamic-forms.S3-file-redirect', ['fileKey' => $value['name']], false);
             if ($value['name'] != $value['key'] || $expectedUrl != $value['url']) {
                 return false;
             }
@@ -45,7 +45,7 @@ class FileExists implements Rule
             }
 
             // Check consistency of fields
-            $expectedUrl = route('dynamic-forms.file-download').'?baseUrl='.urlencode($value['data']['baseUrl']).'&project=&form=/'.$value['name'];
+            $expectedUrl = route('dynamic-forms.url-file-download').'?baseUrl='.urlencode($value['data']['baseUrl']).'&project=&form=/'.$value['name'];
             if ($expectedUrl != $value['url']) {
                 return false;
             }

@@ -3,34 +3,44 @@
 namespace Northwestern\SysDev\DynamicForms\Console\Commands;
 
 use Illuminate\Console\GeneratorCommand;
+use Illuminate\Support\Env;
 
 /**
  * @codeCoverageIgnore
  */
 class Install extends GeneratorCommand
 {
-    protected $signature = 'dynamic-forms:install {--local}';
+    /** @var string */
+    const STORAGE_S3 = 's3';
+
+    /** @var string */
+    const STORAGE_URL = 'multipart';
+
+    protected $signature = 'dynamic-forms:install {--upload=s3}';
     protected $description = 'Installs Dynamic Forms for Laravel';
     protected $type = 'Controller';
 
     public function handle()
     {
+        if(!in_array($this->option('upload'), array(self::STORAGE_S3, self::STORAGE_URL)))
+        {
+            $this->comment('Unknown upload type provided');
+            return;
+        }
         $this->comment('Publishing file upload controller...');
         parent::handle();
         $this->newLine();
 
         $this->comment('Publishing JS assets...');
-        if($this->option('local'))
+        if($this->option('upload') == self::STORAGE_URL)
         {
-            $this->comment('Doing Local Ops...');
-            $this->files->move(__DIR__ . '/../../../dist/defaults.js', __DIR__ . '/../../../stubs/defaults.stub.temp');
-            $this->files->copy(__DIR__ . '/../../../stubs/defaults.stub', __DIR__ . '/../../../dist/defaults.js');
-            $this->callSilent('vendor:publish', ['--tag' => 'dynamic-forms-js']);
-            $this->files->move(__DIR__ . '/../../../stubs/defaults.stub.temp', __DIR__ . '/../../../dist/defaults.js');
+            $this->ejectEnv('MIX_STORAGE_DEFAULT_VALUE=url');
         }
-        else{
-            $this->callSilent('vendor:publish', ['--tag' => 'dynamic-forms-js']);
+        if($this->option('upload') == self::STORAGE_S3)
+        {
+            $this->ejectEnv('MIX_STORAGE_DEFAULT_VALUE=s3');
         }
+        $this->callSilent('vendor:publish', ['--tag' => 'dynamic-forms-js']);
         $this->ejectJsInclude();
         $this->newLine();
 
@@ -52,10 +62,6 @@ class Install extends GeneratorCommand
 
     protected function getStub()
     {
-        if($this->option('local'))
-        {
-           return __DIR__ . '/../../../stubs/DynamicFormsStorageControllerLocal.stub';
-        }
         return __DIR__ . '/../../../stubs/DynamicFormsStorageController.stub';
     }
 
@@ -66,21 +72,11 @@ class Install extends GeneratorCommand
 
     protected function ejectRoutes()
     {
-        if($this->option('local'))
-        {
-            file_put_contents(
-                base_path('routes/web.php'),
-                file_get_contents(__DIR__.'/../../../stubs/routesLocal.stub'),
-                FILE_APPEND
-            );
-        }
-        else {
-            file_put_contents(
-                base_path('routes/web.php'),
-                file_get_contents(__DIR__ . '/../../../stubs/routes.stub'),
-                FILE_APPEND
-            );
-        }
+        file_put_contents(
+            base_path('routes/web.php'),
+            file_get_contents(__DIR__ . '/../../../stubs/routes.stub'),
+            FILE_APPEND
+        );
     }
 
     protected function ejectJsInclude()
@@ -88,6 +84,15 @@ class Install extends GeneratorCommand
         file_put_contents(
             resource_path('js/app.js'),
             "require('./formio');",
+            FILE_APPEND
+        );
+    }
+
+    protected function ejectEnv($env)
+    {
+        file_put_contents(
+            base_path('.env'),
+            $env,
             FILE_APPEND
         );
     }

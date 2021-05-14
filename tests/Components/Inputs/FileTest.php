@@ -20,7 +20,7 @@ class FileTest extends InputComponentTestCase
 
         $this->app['router']
             ->get('/dynamic-forms/storage/s3/{fileKey}')
-            ->name('dynamic-forms.file-redirect');
+            ->name('dynamic-forms.S3-file-redirect');
     }
 
     /**
@@ -97,7 +97,7 @@ class FileTest extends InputComponentTestCase
             "originalName": "TEST.docx"
         }]',true);
 
-        $filePASS[0]['url'] = fn () => route('dynamic-forms.file-redirect', [$filePASS[0]['name']], false);
+        $filePASS[0]['url'] = fn () => route('dynamic-forms.S3-file-redirect', [$filePASS[0]['name']], false);
         $fileNameCheckFail = $filePASS;
         $fileNameCheckFail[0]['name'] = 'TEST2.docx';
         $fileKeyCheckFail = $filePASS;

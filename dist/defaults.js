@@ -215,7 +215,11 @@ export default {
                 key: 'file',
                 ignore: false,
                 components: [
-                    { key: 'storage', defaultValue: 's3', disabled: true },
+                    { key: 'storage', defaultValue: 'process.env.MIX_STORAGE_DEFAULT_VALUE', disabled: true },
+                    { key: 'url', defaultValue: '/dynamic-forms/storage/url', disabled: true },
+                    { key: 'fileKey', ignore: true },
+                    { key: 'privateDownload', ignore: true },
+                    { key: 'options', ignore: true },
                     { key: 'dir', ignore: true },
                     { key: 'fileNameTemplate', ignore: true },
                     { key: 'uploadOnly', ignore: true },

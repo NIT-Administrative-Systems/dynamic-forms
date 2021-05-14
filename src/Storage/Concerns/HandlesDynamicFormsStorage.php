@@ -3,6 +3,7 @@
 namespace Northwestern\SysDev\DynamicForms\Storage\Concerns;
 
 use Illuminate\Http\Request;
+use Northwestern\SysDev\DynamicForms\Rules\FileExists;
 use Northwestern\SysDev\DynamicForms\Storage\S3Driver;
 use Northwestern\SysDev\DynamicForms\Storage\StorageInterface;
 
@@ -16,10 +17,10 @@ trait HandlesDynamicFormsStorage
     /**
      * Generates a pre-signed upload URL.
      */
-    public function store(Request $request)
+    public function storeS3(Request $request)
     {
         $fileKey = $request->get('name');
-        $this->authorizeFileAction('upload', $fileKey, $request);
+        $this->authorizeFileAction('upload', $fileKey, $request, FileExists::STORAGE_S3);
 
         return $this->storageDriver()->getUploadLink($fileKey);
     }
@@ -29,14 +30,14 @@ trait HandlesDynamicFormsStorage
      *
      * This can be invoked in two ways, one of which will yield a redirect instead of JSON.
      */
-    public function show(Request $request, ?string $fileKey = null)
+    public function showS3(Request $request, ?string $fileKey = null)
     {
         // Can enter this method from a GET with a ?key={key}, or from a GET with /{key}.
         // The second one indicates a direct download, in which case we need to send a redirect.
         $needsRedirect = $fileKey !== null;
         $fileKey = $fileKey ?: $request->get('key');
 
-        $this->authorizeFileAction('download', $fileKey, $request);
+        $this->authorizeFileAction('download', $fileKey, $request, FileExists::STORAGE_S3);
 
         return $needsRedirect
             ? redirect($this->storageDriver()->getDirectDownloadLink($fileKey))

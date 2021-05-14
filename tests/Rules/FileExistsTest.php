@@ -23,12 +23,12 @@ class FileExistsTest extends TestCase
 
         $this->app['router']
             ->get('/dynamic-forms/storage/s3/{fileKey}')
-            ->name('dynamic-forms.file-redirect');
+            ->name('dynamic-forms.S3-file-redirect');
 
 
         $this->app['router']
             ->get('/dynamic-forms/storage/url/')
-            ->name('dynamic-forms.file-download');
+            ->name('dynamic-forms.url-file-download');
 
         $this->assertEquals($passes, $rule->passes('test', $file));
     }
