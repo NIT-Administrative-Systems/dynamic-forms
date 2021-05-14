@@ -49,7 +49,7 @@ class HandlesDynamicFormsStorageTest extends TestCase
     }
 
     /**
-     * @covers ::store
+     * @covers ::storeS3
      */
     public function testUploadAuthorization(): void
     {
