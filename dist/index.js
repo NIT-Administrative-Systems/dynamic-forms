@@ -1,6 +1,7 @@
 import 'formiojs';
 import Defaults from './defaults';
 import CustomTemplates from "./custom-templates";
+import BuilderSidebar from "./builder-sidebar"
 
 /*
 * We explicitly do NOT support JS evaluation stuff, so disable all of it.
@@ -24,6 +25,10 @@ Defaults.globalButtonCustomization();
  */
 _.forOwn(CustomTemplates, (template, name) => Formio.Templates.current[name] = template);
 
+/**
+ * Make the default builder sidebar config available for use in script tags.
+ */
+window.DynamicFormsBuilderSidebar = BuilderSidebar;
 
 /**
  * Disable editForm (the modal that pops up when you add/edit a field in the Builder) options that
@@ -46,6 +51,10 @@ Formio.builder = function (element, form, options) {
         Defaults.configMerge(Defaults.global(), Defaults.specificFields),
         options.editForm
     );
+
+    if (! options.builder) {
+        options.builder = BuilderSidebar;
+    }
 
     return origFormioBuilder(element, form, options);
 };
