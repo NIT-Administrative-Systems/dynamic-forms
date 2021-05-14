@@ -40,8 +40,16 @@ jobs:
         if: steps.composer-cache.outputs.cache-hit != 'true'
         run: composer install --prefer-dist --no-progress --no-suggest
 
+      - name: Configure matchers
+        uses: mheap/phpunit-matcher-action@v1
+
       - name: Run Tests
-        run: php vendor/bin/phpunit --coverage-clover .build/clover.xml
+        run: php vendor/bin/phpunit --coverage-clover .build/clover.xml --teamcity
+      - uses: EnricoMi/publish-unit-test-result-action@v1.15
+        if: github.actor != 'dependabot[bot]' && always()
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          files: .build/junit.xml
 
       - name: Record Coverage
         env:
