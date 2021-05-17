@@ -21,7 +21,8 @@ class FileExistsTest extends TestCase
      */
     public function testPasses(array $file, bool $shouldExist, bool $passes): void
     {
-        $rule = $this->rule($shouldExist);
+        $driver = $file['storage'] == S3Driver::STORAGE_S3 ? S3Driver::class : FileDriver::class;
+        $rule = $this->rule($driver, $shouldExist);
 
         $this->app['router']
             ->get('/dynamic-forms/storage/s3/{fileKey}')
@@ -69,39 +70,22 @@ class FileExistsTest extends TestCase
         ];
     }
 
-    /**
-     * @covers ::passes
-     * @dataProvider passesThrowsExceptionProvider
-     */
-    public function testPassesThrowsException(array $file): void
-    {
-        $this->expectException(UnknownStorageDriverError::class);
-
-        $this->rule(true)->passes('test', $file);
-    }
-
-    public function passesThrowsExceptionProvider(): array
-    {
-        return [
-            'invalid driver' => [['storage' => 'dog']],
-            'null driver' => [['storage' => null]],
-            'missing driver key' => [[]],
-        ];
-    }
 
     /**
      * @covers ::message
      */
     public function testMessage(): void
     {
-        $rule = $this->rule(true);
+        $rule = $this->rule(S3Driver::class, true);
 
         $this->assertStringContainsString('not uploaded', $rule->message());
     }
 
-    public function rule(bool $shouldExist): FileExists
+    public function rule($driver, bool $shouldExist): FileExists
     {
-        $driver = $this->createStub(StorageInterface::class);
+
+        $driver = $this->createPartialMock($driver, ['findObject']);
+
         $driver->method('findObject')->willReturn($shouldExist);
 
         return new FileExists($driver);

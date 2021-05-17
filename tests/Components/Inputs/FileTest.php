@@ -115,11 +115,11 @@ class FileTest extends InputComponentTestCase
             'valid file passes' => [[], $filePASS, true],
             'required passes' => [['required' => true], $filePASS, true],
             'required fails' => [['required' => true], [], false],
-            'FileExistsinS3 fails from name consistency check' => [[], $fileNameCheckFail, false],
-            'FileExistsinS3 fails from key consistency check' => [[], $fileKeyCheckFail, false],
-            'FileExistsinS3 fails from url consistency check' => [[], $fileURLCheckFail, false],
-            'FileExistsinS3 fails from file not found ' => [[], $fileNotFoundCheckFail, false],
-            'FileExistsinS3 passes' => [[], $filePASS, true],
+            'FileExists fails from name consistency check' => [[], $fileNameCheckFail, false],
+            'FileExists fails from key consistency check' => [[], $fileKeyCheckFail, false],
+            'FileExists fails from url consistency check' => [[], $fileURLCheckFail, false],
+            'FileExists fails from file not found ' => [[], $fileNotFoundCheckFail, false],
+            'FileExists passes' => [[], $filePASS, true],
         ];
     }
 
@@ -156,13 +156,13 @@ class FileTest extends InputComponentTestCase
             $submissionValue
         );
 
-        $stub = $this->createStub(S3Driver::class);
+        $stub = $this->createPartialMock(S3Driver::class, ['findObject']);
         $map = [
             ['TEST.docx', true],
             ['TEST2.docx', false],
         ];
-        $stub->method('findObject')
-            ->will($this->returnValueMap($map));
+
+        $stub->method('findObject')->willReturn(true);
 
         $component->setStorageDriver($stub);
 
