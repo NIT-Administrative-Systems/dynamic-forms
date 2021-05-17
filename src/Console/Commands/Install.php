@@ -6,15 +6,9 @@ use Illuminate\Console\GeneratorCommand;
 
 class Install extends GeneratorCommand
 {
-    /** @var string */
-    const STORAGE_S3 = 's3';
-
-    /** @var string */
-    const STORAGE_URL = 'multipart';
-
     public const FORMIOJS_VERSION = '^4.12.7';
 
-    protected $signature = 'dynamic-forms:install {--upload=s3}';
+    protected $signature = 'dynamic-forms:install';
 
     protected $description = 'Installs Dynamic Forms for Laravel';
     protected $type = 'Controller';
@@ -24,24 +18,11 @@ class Install extends GeneratorCommand
      */
     public function handle()
     {
-        if(!in_array($this->option('upload'), array(self::STORAGE_S3, self::STORAGE_URL)))
-        {
-            $this->comment('Unknown upload type provided');
-            return;
-        }
         $this->comment('Publishing file upload controller...');
         parent::handle();
         $this->newLine();
 
         $this->comment('Publishing JS assets...');
-        if($this->option('upload') == self::STORAGE_URL)
-        {
-            $this->ejectEnv('MIX_STORAGE_DEFAULT_VALUE=url');
-        }
-        if($this->option('upload') == self::STORAGE_S3)
-        {
-            $this->ejectEnv('MIX_STORAGE_DEFAULT_VALUE=s3');
-        }
         $this->callSilent('vendor:publish', ['--tag' => 'dynamic-forms-js']);
         $this->ejectJsInclude(resource_path('js/app.js'));
         $this->ejectCssInclude(resource_path('sass/app.scss'));

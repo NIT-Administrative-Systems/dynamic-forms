@@ -215,7 +215,6 @@ export default {
                 key: 'file',
                 ignore: false,
                 components: [
-                    { key: 'storage', defaultValue: 'process.env.MIX_STORAGE_DEFAULT_VALUE', disabled: true },
                     { key: 'url', defaultValue: '/dynamic-forms/storage/url', disabled: true },
                     { key: 'fileKey', ignore: true },
                     { key: 'privateDownload', ignore: true },
@@ -254,5 +253,26 @@ export default {
         stateField.type = 'hidden';
 
         Formio.Components.components.button.editForm = function() { return editForm; };
+    },
+
+    /**
+     * Builder dropdown values cannot be modified by overriding defaults.
+     *
+     * This modifies the File editForm directly & globally, which seems to be
+     * the only approach that works.
+     *
+     * It also modifies the behaviour of the 'saveState' additional field, state,
+     * which was not possible from the overrides either.
+     */
+    globalFileCustomization: () => {
+        var editForm = Formio.Components.components.file.editForm();
+
+        Formio.Utils.getComponent(editForm.components, 'storage').data.values = [
+            {label: "S3", value: "s3"},
+            {label: "Local", value: "url"}
+        ];
+
+        Formio.Components.components.file.editForm = function() { return editForm; };
     }
+
 }
