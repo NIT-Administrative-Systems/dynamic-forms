@@ -8,6 +8,9 @@ use Illuminate\Http\JsonResponse;
 
 class S3Driver implements StorageInterface
 {
+    /** @var string */
+    const STORAGE_S3 = 's3';
+
     protected S3Client $client;
     protected string $bucket;
 
@@ -90,5 +93,26 @@ class S3Driver implements StorageInterface
                 'fileName' => $key,
             ],
         ], 201);
+    }
+
+    public function isValid(mixed $value): bool
+    {
+        // Check if all fields exist
+        if (! isset($value) || ! isset($value['name']) || ! isset($value['key']) || ! isset($value['url'])) {
+            return false;
+        }
+
+        // Check consistency of fields
+        $expectedUrl = route('dynamic-forms.S3-file-redirect', ['fileKey' => $value['name']], false);
+        if ($value['name'] != $value['key'] || $expectedUrl != $value['url']) {
+            return false;
+        }
+
+        return $this->findObject($value['name']);
+    }
+
+    public static function getStorageMethod(): string
+    {
+        return self::STORAGE_S3;
     }
 }

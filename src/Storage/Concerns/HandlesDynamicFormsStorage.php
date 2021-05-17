@@ -3,7 +3,6 @@
 namespace Northwestern\SysDev\DynamicForms\Storage\Concerns;
 
 use Illuminate\Http\Request;
-use Northwestern\SysDev\DynamicForms\Rules\FileExists;
 use Northwestern\SysDev\DynamicForms\Storage\S3Driver;
 use Northwestern\SysDev\DynamicForms\Storage\StorageInterface;
 
@@ -20,7 +19,7 @@ trait HandlesDynamicFormsStorage
     public function storeS3(Request $request)
     {
         $fileKey = $request->get('name');
-        $this->authorizeFileAction('upload', $fileKey, $request, FileExists::STORAGE_S3);
+        $this->authorizeFileAction('upload', $fileKey, $request, S3Driver::STORAGE_S3);
 
         return $this->storageDriver()->getUploadLink($fileKey);
     }
@@ -37,7 +36,7 @@ trait HandlesDynamicFormsStorage
         $needsRedirect = $fileKey !== null;
         $fileKey = $fileKey ?: $request->get('key');
 
-        $this->authorizeFileAction('download', $fileKey, $request, FileExists::STORAGE_S3);
+        $this->authorizeFileAction('download', $fileKey, $request, S3Driver::STORAGE_S3);
 
         return $needsRedirect
             ? redirect($this->storageDriver()->getDirectDownloadLink($fileKey))

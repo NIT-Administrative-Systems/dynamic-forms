@@ -4,6 +4,8 @@ namespace Northwestern\SysDev\DynamicForms\Tests\Rules;
 
 use Northwestern\SysDev\DynamicForms\Errors\UnknownStorageDriverError;
 use Northwestern\SysDev\DynamicForms\Rules\FileExists;
+use Northwestern\SysDev\DynamicForms\Storage\FileDriver;
+use Northwestern\SysDev\DynamicForms\Storage\S3Driver;
 use Northwestern\SysDev\DynamicForms\Storage\StorageInterface;
 use Orchestra\Testbench\TestCase;
 
@@ -39,13 +41,13 @@ class FileExistsTest extends TestCase
             'name' => 'foo1',
             'key' => 'foo1', // should match name
             'url' => '/dynamic-forms/storage/s3/foo1', // should match name
-            'storage' => FileExists::STORAGE_S3,
+            'storage' => S3Driver::STORAGE_S3,
         ];
 
         $validURL = [
             'name' => 'foo1',
             'url' => 'http://localhost/dynamic-forms/storage/url?baseUrl=https%3A%2F%2Fapi.form.io&project=&form=/foo1', // should match name with additional data fields added on
-            'storage' => FileExists::STORAGE_URL,
+            'storage' => FileDriver::STORAGE_URL,
             'data' => ['baseUrl' => 'https://api.form.io',
                         'project' => '',
                         'form' => '',]
@@ -54,14 +56,14 @@ class FileExistsTest extends TestCase
         return [
             // file, should exist in storage, passes
             'valid S3' => [$validS3, true, true],
-            'missing field S3' => [['storage' => FileExists::STORAGE_S3], true, false],
+            'missing field S3' => [['storage' => S3Driver::STORAGE_S3], true, false],
             'unexpected url S3' => [array_merge($validS3, ['url' => '/dog']), true, false],
             'not consistent S3' => [array_merge($validS3, ['name' => 'dog']), true, false],
             'file does not exist S3' => [$validS3, false, false],
 
             // file, should exist in storage, passes
             'valid URL' => [$validURL, true, true],
-            'missing field URL' => [['storage' => FileExists::STORAGE_URL], true, false],
+            'missing field URL' => [['storage' => FileDriver::STORAGE_URL], true, false],
             'unexpected url URL' => [array_merge($validURL, ['url' => '/dog']), true, false],
             'file does not exist URL' => [$validURL, false, false],
         ];

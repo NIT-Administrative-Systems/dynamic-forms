@@ -9,4 +9,9 @@ interface StorageInterface
      * Used to see if key is stored in the storage location.
      */
     public function findObject(string $key): bool;
+
+    public function isValid(mixed $value): bool;
+
+    public static function getStorageMethod(): string;
+
 }

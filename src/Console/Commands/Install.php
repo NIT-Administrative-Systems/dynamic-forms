@@ -3,7 +3,6 @@
 namespace Northwestern\SysDev\DynamicForms\Console\Commands;
 
 use Illuminate\Console\GeneratorCommand;
-use Illuminate\Support\Env;
 
 class Install extends GeneratorCommand
 {

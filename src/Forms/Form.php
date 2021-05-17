@@ -8,10 +8,8 @@ use Northwestern\SysDev\DynamicForms\Components\BaseComponent;
 use Northwestern\SysDev\DynamicForms\Components\ComponentInterface;
 use Northwestern\SysDev\DynamicForms\Components\CustomSubcomponentDeserialization;
 use Northwestern\SysDev\DynamicForms\Components\UploadInterface;
-use Northwestern\SysDev\DynamicForms\DynamicFormsProvider;
 use Northwestern\SysDev\DynamicForms\Errors\InvalidDefinitionError;
-use Northwestern\SysDev\DynamicForms\Storage\FileDriver;
-use Northwestern\SysDev\DynamicForms\Storage\S3Driver;
+use Northwestern\SysDev\DynamicForms\FileComponentRegistry;
 
 class Form
 {
@@ -31,9 +29,12 @@ class Form
 
     protected ComponentRegistry $componentRegistry;
 
+    protected FileComponentRegistry $fileComponentRegistry;
+
     public function __construct(string $definitionJson)
     {
         $this->componentRegistry = resolve(ComponentRegistry::class);
+        $this->fileComponentRegistry = resolve(FileComponentRegistry::class);
         $this->setDefinition($definitionJson);
     }
 
@@ -115,20 +116,8 @@ class Form
             );
 
             if (is_subclass_of($component, UploadInterface::class)) {
-                $storageType = $component->getStorageType();
-                if($storageType == \Northwestern\SysDev\DynamicForms\Rules\FileExists::STORAGE_S3)
-                {
-                    $component->setStorageDriver(app()->make(S3Driver::class));
-                }
-                else if($storageType == \Northwestern\SysDev\DynamicForms\Rules\FileExists::STORAGE_URL)
-                {
-                    $component->setStorageDriver(app()->make(FileDriver::class));
-                }
-                else
-                {
-                    throw new InvalidDefinitionError('Unable to find storage type', $storageType);
-                }
-
+                $storageDriver = $this->fileComponentRegistry->get($component->getStorageType());
+                $component->setStorageDriver(new $storageDriver());
             }
 
             $components[] = $component;
