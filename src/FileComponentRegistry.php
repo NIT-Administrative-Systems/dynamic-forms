@@ -44,9 +44,9 @@ class FileComponentRegistry
      *
      * @param string $interface
      */
-    public function register(string $interface, string $storageType): void
+    public function register(string $interface): void
     {
-        $this->storageDrivers[$storageType] = $interface;
+        $this->storageDrivers[$interface::getStorageMethod()] = $interface;
     }
 
     /**
@@ -74,7 +74,7 @@ class FileComponentRegistry
                 is_subclass_of($interface, StorageInterface::class)
                 && ! (new \ReflectionClass($interface))->isAbstract()
             ) {
-                $this->register($interface, $interface::getStorageMethod());
+                $this->register($interface);
             }
         }
     }
