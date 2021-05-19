@@ -1,5 +1,7 @@
 # File Uploads
-File uploads are supported via Amazon S3 or direct uploading. 
+File uploads are supported via Amazon S3 or directly to local storage. 
+
+## S3 Uploads
 
 S3 Uploads are done in a multi-step process: 
 
@@ -15,14 +17,8 @@ The AWS S3 bucket itself should be private. The presigned URLs are what provide 
 
 Local file upload does not use presigned URL but directly uploads and downloads from local storage.
 
-## Temporary Files
-Since file transfers are done before a form is submitted, it is possible for a user to abandon their form and leave what is essentially junk data in the S3 bucket.
 
-There are techniques to deal with this problem. For example, an S3 lifecycle policy to delete objects under `tmp/` after three days. When a form is filled out and submitted, you can move the object out of `tmp/`, and then update the submission JSON to reflect the new path.
-
-This becomes a more complicated issue if you are doing auto-saves for forms as users fill them out.
-
-## Buckets & CORS Policy
+### Buckets & CORS Policy
 Since the end-user's browser is doing requests directly to your S3 bucket to upload and download files, you will need to set an appropriate CORS policy on the bucket.
 
 The below wildcard policy will work, but you may wish to add your domain names for the `AllowedOrigin`.
@@ -38,3 +34,8 @@ The below wildcard policy will work, but you may wish to add your domain names f
 </CORSRule>
 </CORSConfiguration>
 ```
+
+## Local Storage Uploads
+
+Local file handling is done simply via AJAX requests to `App\Http\Controllers\DynamicFormsStorageController`
+Files are stored at Laravel's storage_path('app/uploaded') with a keyed filename, similarly downloading and delete requests are also handled by Form.js with the keyed file

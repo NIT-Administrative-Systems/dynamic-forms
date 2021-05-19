@@ -106,3 +106,73 @@ class AppServiceProvider extends ServiceProvider
     }
 }
 ```
+
+## Adding Storage backends
+In order to add a storage backend you must create a driver that implements StorageInterface for the backend.
+
+Form.js supports base64, dropbox, azure, indexeddb, which are all not currently implemented.
+
+### Writing new backend
+There are two aspects to the new backend component: the controller to handle the requests, and a StorageInterface driver in your Laravel application that tells Dynamic Forms how to validate submissions.
+
+
+### Registering with Formiojs
+You need to tell Formiojs about your component before it will be usable by the application.
+
+To do this, edit your `resources/js/formio/defaults.js` file and add your backend to globalFileCustomization
+
+```js
+    /**
+     * Builder dropdown values cannot be modified by overriding defaults.
+     *
+     * This modifies the File editForm directly & globally, which seems to be
+     * the only approach that works.
+     *
+     * It also modifies the behaviour of the 'saveState' additional field, state,
+     * which was not possible from the overrides either.
+     */
+    globalFileCustomization: () => {
+        var editForm = Formio.Components.components.file.editForm();
+
+        Formio.Utils.getComponent(editForm.components, 'storage').data.values = [
+            {label: "S3", value: "s3"},
+            {label: "Local", value: "url"}
+            //INSERT NEW BACKEND HERE
+        ];
+
+        Formio.Components.components.file.editForm = function() { return editForm; };
+    }
+```
+
+#### Registering Server-side
+Dynamic Form comes with support for S3 and local storage.
+
+If you want to implement an additional backend you need to register it with the File component registry. The best place to register components is in a service provider's boot method.
+
+Here is an example of creating and registering a layout component for tabs.
+
+
+```php
+// app\Providers\AppServiceProvider.php
+
+namespace App\Providers;
+
+use App\DropboxDriver;
+use Illuminate\Support\ServiceProvider;
+use Northwestern\SysDev\DynamicForms\FileComponentRegistry;
+
+class AppServiceProvider extends ServiceProvider
+{
+    // . . .
+    
+    public function boot()
+    {
+        // . . .
+        
+        /** @var ComponentRegistry $registry */
+        $registry = $this->app->make(FileComponentRegistry::class);
+
+        $registry->register(DropboxDriver::class);
+    }
+}
+```
