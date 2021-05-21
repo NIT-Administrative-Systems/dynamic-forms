@@ -7,7 +7,6 @@ use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Northwestern\SysDev\DynamicForms\Storage\Concerns\HandlesDynamicFormsStorage;
-use Northwestern\SysDev\DynamicForms\Storage\Concerns\HandlesDynamicFormsStorageLocal;
 
 
 /**
@@ -15,7 +14,7 @@ use Northwestern\SysDev\DynamicForms\Storage\Concerns\HandlesDynamicFormsStorage
  */
 class DynamicFormsStorageController extends Controller
 {
-    use HandlesDynamicFormsStorage, HandlesDynamicFormsStorageLocal;
+    use HandlesDynamicFormsStorage;
 
     /**
      * Performs an authorization check for upload/download requests.

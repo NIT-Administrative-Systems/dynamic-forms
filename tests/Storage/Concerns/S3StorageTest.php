@@ -1,6 +1,8 @@
 <?php
 
+
 namespace Northwestern\SysDev\DynamicForms\Tests\Storage\Concerns;
+
 
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
@@ -10,9 +12,9 @@ use Northwestern\SysDev\DynamicForms\Storage\S3Driver;
 use Orchestra\Testbench\TestCase;
 
 /**
- * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Storage\Concerns\HandlesDynamicFormsStorage
+ * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Storage\Concerns\S3Storage
  */
-class HandlesDynamicFormsStorageTest extends TestCase
+class S3StorageTest extends TestCase
 {
     /**
      * @covers ::storeS3

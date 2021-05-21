@@ -30,7 +30,7 @@ class Install extends GeneratorCommand
         $this->newLine();
 
         $this->comment('Publishing routes...');
-        $this->ejectRoutes(base_path('routes/web.php'),);
+        $this->ejectRoutes(base_path('routes/web.php'));
         $this->newLine();
 
         $this->info('Dynamic Forms for Laravel has been installed!');

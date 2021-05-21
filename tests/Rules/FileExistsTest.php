@@ -2,11 +2,9 @@
 
 namespace Northwestern\SysDev\DynamicForms\Tests\Rules;
 
-use Northwestern\SysDev\DynamicForms\Errors\UnknownStorageDriverError;
 use Northwestern\SysDev\DynamicForms\Rules\FileExists;
 use Northwestern\SysDev\DynamicForms\Storage\FileDriver;
 use Northwestern\SysDev\DynamicForms\Storage\S3Driver;
-use Northwestern\SysDev\DynamicForms\Storage\StorageInterface;
 use Orchestra\Testbench\TestCase;
 
 /**

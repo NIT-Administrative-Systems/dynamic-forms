@@ -1,5 +1,6 @@
 # File Uploads
 File uploads are supported via Amazon S3 or directly to local storage. 
+By default both options are exposed to the Form builder in order to allow only one or the other set MIX_STORAGE_DEFAULT_VALUE to either 's3' or 'url'.
 
 ## S3 Uploads
 

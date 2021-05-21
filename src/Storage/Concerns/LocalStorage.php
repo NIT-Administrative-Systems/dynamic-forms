@@ -1,17 +1,19 @@
 <?php
 
+
 namespace Northwestern\SysDev\DynamicForms\Storage\Concerns;
+
 
 use Illuminate\Http\Request;
 use Northwestern\SysDev\DynamicForms\Storage\FileDriver;
 
-
 /**
- * Trait providing the upload/download actions for a controller.
+ * Trait providing the upload/download actions for a controller for local files.
  *
  * The stubs/DynamicFormsStorageController.stub file utilizes this trait.
  */
-trait HandlesDynamicFormsStorageLocal
+
+trait LocalStorage
 {
     /**
      * Stores the given request
@@ -37,5 +39,5 @@ trait HandlesDynamicFormsStorageLocal
         \File::delete(storage_path('app/uploaded'.$request->form));
         return response()->noContent();
     }
-    
+
 }

@@ -261,18 +261,32 @@ export default {
      * This modifies the File editForm directly & globally, which seems to be
      * the only approach that works.
      *
-     * It also modifies the behaviour of the 'saveState' additional field, state,
-     * which was not possible from the overrides either.
      */
     globalFileCustomization: () => {
         var editForm = Formio.Components.components.file.editForm();
-
-        Formio.Utils.getComponent(editForm.components, 'storage').data.values = [
+        var StorageValues = [
             {label: "S3", value: "s3"},
             {label: "Local", value: "url"}
         ];
+        if(process.env.MIX_STORAGE_DEFAULT_VALUE === 's3')
+        {
+            StorageValues = [
+                {label: "S3", value: "s3"},
+            ];
+        }
+        if(process.env.MIX_STORAGE_DEFAULT_VALUE === 'url')
+        {
+            StorageValues = [
+                {label: "Local", value: "url"}
+            ];
+        }
+
+        Formio.Utils.getComponent(editForm.components, 'storage').data.values = StorageValues;
+
+        Formio.Utils.getComponent(editForm.components, 'storage').dataSrc = 'values';
 
         Formio.Components.components.file.editForm = function() { return editForm; };
+
     }
 
 }
