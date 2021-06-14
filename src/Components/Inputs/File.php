@@ -7,7 +7,7 @@ use Illuminate\Validation\Factory;
 use Northwestern\SysDev\DynamicForms\Components\BaseComponent;
 use Northwestern\SysDev\DynamicForms\Components\UploadInterface;
 use Northwestern\SysDev\DynamicForms\RuleBag;
-use Northwestern\SysDev\DynamicForms\Rules\FileExistsInS3;
+use Northwestern\SysDev\DynamicForms\Rules\FileExists;
 use Northwestern\SysDev\DynamicForms\Storage\StorageInterface;
 
 class File extends BaseComponent implements UploadInterface
@@ -23,7 +23,7 @@ class File extends BaseComponent implements UploadInterface
         } else {
             $rules->add('nullable');
         }
-        $rules->add(new FileExistsInS3($this->getStorageDriver()));
+        $rules->add(new FileExists($this->getStorageDriver()));
 
         return $validator->make(
             [$fieldKey => $submissionValue],
@@ -51,5 +51,13 @@ class File extends BaseComponent implements UploadInterface
         }
 
         return parent::submissionValue()[0] ?? parent::submissionValue();
+    }
+
+    /**
+     * @return string
+     */
+    public function getStorageType(): string
+    {
+        return $this->additional['storage'];
     }
 }

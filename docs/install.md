@@ -8,7 +8,7 @@ You will need the following:
 - Laravel 8+
 - Bootstrap 4 
 - FontAwesome 5
-- An Amazon S3 bucket & access token, if you are going to handle file uploads via your dynamic forms
+- (optional) An Amazon S3 bucket & access token, if you are going to handle file uploads via S3 for your dynamic forms
 
 Dynamic Forms assumes that you are using [Laravel Mix](https://laravel.com/docs/8.x/mix) to prepare your JS/CSS assets. If you are not, you will need to transpile/minify the JavaScript that is installed into your `resources/js` folder using your own build system.
 
@@ -24,10 +24,10 @@ yarn install
 yarn run prod
 ```
 
-If you are going to use file uploads, you will want to ensure you have configured your Laravel app with a bucket name and credentials. If you are deploying to Laravel Vapor, no additional config is needed for file uploads.
+If you are going to use S3 for file uploads, you will want to ensure you have configured your Laravel app with a bucket name and credentials. If you are deploying to Laravel Vapor, no additional config is needed for file uploads.
 
 ## Post-Installation Tasks
-The installation command creates `App\Http\Controllers\DynamicFormsStorageController`. This controller is responsible for interacting with Amazon S3 to upload & download files.
+The installation command creates `App\Http\Controllers\DynamicFormsStorageController`. This controller is responsible for interactions from the form to backend storage providers such as Amazon S3 to upload & download files.
 
 Out of the box, this controller will deny all requests. You need to implement the `authorizeFileAction` method to check a gate or perform some other authorization check.
 

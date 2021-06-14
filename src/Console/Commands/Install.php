@@ -9,6 +9,7 @@ class Install extends GeneratorCommand
     public const FORMIOJS_VERSION = '^4.12.7';
 
     protected $signature = 'dynamic-forms:install';
+
     protected $description = 'Installs Dynamic Forms for Laravel';
     protected $type = 'Controller';
 
@@ -21,7 +22,7 @@ class Install extends GeneratorCommand
         parent::handle();
         $this->newLine();
 
-        $this->comment('Publishing JS/CSS assets...');
+        $this->comment('Publishing JS assets...');
         $this->callSilent('vendor:publish', ['--tag' => 'dynamic-forms-js']);
         $this->ejectJsInclude(resource_path('js/app.js'));
         $this->ejectCssInclude(resource_path('sass/app.scss'));
@@ -29,7 +30,7 @@ class Install extends GeneratorCommand
         $this->newLine();
 
         $this->comment('Publishing routes...');
-        $this->ejectRoutes(base_path('routes/web.php'),);
+        $this->ejectRoutes(base_path('routes/web.php'));
         $this->newLine();
 
         $this->info('Dynamic Forms for Laravel has been installed!');
@@ -68,6 +69,15 @@ class Install extends GeneratorCommand
         file_put_contents(
             $appJsFile,
             "require('./formio');",
+            FILE_APPEND
+        );
+    }
+
+    protected function ejectEnv($env)
+    {
+        file_put_contents(
+            base_path('.env'),
+            $env,
             FILE_APPEND
         );
     }

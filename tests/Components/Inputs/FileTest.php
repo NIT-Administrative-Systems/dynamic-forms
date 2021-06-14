@@ -20,7 +20,7 @@ class FileTest extends InputComponentTestCase
 
         $this->app['router']
             ->get('/dynamic-forms/storage/s3/{fileKey}')
-            ->name('dynamic-forms.file-redirect');
+            ->name('dynamic-forms.S3-file-redirect');
     }
 
     /**
@@ -97,7 +97,7 @@ class FileTest extends InputComponentTestCase
             "originalName": "TEST.docx"
         }]',true);
 
-        $filePASS[0]['url'] = fn () => route('dynamic-forms.file-redirect', [$filePASS[0]['name']], false);
+        $filePASS[0]['url'] = fn () => route('dynamic-forms.S3-file-redirect', [$filePASS[0]['name']], false);
         $fileNameCheckFail = $filePASS;
         $fileNameCheckFail[0]['name'] = 'TEST2.docx';
         $fileKeyCheckFail = $filePASS;
@@ -115,11 +115,11 @@ class FileTest extends InputComponentTestCase
             'valid file passes' => [[], $filePASS, true],
             'required passes' => [['required' => true], $filePASS, true],
             'required fails' => [['required' => true], [], false],
-            'FileExistsinS3 fails from name consistency check' => [[], $fileNameCheckFail, false],
-            'FileExistsinS3 fails from key consistency check' => [[], $fileKeyCheckFail, false],
-            'FileExistsinS3 fails from url consistency check' => [[], $fileURLCheckFail, false],
-            'FileExistsinS3 fails from file not found ' => [[], $fileNotFoundCheckFail, false],
-            'FileExistsinS3 passes' => [[], $filePASS, true],
+            'FileExists fails from name consistency check' => [[], $fileNameCheckFail, false],
+            'FileExists fails from key consistency check' => [[], $fileKeyCheckFail, false],
+            'FileExists fails from url consistency check' => [[], $fileURLCheckFail, false],
+            'FileExists fails from file not found ' => [[], $fileNotFoundCheckFail, false],
+            'FileExists passes' => [[], $filePASS, true],
         ];
     }
 
@@ -156,13 +156,13 @@ class FileTest extends InputComponentTestCase
             $submissionValue
         );
 
-        $stub = $this->createStub(S3Driver::class);
+        $stub = $this->createPartialMock(S3Driver::class, ['findObject']);
         $map = [
             ['TEST.docx', true],
             ['TEST2.docx', false],
         ];
-        $stub->method('findObject')
-            ->will($this->returnValueMap($map));
+
+        $stub->method('findObject')->willReturn(true);
 
         $component->setStorageDriver($stub);
 
