@@ -4,13 +4,13 @@ namespace Northwestern\SysDev\DynamicForms;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
-use Northwestern\SysDev\DynamicForms\Components\ComponentInterface;
-use Northwestern\SysDev\DynamicForms\Errors\UnknownComponentError;
+use Northwestern\SysDev\DynamicForms\Errors\UnknownStorageDriverError;
+use Northwestern\SysDev\DynamicForms\Storage\StorageInterface;
 use Symfony\Component\Finder\Finder;
 
-class ComponentRegistry
+class FileComponentRegistry
 {
-    protected array $components;
+    protected array $storageDrivers;
 
     public function __construct()
     {
@@ -20,33 +20,33 @@ class ComponentRegistry
     /**
      * Get the registered components.
      *
-     * @return ComponentInterface[] Associative array, keyed by the component's type
+     * @return StorageInterface[] Associative array, keyed by the storage type
      */
     public function registered(): array
     {
-        return $this->components;
+        return $this->storageDrivers;
     }
 
     /**
-     * Get the class name for a component.
+     * Get the storaage driver name for a given storage Type.
      */
     public function get(string $type): string
     {
-        if (! Arr::has($this->components, $type)) {
-            throw new UnknownComponentError($type);
+        if (! Arr::has($this->storageDrivers, $type)) {
+            throw new UnknownStorageDriverError($type);
         }
 
-        return $this->components[$type];
+        return $this->storageDrivers[$type];
     }
 
     /**
      * Registers a component class.
      *
-     * @param string $component
+     * @param string $interface
      */
-    public function register(string $component): void
+    public function register(string $interface): void
     {
-        $this->components[$component::type()] = $component;
+        $this->storageDrivers[$interface::getStorageMethod()] = $interface;
     }
 
     /**
@@ -58,24 +58,23 @@ class ComponentRegistry
     {
         $files = Finder::create()
             ->in([
-                __DIR__.DIRECTORY_SEPARATOR.'Components'.DIRECTORY_SEPARATOR.'Layout',
-                __DIR__.DIRECTORY_SEPARATOR.'Components'.DIRECTORY_SEPARATOR.'Inputs',
+                __DIR__.DIRECTORY_SEPARATOR.'Storage',
             ])
             ->name('*.php')
             ->files();
 
         foreach ($files as $file) {
-            $component = __NAMESPACE__.'\\'.str_replace(
+            $interface = __NAMESPACE__.'\\'.str_replace(
                     ['/', '.php'],
                     ['\\', ''],
                     Str::after($file->getRealPath(), __DIR__.DIRECTORY_SEPARATOR)
                 );
 
             if (
-                is_subclass_of($component, ComponentInterface::class)
-                && ! (new \ReflectionClass($component))->isAbstract()
+                is_subclass_of($interface, StorageInterface::class)
+                && ! (new \ReflectionClass($interface))->isAbstract()
             ) {
-                $this->register($component);
+                $this->register($interface);
             }
         }
     }

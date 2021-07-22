@@ -2,27 +2,23 @@
 
 namespace Northwestern\SysDev\DynamicForms\Storage;
 
-use Illuminate\Http\JsonResponse;
 
 interface StorageInterface
 {
     /**
-     * Used to see if key is stored in our bucket.
+     * Used to see if key is stored in the storage location.
      */
     public function findObject(string $key): bool;
 
     /**
-     * Makes a presigned GET link for the resource.
+     * Used to validate a storage request for this method.
      */
-    public function getDownloadLink(string $key, ?string $originalName = null): JsonResponse;
+    public function isValid(mixed $value): bool;
 
     /**
-     * Makes a presigned GET link directly for the resource.
+     * Returns the StorageMethod being implemented by this interface
+     * (supported values are dropbox, azure, indexeddb, s3 (already implemented), url (already implemented))
      */
-    public function getDirectDownloadLink(string $key, ?string $originalName = null): string;
+    public static function getStorageMethod(): string;
 
-    /**
-     * Makes a presigned PUT link for the resource.
-     */
-    public function getUploadLink(string $key): JsonResponse;
 }

@@ -1,6 +1,8 @@
 <?php
 
+
 namespace Northwestern\SysDev\DynamicForms\Tests\Storage\Concerns;
+
 
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
@@ -10,12 +12,12 @@ use Northwestern\SysDev\DynamicForms\Storage\S3Driver;
 use Orchestra\Testbench\TestCase;
 
 /**
- * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Storage\Concerns\HandlesDynamicFormsStorage
+ * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Storage\Concerns\S3Storage
  */
-class HandlesDynamicFormsStorageTest extends TestCase
+class S3StorageTest extends TestCase
 {
     /**
-     * @covers ::store
+     * @covers ::storeS3
      * @covers ::storageDriver
      */
     public function testUploadWorks(): void
@@ -34,7 +36,7 @@ class HandlesDynamicFormsStorageTest extends TestCase
         });
 
         $this->app['router']->post(__METHOD__, function (Request $request) {
-            return $this->mock_controller()->store($request);
+            return $this->mock_controller()->storeS3($request);
         });
 
         $response = $this->post(__METHOD__, ['name' => 'testFile.docx']);
@@ -49,12 +51,12 @@ class HandlesDynamicFormsStorageTest extends TestCase
     }
 
     /**
-     * @covers ::store
+     * @covers ::storeS3
      */
     public function testUploadAuthorization(): void
     {
         $this->app['router']->post(__METHOD__, function (Request $request) {
-            return $this->mock_controller(fn () => throw new AuthorizationException('fail'))->store($request);
+            return $this->mock_controller(fn () => throw new AuthorizationException('fail'))->storeS3($request);
         });
 
         $response = $this->post(__METHOD__, ['name' => 'testFile.docx']);
@@ -62,12 +64,12 @@ class HandlesDynamicFormsStorageTest extends TestCase
     }
 
     /**
-     * @covers ::show
+     * @covers ::showS3
      */
     public function testDownloadAuthorization(): void
     {
         $this->app['router']->get(__METHOD__.'/{fileKey}', function (Request $request, $fileKey) {
-            return $this->mock_controller(fn () => throw new AuthorizationException('fail'))->show($request, $fileKey);
+            return $this->mock_controller(fn () => throw new AuthorizationException('fail'))->showS3($request, $fileKey);
         });
 
         $response = $this->get(__METHOD__.'/testFile.docx');
@@ -75,7 +77,7 @@ class HandlesDynamicFormsStorageTest extends TestCase
     }
 
     /**
-     * @covers ::show
+     * @covers ::showS3
      * @covers ::storageDriver
      */
     public function testDownloadJsonResponse(): void
@@ -90,7 +92,7 @@ class HandlesDynamicFormsStorageTest extends TestCase
         });
 
         $this->app['router']->get(__METHOD__.'', function (Request $request) {
-            return $this->mock_controller()->show($request, null);
+            return $this->mock_controller()->showS3($request, null);
         });
 
         $response = $this->get(__METHOD__.'?key=testFile.docx');
@@ -98,7 +100,7 @@ class HandlesDynamicFormsStorageTest extends TestCase
     }
 
     /**
-     * @covers ::show
+     * @covers ::showS3
      * @covers ::storageDriver
      */
     public function testDownloadRedirect(): void
@@ -114,7 +116,7 @@ class HandlesDynamicFormsStorageTest extends TestCase
 
 
         $this->app['router']->get(__METHOD__.'/{fileKey}', function (Request $request, $fileKey) {
-            return $this->mock_controller()->show($request, $fileKey);
+            return $this->mock_controller()->showS3($request, $fileKey);
         });
 
         $response = $this->get(__METHOD__.'/testFile.docx');
@@ -139,7 +141,7 @@ class HandlesDynamicFormsStorageTest extends TestCase
                 //
             }
 
-            protected function authorizeFileAction(string $action, string $fileKey, Request $request): void
+            protected function authorizeFileAction(string $action, string $fileKey, Request $request, string $backend): void
             {
                 ($this->authCallback)();
             }

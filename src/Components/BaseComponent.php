@@ -70,6 +70,18 @@ abstract class BaseComponent implements ComponentInterface
         return $this->hasMultipleValues;
     }
 
+    /**
+     * Informs the validation code if this should be treated as a multi-value field.
+     *
+     * There are cases where components always store data as multiple values, even in single-
+     * value mode. The validator needs to handle that correctly, but we do not want to inadvertently
+     * perform a transformation that makes the data incompatible with viewing/editing it again.
+     */
+    protected function hasMultipleValuesForValidation(): bool
+    {
+        return $this->hasMultipleValues();
+    }
+
     public function hasConditional(): bool
     {
         return $this->conditional || $this->customConditional;
@@ -122,7 +134,7 @@ abstract class BaseComponent implements ComponentInterface
             return $bag;
         }
 
-        if ($this->hasMultipleValues()) {
+        if ($this->hasMultipleValuesForValidation()) {
             foreach ($this->submissionValue() as $index => $submissionValue) {
                 $bag = $this->mergeErrorBags($bag, $this->processValidations(
                     $this->errorLabel ?? sprintf('%s %s', $fieldKey, $index),
@@ -206,7 +218,7 @@ abstract class BaseComponent implements ComponentInterface
      */
     protected function postProcessValidationsForMultiple(string $fieldKey): MessageBag
     {
-        if (! $this->hasMultipleValues()) {
+        if (! $this->hasMultipleValuesForValidation()) {
             throw new InvalidDefinitionError(
                 sprintf('%s called but component is multiple => false; cannot process', __METHOD__),
                 $this->key()

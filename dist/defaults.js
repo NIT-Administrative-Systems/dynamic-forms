@@ -214,7 +214,10 @@ export default {
                 key: 'file',
                 ignore: false,
                 components: [
-                    { key: 'storage', defaultValue: 's3', disabled: true },
+                    { key: 'url', defaultValue: '/dynamic-forms/storage/url', disabled: true },
+                    { key: 'fileKey', ignore: true },
+                    { key: 'privateDownload', ignore: true },
+                    { key: 'options', ignore: true },
                     { key: 'dir', ignore: true },
                     { key: 'fileNameTemplate', ignore: true },
                     { key: 'uploadOnly', ignore: true },
@@ -249,5 +252,40 @@ export default {
         stateField.type = 'hidden';
 
         Formio.Components.components.button.editForm = function() { return editForm; };
+    },
+
+    /**
+     * Builder dropdown values cannot be modified by overriding defaults.
+     *
+     * This modifies the File editForm directly & globally, which seems to be
+     * the only approach that works.
+     *
+     */
+    globalFileCustomization: () => {
+        var editForm = Formio.Components.components.file.editForm();
+        var StorageValues = [
+            {label: "S3", value: "s3"},
+            {label: "Local", value: "url"}
+        ];
+        if(process.env.MIX_STORAGE_DEFAULT_VALUE === 's3')
+        {
+            StorageValues = [
+                {label: "S3", value: "s3"},
+            ];
+        }
+        if(process.env.MIX_STORAGE_DEFAULT_VALUE === 'url')
+        {
+            StorageValues = [
+                {label: "Local", value: "url"}
+            ];
+        }
+
+        Formio.Utils.getComponent(editForm.components, 'storage').data.values = StorageValues;
+
+        Formio.Utils.getComponent(editForm.components, 'storage').dataSrc = 'values';
+
+        Formio.Components.components.file.editForm = function() { return editForm; };
+
     }
+
 }

@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Northwestern\SysDev\DynamicForms\Storage\Concerns\HandlesDynamicFormsStorage;
 
+
 /**
  * Storage/retrieval for file uploads.
  */
@@ -33,7 +34,7 @@ class DynamicFormsStorageController extends Controller
      *
      * @throws AuthorizationException
      */
-    protected function authorizeFileAction(string $action, string $fileKey, Request $request): void
+    protected function authorizeFileAction(string $action, string $fileKey, Request $request, string $backend): void
     {
         /*
         $permission = "${action}Files"; // uploadFiles, downloadFiles -- it's a convention

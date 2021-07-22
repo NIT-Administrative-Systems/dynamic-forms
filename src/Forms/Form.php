@@ -9,7 +9,7 @@ use Northwestern\SysDev\DynamicForms\Components\ComponentInterface;
 use Northwestern\SysDev\DynamicForms\Components\CustomSubcomponentDeserialization;
 use Northwestern\SysDev\DynamicForms\Components\UploadInterface;
 use Northwestern\SysDev\DynamicForms\Errors\InvalidDefinitionError;
-use Northwestern\SysDev\DynamicForms\Storage\S3Driver;
+use Northwestern\SysDev\DynamicForms\FileComponentRegistry;
 
 class Form
 {
@@ -29,9 +29,12 @@ class Form
 
     protected ComponentRegistry $componentRegistry;
 
+    protected FileComponentRegistry $fileComponentRegistry;
+
     public function __construct(string $definitionJson)
     {
         $this->componentRegistry = resolve(ComponentRegistry::class);
+        $this->fileComponentRegistry = resolve(FileComponentRegistry::class);
         $this->setDefinition($definitionJson);
     }
 
@@ -113,7 +116,8 @@ class Form
             );
 
             if (is_subclass_of($component, UploadInterface::class)) {
-                $component->setStorageDriver(app()->make(S3Driver::class));
+                $storageDriver = $this->fileComponentRegistry->get($component->getStorageType());
+                $component->setStorageDriver(resolve($storageDriver));
             }
 
             $components[] = $component;

@@ -16,6 +16,7 @@ module.exports = {
         sidebar: [
             ['/', 'Overview'],
             './install',
+            './upgrading',
             './usage',
             './uploads',
             './extending',

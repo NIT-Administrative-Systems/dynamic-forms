@@ -92,7 +92,7 @@ class S3DriverTest extends TestCase
      */
     public function testGetUploadLink(): void
     {
-        $this->app['router']->get('/dynamic-forms/storage/s3')->name('dynamic-forms.file-download');
+        $this->app['router']->get('/dynamic-forms/storage/s3')->name('dynamic-forms.S3-file-download');
 
         $driver = $this->mockPresignDriver();
         $expected = response()->json([

@@ -1,15 +1,17 @@
 <?php
 
+
 namespace Northwestern\SysDev\DynamicForms\Tests;
 
-use Northwestern\SysDev\DynamicForms\ComponentRegistry;
-use Northwestern\SysDev\DynamicForms\Components\Inputs\Textfield;
+
+use Northwestern\SysDev\DynamicForms\FileComponentRegistry;
+use Northwestern\SysDev\DynamicForms\Storage\S3Driver;
 use Orchestra\Testbench\TestCase;
 
 /**
- * @coversDefaultClass \Northwestern\SysDev\DynamicForms\ComponentRegistry
+ * @coversDefaultClass \Northwestern\SysDev\DynamicForms\FileComponentRegistry
  */
-class ComponentRegistryTest extends TestCase
+class FileComponentRegistryTest extends TestCase
 {
     /**
      * @covers ::__construct
@@ -19,7 +21,7 @@ class ComponentRegistryTest extends TestCase
      */
     public function testsRegistration(): void
     {
-        $registry = new ComponentRegistry();
+        $registry = new FileComponentRegistry();
         $this->assertGreaterThan(0, count($registry->registered()));
     }
 
@@ -28,7 +30,7 @@ class ComponentRegistryTest extends TestCase
      */
     public function testGet(): void
     {
-        $registry = new ComponentRegistry();
-        $this->assertEquals(Textfield::class, $registry->get('textfield'));
+        $registry = new FileComponentRegistry();
+        $this->assertEquals(S3Driver::class, $registry->get('s3'));
     }
 }

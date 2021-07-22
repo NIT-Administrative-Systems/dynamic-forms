@@ -15,10 +15,11 @@ FormioUtils.Evaluator.noeval = true;
 // -------------------------------------------------------------------------
 
 /**
- * Runs global customizations for the Button component's editForm that were not possible
+ * Runs global customizations for the Button and File component's editForm that were not possible
  * with the typical way of adjusting editForms.
  */
 Defaults.globalButtonCustomization();
+Defaults.globalFileCustomization()
 
 /**
  * Apply any custom templates.
