@@ -13,8 +13,8 @@ jobs:
     continue-on-error: ${{ matrix.experimental }}
 
     strategy:
+      fail-fast: false
       matrix:
-        fail-fast: false
         php-versions: ['8.0']
         experimental: [false]
         include:
