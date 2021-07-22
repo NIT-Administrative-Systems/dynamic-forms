@@ -125,7 +125,9 @@ class FileTest extends InputComponentTestCase
 
     public function submissionValueProvider(): array
     {
-        return [];
+        return [
+            'empty passes through' => [null, [], []],
+        ];
     }
 
     protected function getComponent(
