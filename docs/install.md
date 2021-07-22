@@ -32,3 +32,5 @@ The installation command creates `App\Http\Controllers\DynamicFormsStorageContro
 Out of the box, this controller will deny all requests. You need to implement the `authorizeFileAction` method to check a gate or perform some other authorization check.
 
 Depending on who will be uploading, you may also want to add the `auth` middleware to verify a user is logged in.
+
+For file uploads, S3 and direct server uploads are both options available in the builder. You can set the env variable `MIX_STORAGE_DEFAULT_VALUE` to `s3` or `url` if you do not need to give people a choice.
