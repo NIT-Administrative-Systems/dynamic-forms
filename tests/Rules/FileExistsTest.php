@@ -39,7 +39,7 @@ class FileExistsTest extends TestCase
         $validS3 = [
             'name' => 'foo1',
             'key' => 'foo1', // should match name
-            'url' => '/dynamic-forms/storage/s3/foo1', // should match name
+            'url' => 'http://localhost/dynamic-forms/storage/s3/foo1', // should match name
             'storage' => S3Driver::STORAGE_S3,
         ];
 

@@ -103,7 +103,7 @@ class S3Driver implements StorageInterface
         }
 
         // Check consistency of fields
-        $expectedUrl = route('dynamic-forms.S3-file-redirect', ['fileKey' => $value['name']], false);
+        $expectedUrl = route('dynamic-forms.S3-file-redirect', ['fileKey' => $value['name']]);
         if ($value['name'] != $value['key'] || $expectedUrl != $value['url']) {
             return false;
         }
