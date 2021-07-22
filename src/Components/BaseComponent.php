@@ -7,6 +7,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\MessageBag as MessageBagImpl;
 use Illuminate\Validation\Factory;
 use Northwestern\SysDev\DynamicForms\Conditional\ConditionalInterface;
+use Northwestern\SysDev\DynamicForms\Conditional\JSONConditional;
 use Northwestern\SysDev\DynamicForms\Conditional\SimpleConditional;
 use Northwestern\SysDev\DynamicForms\Errors\ConditionalNotImplemented;
 use Northwestern\SysDev\DynamicForms\Errors\InvalidDefinitionError;
@@ -84,8 +85,8 @@ abstract class BaseComponent implements ComponentInterface
             throw new ConditionalNotImplemented($this->key(), ConditionalNotImplemented::CUSTOM_JS);
         }
 
-        if (Arr::get($this->conditional, '')) {
-            throw new ConditionalNotImplemented($this->key(), ConditionalNotImplemented::JSON);
+        if (Arr::get($this->conditional, 'json')) {
+            return new JSONConditional(Arr::get($this->conditional, 'json'));
         }
 
         return new SimpleConditional(

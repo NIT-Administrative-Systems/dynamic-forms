@@ -115,7 +115,6 @@ export default {
                     key: 'conditional',
                     ignore: false,
                     components: [
-                        {key: 'customConditionalPanel', ignore: true},
                     ],
                 }
             ];
