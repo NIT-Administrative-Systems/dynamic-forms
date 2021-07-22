@@ -41,16 +41,12 @@ class File extends BaseComponent implements UploadInterface
         $this->storage = $storage;
     }
 
-    public function submissionValue(): mixed
+    /**
+     * Files always come in an array, even when in single-value mode.
+     */
+    protected function hasMultipleValuesForValidation(): bool
     {
-        if ($this->hasMultipleValues) {
-            return parent::submissionValue();
-        }
-        if ($this->submissionValue == []) {
-            return null;
-        }
-
-        return parent::submissionValue()[0] ?? parent::submissionValue();
+        return true;
     }
 
     /**
