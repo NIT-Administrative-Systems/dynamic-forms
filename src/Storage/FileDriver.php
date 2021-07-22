@@ -25,7 +25,7 @@ class FileDriver implements StorageInterface
         }
 
         // Check consistency of fields
-        $expectedUrl = route('dynamic-forms.url-file-download').'?baseUrl='.urlencode($value['data']['baseUrl']).'&project=&form=/'.$value['name'];
+        $expectedUrl = route('dynamic-forms.url-file-download', [], false).'?baseUrl='.urlencode($value['data']['baseUrl']).'&project=&form=/'.$value['name'];
         if ($expectedUrl != $value['url']) {
             return false;
         }

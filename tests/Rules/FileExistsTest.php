@@ -45,7 +45,7 @@ class FileExistsTest extends TestCase
 
         $validURL = [
             'name' => 'foo1',
-            'url' => 'http://localhost/dynamic-forms/storage/url?baseUrl=https%3A%2F%2Fapi.form.io&project=&form=/foo1', // should match name with additional data fields added on
+            'url' => '/dynamic-forms/storage/url?baseUrl=https%3A%2F%2Fapi.form.io&project=&form=/foo1', // should match name with additional data fields added on
             'storage' => FileDriver::STORAGE_URL,
             'data' => ['baseUrl' => 'https://api.form.io',
                         'project' => '',

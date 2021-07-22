@@ -98,7 +98,7 @@ class S3DriverTest extends TestCase
         $expected = response()->json([
             'signed' => 'https://test.com',
             'headers' => ['X-AWS-Thing' => 'AMZ', 'Content-Type' => 'application/octet-stream'],
-            'url' => 'http://localhost/dynamic-forms/storage/s3',
+            'url' => '/dynamic-forms/storage/s3',
             'data' => ['fileName' => 'fooFile.docx']
         ], 201);
 
