@@ -1707,8 +1707,8 @@ class JSONConditionalTest extends TestCase
                   ]
                 }', true),
                 'submissionValues' => [
-                    'input1' => (int) (microtime(true) * 1000) - 10000, //give it a buffer for test to run
-                    'input2' => (int) (microtime(true) * 1000) + 10000
+                    'input1' => (int) (microtime(true) * 1000) - 100000, //give it a buffer for test to run
+                    'input2' => (int) (microtime(true) * 1000) + 100000
                 ],
                 'expected' => true,
             ],
