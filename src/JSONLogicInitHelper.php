@@ -91,15 +91,15 @@ class JSONLogicInitHelper
             ['flatMap', 0],
             ['flatMapDeep', 0],
             ['flatMapDepth', 0],
-            ['groupBy', 0], //overlap
+            ['groupBy', 0],
             ['includes', 3],
             ['invokeMap', 0],
             ['keyBy', 1],
             ['map', 1],
             ['orderBy', 3],
             ['partition', 0],
-            ['reduce', 0], //overlap
-            ['reduceRight', 0], //overlap
+            ['reduce', 0],
+            ['reduceRight', 0],
             ['reject', 1],
             ['sample', 1], //untested
             ['sampleSize', 1], //untested
@@ -210,8 +210,8 @@ class JSONLogicInitHelper
             ['invoke', 0],
             ['keys', 3],
             ['keysIn', 3],
-            ['mapKeys', 0], //2nd
-            ['mapValues', 0], //2nd
+            ['mapKeys', 0],
+            ['mapValues', 0],
             ['omit', 3],
             ['omitBy', 0],
             ['pick', 2],
