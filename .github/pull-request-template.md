@@ -11,6 +11,6 @@ When you open the PR, create it as a draft pull request if you aren't done & don
 <!--
 Run through this checklist. Check off items once you've considered them & decided you have them covered in the PR (or they are not applicable).
 -->
-
 - [ ] `tests/` added or updated
+- [ ] CHANGELOG.md's *Unreleased* section is updated
 - [ ] Documentation is updated
