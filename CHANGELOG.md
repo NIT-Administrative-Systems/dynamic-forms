@@ -12,7 +12,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ### Changed
 - The methods from the `HandlesDynamicFormsStorage` trait have been renamed.
-    - The route stub file has been updated accordingly. Please see the upgrading guide in the docs site for resolving this change. 
+    - The route stub file has been updated accordingly. Please see the upgrading guide in the docs site for resolving this change.
+- `BaseComponent` now uses a new `hasMultipleValuesForValidation()` method to determine if a field in single-value mode should be validated in multi-value mode.
 
 ### Fixed
 - The `ComponentRegistry` now consistently registers components without a leading slash in namespaces. 
