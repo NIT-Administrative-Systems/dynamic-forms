@@ -19,6 +19,7 @@ jobs:
       uses: actions/setup-node@v2.3.0
       with:
         node-version: ${{ matrix.node-version }}
+        cache: 'yarn'
     - name: Install and Build 🔧
       run: |
         yarn install
