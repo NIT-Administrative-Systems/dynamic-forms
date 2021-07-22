@@ -64,7 +64,7 @@ class FileComponentRegistry
             ->files();
 
         foreach ($files as $file) {
-            $interface = '\\'.__NAMESPACE__.'\\'.str_replace(
+            $interface = __NAMESPACE__.'\\'.str_replace(
                     ['/', '.php'],
                     ['\\', ''],
                     Str::after($file->getRealPath(), __DIR__.DIRECTORY_SEPARATOR)

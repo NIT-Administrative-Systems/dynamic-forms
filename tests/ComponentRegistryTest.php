@@ -29,6 +29,6 @@ class ComponentRegistryTest extends TestCase
     public function testGet(): void
     {
         $registry = new ComponentRegistry();
-        $this->assertEquals('\\'.Textfield::class, $registry->get('textfield'));
+        $this->assertEquals(Textfield::class, $registry->get('textfield'));
     }
 }

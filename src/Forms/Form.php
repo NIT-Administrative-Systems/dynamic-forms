@@ -117,7 +117,7 @@ class Form
 
             if (is_subclass_of($component, UploadInterface::class)) {
                 $storageDriver = $this->fileComponentRegistry->get($component->getStorageType());
-                $component->setStorageDriver(new $storageDriver());
+                $component->setStorageDriver(resolve($storageDriver));
             }
 
             $components[] = $component;

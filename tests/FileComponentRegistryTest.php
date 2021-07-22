@@ -31,6 +31,6 @@ class FileComponentRegistryTest extends TestCase
     public function testGet(): void
     {
         $registry = new FileComponentRegistry();
-        $this->assertEquals('\\'.S3Driver::class, $registry->get('s3'));
+        $this->assertEquals(S3Driver::class, $registry->get('s3'));
     }
 }

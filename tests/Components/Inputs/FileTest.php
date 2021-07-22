@@ -97,7 +97,7 @@ class FileTest extends InputComponentTestCase
             "originalName": "TEST.docx"
         }]',true);
 
-        $filePASS[0]['url'] = fn () => route('dynamic-forms.S3-file-redirect', [$filePASS[0]['name']], false);
+        $filePASS[0]['url'] = fn () => route('dynamic-forms.S3-file-redirect', [$filePASS[0]['name']]);
         $fileNameCheckFail = $filePASS;
         $fileNameCheckFail[0]['name'] = 'TEST2.docx';
         $fileKeyCheckFail = $filePASS;
