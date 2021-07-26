@@ -8,14 +8,15 @@ use Northwestern\SysDev\DynamicForms\JSONLogicInitHelper;
 use Orchestra\Testbench\TestCase;
 
 /**
- * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Conditional\JSONConditional
+ * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Conditional\
  */
 
 class JSONConditionalTest extends TestCase
 {
     /**
-     * @covers ::__construct
-     * @covers ::__invoke
+     * @covers JSONConditional::__construct
+     * @covers JSONConditional::__invoke
+     * @covers LodashFunctions\___
      * @dataProvider invokeDataProvider
      */
     public function testInvoke(array $jsonLogic, array $submissionValues, bool $expected): void
@@ -3407,7 +3408,69 @@ class JSONConditionalTest extends TestCase
                 ],
                 'expected' => true,
             ],
-
+            'should show toString' => [
+                'jsonLogic' => json_decode('{
+                  "_isEqual": [
+                    {
+                      "_toString": [
+                        {
+                      "var": "data.input1"
+                    }
+                      ]
+                    },
+                    {
+                      "var": "data.output"
+                    }
+                  ]
+                }', true),
+                'submissionValues' => [
+                    'input1' => null,
+                    'output' => ''
+                    ],
+                'expected' => true,
+            ],
+            'should show toString 2' => [
+                'jsonLogic' => json_decode('{
+                  "_isEqual": [
+                    {
+                      "_toString": [
+                        {
+                      "var": "data.input1"
+                    }
+                      ]
+                    },
+                    {
+                      "var": "data.output"
+                    }
+                  ]
+                }', true),
+                'submissionValues' => [
+                    'input1' => [1, 2, 3],
+                    'output' => '1,2,3'
+                ],
+                'expected' => true,
+            ],
+            'should show toString 3' => [
+                'jsonLogic' => json_decode('{
+                  "_isEqual": [
+                    {
+                      "_toString": [
+                        {
+                      "var": "data.input1"
+                    }
+                      ]
+                    },
+                    {
+                      "var": "data.output"
+                    }
+                  ]
+                }', true),
+                'submissionValues' => [
+                    'input1' => 3,
+                    'output' => '3'
+                ],
+                'expected' => true,
+            ],
             //Math functions
             'should show add' => [
                 'jsonLogic' => json_decode('{

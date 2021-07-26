@@ -12,6 +12,9 @@ use Northwestern\SysDev\DynamicForms\Storage\S3Driver;
 
 class DynamicFormsProvider extends ServiceProvider
 {
+    /**
+     * @codeCoverageIgnore
+     */
     public function register()
     {
         $this->app->singleton(ComponentRegistry::class, function ($app) {
@@ -53,6 +56,9 @@ class DynamicFormsProvider extends ServiceProvider
         });
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     public function boot()
     {
         $this->registerCommands();
