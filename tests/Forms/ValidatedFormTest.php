@@ -2,10 +2,13 @@
 
 namespace Northwestern\SysDev\DynamicForms\Tests\Forms;
 
+use Carbon\Carbon;
+use Carbon\CarbonInterface;
 use Northwestern\SysDev\DynamicForms\Components\CaseEnum;
 use Northwestern\SysDev\DynamicForms\Components\Inputs\Textfield;
 use Northwestern\SysDev\DynamicForms\Forms\Form;
 use Northwestern\SysDev\DynamicForms\Forms\ValidatedForm;
+use Northwestern\SysDev\DynamicForms\Storage\S3Driver;
 use Orchestra\Testbench\TestCase;
 
 /**
@@ -91,7 +94,17 @@ class ValidatedFormTest extends TestCase
         $validatedForm = new ValidatedForm($flatComponents, $submission);
 
         $this->assertEquals($passes, $validatedForm->isValid());
-        $this->assertEquals($expectedValues, $validatedForm->values());
+
+        // Values will be a Carbon object, so turn that into a string that matches the JSON file.
+        $values = collect($validatedForm->values())->map(function (mixed $value, string $key) {
+            if ($value instanceof CarbonInterface) {
+                /** @var $value CarbonInterface */
+                return $value->tz('America/Chicago')->toIso8601String();
+            }
+
+            return $value;
+        });
+        $this->assertEquals($expectedValues, $values->all());
     }
 
     public function validationDataProvider(): array
