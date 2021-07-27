@@ -4,17 +4,19 @@
 namespace Northwestern\SysDev\DynamicForms\Conditional\LodashFunctions;
 
 
+use Closure;
+
 trait Util
 {
-    public static function constant($value)
+    public static function constant(mixed $value) : Closure
     {
         return function () use ($value) {return $value;};
     }
-    public static function iteratee($value = null)
+    public static function iteratee(mixed $value = null) : callable
     {
         return \_\internal\baseIteratee($value);
     }
-    public static function matches($source)
+    public static function matches(array $source): Closure
     {
         return function ($object) use ($source) {
             foreach($source as $key => $value)
@@ -27,7 +29,7 @@ trait Util
             return true;
         };
     }
-    public static function matchesProperty($path, $srcValue)
+    public static function matchesProperty(array|string $path, mixed $srcValue): Closure
     {
         return function ($object) use ($srcValue, $path) {
             if(key_exists($path, $object) && $object[$path] == $srcValue)
@@ -37,7 +39,7 @@ trait Util
             return false;
         };
     }
-    public static function range($start = null, $stop = null, int $step = 1)
+    public static function range(int $start = null, int $stop = null, int $step = 1) : array
     {
         if ($stop == null && $start != null)
         {
@@ -55,38 +57,38 @@ trait Util
         }
         return $ret;
     }
-    public static function rangeRight($start = null, $stop = null, int $step = 1)
+    public static function rangeRight(int $start = null, int $stop = null, int $step = 1) : array
     {
         return array_reverse(self::range($start,$stop,$step));
     }
-    public static function stubArray()
+    public static function stubArray() : array
     {
         return [];
     }
-    public static function stubFalse()
+    public static function stubFalse() : bool
     {
         return false;
     }
-    public static function stubObject()
+    public static function stubObject() : array
     {
         //must be array because stdClass is not used, it is all assoc arrays
         return [];
     }
-    public static function stubString()
+    public static function stubString() : string
     {
         return '';
     }
-    public static function stubTrue()
+    public static function stubTrue() : bool
     {
         return true;
     }
-    public static function toPath($value)
+    public static function toPath(string $value) : array
     {
         $value = str_replace('[', '.', $value);
         $value = str_replace(']', '', $value);
         return explode('.',  $value);
     }
-    public static function times($n, $iteratee)
+    public static function times(int $n, callable $iteratee) : array
     {
         $ret = [];
         for($i = 0; $i < $n;  $i++)

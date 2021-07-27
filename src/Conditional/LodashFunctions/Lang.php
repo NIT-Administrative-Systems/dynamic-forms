@@ -5,7 +5,7 @@ namespace Northwestern\SysDev\DynamicForms\Conditional\LodashFunctions;
 
 trait Lang
 {
-    public static function castArray($value = null)
+    public static function castArray(mixed $value = null) : array
     {
         if (func_num_args() == 0)
         {
@@ -21,47 +21,47 @@ trait Lang
         }
         return [$value];
     }
-    public static function gt($value, $other): bool
+    public static function gt(mixed $value, mixed $other): bool
     {
         return $value > $other;
     }
-    public static function gte($value, $other): bool
+    public static function gte(mixed $value, mixed $other): bool
     {
         return $value >= $other;
     }
-    public static function lt($value, $other): bool
+    public static function lt(mixed $value, mixed $other): bool
     {
         return $value < $other;
     }
-    public static function lte($value, $other): bool
+    public static function lte(mixed $value, mixed $other): bool
     {
         return $value <= $other;
     }
-    public static function isArrayLike($value)
+    public static function isArrayLike(mixed $value) : bool
     {
         return is_array($value) || is_string($value);
     }
-    public static function isArrayLikeObject($value)
+    public static function isArrayLikeObject(mixed $value) : bool
     {
         return is_array($value);
     }
-    public static function isBoolean($value)
+    public static function isBoolean(mixed $value) : bool
     {
         return is_bool($value);
     }
-    public static function isFinite($value)
+    public static function isFinite(mixed $value) : bool
     {
         return is_float($value) || is_int($value);
     }
-    public static function isInteger($value)
+    public static function isInteger(mixed $value) : bool
     {
         return is_int($value);
     }
-    public static function isLength($value)
+    public static function isLength(mixed $value) : bool
     {
         return is_int($value);
     }
-    public static function isMatch($object, $source)
+    public static function isMatch(array $object, array $source) : bool
     {
         foreach($source as $key => $value)
         {
@@ -72,19 +72,19 @@ trait Lang
         }
         return true;
     }
-    public static function isNan($value)
+    public static function isNan(mixed $value) : bool
     {
         return is_float($value) && is_nan($value);
     }
-    public static function isNumber($value): bool
+    public static function isNumber(mixed $value): bool
     {
         return is_int($value) || is_float($value);
     }
-    public static function isObject($value): bool
+    public static function isObject(mixed $value): bool
     {
         return is_object($value) || is_array($value);
     }
-    public static function toArray($value) : array
+    public static function toArray(mixed $value) : array
     {
         if(self::isObject($value) ) //even if it is a js object it will be passed as an associative array
         {
@@ -101,27 +101,27 @@ trait Lang
         }
         return [];
     }
-    public static function toFinite($value)
+    public static function toFinite(mixed $value) : float
     {
         return floatval($value);
     }
-    public static function toInteger($value)
+    public static function toInteger(mixed $value) : int
     {
         return intval($value);
     }
-    public static function toLength($value)
+    public static function toLength(mixed $value) : int
     {
         return intval($value) < 0 ? 0 : intval($value);
     }
-    public static function toNumber($value)
+    public static function toNumber(mixed $value) : float
     {
         return floatval($value);
     }
-    public static function toSafeInteger($value)
+    public static function toSafeInteger(mixed $value) : bool
     {
         return intval($value);
     }
-    public static function toString($value)
+    public static function toString(mixed $value) : string
     {
         if(is_array($value))
         {
@@ -130,7 +130,8 @@ trait Lang
             {
                 $ret .= strval($subpart).',';
             }
-            return rtrim($ret, ',');
+            $temp =  rtrim($ret, ',');
+            return $temp;
         }
         return strval($value);
     }

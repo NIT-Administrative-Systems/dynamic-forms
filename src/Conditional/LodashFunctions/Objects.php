@@ -6,7 +6,7 @@ namespace Northwestern\SysDev\DynamicForms\Conditional\LodashFunctions;
 
 trait Objects
 {
-    public static function at($object, $paths)
+    public static function at(array $object, string|array $paths) : array
     {
         $ret = [];
         foreach ($paths as $path)
@@ -15,7 +15,7 @@ trait Objects
         }
         return $ret;
     }
-    public static function entries($object)
+    public static function entries(array $object) : array
     {
         $ret = [];
         foreach($object as $key => $item)
@@ -24,22 +24,22 @@ trait Objects
         }
         return $ret;
     }
-    public static function entriesIn($object)
+    public static function entriesIn(array $object) : array
     {
         //This is the same as entries since we do not support inherited properties for objects
         return self::entries($object);
     }
     //This is an alias of entries
-    public static function toPairs($object)
+    public static function toPairs(array $object) : array
     {
         return self::entries($object);
     }
     //This is an alias of entriesIn
-    public static function toPairsIn($object)
+    public static function toPairsIn(array $object) : array
     {
         return self::entries($object);
     }
-    public static function has($object, $path)
+    public static function has(array $object, string|array $path) : bool
     {
         if(is_array($path))
         {
@@ -47,16 +47,16 @@ trait Objects
         }
         return \__\Traits\Collections::has($object, $path);
     }
-    public static function hasIn($object, $path)
+    public static function hasIn(array $object, string|array $path) : bool
     {
         //This is the same as has since we do not support inherited properties for objects
         return self::has($object, $path);
     }
-    public static function invert($object)
+    public static function invert(array $object) : array
     {
         return array_flip($object);
     }
-    public static function keys($object)
+    public static function keys(array|string $object) : array
     {
         if(self::isObject($object)) //even if it is a js object it will be passed as an associative array
         {
@@ -73,30 +73,30 @@ trait Objects
         }
         return [];
     }
-    public static function keysIn($object)
+    public static function keysIn(array|string $object) : array
     {
         //This is the same as keys since we do not support inherited properties for objects
         return self::keys($object);
     }
-    public static function omit($object, array $paths)
+    public static function omit(array $object, array $paths) : array
     {
-        $picked = \_\pick((object) $object, $paths);
+        $picked = \__\Traits\Collections::pick( $object, $paths);
         $ret = [];
         foreach($object as $key => &$item)
         {
-            if(!property_exists($picked, $key))
+            if(!key_exists($key, $picked))
             {
                 $ret[$key] = $item;
             }
         }
         return $ret;
     }
-    public static function result($object, $path, $defaultValue = null)
+    public static function result(array $object, array|string $path, mixed $defaultValue = null) : mixed
     {
         //This is the same as get since we do not support functions within objects
         return \_\get($object, $path, $defaultValue);
     }
-    public static function values($object)
+    public static function values(array|string $object) : array
     {
         if(self::isObject($object))
         {
@@ -113,7 +113,7 @@ trait Objects
         }
         return [];
     }
-    public static function valuesIn($object)
+    public static function valuesIn(array|string$object) : array
     {
         //This is the same as values since we do not support inherited properties for objects
         return self::values($object);

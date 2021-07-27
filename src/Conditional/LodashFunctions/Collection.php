@@ -6,7 +6,7 @@ namespace Northwestern\SysDev\DynamicForms\Conditional\LodashFunctions;
 
 trait Collection
 {
-    public static function includes($collection, $value, $fromIndex = 0)
+    public static function includes(string|object|array $collection, mixed $value, int $fromIndex = 0) : bool
     {
         if(is_string($collection))
         {

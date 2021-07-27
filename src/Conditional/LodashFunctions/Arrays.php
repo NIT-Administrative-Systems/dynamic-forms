@@ -6,7 +6,7 @@ namespace Northwestern\SysDev\DynamicForms\Conditional\LodashFunctions;
 
 trait Arrays
 {
-    public static function fromPairs(array $pairs)
+    public static function fromPairs(array $pairs) : array
     {
         //has to be array not StdClass
         $result = [];
@@ -23,11 +23,11 @@ trait Arrays
 
         return $result;
     }
-    public static function join(array $array, $separator=','): string
+    public static function join(array $array, string $separator=','): string
     {
         return implode($separator, $array);
     }
-    public static function slice(array $array, $start = 0, $end = null): array
+    public static function slice(array $array, int $start = 0, int $end = null): array
     {
         if($end == null)
         {
@@ -35,7 +35,7 @@ trait Arrays
         }
         return array_slice($array, $start, $end - $start);
     }
-    public static function sortedIndex(array $array, $value)
+    public static function sortedIndex(array $array, mixed $value) : int
     {
         $size = count($array);
         if($size == 0 )
@@ -54,11 +54,11 @@ trait Arrays
             }
         }
     }
-    public static function sortedIndexOf(array $array, $value)
+    public static function sortedIndexOf(array $array, mixed $value): int
     {
         return \_\indexOf($array, $value);
     }
-    public static function sortedLastIndex(array $array, $value)
+    public static function sortedLastIndex(array $array, mixed $value) : int
     {
         $size = count($array);
         if($size == 0 )
@@ -77,11 +77,11 @@ trait Arrays
             }
         }
     }
-    public static function sortedLastIndexOf(array $array, $value)
+    public static function sortedLastIndexOf(array $array, mixed $value): int
     {
         return \_\lastIndexOf($array, $value);
     }
-    public static function sortedUniq(array $array)
+    public static function sortedUniq(array $array) : array
     {
         return array_values(array_unique($array));
     }
