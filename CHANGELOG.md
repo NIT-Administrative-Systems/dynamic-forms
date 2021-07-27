@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## Unreleased
 
+## [v0.3.1] - 2021-07-27
+## Added
+- Added an `allFiles()` method to `ValidatedForm`s to easily access submitted files.
+
 ## [v0.3.0] - 2021-07-22
 ### Added
 - Support for uploading files to the server instead of S3 added.
