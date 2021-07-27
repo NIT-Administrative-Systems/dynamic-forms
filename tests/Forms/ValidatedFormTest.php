@@ -99,6 +99,11 @@ class ValidatedFormTest extends TestCase
         $json = fn (string $filename) => file_get_contents(implode(DIRECTORY_SEPARATOR, [__DIR__, '..', 'Fixtures', $filename]));
         $components = fn (string $filename) => (new Form($json($filename)))->flatComponents();
         $values = fn (string $filename) => json_decode($json($filename), true);
+        $values2 = function (string $filename) use ($values) {
+            $value = $values($filename);
+            unset($value['submit']);
+            return $value;
+        };
 
         return [
             'simple form passes' => [
@@ -117,19 +122,19 @@ class ValidatedFormTest extends TestCase
                 $components('complex_definition.json'),
                 $values('complex_submission.json'),
                 true,
-                $values('complex_submission.json'),
+                $values2('complex_submission.json'),
             ],
             'form with times passes' => [
                 $components('time_definition.json'),
                 $values('time_submission.json'),
                 true,
-                $values('time_submission.json'),
+                $values2('time_submission.json'),
             ],
             'form with conditional fields passes' => [
                 $components('conditional_definition.json'),
                 $values('conditional_submission.json'),
                 true,
-                $values('conditional_submission.json'),
+                $values2('conditional_submission.json'),
             ],
             'strips extra values' => [
                 $components('simple_definition.json'),
@@ -141,7 +146,7 @@ class ValidatedFormTest extends TestCase
                 $components('conditional_definition.json'),
                 array_merge($values('conditional_submission.json'), ['textField1' => 'hey']),
                 true,
-                $values('conditional_submission.json'),
+                $values2('conditional_submission.json'),
             ],
             'transformations' => [
                 ['test' => new Textfield('test', 'Test', null, [], [], false, null, null, CaseEnum::UPPER, [])],
