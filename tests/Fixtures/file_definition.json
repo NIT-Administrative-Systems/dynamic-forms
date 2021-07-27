@@ -1,0 +1,45 @@
+{
+  "components": [
+    {
+      "label": "Upload",
+      "storage": "s3",
+      "key": "file",
+      "type": "file",
+      "input": true,
+      "tableView": false
+    },
+    {
+      "label": "Upload2",
+      "storage": "s3",
+      "key": "upload2",
+      "type": "file",
+      "input": true,
+      "tableView": false
+    },
+    {
+      "label": "Upload",
+      "storage": "s3",
+      "key": "upload",
+      "type": "file",
+      "input": true,
+      "tableView": false
+    },
+    {
+      "label": "Upload",
+      "storage": "s3",
+      "key": "file1",
+      "type": "file",
+      "input": true,
+      "tableView": false
+    },
+    {
+      "label": "notafile",
+      "storage": "s3",
+      "multiple": true,
+      "key": "notafile",
+      "type": "file",
+      "input": true,
+      "tableView": false
+    }
+  ]
+}
