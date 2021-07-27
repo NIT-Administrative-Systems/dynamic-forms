@@ -7,6 +7,7 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\MessageBag as MessageBagImpl;
 use Northwestern\SysDev\DynamicForms\Components\ComponentInterface;
+use Northwestern\SysDev\DynamicForms\FileComponentRegistry;
 
 class ValidatedForm implements Validator
 {
@@ -63,9 +64,17 @@ class ValidatedForm implements Validator
     public function allFiles(): array
     {
         $list = [];
-        foreach ($this->values as $key => $file) {
-            if (str_starts_with($key, 'file') && isset($file[0])) {
-                $list[] = $file[0];
+        foreach ($this->values as $component) {
+            if (is_array($component)) { //files always present as multivalued
+                foreach ($component as $subComponent) {
+                    if (array_key_exists('storage', $subComponent)) {
+                        //get storage driver and check if file exists
+                        $storageDriver =  resolve(resolve(FileComponentRegistry::class)->get($subComponent['storage']));
+                        if ($storageDriver->findObject($subComponent['name'])) {
+                            $list[] = $subComponent;
+                        }
+                    }
+                }
             }
         }
 
