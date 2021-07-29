@@ -115,6 +115,7 @@ class ValidatedFormTest extends TestCase
         $values2 = function (string $filename) use ($values) {
             $value = $values($filename);
             unset($value['submit']);
+
             return $value;
         };
 

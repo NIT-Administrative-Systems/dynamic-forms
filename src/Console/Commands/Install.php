@@ -47,12 +47,12 @@ class Install extends GeneratorCommand
 
     protected function getStub(): string
     {
-        return __DIR__ . '/../../../stubs/DynamicFormsStorageController.stub';
+        return __DIR__.'/../../../stubs/DynamicFormsStorageController.stub';
     }
 
     protected function getDefaultNamespace($rootNamespace): string
     {
-        return $rootNamespace . '\Http\Controllers';
+        return $rootNamespace.'\Http\Controllers';
     }
 
     protected function ejectRoutes(string $routesFile): void
@@ -85,9 +85,9 @@ class Install extends GeneratorCommand
     protected function ejectCssInclude(string $appCssFile): void
     {
         file_put_contents(
-          $appCssFile,
-          "@import '~formiojs/dist/formio.full';",
-          FILE_APPEND
+            $appCssFile,
+            "@import '~formiojs/dist/formio.full';",
+            FILE_APPEND
         );
     }
 

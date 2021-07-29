@@ -65,10 +65,10 @@ class FileComponentRegistry
 
         foreach ($files as $file) {
             $interface = __NAMESPACE__.'\\'.str_replace(
-                    ['/', '.php'],
-                    ['\\', ''],
-                    Str::after($file->getRealPath(), __DIR__.DIRECTORY_SEPARATOR)
-                );
+                ['/', '.php'],
+                ['\\', ''],
+                Str::after($file->getRealPath(), __DIR__.DIRECTORY_SEPARATOR)
+            );
 
             if (
                 is_subclass_of($interface, StorageInterface::class)

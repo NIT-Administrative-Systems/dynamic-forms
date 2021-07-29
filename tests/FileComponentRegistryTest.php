@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Northwestern\SysDev\DynamicForms\Tests;
-
 
 use Northwestern\SysDev\DynamicForms\FileComponentRegistry;
 use Northwestern\SysDev\DynamicForms\Storage\S3Driver;

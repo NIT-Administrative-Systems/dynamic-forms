@@ -2,7 +2,6 @@
 
 namespace Northwestern\SysDev\DynamicForms\Tests\Components\TestCases;
 
-use Northwestern\SysDev\DynamicForms\Tests\Components\TestCases\BaseComponentTestCase;
 use function app;
 
 /**

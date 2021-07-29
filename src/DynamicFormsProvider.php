@@ -25,7 +25,6 @@ class DynamicFormsProvider extends ServiceProvider
             return new JSONLogicInitHelper;
         });
 
-
         $this->app->singleton(FileComponentRegistry::class, function ($app) {
             return new FileComponentRegistry;
         });
@@ -108,5 +107,4 @@ class DynamicFormsProvider extends ServiceProvider
             ], 'dynamic-forms-js');
         }
     }
-
 }

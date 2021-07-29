@@ -49,11 +49,12 @@ class S3Driver implements StorageInterface
     {
         $client = $this->storageClient();
         $signedRequest =
-            $client->createPresignedRequest($client->getCommand('getObject', array_filter([
-                'Bucket' => $this->bucket,
-                'Key' => $key,
-                'ResponseContentDisposition' => 'attachment; filename ="'.$originalName.'"',
-            ])),
+            $client->createPresignedRequest(
+                $client->getCommand('getObject', array_filter([
+                    'Bucket' => $this->bucket,
+                    'Key' => $key,
+                    'ResponseContentDisposition' => 'attachment; filename ="'.$originalName.'"',
+                ])),
                 '+50 minutes'
             );
 

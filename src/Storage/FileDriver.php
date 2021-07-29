@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Northwestern\SysDev\DynamicForms\Storage;
 
 class FileDriver implements StorageInterface

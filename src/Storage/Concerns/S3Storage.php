@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Northwestern\SysDev\DynamicForms\Storage\Concerns;
-
 
 use Illuminate\Http\Request;
 use Northwestern\SysDev\DynamicForms\Storage\S3Driver;
@@ -13,7 +11,6 @@ use Northwestern\SysDev\DynamicForms\Storage\StorageInterface;
  *
  * The stubs/DynamicFormsStorageController.stub file utilizes this trait.
  */
-
 trait S3Storage
 {
     /**
@@ -53,5 +50,4 @@ trait S3Storage
     {
         return app()->make(S3Driver::class);
     }
-
 }

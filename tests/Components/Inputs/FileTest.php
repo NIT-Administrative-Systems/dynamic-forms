@@ -95,7 +95,7 @@ class FileTest extends InputComponentTestCase
             "size": 10000,
             "type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
             "originalName": "TEST.docx"
-        }]',true);
+        }]', true);
 
         $filePASS[0]['url'] = fn () => route('dynamic-forms.S3-file-redirect', [$filePASS[0]['name']]);
         $fileNameCheckFail = $filePASS;

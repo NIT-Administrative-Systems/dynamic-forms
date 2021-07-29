@@ -26,7 +26,6 @@ class FileExistsTest extends TestCase
             ->get('/dynamic-forms/storage/s3/{fileKey}')
             ->name('dynamic-forms.S3-file-redirect');
 
-
         $this->app['router']
             ->get('/dynamic-forms/storage/url/')
             ->name('dynamic-forms.url-file-download');
@@ -48,8 +47,8 @@ class FileExistsTest extends TestCase
             'url' => 'http://localhost/dynamic-forms/storage/url?baseUrl=https%3A%2F%2Fapi.form.io&project=&form=/foo1', // should match name with additional data fields added on
             'storage' => FileDriver::STORAGE_URL,
             'data' => ['baseUrl' => 'https://api.form.io',
-                        'project' => '',
-                        'form' => '',]
+                'project' => '',
+                'form' => '', ],
         ];
 
         return [
@@ -68,7 +67,6 @@ class FileExistsTest extends TestCase
         ];
     }
 
-
     /**
      * @covers ::message
      */
@@ -81,7 +79,6 @@ class FileExistsTest extends TestCase
 
     public function rule($driver, bool $shouldExist): FileExists
     {
-
         $driver = $this->createPartialMock($driver, ['findObject']);
 
         $driver->method('findObject')->willReturn($shouldExist);

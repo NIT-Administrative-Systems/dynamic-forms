@@ -10,5 +10,4 @@ namespace Northwestern\SysDev\DynamicForms\Storage\Concerns;
 trait HandlesDynamicFormsStorage
 {
     use S3Storage, LocalStorage;
-
 }
