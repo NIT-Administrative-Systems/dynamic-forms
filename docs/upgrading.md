@@ -1,5 +1,22 @@
 # Upgrading
 
+## v0.4.0
+This version adds support for JSONLogic conditionals.
+
+To enable support, edit the `resources/js/formio/default.js` file. The `global` function has a section for conditionals (shown below) -- remove that item:
+
+```js
+{
+    key: 'conditional',
+    ignore: false,
+    components: [
+        {key: 'customConditionalPanel', ignore: true},
+    ],
+}
+```
+
+Run Laravel Mix to rebuild, and your form builder should have JSON conditional support.
+
 ## v0.3.0
 This version adds support for uploading files directly to your server as an alternative to S3.
 

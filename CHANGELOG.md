@@ -4,8 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## Unreleased
+
+## [v0.4.0 - 2021-07-29]
 ### Added
 - Support for JSONLogic (augmented with lodash) for conditional form fields.
+
+### Fixes
+- Fixed a bug in `ValidatedForm::allFiles()` when components were nested.
 
 ## [v0.3.1] - 2021-07-27
 ## Added
