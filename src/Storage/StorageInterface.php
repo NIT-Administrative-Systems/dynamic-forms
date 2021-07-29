@@ -2,7 +2,6 @@
 
 namespace Northwestern\SysDev\DynamicForms\Storage;
 
-
 interface StorageInterface
 {
     /**
@@ -17,8 +16,7 @@ interface StorageInterface
 
     /**
      * Returns the StorageMethod being implemented by this interface
-     * (supported values are dropbox, azure, indexeddb, s3 (already implemented), url (already implemented))
+     * (supported values are dropbox, azure, indexeddb, s3 (already implemented), url (already implemented)).
      */
     public static function getStorageMethod(): string;
-
 }

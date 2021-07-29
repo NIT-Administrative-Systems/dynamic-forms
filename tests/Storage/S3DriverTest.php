@@ -82,7 +82,7 @@ class S3DriverTest extends TestCase
     public function testGetDownloadLink(): void
     {
         $driver = $this->mockPresignDriver();
-        $expected = response()->json(['url' => 'https://test.com',], 201);
+        $expected = response()->json(['url' => 'https://test.com'], 201);
 
         $this->assertEquals($expected, $driver->getDownloadLink('foo'));
     }
@@ -99,7 +99,7 @@ class S3DriverTest extends TestCase
             'signed' => 'https://test.com',
             'headers' => ['X-AWS-Thing' => 'AMZ', 'Content-Type' => 'application/octet-stream'],
             'url' => 'http://localhost/dynamic-forms/storage/s3',
-            'data' => ['fileName' => 'fooFile.docx']
+            'data' => ['fileName' => 'fooFile.docx'],
         ], 201);
 
         $this->assertEquals($expected, $driver->getUploadLink('fooFile.docx'));

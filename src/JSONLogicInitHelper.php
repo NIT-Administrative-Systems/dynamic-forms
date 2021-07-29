@@ -1,19 +1,15 @@
 <?php
 
-
 namespace Northwestern\SysDev\DynamicForms;
-
 
 use JWadhams\JsonLogic;
 
 class JSONLogicInitHelper
 {
-
     public function __construct()
     {
         $this->registerLodash();
     }
-
 
     /**
      * Registers all of the lodash functions.
@@ -282,22 +278,16 @@ class JSONLogicInitHelper
             ['toPath', 3],
             ['uniqueId', 0],
         ];
-        foreach ($lodashList as $lodashfunct)
-        {
-            if($lodashfunct[1] == 1)
-            {
+        foreach ($lodashList as $lodashfunct) {
+            if ($lodashfunct[1] == 1) {
                 JsonLogic::add_operation('_'.$lodashfunct[0], '_::'.$lodashfunct[0]);
             }
-            if ($lodashfunct[1] == 2)
-            {
+            if ($lodashfunct[1] == 2) {
                 JsonLogic::add_operation('_'.$lodashfunct[0], '__::'.$lodashfunct[0]);
             }
-            if ($lodashfunct[1] == 3)
-            {
+            if ($lodashfunct[1] == 3) {
                 JsonLogic::add_operation('_'.$lodashfunct[0], 'Northwestern\SysDev\DynamicForms\Conditional\LodashFunctions\___::'.$lodashfunct[0]);
             }
         }
     }
-
-
 }

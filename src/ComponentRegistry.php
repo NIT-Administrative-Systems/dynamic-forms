@@ -66,10 +66,10 @@ class ComponentRegistry
 
         foreach ($files as $file) {
             $component = __NAMESPACE__.'\\'.str_replace(
-                    ['/', '.php'],
-                    ['\\', ''],
-                    Str::after($file->getRealPath(), __DIR__.DIRECTORY_SEPARATOR)
-                );
+                ['/', '.php'],
+                ['\\', ''],
+                Str::after($file->getRealPath(), __DIR__.DIRECTORY_SEPARATOR)
+            );
 
             if (
                 is_subclass_of($component, ComponentInterface::class)

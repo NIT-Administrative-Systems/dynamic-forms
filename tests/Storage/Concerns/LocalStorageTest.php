@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Northwestern\SysDev\DynamicForms\Tests\Storage\Concerns;
-
 
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
@@ -25,8 +23,8 @@ class LocalStorageTest extends \Orchestra\Testbench\TestCase
 
         $response = $this->postJson(__METHOD__, [
             'file' => new UploadedFile(implode(DIRECTORY_SEPARATOR, [__DIR__, '../..', 'Fixtures', 'sample.pdf']), 'sample.pdf', null, null, true),
-            'name' => 'sample.pdf'
-        ]  );
+            'name' => 'sample.pdf',
+        ]);
         $response->assertOk();
     }
 
@@ -51,7 +49,7 @@ class LocalStorageTest extends \Orchestra\Testbench\TestCase
         $this->app['router']->get(__METHOD__, function (Request $request) {
             return $this->mock_controller(fn () => throw new AuthorizationException('fail'))->showURL($request);
         });
-        $response = $this->call('GET', __METHOD__, ['form'=>'sample.pdf']  );
+        $response = $this->call('GET', __METHOD__, ['form' => 'sample.pdf']);
         $response->assertForbidden();
     }
 
@@ -63,10 +61,9 @@ class LocalStorageTest extends \Orchestra\Testbench\TestCase
         $this->app['router']->delete(__METHOD__, function (Request $request) {
             return $this->mock_controller(fn () => throw new AuthorizationException('fail'))->deleteURL($request);
         });
-        $response = $this->call('DELETE', __METHOD__, ['form'=>'sample.pdf']  );
+        $response = $this->call('DELETE', __METHOD__, ['form' => 'sample.pdf']);
         $response->assertForbidden();
     }
-
 
     /**
      * Gets a class using the HandlesDynamicFormsStorage trait w/ the authorizeFileAction method implemented.
@@ -92,5 +89,4 @@ class LocalStorageTest extends \Orchestra\Testbench\TestCase
             }
         };
     }
-
 }

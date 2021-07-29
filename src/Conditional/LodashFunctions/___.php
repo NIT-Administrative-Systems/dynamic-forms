@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Northwestern\SysDev\DynamicForms\Conditional\LodashFunctions;
 
 class ___

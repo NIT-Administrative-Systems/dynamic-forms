@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Northwestern\SysDev\DynamicForms\Tests\Storage\Concerns;
-
 
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
@@ -113,7 +111,6 @@ class S3StorageTest extends TestCase
 
             return $mock;
         });
-
 
         $this->app['router']->get(__METHOD__.'/{fileKey}', function (Request $request, $fileKey) {
             return $this->mock_controller()->showS3($request, $fileKey);

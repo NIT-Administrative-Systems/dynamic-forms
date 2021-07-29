@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Northwestern\SysDev\DynamicForms\Tests\Conditional;
 
 use Northwestern\SysDev\DynamicForms\Conditional\JSONConditional;
@@ -10,7 +9,6 @@ use Orchestra\Testbench\TestCase;
 /**
  * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Conditional\
  */
-
 class JSONConditionalTest extends TestCase
 {
     /**
@@ -148,7 +146,7 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => [0, 1, false, 2, '', 3],
-                    'output' => [1, 2, 3] ],
+                    'output' => [1, 2, 3], ],
                 'expected' => true,
             ],
             'should show concat' => [
@@ -180,7 +178,7 @@ class JSONConditionalTest extends TestCase
                     'input2' => 2,
                     'input3' => [3],
                     'input4' => [[4]],
-                    'output' => [1, 2, 3, [4]] ],
+                    'output' => [1, 2, 3, [4]], ],
                 'expected' => true,
             ],
             'should show difference' => [
@@ -202,9 +200,9 @@ class JSONConditionalTest extends TestCase
                   ]
                 }', true),
                 'submissionValues' => [
-                    'input1' => [2,1],
-                    'input2' => [2,3],
-                    'output' => [1] ],
+                    'input1' => [2, 1],
+                    'input2' => [2, 3],
+                    'output' => [1], ],
                 'expected' => true,
             ],
             'should show drop' => [
@@ -245,8 +243,8 @@ class JSONConditionalTest extends TestCase
                   ]
                 }', true),
                 'submissionValues' => [
-                    'input1' => [1,2,3],
-                    'output' => [1,2]
+                    'input1' => [1, 2, 3],
+                    'output' => [1, 2],
                 ],
                 'expected' => true,
             ],
@@ -269,9 +267,9 @@ class JSONConditionalTest extends TestCase
                   ]
                 }', true),
                 'submissionValues' => [
-                    'input1' => [[ 'user' => 'barney', 'age' => 36, 'active' => true], [ 'user' => 'fred',   'age' => 40, 'active' => false], [ 'user' => 'pebbles',   'age' => 41, 'active' => true]],
+                    'input1' => [['user' => 'barney', 'age' => 36, 'active' => true], ['user' => 'fred',   'age' => 40, 'active' => false], ['user' => 'pebbles',   'age' => 41, 'active' => true]],
                     'input2' => ['active', false],
-                    'output' => 1
+                    'output' => 1,
                 ],
                 'expected' => true,
             ],
@@ -294,9 +292,9 @@ class JSONConditionalTest extends TestCase
                   ]
                 }', true),
                 'submissionValues' => [
-                    'input1' => [[ 'user' => 'barney', 'age' => 36, 'active' => true], [ 'user' => 'fred',   'age' => 40, 'active' => false], [ 'user' => 'pebbles',   'age' => 41, 'active' => true]],
-                    'input2' => [ 'user' => 'fred',   'age' => 40, 'active' => false],
-                    'output' => 1
+                    'input1' => [['user' => 'barney', 'age' => 36, 'active' => true], ['user' => 'fred',   'age' => 40, 'active' => false], ['user' => 'pebbles',   'age' => 41, 'active' => true]],
+                    'input2' => ['user' => 'fred',   'age' => 40, 'active' => false],
+                    'output' => 1,
                 ],
                 'expected' => true,
             ],
@@ -319,9 +317,9 @@ class JSONConditionalTest extends TestCase
                   ]
                 }', true),
                 'submissionValues' => [
-                    'input1' => [[ 'user' => 'barney', 'age' => 36, 'active' => true], [ 'user' => 'fred',   'age' => 40, 'active' => false], [ 'user' => 'pebbles',   'age' => 41, 'active' => true]],
+                    'input1' => [['user' => 'barney', 'age' => 36, 'active' => true], ['user' => 'fred',   'age' => 40, 'active' => false], ['user' => 'pebbles',   'age' => 41, 'active' => true]],
                     'input2' => ['active', true],
-                    'output' => 2
+                    'output' => 2,
                 ],
                 'expected' => true,
             ],
@@ -342,7 +340,7 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => [1, 2, 3],
-                    'output' => 1
+                    'output' => 1,
                 ],
                 'expected' => true,
             ],
@@ -363,7 +361,7 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => [],
-                    'output' => null
+                    'output' => null,
                 ],
                 'expected' => true,
             ],
@@ -384,7 +382,7 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => [1, [2, [3, [4]], 5]],
-                    'output' => [1, 2, [3, [4]], 5]
+                    'output' => [1, 2, [3, [4]], 5],
                 ],
                 'expected' => true,
             ],
@@ -405,7 +403,7 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => [1, [2, [3, [4]], 5]],
-                    'output' => [1, 2, 3, 4, 5]
+                    'output' => [1, 2, 3, 4, 5],
                 ],
                 'expected' => true,
             ],
@@ -430,7 +428,7 @@ class JSONConditionalTest extends TestCase
                 'submissionValues' => [
                     'input1' => [1, [2, [3, [4]], 5]],
                     'input2' => 2,
-                    'output' => [1, 2, 3, [4], 5]
+                    'output' => [1, 2, 3, [4], 5],
                 ],
                 'expected' => true,
             ],
@@ -451,7 +449,7 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => [['a', 1], ['b', 2]],
-                    'output' => json_decode('{"a":1, "b":2}', true)
+                    'output' => json_decode('{"a":1, "b":2}', true),
                 ],
                 'expected' => true,
             ],
@@ -472,7 +470,7 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => [1, 2, 3],
-                    'output' => 1
+                    'output' => 1,
                 ],
                 'expected' => true,
             ],
@@ -493,7 +491,7 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => [],
-                    'output' => null
+                    'output' => null,
                 ],
                 'expected' => true,
             ],
@@ -522,7 +520,7 @@ class JSONConditionalTest extends TestCase
                     'input1' => [1, 2, 1, 2],
                     'input2' => 2,
                     'input3' => 2,
-                    'output' => 3
+                    'output' => 3,
                 ],
                 'expected' => true,
             ],
@@ -542,8 +540,8 @@ class JSONConditionalTest extends TestCase
                   ]
                 }', true),
                 'submissionValues' => [
-                    'input1' => [1,2,3],
-                    'output' => [1,2]
+                    'input1' => [1, 2, 3],
+                    'output' => [1, 2],
                 ],
                 'expected' => true,
             ],
@@ -566,9 +564,9 @@ class JSONConditionalTest extends TestCase
                   ]
                 }', true),
                 'submissionValues' => [
-                    'input1' => [2,1],
-                    'input2' => [2,3],
-                    'output' => [2]
+                    'input1' => [2, 1],
+                    'input2' => [2, 3],
+                    'output' => [2],
                 ],
                 'expected' => true,
             ],
@@ -593,8 +591,8 @@ class JSONConditionalTest extends TestCase
                 'submissionValues' => [
                     'input1' => ['a', 'b', 'c'],
                     'input2' => '~',
-                    'output' => 'a~b~c'
-                    ],
+                    'output' => 'a~b~c',
+                ],
                 'expected' => true,
             ],
             'should show last' => [
@@ -613,8 +611,8 @@ class JSONConditionalTest extends TestCase
                   ]
                 }', true),
                 'submissionValues' => [
-                    'input1' => [1,2,3],
-                    'output' => 3
+                    'input1' => [1, 2, 3],
+                    'output' => 3,
                 ],
                 'expected' => true,
             ],
@@ -643,7 +641,7 @@ class JSONConditionalTest extends TestCase
                     'input1' => [1, 2, 1, 2],
                     'input2' => 2,
                     'input3' => 2,
-                    'output' => 1
+                    'output' => 1,
                 ],
                 'expected' => true,
             ],
@@ -668,7 +666,7 @@ class JSONConditionalTest extends TestCase
                 'submissionValues' => [
                     'input1' => ['a', 'b', 'c', 'd'],
                     'input2' => -2,
-                    'output' => 'c'
+                    'output' => 'c',
                 ],
                 'expected' => true,
             ],
@@ -694,10 +692,10 @@ class JSONConditionalTest extends TestCase
                   ]
                 }', true),
                 'submissionValues' => [
-                    'input1' => [1,2,3,4,5],
+                    'input1' => [1, 2, 3, 4, 5],
                     'input2' => 2,
                     'input3' => 4,
-                    'output' => [3,4]
+                    'output' => [3, 4],
                 ],
                 'expected' => true,
             ],
@@ -721,9 +719,9 @@ class JSONConditionalTest extends TestCase
                   ]
                 }', true),
                 'submissionValues' => [
-                    'input1' => [1,2,3,4,5],
+                    'input1' => [1, 2, 3, 4, 5],
                     'input2' => 2,
-                    'output' => [3,4,5]
+                    'output' => [3, 4, 5],
                 ],
                 'expected' => true,
             ],
@@ -748,8 +746,8 @@ class JSONConditionalTest extends TestCase
                 'submissionValues' => [
                     'input1' => [30, 50],
                     'input2' => 40,
-                    'output' => 1
-                    ],
+                    'output' => 1,
+                ],
                 'expected' => true,
             ],
             'should show sortedIndex 2' => [
@@ -773,7 +771,7 @@ class JSONConditionalTest extends TestCase
                 'submissionValues' => [
                     'input1' => [30, 50],
                     'input2' => 60,
-                    'output' => 2
+                    'output' => 2,
                 ],
                 'expected' => true,
             ],
@@ -798,7 +796,7 @@ class JSONConditionalTest extends TestCase
                 'submissionValues' => [
                     'input1' => [4, 5, 5, 5, 6],
                     'input2' => 5,
-                    'output' => 1
+                    'output' => 1,
                 ],
                 'expected' => true,
             ],
@@ -823,7 +821,7 @@ class JSONConditionalTest extends TestCase
                 'submissionValues' => [
                     'input1' => [30, 50],
                     'input2' => 20,
-                    'output' => 0
+                    'output' => 0,
                 ],
                 'expected' => true,
             ],
@@ -848,7 +846,7 @@ class JSONConditionalTest extends TestCase
                 'submissionValues' => [
                     'input1' => [4, 5, 5, 5, 6],
                     'input2' => 5,
-                    'output' => 1
+                    'output' => 1,
                 ],
                 'expected' => true,
             ],
@@ -873,7 +871,7 @@ class JSONConditionalTest extends TestCase
                 'submissionValues' => [
                     'input1' => [30, 50],
                     'input2' => 40,
-                    'output' => 1
+                    'output' => 1,
                 ],
                 'expected' => true,
             ],
@@ -898,7 +896,7 @@ class JSONConditionalTest extends TestCase
                 'submissionValues' => [
                     'input1' => [30, 50],
                     'input2' => 60,
-                    'output' => 2
+                    'output' => 2,
                 ],
                 'expected' => true,
             ],
@@ -923,7 +921,7 @@ class JSONConditionalTest extends TestCase
                 'submissionValues' => [
                     'input1' => [4, 5, 5, 5, 6],
                     'input2' => 5,
-                    'output' => 4
+                    'output' => 4,
                 ],
                 'expected' => true,
             ],
@@ -948,7 +946,7 @@ class JSONConditionalTest extends TestCase
                 'submissionValues' => [
                     'input1' => [30, 50],
                     'input2' => 20,
-                    'output' => 0
+                    'output' => 0,
                 ],
                 'expected' => true,
             ],
@@ -973,7 +971,7 @@ class JSONConditionalTest extends TestCase
                 'submissionValues' => [
                     'input1' => [4, 5, 5, 5, 6],
                     'input2' => 5,
-                    'output' => 3
+                    'output' => 3,
                 ],
                 'expected' => true,
             ],
@@ -994,8 +992,8 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => [1, 1, 2],
-                    'output' => [1, 2]
-                    ],
+                    'output' => [1, 2],
+                ],
                 'expected' => true,
             ],
             'should show tail' => [
@@ -1014,8 +1012,8 @@ class JSONConditionalTest extends TestCase
                   ]
                 }', true),
                 'submissionValues' => [
-                    'input1' => [1,2,3],
-                    'output' => [2,3]
+                    'input1' => [1, 2, 3],
+                    'output' => [2, 3],
                 ],
                 'expected' => true,
             ],
@@ -1040,7 +1038,7 @@ class JSONConditionalTest extends TestCase
                 'submissionValues' => [
                     'input1' => [1, 2, 3],
                     'input2' => 2,
-                    'output' => [1,2]
+                    'output' => [1, 2],
                 ],
                 'expected' => true,
             ],
@@ -1065,7 +1063,7 @@ class JSONConditionalTest extends TestCase
                 'submissionValues' => [
                     'input1' => [1, 2, 3],
                     'input2' => 2,
-                    'output' => [2,3]
+                    'output' => [2, 3],
                 ],
                 'expected' => true,
             ],
@@ -1088,9 +1086,9 @@ class JSONConditionalTest extends TestCase
                   ]
                 }', true),
                 'submissionValues' => [
-                    'input1' => [[ 'user' => 'barney', 'age' => 36, 'active' => true], [ 'user' => 'fred',   'age' => 40, 'active' => false], [ 'user' => 'pebbles',   'age' => 41, 'active' => false]],
+                    'input1' => [['user' => 'barney', 'age' => 36, 'active' => true], ['user' => 'fred',   'age' => 40, 'active' => false], ['user' => 'pebbles',   'age' => 41, 'active' => false]],
                     'input2' => ['active', false],
-                    'output' => [[ 'user' => 'fred',   'age' => 40, 'active' => false], [ 'user' => 'pebbles',   'age' => 41, 'active' => false]]
+                    'output' => [['user' => 'fred',   'age' => 40, 'active' => false], ['user' => 'pebbles',   'age' => 41, 'active' => false]],
                 ],
                 'expected' => true,
             ],
@@ -1113,9 +1111,9 @@ class JSONConditionalTest extends TestCase
                   ]
                 }', true),
                 'submissionValues' => [
-                    'input1' => [[ 'user' => 'barney', 'age' => 36, 'active' => false], [ 'user' => 'fred',   'age' => 40, 'active' => false], [ 'user' => 'pebbles',   'age' => 41, 'active' => true]],
+                    'input1' => [['user' => 'barney', 'age' => 36, 'active' => false], ['user' => 'fred',   'age' => 40, 'active' => false], ['user' => 'pebbles',   'age' => 41, 'active' => true]],
                     'input2' => ['active', false],
-                    'output' => [[ 'user' => 'barney', 'age' => 36, 'active' => false], [ 'user' => 'fred',   'age' => 40, 'active' => false]]
+                    'output' => [['user' => 'barney', 'age' => 36, 'active' => false], ['user' => 'fred',   'age' => 40, 'active' => false]],
                 ],
                 'expected' => true,
             ],
@@ -1139,8 +1137,8 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => [2],
-                    'input2' => [1,2],
-                    'output' => [2,1]
+                    'input2' => [1, 2],
+                    'output' => [2, 1],
                 ],
                 'expected' => true,
             ],
@@ -1161,7 +1159,7 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => [2, 1, 2],
-                    'output' => [2,1]
+                    'output' => [2, 1],
                 ],
                 'expected' => true,
             ],
@@ -1182,7 +1180,7 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => [['a', 1, true], ['b', 2, false]],
-                    'output' => [['a', 'b'], [1, 2], [true, false]]
+                    'output' => [['a', 'b'], [1, 2], [true, false]],
                 ],
                 'expected' => true,
             ],
@@ -1211,7 +1209,7 @@ class JSONConditionalTest extends TestCase
                     'input1' => [2, 1, 2, 3],
                     'input2' => 1,
                     'input3' => 2,
-                    'output' => [3]
+                    'output' => [3],
                 ],
                 'expected' => true,
             ],
@@ -1238,9 +1236,9 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => ['a', 'b'],
-                    'input2' => [1,2],
+                    'input2' => [1, 2],
                     'input3' => [true, false],
-                    'output' => [['a', 1, true], ['b', 2, false]]
+                    'output' => [['a', 1, true], ['b', 2, false]],
                 ],
                 'expected' => true,
             ],
@@ -1265,7 +1263,7 @@ class JSONConditionalTest extends TestCase
                 'submissionValues' => [
                     'input1' => ['a', 'b'],
                     'input2' => [1, 2],
-                    'output' => json_decode('{"a":1,"b":2}')
+                    'output' => json_decode('{"a":1,"b":2}'),
                 ],
                 'expected' => true,
             ],
@@ -1290,7 +1288,7 @@ class JSONConditionalTest extends TestCase
                 'submissionValues' => [
                     'input1' => ['a.b[0].c', 'a.b[1].d'],
                     'input2' => [1, 2],
-                    'output' => json_decode('{"a":{"b":[{"c":1},{"d":2}]}}')
+                    'output' => json_decode('{"a":{"b":[{"c":1},{"d":2}]}}'),
                 ],
                 'expected' => true,
             ],
@@ -1314,9 +1312,9 @@ class JSONConditionalTest extends TestCase
                   ]
                 }', true),
                 'submissionValues' => [
-                    'input1' => [[ 'user' => 'barney', 'age' => 36, 'active' => true], [ 'user' => 'fred',   'age' => 40, 'active' => false], [ 'user' => 'pebbles',   'age' => 41, 'active' => false]],
+                    'input1' => [['user' => 'barney', 'age' => 36, 'active' => true], ['user' => 'fred',   'age' => 40, 'active' => false], ['user' => 'pebbles',   'age' => 41, 'active' => false]],
                     'input2' => ['active', false],
-                    'output' => false
+                    'output' => false,
                 ],
                 'expected' => true,
             ],
@@ -1336,8 +1334,8 @@ class JSONConditionalTest extends TestCase
                     }]
                   ]
                 }', true),
-                'submissionValues' => ['extra1' => [[ 'user' => 'barney', 'age' => 36, 'active' => true], [ 'user' => 'fred',   'age' => 40, 'active' => false]] ,
-                    'extra2' =>  [ 'user' => 'fred',   'age' => 40, 'active' => false]],
+                'submissionValues' => ['extra1' => [['user' => 'barney', 'age' => 36, 'active' => true], ['user' => 'fred',   'age' => 40, 'active' => false]],
+                    'extra2' => ['user' => 'fred',   'age' => 40, 'active' => false], ],
                 'expected' => true,
             ],
             'should show find' => [
@@ -1359,9 +1357,9 @@ class JSONConditionalTest extends TestCase
                   ]
                 }', true),
                 'submissionValues' => [
-                    'input1' => [[ 'user' => 'barney', 'age' => 36, 'active' => true], [ 'user' => 'fred',   'age' => 40, 'active' => false], [ 'user' => 'pebbles',   'age' => 41, 'active' => false]],
+                    'input1' => [['user' => 'barney', 'age' => 36, 'active' => true], ['user' => 'fred',   'age' => 40, 'active' => false], ['user' => 'pebbles',   'age' => 41, 'active' => false]],
                     'input2' => ['active', false],
-                    'output' => [ 'user' => 'fred',   'age' => 40, 'active' => false]
+                    'output' => ['user' => 'fred',   'age' => 40, 'active' => false],
                 ],
                 'expected' => true,
             ],
@@ -1384,9 +1382,9 @@ class JSONConditionalTest extends TestCase
                   ]
                 }', true),
                 'submissionValues' => [
-                    'input1' => [[ 'user' => 'barney', 'age' => 36, 'active' => true], [ 'user' => 'fred',   'age' => 40, 'active' => false], [ 'user' => 'pebbles',   'age' => 41, 'active' => false]],
+                    'input1' => [['user' => 'barney', 'age' => 36, 'active' => true], ['user' => 'fred',   'age' => 40, 'active' => false], ['user' => 'pebbles',   'age' => 41, 'active' => false]],
                     'input2' => ['active', false],
-                    'output' => [ 'user' => 'pebbles',   'age' => 41, 'active' => false]
+                    'output' => ['user' => 'pebbles',   'age' => 41, 'active' => false],
                 ],
                 'expected' => true,
             ],
@@ -1412,10 +1410,10 @@ class JSONConditionalTest extends TestCase
                   ]
                 }', true),
                 'submissionValues' => [
-                    'input1' => [1,2,3],
+                    'input1' => [1, 2, 3],
                     'input2' => 1,
                     'input3' => 2,
-                    'output' => false
+                    'output' => false,
                 ],
                 'expected' => true,
             ],
@@ -1438,9 +1436,9 @@ class JSONConditionalTest extends TestCase
                   ]
                 }', true),
                 'submissionValues' => [
-                    'input1' => [1,2,3],
+                    'input1' => [1, 2, 3],
                     'input2' => 1,
-                    'output' => true
+                    'output' => true,
                 ],
                 'expected' => true,
             ],
@@ -1465,7 +1463,7 @@ class JSONConditionalTest extends TestCase
                 'submissionValues' => [
                     'input1' => json_decode('{"a":1, "b":2}', true),
                     'input2' => 1,
-                    'output' => true
+                    'output' => true,
                 ],
                 'expected' => true,
             ],
@@ -1490,7 +1488,7 @@ class JSONConditionalTest extends TestCase
                 'submissionValues' => [
                     'input1' => 'abcd',
                     'input2' => 'bc',
-                    'output' => true
+                    'output' => true,
                 ],
                 'expected' => true,
             ],
@@ -1513,7 +1511,7 @@ class JSONConditionalTest extends TestCase
                   ]
                 }', true),
                 'submissionValues' => [
-                    'input1' => [['direction' => 'left', 'code' => 97],['direction' => 'right', 'code' => 100]],
+                    'input1' => [['direction' => 'left', 'code' => 97], ['direction' => 'right', 'code' => 100]],
                     'input2' => 'direction',
                     'output' => ['left' => ['direction' => 'left', 'code' => 97], 'right' => ['direction' => 'right', 'code' => 100]],
                 ],
@@ -1538,9 +1536,9 @@ class JSONConditionalTest extends TestCase
                   ]
                 }', true),
                 'submissionValues' => [
-                    'input1' => [[ 'user' => 'barney' ],[ 'user' => 'fred' ]],
+                    'input1' => [['user' => 'barney'], ['user' => 'fred']],
                     'input2' => 'user',
-                    'output' => ['barney', 'fred']
+                    'output' => ['barney', 'fred'],
                 ],
                 'expected' => true,
             ],
@@ -1566,10 +1564,10 @@ class JSONConditionalTest extends TestCase
                   ]
                 }', true),
                 'submissionValues' => [
-                    'input1' => [['user' => 'fred',   'age' => 48],['user' => 'barney', 'age' => 34],['user' => 'fred',   'age' => 40],['user' => 'barney', 'age' => 36]],
+                    'input1' => [['user' => 'fred',   'age' => 48], ['user' => 'barney', 'age' => 34], ['user' => 'fred',   'age' => 40], ['user' => 'barney', 'age' => 36]],
                     'input2' => ['user', 'age'],
                     'input3' => ['asc', 'desc'],
-                    'output' => [['user' => 'barney', 'age' => 36],['user' => 'barney', 'age' => 34],['user' => 'fred',   'age' => 48],['user' => 'fred',   'age' => 40]]
+                    'output' => [['user' => 'barney', 'age' => 36], ['user' => 'barney', 'age' => 34], ['user' => 'fred',   'age' => 48], ['user' => 'fred',   'age' => 40]],
                 ],
                 'expected' => true,
             ],
@@ -1592,9 +1590,9 @@ class JSONConditionalTest extends TestCase
                   ]
                 }', true),
                 'submissionValues' => [
-                    'input1' => [[ 'user' => 'barney', 'age' => 36, 'active' => true], [ 'user' => 'fred',   'age' => 40, 'active' => false], [ 'user' => 'pebbles',   'age' => 41, 'active' => false]],
+                    'input1' => [['user' => 'barney', 'age' => 36, 'active' => true], ['user' => 'fred',   'age' => 40, 'active' => false], ['user' => 'pebbles',   'age' => 41, 'active' => false]],
                     'input2' => ['active', false],
-                    'output' => [[ 'user' => 'barney', 'age' => 36, 'active' => true]]
+                    'output' => [['user' => 'barney', 'age' => 36, 'active' => true]],
                 ],
                 'expected' => true,
             ],
@@ -1614,8 +1612,8 @@ class JSONConditionalTest extends TestCase
                   ]
                 }', true),
                 'submissionValues' => [
-                    'input1' => [1,2,3],
-                    'output' => 3
+                    'input1' => [1, 2, 3],
+                    'output' => 3,
                 ],
                 'expected' => true,
             ],
@@ -1636,7 +1634,7 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => json_decode('{"a":1, "b":2}', true),
-                    'output' => 2
+                    'output' => 2,
                 ],
                 'expected' => true,
             ],
@@ -1659,9 +1657,9 @@ class JSONConditionalTest extends TestCase
                   ]
                 }', true),
                 'submissionValues' => [
-                    'input1' => [[ 'user' => 'barney', 'age' => 36, 'active' => true], [ 'user' => 'fred',   'age' => 40, 'active' => false], [ 'user' => 'pebbles',   'age' => 41, 'active' => false]],
+                    'input1' => [['user' => 'barney', 'age' => 36, 'active' => true], ['user' => 'fred',   'age' => 40, 'active' => false], ['user' => 'pebbles',   'age' => 41, 'active' => false]],
                     'input2' => ['active', false],
-                    'output' => true
+                    'output' => true,
                 ],
                 'expected' => true,
             ],
@@ -1684,9 +1682,9 @@ class JSONConditionalTest extends TestCase
                   ]
                 }', true),
                 'submissionValues' => [
-                    'input1' => [['user' => 'fred',   'age' => 48],['user' => 'barney', 'age' => 34],['user' => 'fred',   'age' => 40],['user' => 'barney', 'age' => 36]],
+                    'input1' => [['user' => 'fred',   'age' => 48], ['user' => 'barney', 'age' => 34], ['user' => 'fred',   'age' => 40], ['user' => 'barney', 'age' => 36]],
                     'input2' => ['user', 'age'],
-                    'output' => [['user' => 'barney', 'age' => 34],['user' => 'barney', 'age' => 36],['user' => 'fred',   'age' => 40],['user' => 'fred',   'age' => 48]]
+                    'output' => [['user' => 'barney', 'age' => 34], ['user' => 'barney', 'age' => 36], ['user' => 'fred',   'age' => 40], ['user' => 'fred',   'age' => 48]],
                 ],
                 'expected' => true,
             ],
@@ -1709,7 +1707,7 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => (int) (microtime(true) * 1000) - 100000, //give it a buffer for test to run
-                    'input2' => (int) (microtime(true) * 1000) + 100000
+                    'input2' => (int) (microtime(true) * 1000) + 100000,
                 ],
                 'expected' => true,
             ],
@@ -1731,8 +1729,8 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => 1,
-                    'output' => [1]
-                    ],
+                    'output' => [1],
+                ],
                 'expected' => true,
             ],
             'should show castArray 2' => [
@@ -1752,7 +1750,7 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => json_decode('{"a":1}', true),
-                    'output' => json_decode('[{"a":1}]', true)
+                    'output' => json_decode('[{"a":1}]', true),
                 ],
                 'expected' => true,
             ],
@@ -1773,7 +1771,7 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => 'abc',
-                    'output' => ['abc']
+                    'output' => ['abc'],
                 ],
                 'expected' => true,
             ],
@@ -1794,7 +1792,7 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => null,
-                    'output' => [null]
+                    'output' => [null],
                 ],
                 'expected' => true,
             ],
@@ -1811,7 +1809,7 @@ class JSONConditionalTest extends TestCase
                   ]
                 }', true),
                 'submissionValues' => [
-                    'output' => []
+                    'output' => [],
                 ],
                 'expected' => true,
             ],
@@ -1836,7 +1834,7 @@ class JSONConditionalTest extends TestCase
                 'submissionValues' => [
                     'input1' => 'a',
                     'input2' => 'a',
-                    'output' => true
+                    'output' => true,
                 ],
                 'expected' => true,
             ],
@@ -1861,8 +1859,8 @@ class JSONConditionalTest extends TestCase
                 'submissionValues' => [
                     'input1' => 3,
                     'input2' => 1,
-                    'output' => true
-                    ],
+                    'output' => true,
+                ],
                 'expected' => true,
             ],
             'should show gt 2' => [
@@ -1886,8 +1884,8 @@ class JSONConditionalTest extends TestCase
                 'submissionValues' => [
                     'input1' => 3,
                     'input2' => 3,
-                    'output' => false
-                    ],
+                    'output' => false,
+                ],
                 'expected' => true,
             ],
             'should show gt 3' => [
@@ -1911,8 +1909,8 @@ class JSONConditionalTest extends TestCase
                 'submissionValues' => [
                     'input1' => 1,
                     'input2' => 3,
-                    'output' => false
-                    ],
+                    'output' => false,
+                ],
                 'expected' => true,
             ],
             'should show gte' => [
@@ -1936,8 +1934,8 @@ class JSONConditionalTest extends TestCase
                 'submissionValues' => [
                     'input1' => 3,
                     'input2' => 1,
-                    'output' => true
-                    ],
+                    'output' => true,
+                ],
                 'expected' => true,
             ],
             'should show gte 2' => [
@@ -1961,8 +1959,8 @@ class JSONConditionalTest extends TestCase
                 'submissionValues' => [
                     'input1' => 3,
                     'input2' => 3,
-                    'output' => true
-                    ],
+                    'output' => true,
+                ],
                 'expected' => true,
             ],
             'should show gte 3' => [
@@ -1986,8 +1984,8 @@ class JSONConditionalTest extends TestCase
                 'submissionValues' => [
                     'input1' => 1,
                     'input2' => 3,
-                    'output' => false
-                    ],
+                    'output' => false,
+                ],
                 'expected' => true,
             ],
             'should show isArray' => [
@@ -2007,8 +2005,8 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => [1, 2, 3],
-                    'output' => true
-                    ],
+                    'output' => true,
+                ],
                 'expected' => true,
             ],
             'should show isArray 2' => [
@@ -2028,8 +2026,8 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => 'abc',
-                    'output' => false
-                    ],
+                    'output' => false,
+                ],
                 'expected' => true,
             ],
             'should show isArrayLike' => [
@@ -2049,7 +2047,7 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => [1, 2, 3],
-                    'output' => true
+                    'output' => true,
                 ],
                 'expected' => true,
             ],
@@ -2070,7 +2068,7 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => 'abc',
-                    'output' => true
+                    'output' => true,
                 ],
                 'expected' => true,
             ],
@@ -2091,7 +2089,7 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => [1, 2, 3],
-                    'output' => true
+                    'output' => true,
                 ],
                 'expected' => true,
             ],
@@ -2112,7 +2110,7 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => 'abc',
-                    'output' => false
+                    'output' => false,
                 ],
                 'expected' => true,
             ],
@@ -2133,8 +2131,8 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => false,
-                    'output' => true
-                    ],
+                    'output' => true,
+                ],
                 'expected' => true,
             ],
             'should show isBoolean 2' => [
@@ -2154,7 +2152,7 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => true,
-                    'output' => true
+                    'output' => true,
                 ],
                 'expected' => true,
             ],
@@ -2175,7 +2173,7 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => [],
-                    'output' => false
+                    'output' => false,
                 ],
                 'expected' => true,
             ],
@@ -2196,7 +2194,7 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => 'abc',
-                    'output' => false
+                    'output' => false,
                 ],
                 'expected' => true,
             ],
@@ -2217,7 +2215,7 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => null,
-                    'output' => true
+                    'output' => true,
                 ],
                 'expected' => true,
             ],
@@ -2238,7 +2236,7 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => true,
-                    'output' => true
+                    'output' => true,
                 ],
                 'expected' => true,
             ],
@@ -2259,7 +2257,7 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => 1,
-                    'output' => true
+                    'output' => true,
                 ],
                 'expected' => true,
             ],
@@ -2280,7 +2278,7 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => [1, 2, 3],
-                    'output' => false
+                    'output' => false,
                 ],
                 'expected' => true,
             ],
@@ -2301,7 +2299,7 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => json_decode('{"a":1}', true),
-                    'output' => false
+                    'output' => false,
                 ],
                 'expected' => true,
             ],
@@ -2322,8 +2320,8 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => 3,
-                    'output' => true
-                    ],
+                    'output' => true,
+                ],
                 'expected' => true,
             ],
             'should show isFinite 2' => [
@@ -2343,8 +2341,8 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => 0.5,
-                    'output' => true
-                    ],
+                    'output' => true,
+                ],
                 'expected' => true,
             ],
             'should show isFinite 3' => [
@@ -2364,8 +2362,8 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => '3',
-                    'output' => false
-                    ],
+                    'output' => false,
+                ],
                 'expected' => true,
             ],
             'should show isInteger' => [
@@ -2385,8 +2383,8 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => 3,
-                    'output' => true
-                    ],
+                    'output' => true,
+                ],
                 'expected' => true,
             ],
             'should show isInteger 2' => [
@@ -2406,8 +2404,8 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => 0.5,
-                    'output' => false
-                    ],
+                    'output' => false,
+                ],
                 'expected' => true,
             ],
             'should show isInteger 3' => [
@@ -2427,8 +2425,8 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => '3',
-                    'output' => false
-                    ],
+                    'output' => false,
+                ],
                 'expected' => true,
             ],
             'should show isLength' => [
@@ -2448,8 +2446,8 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => 3,
-                    'output' =>  true
-                    ],
+                    'output' => true,
+                ],
                 'expected' => true,
             ],
             'should show isLength 2' => [
@@ -2469,8 +2467,8 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => 0.5,
-                    'output' =>  false
-                    ],
+                    'output' => false,
+                ],
                 'expected' => true,
             ],
             'should show isLength 3' => [
@@ -2490,8 +2488,8 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => '3',
-                    'output' =>  false
-                    ],
+                    'output' => false,
+                ],
                 'expected' => true,
             ],
             'should show isEqual' => [
@@ -2507,7 +2505,7 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => json_decode('{"a":1 }', true),
-                    'input2' => json_decode('{"a":1 }', true)
+                    'input2' => json_decode('{"a":1 }', true),
                 ],
                 'expected' => true,
             ],
@@ -2528,7 +2526,7 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => new \Error(),
-                    'output' => true
+                    'output' => true,
                 ],
                 'expected' => true,
             ],
@@ -2553,8 +2551,8 @@ class JSONConditionalTest extends TestCase
                 'submissionValues' => [
                     'input1' => json_decode('{"a":1, "b":2}', true),
                     'input2' => json_decode('{"a":1}', true),
-                    'output' => true
-                    ],
+                    'output' => true,
+                ],
                 'expected' => true,
             ],
             'should show isMatch 2' => [
@@ -2578,7 +2576,7 @@ class JSONConditionalTest extends TestCase
                 'submissionValues' => [
                     'input1' => json_decode('{"b":2}', true),
                     'input2' => json_decode('{"a":1}', true),
-                    'output' => false
+                    'output' => false,
                 ],
                 'expected' => true,
             ],
@@ -2603,7 +2601,7 @@ class JSONConditionalTest extends TestCase
                 'submissionValues' => [
                     'input1' => json_decode('{"a":3, "b":2}', true),
                     'input2' => json_decode('{"a":1}', true),
-                    'output' => false
+                    'output' => false,
                 ],
                 'expected' => true,
             ],
@@ -2624,8 +2622,8 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => NAN,
-                    'output' =>  true
-                    ],
+                    'output' => true,
+                ],
                 'expected' => true,
             ],
             'should show isNaN 2' => [
@@ -2645,7 +2643,7 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => 'abc',
-                    'output' =>  false
+                    'output' => false,
                 ],
                 'expected' => true,
             ],
@@ -2666,7 +2664,7 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => [],
-                    'output' =>  false
+                    'output' => false,
                 ],
                 'expected' => true,
             ],
@@ -2687,7 +2685,7 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => null,
-                    'output' => true
+                    'output' => true,
                 ],
                 'expected' => true,
             ],
@@ -2708,7 +2706,7 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => 0,
-                    'output' => false
+                    'output' => false,
                 ],
                 'expected' => true,
             ],
@@ -2729,8 +2727,8 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => 3,
-                    'output' => true
-                    ],
+                    'output' => true,
+                ],
                 'expected' => true,
             ],
             'should show isNumber 2' => [
@@ -2750,7 +2748,7 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => '3',
-                    'output' => false
+                    'output' => false,
                 ],
                 'expected' => true,
             ],
@@ -2771,8 +2769,8 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => json_decode('{}', true),
-                    'output' => true
-                    ],
+                    'output' => true,
+                ],
                 'expected' => true,
             ],
             'should show isObject 2' => [
@@ -2792,8 +2790,8 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => [1, 2, 3],
-                    'output' => true
-                    ],
+                    'output' => true,
+                ],
                 'expected' => true,
             ],
             'should show isObject 3' => [
@@ -2813,8 +2811,8 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => null,
-                    'output' => false
-                    ],
+                    'output' => false,
+                ],
                 'expected' => true,
             ],
             'should show isString' => [
@@ -2834,7 +2832,7 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => 'abc',
-                    'output' => true
+                    'output' => true,
                 ],
                 'expected' => true,
             ],
@@ -2855,7 +2853,7 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => 1,
-                    'output' => false
+                    'output' => false,
                 ],
                 'expected' => true,
             ],
@@ -2880,8 +2878,8 @@ class JSONConditionalTest extends TestCase
                 'submissionValues' => [
                     'input1' => 3,
                     'input2' => 1,
-                    'output' => false
-                    ],
+                    'output' => false,
+                ],
                 'expected' => true,
             ],
             'should show lt 2' => [
@@ -2905,8 +2903,8 @@ class JSONConditionalTest extends TestCase
                 'submissionValues' => [
                     'input1' => 3,
                     'input2' => 3,
-                    'output' => false
-                    ],
+                    'output' => false,
+                ],
                 'expected' => true,
             ],
             'should show lt 3' => [
@@ -2930,8 +2928,8 @@ class JSONConditionalTest extends TestCase
                 'submissionValues' => [
                     'input1' => 1,
                     'input2' => 3,
-                    'output' => true
-                    ],
+                    'output' => true,
+                ],
                 'expected' => true,
             ],
             'should show lte' => [
@@ -2955,8 +2953,8 @@ class JSONConditionalTest extends TestCase
                 'submissionValues' => [
                     'input1' => 3,
                     'input2' => 1,
-                    'output' => false
-                    ],
+                    'output' => false,
+                ],
                 'expected' => true,
             ],
             'should show lte 2' => [
@@ -2980,8 +2978,8 @@ class JSONConditionalTest extends TestCase
                 'submissionValues' => [
                     'input1' => 3,
                     'input2' => 3,
-                    'output' => true
-                    ],
+                    'output' => true,
+                ],
                 'expected' => true,
             ],
             'should show lte 3' => [
@@ -3005,8 +3003,8 @@ class JSONConditionalTest extends TestCase
                 'submissionValues' => [
                     'input1' => 1,
                     'input2' => 3,
-                    'output' => true
-                    ],
+                    'output' => true,
+                ],
                 'expected' => true,
             ],
             'should show toArray' => [
@@ -3026,8 +3024,8 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => json_decode('{"a":1, "b":2}', true),
-                    'output' => [1,2]
-                    ],
+                    'output' => [1, 2],
+                ],
                 'expected' => true,
             ],
             'should show toArray 2' => [
@@ -3047,8 +3045,8 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => 'abc',
-                    'output' => ['a', 'b', 'c']
-                    ],
+                    'output' => ['a', 'b', 'c'],
+                ],
                 'expected' => true,
             ],
             'should show toArray 3' => [
@@ -3068,8 +3066,8 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => 1,
-                    'output' => []
-                    ],
+                    'output' => [],
+                ],
                 'expected' => true,
             ],
             'should show toArray 4' => [
@@ -3089,8 +3087,8 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => null,
-                    'output' => []
-                    ],
+                    'output' => [],
+                ],
                 'expected' => true,
             ],
             'should show toFinite' => [
@@ -3110,8 +3108,8 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => 3.2,
-                    'output' => 3.2
-                    ],
+                    'output' => 3.2,
+                ],
                 'expected' => true,
             ],
             'should show toFinite 2' => [
@@ -3131,8 +3129,8 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => -14.5,
-                    'output' => -14.5
-                    ],
+                    'output' => -14.5,
+                ],
                 'expected' => true,
             ],
             'should show toFinite 3' => [
@@ -3152,7 +3150,7 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => '3.2',
-                    'output' => 3.2
+                    'output' => 3.2,
                 ],
                 'expected' => true,
             ],
@@ -3173,7 +3171,7 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => 3.2,
-                    'output' => 3
+                    'output' => 3,
                 ],
                 'expected' => true,
             ],
@@ -3194,7 +3192,7 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => -14.5,
-                    'output' => -14
+                    'output' => -14,
                 ],
                 'expected' => true,
             ],
@@ -3215,7 +3213,7 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => '3.2',
-                    'output' => 3
+                    'output' => 3,
                 ],
                 'expected' => true,
             ],
@@ -3236,7 +3234,7 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => 3.2,
-                    'output' => 3
+                    'output' => 3,
                 ],
                 'expected' => true,
             ],
@@ -3257,7 +3255,7 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => -14.5,
-                    'output' => 0
+                    'output' => 0,
                 ],
                 'expected' => true,
             ],
@@ -3278,7 +3276,7 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => '3.2',
-                    'output' => 3
+                    'output' => 3,
                 ],
                 'expected' => true,
             ],
@@ -3299,7 +3297,7 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => 3.2,
-                    'output' => 3.2
+                    'output' => 3.2,
                 ],
                 'expected' => true,
             ],
@@ -3320,7 +3318,7 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => -14.5,
-                    'output' => -14.5
+                    'output' => -14.5,
                 ],
                 'expected' => true,
             ],
@@ -3341,7 +3339,7 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => '3.2',
-                    'output' => 3.2
+                    'output' => 3.2,
                 ],
                 'expected' => true,
             ],
@@ -3362,7 +3360,7 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => 3.2,
-                    'output' => 3
+                    'output' => 3,
                 ],
                 'expected' => true,
             ],
@@ -3383,7 +3381,7 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => -14.5,
-                    'output' => -14
+                    'output' => -14,
                 ],
                 'expected' => true,
             ],
@@ -3404,7 +3402,7 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => '3.2',
-                    'output' => 3
+                    'output' => 3,
                 ],
                 'expected' => true,
             ],
@@ -3425,8 +3423,8 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => null,
-                    'output' => ''
-                    ],
+                    'output' => '',
+                ],
                 'expected' => true,
             ],
             'should show toString 2' => [
@@ -3446,7 +3444,7 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => [1, 2, 3],
-                    'output' => '1,2,3'
+                    'output' => '1,2,3',
                 ],
                 'expected' => true,
             ],
@@ -3467,7 +3465,7 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => 3,
-                    'output' => '3'
+                    'output' => '3',
                 ],
                 'expected' => true,
             ],
@@ -3493,7 +3491,7 @@ class JSONConditionalTest extends TestCase
                 'submissionValues' => [
                     'input1' => 6,
                     'input2' => 4,
-                    'output' => 10
+                    'output' => 10,
                 ],
                 'expected' => true,
             ],
@@ -3514,8 +3512,8 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => 4.006,
-                    'output' => 5
-                    ],
+                    'output' => 5,
+                ],
                 'expected' => true,
             ],
             'should show ceil 2' => [
@@ -3539,8 +3537,8 @@ class JSONConditionalTest extends TestCase
                 'submissionValues' => [
                     'input1' => 6.004,
                     'input2' => 2,
-                    'output' => 6.01
-                    ],
+                    'output' => 6.01,
+                ],
                 'expected' => true,
             ],
             'should show ceil 3' => [
@@ -3564,7 +3562,7 @@ class JSONConditionalTest extends TestCase
                 'submissionValues' => [
                     'input1' => 6040,
                     'input2' => -2,
-                    'output' => 6100
+                    'output' => 6100,
                 ],
                 'expected' => true,
             ],
@@ -3589,7 +3587,7 @@ class JSONConditionalTest extends TestCase
                 'submissionValues' => [
                     'input1' => 2.22,
                     'input2' => 2,
-                    'output' => 2.22
+                    'output' => 2.22,
                 ],
                 'expected' => true,
             ],
@@ -3614,8 +3612,8 @@ class JSONConditionalTest extends TestCase
                 'submissionValues' => [
                     'input1' => 6,
                     'input2' => 4,
-                    'output' => 1.5
-                    ],
+                    'output' => 1.5,
+                ],
                 'expected' => true,
             ],
             'should show floor' => [
@@ -3635,7 +3633,7 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => 4.006,
-                    'output' => 4
+                    'output' => 4,
                 ],
                 'expected' => true,
             ],
@@ -3660,7 +3658,7 @@ class JSONConditionalTest extends TestCase
                 'submissionValues' => [
                     'input1' => 0.046,
                     'input2' => 2,
-                    'output' => 0.04
+                    'output' => 0.04,
                 ],
                 'expected' => true,
             ],
@@ -3685,7 +3683,7 @@ class JSONConditionalTest extends TestCase
                 'submissionValues' => [
                     'input1' => 4060,
                     'input2' => -2,
-                    'output' => 4000
+                    'output' => 4000,
                 ],
                 'expected' => true,
             ],
@@ -3710,7 +3708,7 @@ class JSONConditionalTest extends TestCase
                 'submissionValues' => [
                     'input1' => 2.22,
                     'input2' => 2,
-                    'output' => 2.22
+                    'output' => 2.22,
                 ],
                 'expected' => true,
             ],
@@ -3731,8 +3729,8 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => [4, 2, 8, 6],
-                    'output' => 5
-                    ],
+                    'output' => 5,
+                ],
                 'expected' => true,
             ],
             'should show max' => [
@@ -3752,7 +3750,7 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => [4, 2, 8, 6],
-                    'output' => 8
+                    'output' => 8,
                 ],
                 'expected' => true,
             ],
@@ -3773,7 +3771,7 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => [],
-                    'output' => null
+                    'output' => null,
                 ],
                 'expected' => true,
             ],
@@ -3793,7 +3791,7 @@ class JSONConditionalTest extends TestCase
                     }
                   ]
                 }', true),
-                'submissionValues' => ['extra1' => json_decode('[{"n":1},{"n":2},{"n":3},{"h":5}]', true) , 'extra2' =>  json_decode('{"n":3}', true)],
+                'submissionValues' => ['extra1' => json_decode('[{"n":1},{"n":2},{"n":3},{"h":5}]', true), 'extra2' => json_decode('{"n":3}', true)],
                 'expected' => true,
             ],
             'should show min' => [
@@ -3813,7 +3811,7 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => [4, 2, 8, 6],
-                    'output' => 2
+                    'output' => 2,
                 ],
                 'expected' => true,
             ],
@@ -3834,7 +3832,7 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => [],
-                    'output' => null
+                    'output' => null,
                 ],
                 'expected' => true,
             ],
@@ -3859,8 +3857,8 @@ class JSONConditionalTest extends TestCase
                 'submissionValues' => [
                     'input1' => 6,
                     'input2' => 4,
-                    'output' => 24
-                    ],
+                    'output' => 24,
+                ],
                 'expected' => true,
             ],
             'should show round' => [
@@ -3880,8 +3878,8 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => 4.006,
-                    'output' => 4
-                    ],
+                    'output' => 4,
+                ],
                 'expected' => true,
             ],
             'should show round 2' => [
@@ -3905,8 +3903,8 @@ class JSONConditionalTest extends TestCase
                 'submissionValues' => [
                     'input1' => 4.006,
                     'input2' => 2,
-                    'output' => 4.01
-                    ],
+                    'output' => 4.01,
+                ],
                 'expected' => true,
             ],
             'should show round 3' => [
@@ -3930,8 +3928,8 @@ class JSONConditionalTest extends TestCase
                 'submissionValues' => [
                     'input1' => 4060,
                     'input2' => -2,
-                    'output' => 4100
-                    ],
+                    'output' => 4100,
+                ],
                 'expected' => true,
             ],
             'should show subtract' => [
@@ -3955,8 +3953,8 @@ class JSONConditionalTest extends TestCase
                 'submissionValues' => [
                     'input1' => 6,
                     'input2' => 4,
-                    'output' => 2
-                    ],
+                    'output' => 2,
+                ],
                 'expected' => true,
             ],
             'should show sum' => [
@@ -3977,8 +3975,8 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => [4, 2, 8, 6],
-                    'output' => 20
-                    ],
+                    'output' => 20,
+                ],
                 'expected' => true,
             ],
             //Number functions
@@ -4007,7 +4005,7 @@ class JSONConditionalTest extends TestCase
                     'input1' => -10,
                     'input2' => -5,
                     'input3' => 5,
-                    'output' => -5
+                    'output' => -5,
                 ],
                 'expected' => true,
             ],
@@ -4036,7 +4034,7 @@ class JSONConditionalTest extends TestCase
                     'input1' => 10,
                     'input2' => -5,
                     'input3' => 5,
-                    'output' => 5
+                    'output' => 5,
                 ],
                 'expected' => true,
             ],
@@ -4065,7 +4063,7 @@ class JSONConditionalTest extends TestCase
                     'input1' => 3,
                     'input2' => 2,
                     'input3' => 4,
-                    'output' => true
+                    'output' => true,
                 ],
                 'expected' => true,
             ],
@@ -4090,7 +4088,7 @@ class JSONConditionalTest extends TestCase
                 'submissionValues' => [
                     'input1' => 4,
                     'input2' => 8,
-                    'output' => true
+                    'output' => true,
                 ],
                 'expected' => true,
             ],
@@ -4115,7 +4113,7 @@ class JSONConditionalTest extends TestCase
                 'submissionValues' => [
                     'input1' => 4,
                     'input2' => 2,
-                    'output' => false
+                    'output' => false,
                 ],
                 'expected' => true,
             ],
@@ -4140,7 +4138,7 @@ class JSONConditionalTest extends TestCase
                 'submissionValues' => [
                     'input1' => 2,
                     'input2' => 2,
-                    'output' => false
+                    'output' => false,
                 ],
                 'expected' => true,
             ],
@@ -4165,7 +4163,7 @@ class JSONConditionalTest extends TestCase
                 'submissionValues' => [
                     'input1' => 1.2,
                     'input2' => 2,
-                    'output' => true
+                    'output' => true,
                 ],
                 'expected' => true,
             ],
@@ -4194,7 +4192,7 @@ class JSONConditionalTest extends TestCase
                     'input1' => -3,
                     'input2' => -2,
                     'input3' => -6,
-                    'output' => true
+                    'output' => true,
                 ],
                 'expected' => true,
             ],
@@ -4220,7 +4218,7 @@ class JSONConditionalTest extends TestCase
                 'submissionValues' => [
                     'input1' => json_decode('{ "a": [{ "b": { "c": 3 } }, 4] }', true),
                     'input2' => ['a[0].b.c', 'a[1]'],
-                    'output' => [3, 4]
+                    'output' => [3, 4],
                 ],
                 'expected' => true,
             ],
@@ -4241,8 +4239,8 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => json_decode('{"a":1, "b":2}', true),
-                    'output' => [['a', 1], ['b', 2]]
-                    ],
+                    'output' => [['a', 1], ['b', 2]],
+                ],
                 'expected' => true,
             ],
             'should show entriesIn' => [
@@ -4262,7 +4260,7 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => json_decode('{"a":1, "b":2}', true),
-                    'output' => [['a', 1], ['b', 2]]
+                    'output' => [['a', 1], ['b', 2]],
                 ],
                 'expected' => true,
             ],
@@ -4287,7 +4285,7 @@ class JSONConditionalTest extends TestCase
                 'submissionValues' => [
                     'input1' => json_decode('{ "a": [{ "b": { "c": 3 } }] }', true),
                     'input2' => 'a[0].b.c',
-                    'output' => 3
+                    'output' => 3,
                 ],
                 'expected' => true,
             ],
@@ -4312,7 +4310,7 @@ class JSONConditionalTest extends TestCase
                 'submissionValues' => [
                     'input1' => json_decode('{ "a": [{ "b": { "c": 3 } }] }', true),
                     'input2' => ['a', '0', 'b', 'c'],
-                    'output' => 3
+                    'output' => 3,
                 ],
                 'expected' => true,
             ],
@@ -4341,7 +4339,7 @@ class JSONConditionalTest extends TestCase
                     'input1' => json_decode('{ "a": [{ "b": { "c": 3 } }] }', true),
                     'input2' => 'a.b.c',
                     'input3' => 'default',
-                    'output' => 'default'
+                    'output' => 'default',
                 ],
                 'expected' => true,
             ],
@@ -4366,7 +4364,7 @@ class JSONConditionalTest extends TestCase
                 'submissionValues' => [
                     'input1' => json_decode('{ "a": { "b": 2 } }', true),
                     'input2' => 'a',
-                    'output' => true
+                    'output' => true,
                 ],
                 'expected' => true,
             ],
@@ -4391,7 +4389,7 @@ class JSONConditionalTest extends TestCase
                 'submissionValues' => [
                     'input1' => json_decode('{ "a": { "b": 2 } }', true),
                     'input2' => 'a.b',
-                    'output' => true
+                    'output' => true,
                 ],
                 'expected' => true,
             ],
@@ -4416,7 +4414,7 @@ class JSONConditionalTest extends TestCase
                 'submissionValues' => [
                     'input1' => json_decode('{ "a": { "b": 2 } }', true),
                     'input2' => ['a', 'b'],
-                    'output' => true
+                    'output' => true,
                 ],
                 'expected' => true,
             ],
@@ -4441,7 +4439,7 @@ class JSONConditionalTest extends TestCase
                 'submissionValues' => [
                     'input1' => json_decode('{ "a": { "b": 2 } }', true),
                     'input2' => 'a',
-                    'output' => true
+                    'output' => true,
                 ],
                 'expected' => true,
             ],
@@ -4466,7 +4464,7 @@ class JSONConditionalTest extends TestCase
                 'submissionValues' => [
                     'input1' => json_decode('{ "a": { "b": 2 } }', true),
                     'input2' => 'a.b',
-                    'output' => true
+                    'output' => true,
                 ],
                 'expected' => true,
             ],
@@ -4491,7 +4489,7 @@ class JSONConditionalTest extends TestCase
                 'submissionValues' => [
                     'input1' => json_decode('{ "a": { "b": 2 } }', true),
                     'input2' => ['a', 'b'],
-                    'output' => true
+                    'output' => true,
                 ],
                 'expected' => true,
             ],
@@ -4512,8 +4510,8 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => json_decode('{"a":1, "b":2, "c": 1}', true),
-                    'output' => json_decode('{"1": "c", "2": "b"}', true)
-                    ],
+                    'output' => json_decode('{"1": "c", "2": "b"}', true),
+                ],
                 'expected' => true,
             ],
             'should show keys' => [
@@ -4533,8 +4531,8 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => json_decode('{"a":1, "b":2}', true),
-                    'output' => ['a', 'b']
-                    ],
+                    'output' => ['a', 'b'],
+                ],
                 'expected' => true,
             ],
             'should show keys 2' => [
@@ -4554,8 +4552,8 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => 'hi',
-                    'output' => ['0', '1']
-                    ],
+                    'output' => ['0', '1'],
+                ],
                 'expected' => true,
             ],
             'should show keysIn' => [
@@ -4575,7 +4573,7 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => json_decode('{"a":1, "b":2}', true),
-                    'output' => ['a', 'b']
+                    'output' => ['a', 'b'],
                 ],
                 'expected' => true,
             ],
@@ -4596,7 +4594,7 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => 'hi',
-                    'output' => ['0', '1']
+                    'output' => ['0', '1'],
                 ],
                 'expected' => true,
             ],
@@ -4621,7 +4619,7 @@ class JSONConditionalTest extends TestCase
                 'submissionValues' => [
                     'input1' => json_decode('{ "a": 1, "b": "2", "c": 3 }', true),
                     'input2' => ['a', 'c'],
-                    'output' => json_decode('{ "b": "2" }', true)
+                    'output' => json_decode('{ "b": "2" }', true),
                 ],
                 'expected' => true,
             ],
@@ -4646,7 +4644,7 @@ class JSONConditionalTest extends TestCase
                 'submissionValues' => [
                     'input1' => json_decode('{ "a": 1, "b": "2", "c": 3 }', true),
                     'input2' => ['a', 'c'],
-                    'output' => json_decode('{ "a": 1, "c": 3 }', true)
+                    'output' => json_decode('{ "a": 1, "c": 3 }', true),
                 ],
                 'expected' => true,
             ],
@@ -4671,7 +4669,7 @@ class JSONConditionalTest extends TestCase
                 'submissionValues' => [
                     'input1' => json_decode('{ "a": [{ "b": { "c": 3 } }] }', true),
                     'input2' => 'a[0].b.c',
-                    'output' => 3
+                    'output' => 3,
                 ],
                 'expected' => true,
             ],
@@ -4696,7 +4694,7 @@ class JSONConditionalTest extends TestCase
                 'submissionValues' => [
                     'input1' => json_decode('{ "a": [{ "b": { "c": 3 } }] }', true),
                     'input2' => ['a', '0', 'b', 'c'],
-                    'output' => 3
+                    'output' => 3,
                 ],
                 'expected' => true,
             ],
@@ -4725,7 +4723,7 @@ class JSONConditionalTest extends TestCase
                     'input1' => json_decode('{ "a": [{ "b": { "c": 3 } }] }', true),
                     'input2' => 'a.b.c',
                     'input3' => 'default',
-                    'output' => 'default'
+                    'output' => 'default',
                 ],
                 'expected' => true,
             ],
@@ -4746,7 +4744,7 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => json_decode('{"a":1, "b":2}', true),
-                    'output' => [['a', 1], ['b', 2]]
+                    'output' => [['a', 1], ['b', 2]],
                 ],
                 'expected' => true,
             ],
@@ -4767,7 +4765,7 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => json_decode('{"a":1, "b":2}', true),
-                    'output' => [['a', 1], ['b', 2]]
+                    'output' => [['a', 1], ['b', 2]],
                 ],
                 'expected' => true,
             ],
@@ -4788,7 +4786,7 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => json_decode('{"a":1, "b":2}', true),
-                    'output' => [1, 2]
+                    'output' => [1, 2],
                 ],
                 'expected' => true,
             ],
@@ -4809,7 +4807,7 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => 'hi',
-                    'output' => ['h', 'i']
+                    'output' => ['h', 'i'],
                 ],
                 'expected' => true,
             ],
@@ -4830,7 +4828,7 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => json_decode('{"a":1, "b":2}', true),
-                    'output' => [1, 2]
+                    'output' => [1, 2],
                 ],
                 'expected' => true,
             ],
@@ -4851,7 +4849,7 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => 'hi',
-                    'output' => ['h', 'i']
+                    'output' => ['h', 'i'],
                 ],
                 'expected' => true,
             ],
@@ -4873,7 +4871,7 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => 'Foo Bar',
-                    'output' => 'fooBar'
+                    'output' => 'fooBar',
                 ],
                 'expected' => true,
             ],
@@ -4894,7 +4892,7 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => 'FRED',
-                    'output' => 'Fred'
+                    'output' => 'Fred',
                 ],
                 'expected' => true,
             ],
@@ -4915,8 +4913,8 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => 'déjà vu',
-                    'output' => 'deja vu'
-                    ],
+                    'output' => 'deja vu',
+                ],
                 'expected' => true,
             ],
             'should show endsWith' => [
@@ -4944,8 +4942,8 @@ class JSONConditionalTest extends TestCase
                     'input1' => 'abc',
                     'input2' => 'b',
                     'input3' => 2,
-                    'output' => true
-                    ],
+                    'output' => true,
+                ],
                 'expected' => true,
             ],
             'should show escape' => [
@@ -4965,8 +4963,8 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => 'fred, barney, & pebbles',
-                    'output' => 'fred, barney, &amp; pebbles'
-                    ],
+                    'output' => 'fred, barney, &amp; pebbles',
+                ],
                 'expected' => true,
             ],
             'should show escapeRegExp' => [
@@ -4986,8 +4984,8 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => '[lodash](https://lodash.com/)',
-                    'output' => '\[lodash\]\(https://lodash\.com/\)'
-                    ],
+                    'output' => '\[lodash\]\(https://lodash\.com/\)',
+                ],
                 'expected' => true,
             ],
             'should show kebabCase' => [
@@ -5007,8 +5005,8 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => '__FOO_BAR__',
-                    'output' => 'foo-bar'
-                    ],
+                    'output' => 'foo-bar',
+                ],
                 'expected' => true,
             ],
             'should show lowerCase' => [
@@ -5028,8 +5026,8 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => '__FOO_BAR__',
-                    'output' => 'foo bar'
-                    ],
+                    'output' => 'foo bar',
+                ],
                 'expected' => true,
             ],
             'should show lowerFirst' => [
@@ -5049,8 +5047,8 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => 'FRED',
-                    'output' => 'fRED'
-                    ],
+                    'output' => 'fRED',
+                ],
                 'expected' => true,
             ],
             'should show pad' => [
@@ -5078,8 +5076,8 @@ class JSONConditionalTest extends TestCase
                     'input1' => 'abc',
                     'input2' => 8,
                     'input3' => '_-',
-                    'output' => '_-abc_-_'
-                    ],
+                    'output' => '_-abc_-_',
+                ],
                 'expected' => true,
             ],
             'should show padEnd' => [
@@ -5107,7 +5105,7 @@ class JSONConditionalTest extends TestCase
                     'input1' => 'abc',
                     'input2' => 6,
                     'input3' => '_-',
-                    'output' => 'abc_-_'
+                    'output' => 'abc_-_',
                 ],
                 'expected' => true,
             ],
@@ -5136,7 +5134,7 @@ class JSONConditionalTest extends TestCase
                     'input1' => 'abc',
                     'input2' => 6,
                     'input3' => '_-',
-                    'output' => '_-_abc'
+                    'output' => '_-_abc',
                 ],
                 'expected' => true,
             ],
@@ -5157,8 +5155,8 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => '08',
-                    'output' => 8
-                    ],
+                    'output' => 8,
+                ],
                 'expected' => true,
             ],
             'should show repeat' => [
@@ -5182,8 +5180,8 @@ class JSONConditionalTest extends TestCase
                 'submissionValues' => [
                     'input1' => '*',
                     'input2' => 5,
-                    'output' => "*****"
-                    ],
+                    'output' => '*****',
+                ],
                 'expected' => true,
             ],
             'should show replace' => [
@@ -5211,8 +5209,8 @@ class JSONConditionalTest extends TestCase
                     'input1' => 'Hi Fred',
                     'input2' => 'Fred',
                     'input3' => 'Barney',
-                    'output' => 'Hi Barney'
-                    ],
+                    'output' => 'Hi Barney',
+                ],
                 'expected' => true,
             ],
             'should show snakeCase' => [
@@ -5232,8 +5230,8 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => 'Foo Bar',
-                    'output' => 'foo_bar'
-                    ],
+                    'output' => 'foo_bar',
+                ],
                 'expected' => true,
             ],
             'should show split' => [
@@ -5261,8 +5259,8 @@ class JSONConditionalTest extends TestCase
                     'input1' => 'a-b-c',
                     'input2' => '-',
                     'input3' => 2,
-                    'output' => ['a','b']
-                    ],
+                    'output' => ['a', 'b'],
+                ],
                 'expected' => true,
             ],
             'should show startCase' => [
@@ -5282,8 +5280,8 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => '--foo-bar--',
-                    'output' => 'Foo Bar'
-                    ],
+                    'output' => 'Foo Bar',
+                ],
                 'expected' => true,
             ],
             'should show startsWith' => [
@@ -5311,8 +5309,8 @@ class JSONConditionalTest extends TestCase
                     'input1' => 'abc',
                     'input2' => 'b',
                     'input3' => 1,
-                    'output' => true
-                    ],
+                    'output' => true,
+                ],
                 'expected' => true,
             ],
             'should show toLower' => [
@@ -5332,8 +5330,8 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => '__FOO_BAR__',
-                    'output' => '__foo_bar__'
-                    ],
+                    'output' => '__foo_bar__',
+                ],
                 'expected' => true,
             ],
             'should show toUpper' => [
@@ -5353,8 +5351,8 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => '__foo_bar__',
-                    'output' => '__FOO_BAR__'
-                    ],
+                    'output' => '__FOO_BAR__',
+                ],
                 'expected' => true,
             ],
             'should show trim' => [
@@ -5378,8 +5376,8 @@ class JSONConditionalTest extends TestCase
                 'submissionValues' => [
                     'input1' => '-_-abc-_-',
                     'input2' => '_-',
-                    'output' => 'abc'
-                    ],
+                    'output' => 'abc',
+                ],
                 'expected' => true,
             ],
             'should show trimEnd' => [
@@ -5403,7 +5401,7 @@ class JSONConditionalTest extends TestCase
                 'submissionValues' => [
                     'input1' => '-_-abc-_-',
                     'input2' => '_-',
-                    'output' => '-_-abc'
+                    'output' => '-_-abc',
                 ],
                 'expected' => true,
             ],
@@ -5428,7 +5426,7 @@ class JSONConditionalTest extends TestCase
                 'submissionValues' => [
                     'input1' => '-_-abc-_-',
                     'input2' => '_-',
-                    'output' => 'abc-_-'
+                    'output' => 'abc-_-',
                 ],
                 'expected' => true,
             ],
@@ -5452,9 +5450,9 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => 'hi-diddly-ho there, neighborino',
-                    'input2' => ['length' => 24 ,'separator' => ' '],
-                    'output' => 'hi-diddly-ho there,...'
-                    ],
+                    'input2' => ['length' => 24, 'separator' => ' '],
+                    'output' => 'hi-diddly-ho there,...',
+                ],
                 'expected' => true,
             ],
             'should show unescape' => [
@@ -5474,8 +5472,8 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => 'fred, barney, &amp; pebbles',
-                    'output' => 'fred, barney, & pebbles'
-                    ],
+                    'output' => 'fred, barney, & pebbles',
+                ],
                 'expected' => true,
             ],
             'should show upperCase' => [
@@ -5495,8 +5493,8 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => '__foo_bar__',
-                    'output' => 'FOO BAR'
-                    ],
+                    'output' => 'FOO BAR',
+                ],
                 'expected' => true,
             ],
             'should show upperFirst' => [
@@ -5516,8 +5514,8 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => 'fred',
-                    'output' => 'Fred'
-                    ],
+                    'output' => 'Fred',
+                ],
                 'expected' => true,
             ],
             'should show words' => [
@@ -5537,8 +5535,8 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => 'fred, barney, & pebbles',
-                    'output' => ['fred', 'barney', 'pebbles']
-                    ],
+                    'output' => ['fred', 'barney', 'pebbles'],
+                ],
                 'expected' => true,
             ],
             // Util functions
@@ -5567,7 +5565,7 @@ class JSONConditionalTest extends TestCase
                 'submissionValues' => [
                     'input1' => 5,
                     'input2' => 'abc',
-                    'output' => ['abc','abc' , 'abc', 'abc', 'abc']
+                    'output' => ['abc', 'abc', 'abc', 'abc', 'abc'],
                 ],
                 'expected' => true,
             ],
@@ -5592,8 +5590,8 @@ class JSONConditionalTest extends TestCase
                 'submissionValues' => [
                     'input1' => 1,
                     'input2' => 10,
-                    'output' => 1
-                    ],
+                    'output' => 1,
+                ],
                 'expected' => true,
             ],
             'should show defaultTo 2' => [
@@ -5617,7 +5615,7 @@ class JSONConditionalTest extends TestCase
                 'submissionValues' => [
                     'input1' => null,
                     'input2' => 10,
-                    'output' => 10
+                    'output' => 10,
                 ],
                 'expected' => true,
             ],
@@ -5642,7 +5640,7 @@ class JSONConditionalTest extends TestCase
                 'submissionValues' => [
                     'input1' => NAN,
                     'input2' => 10,
-                    'output' => 10
+                    'output' => 10,
                 ],
                 'expected' => true,
             ],
@@ -5663,7 +5661,7 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => json_decode('[{"n":1},{"n":2},{"n":3},{"h":5}]', true),
-                    'output' => json_decode('[{"n":1},{"n":2},{"n":3},{"h":5}]', true)
+                    'output' => json_decode('[{"n":1},{"n":2},{"n":3},{"h":5}]', true),
                 ],
                 'expected' => true,
             ],
@@ -5690,9 +5688,9 @@ class JSONConditionalTest extends TestCase
                   ]
                 }', true),
                 'submissionValues' => [
-                    'extra1' => [[ 'user' => 'barney', 'age' => 36, 'active' => true], [ 'user' => 'fred',   'age' => 40, 'active' => false]] ,
+                    'extra1' => [['user' => 'barney', 'age' => 36, 'active' => true], ['user' => 'fred',   'age' => 40, 'active' => false]],
                     'extra2' => ['user', 'fred'],
-                    'output' =>  [ 'user' => 'fred',   'age' => 40, 'active' => false]],
+                    'output' => ['user' => 'fred',   'age' => 40, 'active' => false], ],
                 'expected' => true,
             ],
             'should show matches' => [
@@ -5717,7 +5715,7 @@ class JSONConditionalTest extends TestCase
                     'input1' => json_decode('[{ "a": 1, "b": 2, "c": 3 },{ "a": 4, "b": 5, "c": 6 }]', true),
                     'input2' => json_decode('{ "a": 4, "c": 6 }', true),
                     'output' => json_decode('[{ "a": 4, "b": 5, "c": 6 }]', true),
-                    ],
+                ],
                 'expected' => true,
             ],
             'should show matchesProperty' => [
@@ -5773,8 +5771,8 @@ class JSONConditionalTest extends TestCase
                 'submissionValues' => [
                     'input1' => json_decode('[{ "a": { "b": 2 } },{ "a": { "b": 1 } }]', true),
                     'input2' => 'a.b',
-                    'output' => [2, 1]
-                    ],
+                    'output' => [2, 1],
+                ],
                 'expected' => true,
             ],
             'should show range' => [
@@ -5794,8 +5792,8 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => 4,
-                    'output' => [0, 1, 2, 3]
-                    ],
+                    'output' => [0, 1, 2, 3],
+                ],
                 'expected' => true,
             ],
             'should show range 2' => [
@@ -5815,7 +5813,7 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => -4,
-                    'output' => [0, -1, -2, -3]
+                    'output' => [0, -1, -2, -3],
                 ],
                 'expected' => true,
             ],
@@ -5836,7 +5834,7 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => 0,
-                    'output' => []
+                    'output' => [],
                 ],
                 'expected' => true,
             ],
@@ -5861,8 +5859,8 @@ class JSONConditionalTest extends TestCase
                 'submissionValues' => [
                     'input1' => 1,
                     'input2' => 5,
-                    'output' => [1, 2, 3, 4]
-                    ],
+                    'output' => [1, 2, 3, 4],
+                ],
                 'expected' => true,
             ],
             'should show range 5' => [
@@ -5890,8 +5888,8 @@ class JSONConditionalTest extends TestCase
                     'input1' => 0,
                     'input2' => 20,
                     'input3' => 5,
-                    'output' => [0, 5, 10, 15]
-                    ],
+                    'output' => [0, 5, 10, 15],
+                ],
                 'expected' => true,
             ],
             'should show range 6' => [
@@ -5919,7 +5917,7 @@ class JSONConditionalTest extends TestCase
                     'input1' => 1,
                     'input2' => 4,
                     'input3' => 0,
-                    'output' => [1, 1, 1]
+                    'output' => [1, 1, 1],
                 ],
                 'expected' => true,
             ],
@@ -5948,7 +5946,7 @@ class JSONConditionalTest extends TestCase
                     'input1' => 0,
                     'input2' => 21,
                     'input3' => 5,
-                    'output' => [0, 5, 10, 15, 20]
+                    'output' => [0, 5, 10, 15, 20],
                 ],
                 'expected' => true,
             ],
@@ -5969,7 +5967,7 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => 4,
-                    'output' => [3, 2, 1, 0]
+                    'output' => [3, 2, 1, 0],
                 ],
                 'expected' => true,
             ],
@@ -5990,7 +5988,7 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => -4,
-                    'output' => [-3, -2, -1, 0]
+                    'output' => [-3, -2, -1, 0],
                 ],
                 'expected' => true,
             ],
@@ -6011,7 +6009,7 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => 0,
-                    'output' => []
+                    'output' => [],
                 ],
                 'expected' => true,
             ],
@@ -6036,7 +6034,7 @@ class JSONConditionalTest extends TestCase
                 'submissionValues' => [
                     'input1' => 1,
                     'input2' => 5,
-                    'output' => [4, 3, 2, 1]
+                    'output' => [4, 3, 2, 1],
                 ],
                 'expected' => true,
             ],
@@ -6065,7 +6063,7 @@ class JSONConditionalTest extends TestCase
                     'input1' => 0,
                     'input2' => 20,
                     'input3' => 5,
-                    'output' => [15, 10, 5, 0]
+                    'output' => [15, 10, 5, 0],
                 ],
                 'expected' => true,
             ],
@@ -6094,7 +6092,7 @@ class JSONConditionalTest extends TestCase
                     'input1' => 1,
                     'input2' => 4,
                     'input3' => 0,
-                    'output' => [1, 1, 1]
+                    'output' => [1, 1, 1],
                 ],
                 'expected' => true,
             ],
@@ -6123,7 +6121,7 @@ class JSONConditionalTest extends TestCase
                     'input1' => 0,
                     'input2' => 21,
                     'input3' => 5,
-                    'output' => [20, 15, 10, 5, 0]
+                    'output' => [20, 15, 10, 5, 0],
                 ],
                 'expected' => true,
             ],
@@ -6140,8 +6138,8 @@ class JSONConditionalTest extends TestCase
                   ]
                 }', true),
                 'submissionValues' => [
-                    'output' => []
-                    ],
+                    'output' => [],
+                ],
                 'expected' => true,
             ],
             'should show stubFalse' => [
@@ -6157,8 +6155,8 @@ class JSONConditionalTest extends TestCase
                   ]
                 }', true),
                 'submissionValues' => [
-                    'output' => false
-                    ],
+                    'output' => false,
+                ],
                 'expected' => true,
             ],
             'should show stubObject' => [
@@ -6174,7 +6172,7 @@ class JSONConditionalTest extends TestCase
                   ]
                 }', true),
                 'submissionValues' => [
-                    'output' => json_decode('{}', true)
+                    'output' => json_decode('{}', true),
                 ],
                 'expected' => true,
             ],
@@ -6191,8 +6189,8 @@ class JSONConditionalTest extends TestCase
                   ]
                 }', true),
                 'submissionValues' => [
-                    'output' => ''
-                    ],
+                    'output' => '',
+                ],
                 'expected' => true,
             ],
             'should show stubTrue' => [
@@ -6208,8 +6206,8 @@ class JSONConditionalTest extends TestCase
                   ]
                 }', true),
                 'submissionValues' => [
-                    'output' => true
-                    ],
+                    'output' => true,
+                ],
                 'expected' => true,
             ],
             'should show toPath' => [
@@ -6229,8 +6227,8 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => 'a[0].b.c',
-                    'output' => ['a', '0', 'b', 'c']
-                    ],
+                    'output' => ['a', '0', 'b', 'c'],
+                ],
                 'expected' => true,
             ],
             'should show toPath 2' => [
@@ -6250,8 +6248,8 @@ class JSONConditionalTest extends TestCase
                 }', true),
                 'submissionValues' => [
                     'input1' => 'a.b.c',
-                    'output' => ['a', 'b', 'c']
-                    ],
+                    'output' => ['a', 'b', 'c'],
+                ],
                 'expected' => true,
             ],
             'should show times' => [
@@ -6279,13 +6277,10 @@ class JSONConditionalTest extends TestCase
                 'submissionValues' => [
                     'input1' => 4,
                     'input2' => 0,
-                    'output' => [0, 0, 0, 0]
-                    ],
+                    'output' => [0, 0, 0, 0],
+                ],
                 'expected' => true,
-            ]
-
-
-
+            ],
 
             /*
 

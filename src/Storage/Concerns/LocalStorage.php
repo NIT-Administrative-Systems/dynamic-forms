@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Northwestern\SysDev\DynamicForms\Storage\Concerns;
-
 
 use Illuminate\Http\Request;
 use Northwestern\SysDev\DynamicForms\Storage\FileDriver;
@@ -12,11 +10,10 @@ use Northwestern\SysDev\DynamicForms\Storage\FileDriver;
  *
  * The stubs/DynamicFormsStorageController.stub file utilizes this trait.
  */
-
 trait LocalStorage
 {
     /**
-     * Stores the given request
+     * Stores the given request.
      */
     public function storeURL(Request $request)
     {
@@ -25,11 +22,12 @@ trait LocalStorage
     }
 
     /**
-     * Returns the given file
+     * Returns the given file.
      */
     public function showURL(Request $request)
     {
         $this->authorizeFileAction('download', $request->form, $request, FileDriver::STORAGE_URL);
+
         return response()->download(storage_path('app/uploaded'.$request->form));
     }
 
@@ -37,7 +35,7 @@ trait LocalStorage
     {
         $this->authorizeFileAction('delete', $request->form, $request, FileDriver::STORAGE_URL);
         \File::delete(storage_path('app/uploaded'.$request->form));
+
         return response()->noContent();
     }
-
 }
