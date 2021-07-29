@@ -26,7 +26,10 @@
         "illuminate/contracts": "^8",
         "illuminate/http": "^8",
         "symfony/finder": "^5",
-        "nesbot/carbon": "^2"
+        "nesbot/carbon": "^2",
+        "jwadhams/json-logic-php": "^1.4",
+        "lodash-php/lodash-php": "^0.0.7",
+        "me-io/php-lodash": "^2.0"
     },
     "require-dev": {
         "orchestra/testbench": "^6.17",

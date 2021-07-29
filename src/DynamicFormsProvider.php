@@ -12,11 +12,19 @@ use Northwestern\SysDev\DynamicForms\Storage\S3Driver;
 
 class DynamicFormsProvider extends ServiceProvider
 {
+    /**
+     * @codeCoverageIgnore
+     */
     public function register()
     {
         $this->app->singleton(ComponentRegistry::class, function ($app) {
             return new ComponentRegistry;
         });
+
+        $this->app->singleton(JSONLogicInitHelper::class, function ($app) {
+            return new JSONLogicInitHelper;
+        });
+
 
         $this->app->singleton(FileComponentRegistry::class, function ($app) {
             return new FileComponentRegistry;
@@ -48,6 +56,9 @@ class DynamicFormsProvider extends ServiceProvider
         });
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     public function boot()
     {
         $this->registerCommands();
@@ -56,6 +67,8 @@ class DynamicFormsProvider extends ServiceProvider
         /** @var ComponentRegistry $registry */
         $registry = $this->app->make(ComponentRegistry::class);
 
+        /** @var JSONLogicInitHelper $jsonHelper */
+        $jsonHelper = $this->app->make(JSONLogicInitHelper::class);
         /** @var FileComponentRegistry $fileRegistry */
         $fileRegistry = $this->app->make(FileComponentRegistry::class);
 
