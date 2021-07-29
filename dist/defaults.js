@@ -111,12 +111,6 @@ export default {
                         {key: 'json-validation-json', ignore: true},
                     ]
                 },
-                {
-                    key: 'conditional',
-                    ignore: false,
-                    components: [
-                    ],
-                }
             ];
         })
     },
