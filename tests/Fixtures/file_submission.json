@@ -62,5 +62,36 @@
       "type": "application/pdf",
       "originalName": "TEST99.pdf"
     }
-  ]
+  ],
+  "campusAddress": {
+    "place_id": 102103665,
+    "licence": "Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright",
+    "osm_type": "way",
+    "osm_id": 42706487,
+    "boundingbox": [
+      "42.0500749",
+      "42.050507",
+      "-87.6825641",
+      "-87.6819604"
+    ],
+    "lat": "42.0502499",
+    "lon": "-87.68226336219436",
+    "display_name": "1800 Sherman Avenue, 1800, Sherman Avenue, Downtown, Evanston, Evanston Township, Cook County, Illinois, 60201, United States",
+    "class": "building",
+    "type": "office",
+    "importance": 0.31100000000000005,
+    "address": {
+      "building": "1800 Sherman Avenue",
+      "house_number": "1800",
+      "road": "Sherman Avenue",
+      "neighbourhood": "Downtown",
+      "town": "Evanston",
+      "municipality": "Evanston Township",
+      "county": "Cook County",
+      "state": "Illinois",
+      "postcode": "60201",
+      "country": "United States",
+      "country_code": "us"
+    }
+  }
 }

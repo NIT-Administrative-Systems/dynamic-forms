@@ -67,7 +67,7 @@ class ValidatedForm implements Validator
         foreach ($this->values as $component) {
             if (is_array($component)) { //files always present as multivalued
                 foreach ($component as $subComponent) {
-                    if (array_key_exists('storage', $subComponent)) {
+                    if (is_array($subComponent) && array_key_exists('storage', $subComponent)) {
                         //get storage driver and check if file exists
                         $storageDriver =  resolve(resolve(FileComponentRegistry::class)->get($subComponent['storage']));
                         if ($storageDriver->findObject($subComponent['name'])) {
