@@ -184,7 +184,6 @@ export default {
                 key: 'data',
                 ignore: false,
                 components: [
-                    { key: 'dataSrc', defaultValue: 'values', disabled: true },
                     { key: 'idPath', ignore: true },
                     { key: 'template', ignore: true },
                     { key: 'refreshOn', ignore: true },
@@ -279,6 +278,20 @@ export default {
         Formio.Utils.getComponent(editForm.components, 'storage').dataSrc = 'values';
 
         Formio.Components.components.file.editForm = function() { return editForm; };
+
+    }
+
+    /**
+     * Builder defaults to form.io url for resources this changes that.
+     */
+    globalResourceCustomization: () => {
+        var editForm = Formio.Components.components.select.editForm()
+
+
+        Formio.Utils.getComponent(editForm.components, 'data.resource').data.url = 'test';
+
+
+        Formio.Components.components.select.editForm = function() { return editForm; };
 
     }
 
