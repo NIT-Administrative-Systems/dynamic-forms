@@ -296,11 +296,6 @@ export default {
         Formio.Utils.getComponent(editForm.components, 'data.resource').data.url = 'dynamic-forms/resources';
 
         Formio.Components.components.select.editForm = function() { return editForm; };
-        var editForm = Formio.Components.components.select.editForm()
-        //Set route for resource controller
-        Formio.Utils.getComponent(editForm.components, 'data.resource').data.url = 'dynamic-forms/resources';
-
-        Formio.Components.components.select.editForm = function() { return editForm; };
     }
 
 }
