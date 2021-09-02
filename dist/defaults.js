@@ -285,14 +285,22 @@ export default {
      * Builder defaults to form.io url for resources this changes that.
      */
     globalResourceCustomization: () => {
+        //project URL has to be set or it will redirect to https://form.io
+        //maybe this should this be moved to /dynamic-forms namespace
+        //something is not working with this value when you add an "add resource" button which is why base url also needs to be set
+        Formio.setProjectUrl(process.env.MIX_APP_URL);
+        Formio.setBaseUrl(process.env.MIX_APP_URL);
+
         var editForm = Formio.Components.components.select.editForm()
-
-
-        Formio.Utils.getComponent(editForm.components, 'data.resource').data.url = 'test';
-
+        //Set route for resource controller
+        Formio.Utils.getComponent(editForm.components, 'data.resource').data.url = 'dynamic-forms/resources';
 
         Formio.Components.components.select.editForm = function() { return editForm; };
+        var editForm = Formio.Components.components.select.editForm()
+        //Set route for resource controller
+        Formio.Utils.getComponent(editForm.components, 'data.resource').data.url = 'dynamic-forms/resources';
 
+        Formio.Components.components.select.editForm = function() { return editForm; };
     }
 
 }
