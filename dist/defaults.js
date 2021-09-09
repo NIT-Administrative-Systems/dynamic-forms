@@ -185,7 +185,7 @@ export default {
                 ignore: false,
                 components: [
                     { key: 'idPath', ignore: true },
-                    { key: 'template', ignore: true },
+                    //{ key: 'template', ignore: true }, //removed to make Resource's work
                     { key: 'refreshOn', ignore: true },
                     { key: 'refreshOnBlur', ignore: true },
                     { key: 'clearOnRefresh', ignore: true },
