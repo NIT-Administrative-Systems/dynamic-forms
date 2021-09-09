@@ -6,7 +6,6 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Northwestern\SysDev\DynamicForms\Components\ComponentInterface;
 use Northwestern\SysDev\DynamicForms\Errors\UnknownComponentError;
-use Northwestern\SysDev\DynamicForms\Errors\UnknownResourceError;
 use Symfony\Component\Finder\Finder;
 
 class ComponentRegistry
