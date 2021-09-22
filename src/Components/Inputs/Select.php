@@ -8,6 +8,7 @@ use Illuminate\Validation\Factory;
 use Illuminate\Validation\Rule;
 use Northwestern\SysDev\DynamicForms\Components\BaseComponent;
 use Northwestern\SysDev\DynamicForms\Errors\InvalidDefinitionError;
+use Northwestern\SysDev\DynamicForms\Errors\UnknownResourceError;
 use Northwestern\SysDev\DynamicForms\RuleBag;
 
 class Select extends BaseComponent
@@ -28,6 +29,7 @@ class Select extends BaseComponent
      */
     const SUPPORTED_DATA_SRC = [
         self::DATA_SRC_VALUES,
+        self::DATA_SRC_RESOURCE,
     ];
 
     protected string $dataSource;
@@ -36,6 +38,11 @@ class Select extends BaseComponent
      * Valid values from the definition, for DATA_SRC_VALUES mode.
      */
     protected array $optionValues;
+
+    /**
+     * Valid resources from the definition, for DATA_SRC_RESOURCE mode.
+     */
+    protected array $optionResources;
 
     public function __construct(
         string $key,
@@ -56,6 +63,7 @@ class Select extends BaseComponent
 
         match ($this->dataSource) {
             self::DATA_SRC_VALUES => $this->initSrcValues($additional),
+            self::DATA_SRC_RESOURCE => $this->initSrcResources($additional),
             default => $this->initSrcUnsupported(),
         };
     }
@@ -68,7 +76,8 @@ class Select extends BaseComponent
         $rules->addIfNotNull('required', $this->validation('required'));
         $rules->addIf('nullable', ! $this->validation('required'));
 
-        $rules->addIf(Rule::in($this->optionValues()), $this->dataSource === self::DATA_SRC_VALUES);
+        $rules->addIf(Rule::in($this->optionValues()), $this->dataSource === self::DATA_SRC_VALUES
+            || $this->dataSource === self::DATA_SRC_RESOURCE );
 
         return $validator->make(
             [$fieldKey => $submissionValue],
@@ -86,9 +95,30 @@ class Select extends BaseComponent
         return $this->optionValues;
     }
 
+
     private function initSrcValues(array $additional): void
     {
         $this->optionValues = collect($this->additional['data']['values'])->map->value->all();
+    }
+
+    private function initSrcResources(array $additional): void
+    {
+        //add in stuff for valueProperty
+        $resourceList = \App\Http\Controllers\ResourceController::getResourceList();
+        $resource = $additional['data']['resource'];
+        if(!isset($resourceList[$resource]))
+        {
+            throw new UnknownResourceError($resource);
+        }
+
+        $this->optionValues = collect($resourceList[$resource]::submissions(-1, 0, '', ''))->transform(function ($val) {
+            $prop = substr($this->additional['valueProperty'], 5);
+            if($prop !== '')
+            {
+                return $val[$prop];
+            }
+            return json_encode($val);
+        })->all();
     }
 
     private function initSrcUnsupported(): void

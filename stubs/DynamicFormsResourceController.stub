@@ -1,0 +1,163 @@
+<?php
+
+
+namespace App\Http\Controllers;
+
+
+use Illuminate\Support\Str;
+use Northwestern\SysDev\DynamicForms\Resources\ResourceInterface;
+use Illuminate\Http\Request;
+use Symfony\Component\Finder\Finder;
+
+class ResourceController extends Controller
+{
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    /**
+     * Provides the index of all registered Resources
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index() //register
+    {
+        $resourceIndexList = array_keys($this->getResourceList());
+
+        $retString = '[';
+        foreach ($resourceIndexList as $name)
+        {
+            $retString .= '{"_id":"'.$name.'","title":"'.$name.'"},';
+
+        }
+        if(count($resourceIndexList) > 0)
+        {
+            $retString = substr($retString, 0, -1);
+        }
+        $retString .= ']';
+
+        return response(
+            $retString
+        ) ->header('Content-Type', 'application/json');
+    }
+
+    /**
+     * Returns a description of components for the given Resource
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function resource($resource)
+    {
+        $resourceList = $this->getResourceList();
+        if(!isset($resourceList[$resource]))
+        {
+            abort(404, 'Given Resource does not exist');
+        }
+        $componentList = $resourceList[$resource]::components();
+        $str = '{"type":"resource", "components":' . $componentList . '}';
+        return response($str)->header('Content-Type', 'application/json');
+    }
+
+    /**
+     * Returns the submission values for a given resource
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function resourceSubmissions(Request $request, $resource)
+    {
+        $resourceList = $this->getResourceList();
+        if(!isset($resourceList[$resource]))
+        {
+            abort(404, 'Given Resource does not exist');
+        }
+        $params = $request->query();
+        $limit = $params['limit'];
+        $skip = $params['skip'];
+        $searchKey = '';
+        $searchValue = '';
+        foreach ($params as $key => $value) {
+            if (str_starts_with($key, 'data')) {
+                if($key !== 'data__regex' && preg_match('/data_(.*)__regex/', $key, $match))
+                {
+                    $searchKey = $match[1];
+                }
+                $searchValue = $value;
+                break;
+            }
+        }
+        $resourceSubmissions = $resourceList[$resource]::submissions($limit, $skip, $searchKey, $searchValue);
+        $handlesPaginationAndSearch = $resourceList[$resource]::handlesPaginationAndSearch();
+
+        if(!$handlesPaginationAndSearch)
+        {
+            if($searchValue !== '')
+            {
+                $resourceSubmissions = array_filter($resourceSubmissions, function ($submissions) use ($limit, $skip, $searchKey, $searchValue) {
+                    foreach ($submissions as $submissionComponent => $submissionValue)
+                    {
+                        if(($searchKey === '' || $submissionComponent === $searchKey) && str_contains($submissionValue, $searchValue) )
+                        {
+                            return true;
+                        }
+                    }
+                    return false;
+                } );
+            }
+
+            $resourceSubmissions = array_slice($resourceSubmissions, $skip, $limit);
+        }
+        $str = '[';
+        foreach ($resourceSubmissions as $submission)
+        {
+            $str .= '{ "data": {';
+            foreach ($submission as $label => $value)
+            {
+                $str.= '"'.$label.'": '.'"'.$value.'",';
+            }
+            $str = substr($str, 0, -1);
+            $str .= '}},';
+        }
+        if(count($resourceSubmissions) > 0)
+        {
+            $str = substr($str, 0, -1);
+        }
+        $str .= ']';
+        return response($str)->header('Content-Type', 'application/json');
+    }
+
+    /**
+     * Returns an array of all of the given Resources class's indexed by the indexName
+     */
+    public static function getResourceList() :array
+    {
+        $ret = [];
+        $files = Finder::create()
+            ->in([
+                __DIR__.DIRECTORY_SEPARATOR.'Resources',
+            ])
+            ->name('*.php')
+            ->files();
+
+        foreach ($files as $file) {
+            $resource = __NAMESPACE__.'\\'.str_replace(
+                    ['/', '.php'],
+                    ['\\', ''],
+                    Str::after($file->getRealPath(), __DIR__.DIRECTORY_SEPARATOR)
+                );
+
+            if (
+                is_subclass_of($resource, ResourceInterface::class)
+                && ! (new \ReflectionClass($resource))->isAbstract()
+            ) {
+                $ret[$resource::indexName()] = $resource;
+            }
+        }
+        return $ret;
+    }
+}

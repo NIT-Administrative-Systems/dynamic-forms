@@ -29,9 +29,6 @@ class DynamicFormsProvider extends ServiceProvider
             return new FileComponentRegistry;
         });
 
-        $this->app->singleton(ResourceRegistry::class, function ($app) {
-            return new ResourceRegistry;
-        });
 
         $this->app->singleton(S3Driver::class, function ($app) {
             $clientConfig = [
@@ -74,8 +71,6 @@ class DynamicFormsProvider extends ServiceProvider
         $jsonHelper = $this->app->make(JSONLogicInitHelper::class);
         /** @var FileComponentRegistry $fileRegistry */
         $fileRegistry = $this->app->make(FileComponentRegistry::class);
-        /** @var ResourceRegistry $fileRegistry */
-        $resourceRegistry = $this->app->make(ResourceRegistry::class);
 
 
         Request::macro('validateDynamicForm', function (string $definitionJson, string $submissionJson) {

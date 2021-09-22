@@ -2,16 +2,15 @@
 
 namespace Northwestern\SysDev\DynamicForms\Console\Commands;
 
-use Illuminate\Console\GeneratorCommand;
+use Illuminate\Console\Command;
 
-class Install extends GeneratorCommand
+class Install extends Command
 {
     public const FORMIOJS_VERSION = '^4.12.7';
 
     protected $signature = 'dynamic-forms:install';
 
     protected $description = 'Installs Dynamic Forms for Laravel';
-    protected $type = 'Controller';
 
     /**
      * @codeCoverageIgnore
@@ -19,7 +18,11 @@ class Install extends GeneratorCommand
     public function handle()
     {
         $this->comment('Publishing file upload controller...');
-        parent::handle();
+        $this->call('dynamic-forms:installStorageController');
+        $this->newLine();
+
+        $this->comment('Publishing resource controller...');
+        $this->call('dynamic-forms:installResourceController');
         $this->newLine();
 
         $this->comment('Publishing JS assets...');
@@ -40,20 +43,6 @@ class Install extends GeneratorCommand
         $this->info('And remember to run `yarn install and Laravel Mix!');
     }
 
-    protected function getNameInput(): string
-    {
-        return 'DynamicFormsStorageController';
-    }
-
-    protected function getStub(): string
-    {
-        return __DIR__.'/../../../stubs/DynamicFormsStorageController.stub';
-    }
-
-    protected function getDefaultNamespace($rootNamespace): string
-    {
-        return $rootNamespace.'\Http\Controllers';
-    }
 
     protected function ejectRoutes(string $routesFile): void
     {
