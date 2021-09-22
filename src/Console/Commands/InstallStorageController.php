@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Northwestern\SysDev\DynamicForms\Console\Commands;
 
 use Illuminate\Console\GeneratorCommand;
@@ -10,7 +9,6 @@ class InstallStorageController extends GeneratorCommand
     protected $type = 'Controller';
 
     protected $signature = 'dynamic-forms:installStorageController';
-
 
     protected function getNameInput(): string
     {
@@ -26,5 +24,4 @@ class InstallStorageController extends GeneratorCommand
     {
         return $rootNamespace.'\Http\Controllers';
     }
-
 }

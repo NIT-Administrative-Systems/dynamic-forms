@@ -29,7 +29,6 @@ class DynamicFormsProvider extends ServiceProvider
             return new FileComponentRegistry;
         });
 
-
         $this->app->singleton(S3Driver::class, function ($app) {
             $clientConfig = [
                 'region' => config('filesystems.disks.s3.region', Arr::get($_ENV, 'AWS_DEFAULT_REGION')),
@@ -71,7 +70,6 @@ class DynamicFormsProvider extends ServiceProvider
         $jsonHelper = $this->app->make(JSONLogicInitHelper::class);
         /** @var FileComponentRegistry $fileRegistry */
         $fileRegistry = $this->app->make(FileComponentRegistry::class);
-
 
         Request::macro('validateDynamicForm', function (string $definitionJson, string $submissionJson) {
             $formDefinition = new Form($definitionJson); // @TODO pass registry

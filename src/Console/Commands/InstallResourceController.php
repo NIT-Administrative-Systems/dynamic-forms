@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Northwestern\SysDev\DynamicForms\Console\Commands;
 
 use Illuminate\Console\GeneratorCommand;
@@ -10,7 +9,6 @@ class InstallResourceController extends GeneratorCommand
     protected $type = 'Controller';
 
     protected $signature = 'dynamic-forms:installResourceController';
-
 
     protected function getNameInput(): string
     {

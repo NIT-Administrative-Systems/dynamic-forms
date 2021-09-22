@@ -77,7 +77,7 @@ class Select extends BaseComponent
         $rules->addIf('nullable', ! $this->validation('required'));
 
         $rules->addIf(Rule::in($this->optionValues()), $this->dataSource === self::DATA_SRC_VALUES
-            || $this->dataSource === self::DATA_SRC_RESOURCE );
+            || $this->dataSource === self::DATA_SRC_RESOURCE);
 
         return $validator->make(
             [$fieldKey => $submissionValue],
@@ -95,7 +95,6 @@ class Select extends BaseComponent
         return $this->optionValues;
     }
 
-
     private function initSrcValues(array $additional): void
     {
         $this->optionValues = collect($this->additional['data']['values'])->map->value->all();
@@ -106,17 +105,16 @@ class Select extends BaseComponent
         //add in stuff for valueProperty
         $resourceList = \App\Http\Controllers\ResourceController::getResourceList();
         $resource = $additional['data']['resource'];
-        if(!isset($resourceList[$resource]))
-        {
+        if (! isset($resourceList[$resource])) {
             throw new UnknownResourceError($resource);
         }
 
         $this->optionValues = collect($resourceList[$resource]::submissions(-1, 0, '', ''))->transform(function ($val) {
             $prop = substr($this->additional['valueProperty'], 5);
-            if($prop !== '')
-            {
+            if ($prop !== '') {
                 return $val[$prop];
             }
+
             return json_encode($val);
         })->all();
     }

@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Northwestern\SysDev\DynamicForms\Tests\Console\Commands;
 
 use Northwestern\SysDev\DynamicForms\Console\Commands\InstallStorageController;
@@ -18,7 +17,7 @@ class InstallStorageControllerTest extends TestCase
      */
     public function testGeneratorMethods(): void
     {
-        $cmd = $this->app->make(InstallStorageController::class);;
+        $cmd = $this->app->make(InstallStorageController::class);
 
         $this->assertStringContainsString('Controller', $this->invokeProtected($cmd, 'getNameInput'));
         $this->assertStringContainsString('stubs', $this->invokeProtected($cmd, 'getStub'));

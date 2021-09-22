@@ -43,7 +43,6 @@ class Install extends Command
         $this->info('And remember to run `yarn install and Laravel Mix!');
     }
 
-
     protected function ejectRoutes(string $routesFile): void
     {
         file_put_contents(

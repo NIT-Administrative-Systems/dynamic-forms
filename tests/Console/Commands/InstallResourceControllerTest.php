@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Northwestern\SysDev\DynamicForms\Tests\Console\Commands;
-
 
 use Northwestern\SysDev\DynamicForms\Console\Commands\InstallResourceController;
 use Orchestra\Testbench\TestCase;
@@ -19,7 +17,7 @@ class InstallResourceControllerTest extends TestCase
      */
     public function testGeneratorMethods(): void
     {
-        $cmd = $this->app->make(InstallResourceController::class);;
+        $cmd = $this->app->make(InstallResourceController::class);
 
         $this->assertStringContainsString('Controller', $this->invokeProtected($cmd, 'getNameInput'));
         $this->assertStringContainsString('stubs', $this->invokeProtected($cmd, 'getStub'));
