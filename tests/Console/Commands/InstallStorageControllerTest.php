@@ -23,4 +23,12 @@ class InstallStorageControllerTest extends TestCase
         $this->assertStringContainsString('stubs', $this->invokeProtected($cmd, 'getStub'));
         $this->assertEquals('App\Http\Controllers', $this->invokeProtected($cmd, 'getDefaultNamespace', ['App']));
     }
+
+    protected function invokeProtected(InstallStorageController $cmd, string $method, $args = []): mixed
+    {
+        $refMeth = new ReflectionMethod($cmd, $method);
+        $refMeth->setAccessible(true);
+
+        return $refMeth->invoke($cmd, ...$args);
+    }
 }
