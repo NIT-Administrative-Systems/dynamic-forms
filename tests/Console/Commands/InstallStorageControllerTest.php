@@ -6,7 +6,6 @@ use Northwestern\SysDev\DynamicForms\Console\Commands\InstallStorageController;
 use Orchestra\Testbench\TestCase;
 use ReflectionMethod;
 
-
 /**
  * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Console\Commands\InstallStorageController
  */
