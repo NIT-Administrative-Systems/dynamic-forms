@@ -301,12 +301,28 @@ export default {
 
     /**
      * Builder defaults to form.io url for resources this changes that.
+     * Also restricts the dropdown for Select data source.
      */
     globalResourceCustomization: () => {
         //project URL has to be set or it will redirect to https://form.io
         //"add resource" button needs the base url to be set
         Formio.setProjectUrl(process.env.MIX_APP_URL + '/dynamic-forms');
         Formio.setBaseUrl(process.env.MIX_APP_URL + '/dynamic-forms');
+
+        //Limit options to only Resource and Values
+        var editForm = Formio.Components.components.select.editForm();
+
+        Formio.Utils.getComponent(editForm.components, 'select').data.values = [
+            { label: 'Values', value: 'values' },
+            //{ label: 'URL', value: 'url' },
+            { label: 'Resource', value: 'resource' },
+            //{ label: 'Custom', value: 'custom' },
+            //{ label: 'Raw JSON', value: 'json' },
+            //{ label: 'IndexedDB', value: 'indexeddb' },
+        ];
+
+
+        Formio.Components.components.select.editForm = function() { return editForm; };
     }
 
 }
