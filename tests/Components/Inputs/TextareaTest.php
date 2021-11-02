@@ -13,7 +13,7 @@ use Northwestern\SysDev\DynamicForms\Tests\Components\TestCases\InputComponentTe
 class TextareaTest extends InputComponentTestCase
 {
     protected string $componentClass = Textarea::class;
-    protected array $defaultAdditional = ['editor' => Textarea::EDITOR_CKEDITOR];
+    protected array $defaultAdditional = ['editor' => Textarea::EDITOR_QUILL];
 
     public function testUnsupportedEditorThrowsError(): void
     {

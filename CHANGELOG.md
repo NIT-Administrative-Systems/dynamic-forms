@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## Unreleased
 
+### Changes
+
+Set the default TextArea editor to Quill, and removed support for CKEDitor
+
 ## [v0.4.0 - 2021-07-29]
 ### Added
 - Support for JSONLogic (augmented with lodash) for conditional form fields.

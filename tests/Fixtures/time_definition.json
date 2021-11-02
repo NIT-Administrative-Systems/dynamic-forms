@@ -165,7 +165,7 @@
         },
         {
             "label":"Proposal ",
-            "editor":"ckeditor",
+            "editor":"quill",
             "hideLabel":true,
             "validate":{
                 "required":true

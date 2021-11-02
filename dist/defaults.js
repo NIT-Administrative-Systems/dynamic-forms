@@ -124,7 +124,7 @@ export default {
                 key: 'display',
                 ignore: false,
                 components: [
-                    { key: 'editor', defaultValue: 'ckeditor', disabled: true }, // do not set hidden, it won't change to ckeditor if you do that
+                    { key: 'editor', defaultValue: 'quill', disabled: true }, // do not set hidden, it won't change if you do that
                     { key: 'wysiwyg', ignore: true },
                 ],
             },
