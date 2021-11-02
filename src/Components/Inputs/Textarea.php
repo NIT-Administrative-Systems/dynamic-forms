@@ -15,12 +15,12 @@ class Textarea extends Textfield
     /** * @var string Supported Quill editor */
     const EDITOR_QUILL = 'quill';
 
-    /** @var string  Unsupported CKEditor editor*/
+    /** @var string Unsupported CKEditor editor */
     const EDITOR_CKEDITOR = 'ckeditor';
 
     /** @var string[] Supported editors */
     const SUPPORTED_EDITORS = [
-        self::EDITOR_QUILL
+        self::EDITOR_QUILL,
     ];
 
     public function __construct(
