@@ -5,9 +5,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## Unreleased
 
+## [v0.5.0 - 2021-11-03]
 ### Changes
-
-Set the default TextArea editor to Quill, and removed support for CKEDitor
+- Set the default TextArea editor to Quill, and removed support for CKEDitor.
 
 ## [v0.4.0 - 2021-07-29]
 ### Added
