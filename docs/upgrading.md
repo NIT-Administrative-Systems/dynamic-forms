@@ -1,5 +1,32 @@
 # Upgrading
 
+## Unreleased
+
+This version switches the default editor to Quill (and removes support for CKEditor)
+
+To enable support, edit the `resources/js/formio/default.js` file. The `textarea` function has a section default editor swithc that from ckeditor to quill:
+
+```js
+       textarea: [
+    {
+        key: 'display',
+        ignore: false,
+        components: [
+            { key: 'editor', defaultValue: 'quill', disabled: true }, // do not set hidden, it won't change to ckeditor if you do that
+            { key: 'wysiwyg', ignore: true },
+        ],
+    },
+    {
+        key: 'data',
+        ignore: false,
+        components: [
+            { key: 'inputFormat', defaultValue: 'html', disabled: true },
+        ],
+    }
+],
+```
+
+
 ## v0.4.0
 This version adds support for JSONLogic conditionals.
 
