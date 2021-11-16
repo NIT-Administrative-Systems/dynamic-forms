@@ -13,4 +13,8 @@ Route::prefix('dynamic-forms')->name('dynamic-forms.')->group(function () {
 
     Route::get('storage/url', [Controllers\DynamicFormsStorageController::class, 'showURL'])->name('url-file-download');
     Route::delete('storage/url', [Controllers\DynamicFormsStorageController::class, 'deleteURL']);
+
+    Route::get('form', [Controllers\ResourceController::class, 'index']);
+    Route::get('form/{resource}', [Controllers\ResourceController::class, 'resource']);
+    Route::get('form/{resource}/submission', [Controllers\ResourceController::class, 'resourceSubmissions']);
 });
