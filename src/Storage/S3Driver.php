@@ -53,8 +53,7 @@ class S3Driver implements StorageInterface
         ?string $originalName = null,
         bool $forceDownload = true,
         string $urlValiditiyPeriod = '+5 minutes'
-    ): string
-    {
+    ): string {
         $client = $this->storageClient();
         $disposition = [$forceDownload ? 'attachment' : 'inline'];
 
@@ -67,7 +66,7 @@ class S3Driver implements StorageInterface
                 $client->getCommand('getObject', array_filter([
                     'Bucket' => $this->bucket,
                     'Key' => $key,
-                    'ResponseContentDisposition' => join('; ', $disposition),
+                    'ResponseContentDisposition' => implode('; ', $disposition),
                 ])),
                 $urlValiditiyPeriod
             );
