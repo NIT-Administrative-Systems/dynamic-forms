@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ## [v0.5.2 - 2022-01-20]
 ### Changes
 - Several methods in `Storage\S3Driver` have a new optional parameter for an array of parameters to add to pre-signed URL `getCommand()` calls. These can be utilized to add S3 encryption and use other S3 features.
+- The `urlValiditiyPeriod` parameter introduced in v0.5.1 had a spelling error. If you are using PHP 8 named parameters, this may be breaking, if you've started using it since the last release.
 
 ## [v0.5.1 - 2022-01-19]
 ### Changes
