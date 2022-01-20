@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ## Unreleased
 
 ## [v0.5.1 - 2022-01-19]
+### Changes
+- The `Storage\S3Driver::getDirectDownloadLink` method now has new optional parameters.
+
 ### Fixes
 - Fixes a bug in `Rules\FileExists` when using the S3 storage driver that caused validation to fail if the original filename contains URL-encodable characters.
 

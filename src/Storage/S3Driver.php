@@ -45,17 +45,31 @@ class S3Driver implements StorageInterface
         $this->client = $client;
     }
 
-    public function getDirectDownloadLink(string $key, ?string $originalName = null): string
+    /**
+     * @param string $urlValiditiyPeriod The time at which the URL should expire. This can be a Unix timestamp, a PHP DateTime object, or a string that can be evaluated by strtotime().
+     */
+    public function getDirectDownloadLink(
+        string $key,
+        ?string $originalName = null,
+        bool $forceDownload = true,
+        string $urlValiditiyPeriod = '+5 minutes'
+    ): string
     {
         $client = $this->storageClient();
+        $disposition = [$forceDownload ? 'attachment' : 'inline'];
+
+        if ($originalName) {
+            $disposition[] = sprintf('filename="%s"', str_replace('"', '\"', $originalName));
+        }
+
         $signedRequest =
             $client->createPresignedRequest(
                 $client->getCommand('getObject', array_filter([
                     'Bucket' => $this->bucket,
                     'Key' => $key,
-                    'ResponseContentDisposition' => 'attachment; filename ="'.$originalName.'"',
+                    'ResponseContentDisposition' => join('; ', $disposition),
                 ])),
-                '+50 minutes'
+                $urlValiditiyPeriod
             );
 
         return $signedRequest->getUri();
