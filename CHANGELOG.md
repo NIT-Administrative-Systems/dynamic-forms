@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## Unreleased
 
+## [v0.5.1 - 2022-01-19]
+### Fixes
+- Fixes a bug in `Rules\FileExists` when using the S3 storage driver that caused validation to fail if the original filename contains URL-encodable characters.
+
 ## [v0.5.0 - 2021-11-03]
 ### Changes
 - Set the default TextArea editor to Quill, and removed support for CKEDitor.

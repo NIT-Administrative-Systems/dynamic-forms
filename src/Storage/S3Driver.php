@@ -103,8 +103,13 @@ class S3Driver implements StorageInterface
             return false;
         }
 
-        // Check consistency of fields
-        $expectedUrl = route('dynamic-forms.S3-file-redirect', ['fileKey' => $value['name']]);
+        /**
+         * Check consistency of fields.
+         *
+         * Laravel's route() helper will provide a URL-encoded URL, but Formio will not. Rectify the difference
+         * before trying to validate.
+         */
+        $expectedUrl = urldecode(route('dynamic-forms.S3-file-redirect', ['fileKey' => $value['name']]));
         if ($value['name'] != $value['key'] || $expectedUrl != $value['url']) {
             return false;
         }

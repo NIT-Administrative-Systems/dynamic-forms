@@ -1,7 +1,6 @@
 # Upgrading
 
-## Unreleased
-
+## v0.5.0
 This version switches the default editor to Quill (and removes support for CKEditor)
 
 To enable support, edit the `resources/js/formio/default.js` file. The `textarea` function has a section default editor swithc that from ckeditor to quill:
