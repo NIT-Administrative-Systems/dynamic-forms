@@ -82,8 +82,7 @@ class S3Driver implements StorageInterface
         ?string $originalName = null,
         string $urlValidityPeriod = '+5 minutes',
         array $additionalCommandParameters = []
-    ): JsonResponse
-    {
+    ): JsonResponse {
         return response()->json([
             'url' => $this->getDirectDownloadLink($key, $originalName, true, $urlValidityPeriod, $additionalCommandParameters),
         ], 201);
@@ -96,8 +95,7 @@ class S3Driver implements StorageInterface
         string $key,
         string $urlValidityPeriod = '+5 minutes',
         array $additionalCommandParameters = []
-    ): JsonResponse
-    {
+    ): JsonResponse {
         $client = $this->storageClient();
         $parameters = array_merge(
             [
