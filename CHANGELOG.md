@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## Unreleased
 
+## [v0.5.2 - 2022-01-20]
+### Changes
+- Several methods in `Storage\S3Driver` have a new optional parameter for an array of parameters to add to pre-signed URL `getCommand()` calls. These can be utilized to add S3 encryption and use other S3 features.
+
 ## [v0.5.1 - 2022-01-19]
 ### Changes
 - The `Storage\S3Driver::getDirectDownloadLink` method now has new optional parameters.

@@ -46,13 +46,14 @@ class S3Driver implements StorageInterface
     }
 
     /**
-     * @param string $urlValiditiyPeriod The time at which the URL should expire. This can be a Unix timestamp, a PHP DateTime object, or a string that can be evaluated by strtotime().
+     * @param string $urlValidityPeriod The time at which the URL should expire. This can be a Unix timestamp, a PHP DateTime object, or a string that can be evaluated by strtotime().
      */
     public function getDirectDownloadLink(
         string $key,
         ?string $originalName = null,
         bool $forceDownload = true,
-        string $urlValiditiyPeriod = '+5 minutes'
+        string $urlValidityPeriod = '+5 minutes',
+        array $additionalCommandParameters = []
     ): string {
         $client = $this->storageClient();
         $disposition = [$forceDownload ? 'attachment' : 'inline'];
@@ -61,37 +62,56 @@ class S3Driver implements StorageInterface
             $disposition[] = sprintf('filename="%s"', str_replace('"', '\"', $originalName));
         }
 
+        $parameters = array_merge([
+            'Bucket' => $this->bucket,
+            'Key' => $key,
+            'ResponseContentDisposition' => implode('; ', $disposition),
+        ], $additionalCommandParameters);
+
         $signedRequest =
             $client->createPresignedRequest(
-                $client->getCommand('getObject', array_filter([
-                    'Bucket' => $this->bucket,
-                    'Key' => $key,
-                    'ResponseContentDisposition' => implode('; ', $disposition),
-                ])),
-                $urlValiditiyPeriod
+                $client->getCommand('getObject', array_filter($parameters)),
+                $urlValidityPeriod
             );
 
         return $signedRequest->getUri();
     }
 
-    public function getDownloadLink(string $key, ?string $originalName = null): JsonResponse
+    public function getDownloadLink(
+        string $key,
+        ?string $originalName = null,
+        string $urlValidityPeriod = '+5 minutes',
+        array $additionalCommandParameters = []
+    ): JsonResponse
     {
         return response()->json([
-            'url' => $this->getDirectDownloadLink($key, $originalName),
+            'url' => $this->getDirectDownloadLink($key, $originalName, true, $urlValidityPeriod, $additionalCommandParameters),
         ], 201);
     }
 
-    public function getUploadLink(string $key): JsonResponse
+    /**
+     * @param string $urlValidityPeriod The time at which the URL should expire. This can be a Unix timestamp, a PHP DateTime object, or a string that can be evaluated by strtotime().
+     */
+    public function getUploadLink(
+        string $key,
+        string $urlValidityPeriod = '+5 minutes',
+        array $additionalCommandParameters = []
+    ): JsonResponse
     {
         $client = $this->storageClient();
-        $signedRequest = $client->createPresignedRequest(
-            $client->getCommand('putObject', array_filter([
+        $parameters = array_merge(
+            [
                 'Bucket' => $this->bucket,
                 'Key' => $key,
                 'ACL' => 'private',
                 'ContentType' => 'application/octet-stream',
-            ])),
-            '+5 minutes'
+            ],
+            $additionalCommandParameters
+        );
+
+        $signedRequest = $client->createPresignedRequest(
+            $client->getCommand('putObject', array_filter($parameters)),
+            $urlValidityPeriod
         );
 
         return response()->json([
