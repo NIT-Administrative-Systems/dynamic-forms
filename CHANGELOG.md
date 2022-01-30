@@ -6,7 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ## Unreleased
 ## [v0.5.3 - 2022-01-29]
 ### Fixes
-- Non-numeric keys for `Select`, `Radio` components no longer cause the validation to fail.
+- Numeric values for `Select` & `Radio` components no longer cause the validation to fail.
 
 ## [v0.5.2 - 2022-01-20]
 ### Changes
