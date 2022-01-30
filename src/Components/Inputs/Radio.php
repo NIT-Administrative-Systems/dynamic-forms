@@ -58,7 +58,6 @@ class Radio extends BaseComponent
         return $this->radioChoices;
     }
 
-
     public function processValidations(string $fieldKey, mixed $submissionValue, Factory $validator): MessageBag
     {
         $rules = new RuleBag($fieldKey, ['string']);
