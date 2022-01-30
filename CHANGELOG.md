@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## Unreleased
+## [v0.5.3 - 2022-01-29]
+### Fixes
+- Numeric values for `Select` & `Radio` components no longer cause the validation to fail.
 
 ## [v0.5.2 - 2022-01-20]
 ### Changes

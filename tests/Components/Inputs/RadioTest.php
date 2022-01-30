@@ -16,6 +16,7 @@ class RadioTest extends InputComponentTestCase
         'values' => [
             ['label' => 'Foo', 'value' => 'foo', 'shortcut' => ''],
             ['label' => 'Bar', 'value' => 'bar', 'shortcut' => ''],
+            ['label' => 'Number', 'value' => '1', 'shortcut' => ''],
         ],
     ];
 
@@ -26,6 +27,7 @@ class RadioTest extends InputComponentTestCase
             'fails with invalid data' => [[], 'invalid option', false],
             'required passes' => [['required' => true], 'foo', true],
             'required fails' => [['required' => true], '', false],
+            'passes with integer' => [['required' => true], 1, true],
         ];
     }
 

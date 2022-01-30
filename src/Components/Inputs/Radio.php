@@ -33,6 +33,24 @@ class Radio extends BaseComponent
     }
 
     /**
+     * {@inheritDoc}
+     */
+    public function submissionValue(): mixed
+    {
+        $value = parent::submissionValue();
+
+        if ($this->hasMultipleValues()) {
+            foreach ($value as $i => $singleValue) {
+                $value[$i] = (string) $singleValue;
+            }
+
+            return $value;
+        }
+
+        return is_scalar($value) ? (string) $value : $value;
+    }
+
+    /**
      * Get valid radio options.
      */
     public function radioChoices(): array

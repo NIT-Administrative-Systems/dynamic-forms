@@ -18,6 +18,7 @@ class SelectTest extends InputComponentTestCase
             'values' => [
                 ['label' => 'Foo', 'value' => 'foo'],
                 ['label' => 'Bar', 'value' => 'bar'],
+                ['label' => 'Number', 'value' => '1', 'shortcut' => ''],
             ],
         ],
     ];
@@ -29,6 +30,7 @@ class SelectTest extends InputComponentTestCase
             'required passes' => [['required' => true], 'foo', true],
             'required fails' => [['required' => true], '', false],
             'invalid values always rejected' => [[], 'not a valid value', false],
+            'passes with integer' => [['required' => true], 1, true],
         ];
     }
 
@@ -36,6 +38,7 @@ class SelectTest extends InputComponentTestCase
     {
         return [
             'no transformations' => [null, 'foo', 'foo'],
+            'integer' => [null, 1, '1'],
             'upper' => [CaseEnum::UPPER, 'foo', 'foo'],
             'lower' => [CaseEnum::LOWER, 'foo', 'foo'],
         ];
@@ -54,6 +57,6 @@ class SelectTest extends InputComponentTestCase
      */
     public function testOptionValues(): void
     {
-        $this->assertEquals(['foo', 'bar'], $this->getComponent()->optionValues());
+        $this->assertEquals(['foo', 'bar', 1], $this->getComponent()->optionValues());
     }
 }
