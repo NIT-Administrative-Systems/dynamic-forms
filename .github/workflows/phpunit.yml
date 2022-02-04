@@ -22,15 +22,15 @@ jobs:
 
 
       - name: Setup PHP
-        uses: shivammathur/setup-php@2.12.0
+        uses: shivammathur/setup-php@2.16.0
         with:
           php-version: ${{ matrix.php-versions }}
           coverage: xdebug
 
       - name: Run php-cs-fixer
-        uses: OskarStark/php-cs-fixer-ga@3.0.0
+        uses: OskarStark/php-cs-fixer-ga@3.5.0
 
-      - uses: stefanzweifel/git-auto-commit-action@v4.11.0
+      - uses: stefanzweifel/git-auto-commit-action@v4.13.1
         with:
           commit_message: Apply php-cs-fixer changes
 
