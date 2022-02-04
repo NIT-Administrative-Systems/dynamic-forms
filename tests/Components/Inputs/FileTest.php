@@ -115,8 +115,6 @@ class FileTest extends InputComponentTestCase
             'valid file passes' => [[], $filePASS, true],
             'required passes' => [['required' => true], $filePASS, true],
             'required fails' => [['required' => true], [], false],
-            'FileExists fails from name consistency check' => [[], $fileNameCheckFail, false],
-            'FileExists fails from key consistency check' => [[], $fileKeyCheckFail, false],
             'FileExists fails from url consistency check' => [[], $fileURLCheckFail, false],
             'FileExists fails from file not found ' => [[], $fileNotFoundCheckFail, false],
             'FileExists passes' => [[], $filePASS, true],
