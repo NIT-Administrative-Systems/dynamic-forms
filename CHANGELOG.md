@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## Unreleased
+## [v0.5.4 - 2021-02-04]
+### Fixes
+- File components that use S3 and have a directory set will pass server-side validations now.
+
 ## [v0.5.3 - 2022-01-29]
 ### Fixes
 - Numeric values for `Select` & `Radio` components no longer cause the validation to fail.
