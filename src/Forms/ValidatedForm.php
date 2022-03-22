@@ -84,6 +84,10 @@ class ValidatedForm implements Validator
     /**
      * Return a flat list of components that should be validated.
      *
+     * Calculations will be run on the unvalidated data before processing
+     * the conditionals (just as they would be in the UI), since those
+     * values may be needed for the conditional logic.
+     *
      * Conditional logic that excludes fields will be evaluated here
      * and may remove components from consideration.
      *
@@ -98,6 +102,14 @@ class ValidatedForm implements Validator
         $data->each(fn ($value, $key) => $components[$key]->setSubmissionValue($value));
 
         $componentsWithConditionals = $components->filter->hasConditional();
+        $componentsWithCalculations = $components->filter->isCalculated();
+
+        /** @var ComponentInterface $component */
+        foreach ($componentsWithCalculations as $component) {
+            $calculation = $component->calculation();
+
+            $component->setSubmissionValue($calculation($data->all()));
+        }
 
         /** @var ComponentInterface $component */
         foreach ($componentsWithConditionals as $component) {

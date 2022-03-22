@@ -33,9 +33,10 @@ class Textarea extends Textfield
         ?array $conditional,
         ?string $customConditional,
         string $case,
+        null|array|string $calculateValue,
         array $additional
     ) {
-        parent::__construct($key, $label, $errorLabel, $components, $validations, $hasMultipleValues, $conditional, $customConditional, $case, $additional);
+        parent::__construct($key, $label, $errorLabel, $components, $validations, $hasMultipleValues, $conditional, $customConditional, $case, $calculateValue, $additional);
 
         $editor = Arr::get($this->additional, 'editor');
         if (! in_array($editor, self::SUPPORTED_EDITORS)) {

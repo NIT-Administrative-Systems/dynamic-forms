@@ -36,6 +36,7 @@ class ValidatedFormTest extends TestCase
                 null,
                 null,
                 'mixed',
+                null,
                 [],
             ),
         ];
@@ -69,6 +70,7 @@ class ValidatedFormTest extends TestCase
                 null,
                 null,
                 'mixed',
+                null,
                 [],
             ),
         ];
@@ -163,10 +165,16 @@ class ValidatedFormTest extends TestCase
                 $values2('conditional_submission.json'),
             ],
             'transformations' => [
-                ['test' => new Textfield('test', 'Test', null, [], [], false, null, null, CaseEnum::UPPER, [])],
+                ['test' => new Textfield('test', 'Test', null, [], [], false, null, null, CaseEnum::UPPER, null, [])],
                 ['test' => 'lowercase'],
                 true,
                 ['test' => 'LOWERCASE'],
+            ],
+            'calculations' => [
+                $components('calculation_definition.json'),
+                ['totalCost' => 10, 'otherFunding' => 5, 'netAmount' => null], // netAmount would be set, but that doesn't make for a very good test.
+                true,
+                ['totalCost' => 10, 'otherFunding' => 5, 'netAmount' => 5],
             ],
         ];
     }

@@ -6,9 +6,12 @@ use Illuminate\Contracts\Support\MessageBag;
 use Illuminate\Support\Arr;
 use Illuminate\Support\MessageBag as MessageBagImpl;
 use Illuminate\Validation\Factory;
+use Northwestern\SysDev\DynamicForms\Calculation\CalculationInterface;
+use Northwestern\SysDev\DynamicForms\Calculation\JSONCalculation;
 use Northwestern\SysDev\DynamicForms\Conditional\ConditionalInterface;
 use Northwestern\SysDev\DynamicForms\Conditional\JSONConditional;
 use Northwestern\SysDev\DynamicForms\Conditional\SimpleConditional;
+use Northwestern\SysDev\DynamicForms\Errors\CalculationNotImplemented;
 use Northwestern\SysDev\DynamicForms\Errors\ConditionalNotImplemented;
 use Northwestern\SysDev\DynamicForms\Errors\InvalidDefinitionError;
 use Northwestern\SysDev\DynamicForms\Errors\ValidationNotImplementedError;
@@ -35,6 +38,7 @@ abstract class BaseComponent implements ComponentInterface
         protected ?array $conditional,
         protected ?string $customConditional,
         protected string $case,
+        protected null|array|string $calculateValue,
         protected array $additional,
     ) {
         //
@@ -106,6 +110,24 @@ abstract class BaseComponent implements ComponentInterface
             Arr::get($this->conditional, 'when'),
             Arr::get($this->conditional, 'eq'),
         );
+    }
+
+    public function isCalculated(): bool
+    {
+        return $this->calculateValue !== null;
+    }
+
+    public function calculation(): ?CalculationInterface
+    {
+        if (! $this->calculateValue) {
+            return null;
+        }
+
+        if (is_string($this->calculateValue)) {
+            throw new CalculationNotImplemented($this->key(), CalculationNotImplemented::CUSTOM_JS);
+        }
+
+        return new JSONCalculation($this->calculateValue);
     }
 
     public function submissionValue(): mixed

@@ -1,0 +1,59 @@
+{
+    "components": [
+        {
+            "label": "Total Cost",
+            "mask": false,
+            "tableView": false,
+            "delimiter": false,
+            "requireDecimal": false,
+            "inputFormat": "plain",
+            "truncateMultipleSpaces": false,
+            "key": "totalCost",
+            "type": "number",
+            "input": true
+        },
+        {
+            "label": "Other Funding",
+            "mask": false,
+            "tableView": false,
+            "delimiter": false,
+            "requireDecimal": false,
+            "inputFormat": "plain",
+            "truncateMultipleSpaces": false,
+            "key": "otherFunding",
+            "type": "number",
+            "input": true
+        },
+        {
+            "label": "Net Amount",
+            "mask": false,
+            "disabled": true,
+            "tableView": false,
+            "delimiter": false,
+            "requireDecimal": false,
+            "inputFormat": "plain",
+            "truncateMultipleSpaces": false,
+            "calculateValue": {
+                "-": [
+                    {
+                        "var": "data.totalCost"
+                    },
+                    {
+                        "var": "data.otherFunding"
+                    }
+                ]
+            },
+            "key": "netAmount",
+            "type": "number",
+            "input": true
+        },
+        {
+            "type": "button",
+            "label": "Submit",
+            "key": "submit",
+            "disableOnInvalid": true,
+            "input": true,
+            "tableView": false
+        }
+    ]
+}

@@ -112,7 +112,8 @@ class Form
                 Arr::get($definition, 'conditional'),
                 Arr::get($definition, 'customConditional'),
                 Arr::get($definition, 'case', 'mixed'),
-                Arr::except($definition, ['key', 'label', 'components', 'validate', 'type', 'input', 'tableView', 'multiple', 'conditional', 'customConditional', 'case', 'errorLabel']),
+                Arr::get($definition, 'calculateValue'),
+                Arr::except($definition, ['key', 'label', 'components', 'validate', 'type', 'input', 'tableView', 'multiple', 'conditional', 'customConditional', 'calculateValue', 'case', 'errorLabel']),
             );
 
             if (is_subclass_of($component, UploadInterface::class)) {

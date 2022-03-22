@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## Unreleased
+
+## [v0.7.0 - 2022-03-22]
+### Added
+- Support for JSONLogic has been extended to calculated values.
+
+## [v0.6.0 - 2021-02-22]
+### Changes
+- Enable support for Laravel 9.
+
 ## [v0.5.4 - 2021-02-04]
 ### Fixes
 - File components that use S3 and have a directory set will pass server-side validations now.
