@@ -170,6 +170,12 @@ class ValidatedFormTest extends TestCase
                 true,
                 ['test' => 'LOWERCASE'],
             ],
+            'calculations' => [
+                $components('calculation_definition.json'),
+                ['totalCost' => 10, 'otherFunding' => 5, 'netAmount' => null], // netAmount would be set, but that doesn't make for a very good test.
+                true,
+                ['totalCost' => 10, 'otherFunding' => 5, 'netAmount' => 5],
+            ],
         ];
     }
 
