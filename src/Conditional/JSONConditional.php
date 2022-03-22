@@ -7,7 +7,8 @@ use Northwestern\SysDev\DynamicForms\JSONLogic\JsonLogicHelpers;
 
 class JSONConditional implements ConditionalInterface
 {
-    public function __construct(array $jsonLogic) {
+    public function __construct(array $jsonLogic)
+    {
         $this->jsonLogic = JsonLogicHelpers::convertDataVars($jsonLogic);
     }
 

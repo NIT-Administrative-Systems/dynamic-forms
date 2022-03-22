@@ -9,7 +9,7 @@ abstract class JsonLogicHelpers
      *
      * The JSONLogic library (and the way we feed it the form data) require us to drop the `data.` prefix.
      */
-    static public function convertDataVars(array $jsonLogic): array
+    public static function convertDataVars(array $jsonLogic): array
     {
         // May have to do similar for rows if we add support for datagrids.
         array_walk_recursive(
