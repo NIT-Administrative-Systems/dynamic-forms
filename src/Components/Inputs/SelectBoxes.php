@@ -24,9 +24,10 @@ class SelectBoxes extends BaseComponent
         ?array $conditional,
         ?string $customConditional,
         string $case,
+        null|array|string $calculateValue,
         array $additional
     ) {
-        parent::__construct($key, $label, $errorLabel, $components, $validations, $hasMultipleValues, $conditional, $customConditional, $case, $additional);
+        parent::__construct($key, $label, $errorLabel, $components, $validations, $hasMultipleValues, $conditional, $customConditional, $case, $calculateValue, $additional);
 
         $this->options = collect($this->additional['values'])->map->value->all();
     }

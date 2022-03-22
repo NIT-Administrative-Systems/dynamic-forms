@@ -36,6 +36,7 @@ class ValidatedFormTest extends TestCase
                 null,
                 null,
                 'mixed',
+                null,
                 [],
             ),
         ];
@@ -69,6 +70,7 @@ class ValidatedFormTest extends TestCase
                 null,
                 null,
                 'mixed',
+                null,
                 [],
             ),
         ];
@@ -163,7 +165,7 @@ class ValidatedFormTest extends TestCase
                 $values2('conditional_submission.json'),
             ],
             'transformations' => [
-                ['test' => new Textfield('test', 'Test', null, [], [], false, null, null, CaseEnum::UPPER, [])],
+                ['test' => new Textfield('test', 'Test', null, [], [], false, null, null, CaseEnum::UPPER, null, [])],
                 ['test' => 'lowercase'],
                 true,
                 ['test' => 'LOWERCASE'],
