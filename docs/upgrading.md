@@ -1,5 +1,15 @@
 # Upgrading
 
+## v0.7.0
+This version adds support for calculated values using JSONLogic. This is ideal for things like summing up numbers into a "total" field.
+
+If you implement the `ComponentInterface`, there is a new parameter in the constructor. Similarly, if you are instantiating any components on your own, the paramater will need to be added.
+
+In the `defaults.js` file, there is a change required to show the calculated value UI in the builder. Inside the `global` function, the `calculateValuePanel`'s `ignore` value should be changed to false. 
+
+## v0.6.0
+This version adjusted the `composer.json` constraint to make it compatible with Laravel 9. No changes are necessary. 
+
 ## v0.5.0
 This version switches the default editor to Quill (and removes support for CKEditor)
 
