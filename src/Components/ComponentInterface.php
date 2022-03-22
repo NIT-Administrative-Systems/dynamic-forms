@@ -3,6 +3,7 @@
 namespace Northwestern\SysDev\DynamicForms\Components;
 
 use Illuminate\Contracts\Support\MessageBag;
+use Northwestern\SysDev\DynamicForms\Calculation\CalculationInterface;
 use Northwestern\SysDev\DynamicForms\Conditional\ConditionalInterface;
 
 interface ComponentInterface
