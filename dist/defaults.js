@@ -96,7 +96,7 @@ export default {
                         {key: 'encrypted', ignore: true},
                         {key: 'redrawOn', ignore: true},
                         {key: 'customDefaultValuePanel', ignore: true},
-                        {key: 'calculateValuePanel', ignore: true},
+                        {key: 'calculateValuePanel', ignore: false},
                         {key: 'calculateServer', ignore: true},
                         {key: 'allowCalculateOverride', ignore: true},
                         {key: 'inputFormat', ignore: true},
