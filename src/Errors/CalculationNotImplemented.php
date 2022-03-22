@@ -11,7 +11,7 @@ class CalculationNotImplemented extends \Exception
     {
         parent::__construct(sprintf(
             'calculateValue type %s not supported on field %s',
-            $this->conditionalType,
+            $this->calculationType,
             $this->fieldKey
         ));
     }

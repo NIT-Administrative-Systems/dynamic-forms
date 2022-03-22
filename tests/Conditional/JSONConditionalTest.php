@@ -21,6 +21,7 @@ class JSONConditionalTest extends TestCase
      * @covers \Northwestern\SysDev\DynamicForms\JSONLogic\LodashFunctions\Math
      * @covers \Northwestern\SysDev\DynamicForms\JSONLogic\LodashFunctions\Objects
      * @covers \Northwestern\SysDev\DynamicForms\JSONLogic\LodashFunctions\Util
+     * @covers \Northwestern\SysDev\DynamicForms\JSONLogicInitHelper
      * @dataProvider invokeDataProvider
      */
     public function testInvoke(array $jsonLogic, array $submissionValues, bool $expected): void
