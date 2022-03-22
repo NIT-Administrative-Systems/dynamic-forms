@@ -16,19 +16,19 @@ jobs:
         php-versions: ['8.0', '8.1']
 
     steps:
-      - uses: actions/checkout@v2.4.0
+      - uses: actions/checkout@v3
         with:
           ref: ${{ github.head_ref }}
 
 
       - name: Setup PHP
-        uses: shivammathur/setup-php@2.17.0
+        uses: shivammathur/setup-php@2.18.0
         with:
           php-version: ${{ matrix.php-versions }}
           coverage: xdebug
 
       - name: Run php-cs-fixer
-        uses: OskarStark/php-cs-fixer-ga@3.6.0
+        uses: OskarStark/php-cs-fixer-ga@3.7.0
 
       - uses: stefanzweifel/git-auto-commit-action@v4.13.1
         with:
@@ -55,7 +55,7 @@ jobs:
 
       - name: Run Tests
         run: php vendor/bin/phpunit --log-junit=.build/junit.xml --coverage-clover .build/clover.xml --teamcity
-      - uses: EnricoMi/publish-unit-test-result-action@v1.29
+      - uses: EnricoMi/publish-unit-test-result-action@v1.31
         if: github.actor != 'dependabot[bot]' && always()
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
