@@ -15,13 +15,13 @@ class JsonLogicHelpersTest extends TestCase
         $rule = ['+' => [
             ['var' => 'data.dog'],
             ['var' => 'data.spoon'],
-            [5]
+            [5],
         ]];
 
         $expected = ['+' => [
             ['var' => 'dog'],
             ['var' => 'spoon'],
-            [5]
+            [5],
         ]];
 
         $this->assertEquals($expected, JsonLogicHelpers::convertDataVars($rule));
