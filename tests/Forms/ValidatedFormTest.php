@@ -176,6 +176,12 @@ class ValidatedFormTest extends TestCase
                 true,
                 ['totalCost' => 10, 'otherFunding' => 5, 'netAmount' => 5],
             ],
+            'calculations that depend on correct datatypes' => [
+                $components('calculation_definition.json'),
+                ['totalCost' => '', 'otherFunding' => 10, 'netAmount' => null],
+                false,
+                ['totalCost' => null, 'otherFunding' => 10, 'netAmount' => -10],
+            ],
         ];
     }
 

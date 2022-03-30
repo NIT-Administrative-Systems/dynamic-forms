@@ -95,6 +95,7 @@ class ValidatedForm implements Validator
      */
     protected function validatableComponents(array $flatComponents, array $values): array
     {
+        /** @var Collection $components */
         $components = collect($flatComponents)->filter->canValidate();
 
         // Populate the components with their data so we can evaluate conditionals
@@ -104,18 +105,21 @@ class ValidatedForm implements Validator
         $componentsWithConditionals = $components->filter->hasConditional();
         $componentsWithCalculations = $components->filter->isCalculated();
 
+        // Processed via each component. Will ensure values are cast properly so calculations/logic can work.
+        $processedData = $components->map->submissionValue();
+
         /** @var ComponentInterface $component */
         foreach ($componentsWithCalculations as $component) {
             $calculation = $component->calculation();
 
-            $component->setSubmissionValue($calculation($data->all()));
+            $component->setSubmissionValue($calculation($processedData->all()));
         }
 
         /** @var ComponentInterface $component */
         foreach ($componentsWithConditionals as $component) {
             $condition = $component->conditional();
 
-            if (! $condition($data->all())) {
+            if (! $condition($processedData->all())) {
                 $components->forget($component->key());
             }
         }
