@@ -54,7 +54,7 @@ class NumberTest extends InputComponentTestCase
         return [
             'integer is untouched' => [100, false, 100, []],
             'two digit float, untouched' => [100.01, false, 100.01, []],
-            'string casts to 0' => ["", false, null, []],
+            'string casts to 0' => ['', false, null, []],
             'multiple works' => [[100, 100.01, 100.991], true, [100, 100.01, 100.991], []],
             'int forced decimal' => [1, false, 1, ['requireDecimal' => true, 'decimalLimit' => 2]],
             'forced decimal, truncates places' => [1.2345, false, 1.23, ['requireDecimal' => true, 'decimalLimit' => 2]],
