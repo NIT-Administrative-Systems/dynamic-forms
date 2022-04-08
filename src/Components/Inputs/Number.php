@@ -12,7 +12,7 @@ class Number extends BaseComponent
 {
     const TYPE = 'number';
 
-    protected function processValidations(string $fieldKey, mixed $submissionValue, Factory $validator): MessageBag
+    protected function processValidations(string $fieldKey, string $fieldLabel, mixed $submissionValue, Factory $validator): MessageBag
     {
         $fieldKey = $this->label() ?? $this->key();
 
@@ -24,6 +24,8 @@ class Number extends BaseComponent
         $validator = app()->make('validator')->make(
             [$fieldKey => $submissionValue],
             $rules->rules(),
+            [],
+            [$fieldKey => $fieldLabel]
         );
 
         return $validator->messages();

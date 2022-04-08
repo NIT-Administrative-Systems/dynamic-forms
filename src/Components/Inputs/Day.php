@@ -12,7 +12,7 @@ class Day extends BaseComponent
 {
     const TYPE = 'day';
 
-    public function processValidations(string $fieldKey, mixed $submissionValue, Factory $validator): MessageBag
+    public function processValidations(string $fieldKey, string $fieldLabel, mixed $submissionValue, Factory $validator): MessageBag
     {
         $dateParts = $this->getDateParts($submissionValue);
 
@@ -67,6 +67,8 @@ class Day extends BaseComponent
         $dateBag = $validator->make(
             [$fieldKey => $submissionValue],
             $dateRules->rules(),
+            [],
+            [$fieldKey => $fieldLabel]
         )->messages();
 
         return $partsBag->merge($dateBag);

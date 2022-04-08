@@ -11,7 +11,7 @@ class Currency extends BaseComponent
 {
     const TYPE = 'currency';
 
-    public function processValidations(string $fieldKey, mixed $submissionValue, Factory $validator): MessageBag
+    public function processValidations(string $fieldKey, string $fieldLabel, mixed $submissionValue, Factory $validator): MessageBag
     {
         $rules = new RuleBag($fieldKey, ['numeric']);
 
@@ -20,6 +20,8 @@ class Currency extends BaseComponent
         return $validator->make(
             [$fieldKey => $submissionValue],
             $rules->rules(),
+            [],
+            [$fieldKey => $fieldLabel]
         )->messages();
     }
 

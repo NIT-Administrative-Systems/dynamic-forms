@@ -26,7 +26,7 @@ class Signature extends BaseComponent
      * @param Factory $validator
      * @return MessageBag
      */
-    protected function processValidations(string $fieldKey, mixed $submissionValue, Factory $validator): MessageBag
+    protected function processValidations(string $fieldKey, string $fieldLabel, mixed $submissionValue, Factory $validator): MessageBag
     {
         $rules = new RuleBag($fieldKey, ['string']);
 
@@ -43,6 +43,8 @@ class Signature extends BaseComponent
         return $validator->make(
             [$fieldKey => $submissionValue],
             $rules->rules(),
+            [],
+            [$fieldKey => $fieldLabel]
         )->messages();
     }
 

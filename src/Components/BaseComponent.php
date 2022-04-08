@@ -148,7 +148,8 @@ abstract class BaseComponent implements ComponentInterface
 
     public function validate(): MessageBag
     {
-        $fieldKey = $this->errorLabel() ?? $this->label() ?? $this->key();
+        $fieldLabel = $this->errorLabel() ?? $this->label() ?? $this->key();
+
         $validator = app()->make('validator');
         $bag = new MessageBagImpl;
 
@@ -159,18 +160,19 @@ abstract class BaseComponent implements ComponentInterface
         if ($this->hasMultipleValuesForValidation()) {
             foreach ($this->submissionValue() as $index => $submissionValue) {
                 $bag = $this->mergeErrorBags($bag, $this->processValidations(
-                    $this->errorLabel ?? sprintf('%s %s', $fieldKey, $index),
+                    $this->key(),
+                    $this->errorLabel() ?? sprintf('%s (%s)', $fieldLabel, $index + 1),
                     $submissionValue,
                     $validator
                 ));
             }
 
-            return $bag->merge($this->postProcessValidationsForMultiple($fieldKey));
+            return $bag->merge($this->postProcessValidationsForMultiple($this->key()));
         }
 
         return $this->mergeErrorBags(
             new MessageBagImpl,
-            $this->processValidations($fieldKey, $this->submissionValue(), $validator)
+            $this->processValidations($this->key(), $fieldLabel, $this->submissionValue(), $validator)
         );
     }
 
@@ -224,7 +226,7 @@ abstract class BaseComponent implements ComponentInterface
      * @param Factory $validator Illuminate validation factory, usage of which is optional (but common!)
      * @return MessageBag
      */
-    protected function processValidations(string $fieldKey, mixed $submissionValue, Factory $validator): MessageBag
+    protected function processValidations(string $fieldKey, string $fieldLabel, mixed $submissionValue, Factory $validator): MessageBag
     {
         throw new ValidationNotImplementedError($this->type());
     }

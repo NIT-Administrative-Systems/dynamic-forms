@@ -11,7 +11,7 @@ class Checkbox extends BaseComponent
 {
     const TYPE = 'checkbox';
 
-    protected function processValidations(string $fieldKey, mixed $submissionValue, Factory $validator): MessageBag
+    protected function processValidations(string $fieldKey, string $fieldLabel, mixed $submissionValue, Factory $validator): MessageBag
     {
         $rules = new RuleBag($fieldKey, ['boolean']);
         $rules->addIf('accepted', $this->validation('required') === true);
@@ -19,6 +19,8 @@ class Checkbox extends BaseComponent
         return $validator->make(
             [$fieldKey => $submissionValue],
             $rules->rules(),
+            [],
+            [$fieldKey => $fieldLabel]
         )->messages();
     }
 }

@@ -63,7 +63,7 @@ class SelectBoxes extends BaseComponent
      * @param Factory $validator
      * @return MessageBag
      */
-    protected function processValidations(string $fieldKey, mixed $submissionValue, Factory $validator): MessageBag
+    protected function processValidations(string $fieldKey, string $fieldLabel, mixed $submissionValue, Factory $validator): MessageBag
     {
         $bag = new MessageBagImpl;
 
@@ -78,12 +78,12 @@ class SelectBoxes extends BaseComponent
 
         if ($minSelected !== null && $checkedNum < $minSelected) {
             $message = sprintf('You must select at least %s items.', $minSelected);
-            $bag->add($fieldKey, Arr::get($this->additional, 'minSelectedCountMessage', $message));
+            $bag->add($fieldLabel, Arr::get($this->additional, 'minSelectedCountMessage', $message));
         }
 
         if ($maxSelected !== null && $checkedNum > $maxSelected) {
             $message = sprintf('You cannot select more than %s items.', $minSelected);
-            $bag->add($fieldKey, Arr::get($this->additional, 'maxSelectedCountMessage', $message));
+            $bag->add($fieldLabel, Arr::get($this->additional, 'maxSelectedCountMessage', $message));
         }
 
         return $bag;
