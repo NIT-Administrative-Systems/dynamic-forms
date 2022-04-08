@@ -2,7 +2,6 @@
 
 namespace Northwestern\SysDev\DynamicForms\Tests\Forms;
 
-use Carbon\Carbon;
 use Carbon\CarbonInterface;
 use Northwestern\SysDev\DynamicForms\Components\CaseEnum;
 use Northwestern\SysDev\DynamicForms\Components\Inputs\Textfield;
@@ -181,6 +180,12 @@ class ValidatedFormTest extends TestCase
                 ['totalCost' => '', 'otherFunding' => 10, 'netAmount' => null],
                 false,
                 ['totalCost' => null, 'otherFunding' => 10, 'netAmount' => -10],
+            ],
+            'validation-key-significant characters in the label do not break validation' => [
+                $components('field_name_ends_with_dot.json'),
+                ['pleaseExplainInDetailWhyApplicationForAUrgWasNotPossible' => 'bla'],
+                true,
+                ['pleaseExplainInDetailWhyApplicationForAUrgWasNotPossible' => 'bla'],
             ],
         ];
     }

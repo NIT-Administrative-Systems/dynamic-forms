@@ -1,0 +1,17 @@
+{
+    "components": [
+        {
+            "label": "Please explain in detail why application for a URG was not possible.",
+            "editor": "quill",
+            "isUploadEnabled": false,
+            "clearOnHide": false,
+            "validate": {
+                "required": true
+            },
+            "key": "pleaseExplainInDetailWhyApplicationForAUrgWasNotPossible",
+            "type": "textarea",
+            "input": true,
+            "tableView": true
+        }
+    ]
+}
