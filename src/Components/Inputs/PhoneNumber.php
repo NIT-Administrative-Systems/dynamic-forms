@@ -11,7 +11,7 @@ class PhoneNumber extends BaseComponent
 {
     const TYPE = 'phoneNumber';
 
-    protected function processValidations(string $fieldKey, mixed $submissionValue, Factory $validator): MessageBag
+    protected function processValidations(string $fieldKey, string $fieldLabel, mixed $submissionValue, Factory $validator): MessageBag
     {
         $rules = new RuleBag($fieldKey, ['string']);
 
@@ -21,6 +21,8 @@ class PhoneNumber extends BaseComponent
         return $validator->make(
             [$fieldKey => $submissionValue],
             $rules->rules(),
+            [],
+            [$fieldKey => $fieldLabel]
         )->messages();
     }
 }

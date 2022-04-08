@@ -62,7 +62,7 @@ class Survey extends BaseComponent
             : $cleaner($this->submissionValue);
     }
 
-    public function processValidations(string $fieldKey, mixed $submissionValue, Factory $validator): MessageBag
+    public function processValidations(string $fieldKey, string $fieldLabel, mixed $submissionValue, Factory $validator): MessageBag
     {
         // This isn't a scalar, so our typical RuleBag pattern does not apply here.
         $rules = [];
@@ -81,7 +81,9 @@ class Survey extends BaseComponent
 
         return $validator->make(
             [$fieldKey => $submissionValue],
-            $rules
+            $rules,
+            [],
+            [$fieldKey => $fieldLabel]
         )->messages();
     }
 }

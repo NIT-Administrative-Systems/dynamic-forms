@@ -49,7 +49,7 @@ class Address extends BaseComponent
         }
     }
 
-    protected function processValidations(string $fieldKey, mixed $submissionValue, Factory $validator): MessageBag
+    protected function processValidations(string $fieldKey, string $fieldLabel, mixed $submissionValue, Factory $validator): MessageBag
     {
         // This isn't a scalar, so our typical RuleBag pattern does not work here.
 
@@ -62,6 +62,8 @@ class Address extends BaseComponent
         return $validator->make(
             [$fieldKey => $submissionValue],
             $rules,
+            [],
+            [$fieldKey => $fieldLabel]
         )->messages();
     }
 }

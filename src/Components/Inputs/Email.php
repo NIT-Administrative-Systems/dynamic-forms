@@ -10,13 +10,13 @@ class Email extends Textfield
 {
     const TYPE = 'email';
 
-    protected function processValidations(string $fieldKey, mixed $submissionValue, Factory $validator): MessageBag
+    protected function processValidations(string $fieldKey, string $fieldLabel, mixed $submissionValue, Factory $validator): MessageBag
     {
         $rules = new RuleBag($fieldKey, ['string']);
 
         // This has all the same stuff as a textfield (including, weirdly, word length),
         // so process it through there first.
-        $bag = parent::processValidations($fieldKey, $submissionValue, $validator);
+        $bag = parent::processValidations($fieldKey, $fieldLabel, $submissionValue, $validator);
 
         // And then email just adds a requirement that the string be a valid-looking email address,
         // assuming the data is present. The nullable rule should make email pass if it's
@@ -27,6 +27,8 @@ class Email extends Textfield
         $valid = $validator->make(
             [$fieldKey => $submissionValue],
             $rules->rules(),
+            [],
+            [$fieldKey => $fieldLabel]
         );
 
         return $bag->merge($valid->messages());

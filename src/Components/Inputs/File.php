@@ -15,7 +15,7 @@ class File extends BaseComponent implements UploadInterface
     const TYPE = 'file';
     protected StorageInterface $storage;
 
-    protected function processValidations(string $fieldKey, mixed $submissionValue, Factory $validator): MessageBag
+    protected function processValidations(string $fieldKey, string $fieldLabel, mixed $submissionValue, Factory $validator): MessageBag
     {
         $rules = new RuleBag($fieldKey, []);
         if ($this->validation('required')) {
@@ -28,6 +28,8 @@ class File extends BaseComponent implements UploadInterface
         return $validator->make(
             [$fieldKey => $submissionValue],
             $rules->rules(),
+            [],
+            [$fieldKey => $fieldLabel]
         )->messages();
     }
 

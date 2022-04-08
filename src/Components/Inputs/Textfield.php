@@ -12,7 +12,7 @@ class Textfield extends BaseComponent
 {
     const TYPE = 'textfield';
 
-    protected function processValidations(string $fieldKey, mixed $submissionValue, Factory $validator): MessageBag
+    protected function processValidations(string $fieldKey, string $fieldLabel, mixed $submissionValue, Factory $validator): MessageBag
     {
         $rules = new RuleBag($fieldKey, ['string']);
         $rules->addIf('required', $this->validation('required') === true);
@@ -34,6 +34,8 @@ class Textfield extends BaseComponent
         return $validator->make(
             [$fieldKey => $submissionValue],
             $rules->rules(),
+            [],
+            [$fieldKey => $fieldLabel],
         )->messages();
     }
 }
