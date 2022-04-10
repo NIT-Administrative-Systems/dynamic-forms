@@ -3,6 +3,7 @@
 namespace Northwestern\SysDev\DynamicForms\Components\Inputs;
 
 use Illuminate\Contracts\Support\MessageBag;
+use Illuminate\Support\Arr;
 use Illuminate\Validation\Factory;
 use Northwestern\SysDev\DynamicForms\Components\BaseComponent;
 use Northwestern\SysDev\DynamicForms\Components\UploadInterface;
@@ -51,11 +52,13 @@ class File extends BaseComponent implements UploadInterface
         return true;
     }
 
-    /**
-     * @return string
-     */
     public function getStorageType(): string
     {
-        return $this->additional['storage'];
+        return Arr::get($this->additional, 'storage', '');
+    }
+
+    public function getStorageDirectory(): string
+    {
+        return Arr::get($this->additional, 'dir', '');
     }
 }

@@ -24,6 +24,22 @@ class FileTest extends InputComponentTestCase
     }
 
     /**
+     * @covers ::getStorageType
+     * @covers ::getStorageDirectory
+     */
+    public function testFileGetters(): void
+    {
+        $component = $this->getComponent(additional: [
+            'storage' => 'dog',
+            'dir' => 'cat/',
+        ]);
+
+        $this->assertEquals('dog', $component->getStorageType());
+        $this->assertEquals('cat/', $component->getStorageDirectory());
+    }
+
+
+    /**
      * @covers ::processValidations
      * @covers ::validate
      * @dataProvider validationsProvider
