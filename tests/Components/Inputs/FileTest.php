@@ -38,7 +38,6 @@ class FileTest extends InputComponentTestCase
         $this->assertEquals('cat/', $component->getStorageDirectory());
     }
 
-
     /**
      * @covers ::processValidations
      * @covers ::validate
