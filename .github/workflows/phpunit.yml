@@ -55,7 +55,7 @@ jobs:
 
       - name: Run Tests
         run: php vendor/bin/phpunit --log-junit=.build/junit.xml --coverage-clover .build/clover.xml --teamcity
-      - uses: EnricoMi/publish-unit-test-result-action@v1.31
+      - uses: EnricoMi/publish-unit-test-result-action@v1.32
         if: github.actor != 'dependabot[bot]' && always()
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
