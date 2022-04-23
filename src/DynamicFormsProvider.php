@@ -3,6 +3,7 @@
 namespace Northwestern\SysDev\DynamicForms;
 
 use Illuminate\Http\Request;
+use Illuminate\Routing\Redirector;
 use Illuminate\Support\Arr;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\ValidationException;
@@ -76,8 +77,11 @@ class DynamicFormsProvider extends ServiceProvider
             $validator = $formDefinition->validate($submissionJson);
 
             if (! $validator->isValid()) {
+                /** @var Redirector $redirector */
+                $redirector = resolve(Redirector::class);
+
                 throw (new ValidationException($validator))
-                    ->redirectTo($this->session()->previousUrl());
+                    ->redirectTo($redirector->getUrlGenerator()->previous());
             }
 
             return $validator->values();
