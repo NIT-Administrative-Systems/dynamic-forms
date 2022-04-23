@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## Unreleased
+## [v0.7.4 - 2022-04-22]
+### Fixes
+- When running AJAX requests back to Laravel via a form component, server-side errors could cause the user to be redirected to the AJAX endpoint URL instead of the form. This has been corrected. 
+
 ## [v0.7.3 - 2022-04-10]
 - `File` components have a new `getStorageDirectory()` method to access the configured storage directory. 
 
