@@ -155,6 +155,7 @@ class FileTest extends InputComponentTestCase
         ?string $customConditional = null,
         string $case = 'mixed',
         ?array $calculateValue = null,
+        mixed $defaultValue = null,
         mixed $submissionValue = null
     ): File {
         /** @var File $component */
@@ -170,6 +171,7 @@ class FileTest extends InputComponentTestCase
             $customConditional,
             $case,
             $calculateValue,
+            $defaultValue,
             $submissionValue
         );
 

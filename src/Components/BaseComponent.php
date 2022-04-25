@@ -39,6 +39,7 @@ abstract class BaseComponent implements ComponentInterface
         protected ?string $customConditional,
         protected string $case,
         protected null|array|string $calculateValue,
+        protected mixed $defaultValue,
         protected array $additional,
     ) {
         //
@@ -207,6 +208,11 @@ abstract class BaseComponent implements ComponentInterface
         }
 
         return $transformations;
+    }
+
+    public function defaultValue(): mixed
+    {
+        return $this->defaultValue;
     }
 
     /**

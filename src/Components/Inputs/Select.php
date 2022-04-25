@@ -48,9 +48,10 @@ class Select extends BaseComponent
         ?string $customConditional,
         string $case,
         null|array|string $calculateValue,
+        mixed $defaultValue,
         array $additional
     ) {
-        parent::__construct($key, $label, $errorLabel, $components, $validations, $hasMultipleValues, $conditional, $customConditional, $case, $calculateValue, $additional);
+        parent::__construct($key, $label, $errorLabel, $components, $validations, $hasMultipleValues, $conditional, $customConditional, $case, $calculateValue, $defaultValue, $additional);
 
         // formiojs omits the dataSrc prop when it's 'values'; assume that's the mode when not present
         $this->dataSource = Arr::get($this->additional, 'dataSrc', self::DATA_SRC_VALUES);
