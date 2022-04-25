@@ -16,10 +16,15 @@ class File extends BaseComponent implements UploadInterface
     const TYPE = 'file';
     protected StorageInterface $storage;
 
-    public function setSubmissionValue(mixed $value): void
+    public function submissionValue(): array
     {
-        // Initialize to an array so things processing file submissions don't break if it's excluded by a condition.
-        $this->submissionValue = $value ?? [];
+        $value = $this->submissionValue;
+
+        foreach ($this->transformations() as $transform) {
+            $value = $transform($value);
+        }
+
+        return $value ?? [];
     }
 
     protected function processValidations(string $fieldKey, string $fieldLabel, mixed $submissionValue, Factory $validator): MessageBag

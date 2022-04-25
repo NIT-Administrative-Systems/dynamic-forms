@@ -256,7 +256,7 @@ abstract class BaseComponent implements ComponentInterface
         }
 
         $bag = new MessageBagImpl;
-        if ($this->validation('required') && count($this->submissionValue) == 0) {
+        if ($this->validation('required') && count($this->submissionValue ?? []) == 0) {
             $bag->add($fieldKey, __('validation.required', ['attribute' => $fieldKey]));
         }
 
