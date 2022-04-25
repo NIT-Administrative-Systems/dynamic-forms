@@ -16,6 +16,24 @@ class File extends BaseComponent implements UploadInterface
     const TYPE = 'file';
     protected StorageInterface $storage;
 
+    public function __construct(
+        protected string $key,
+        protected ?string $label,
+        protected ?string $errorLabel,
+        protected array $components,
+        protected array $validations,
+        protected bool $hasMultipleValues,
+        protected ?array $conditional,
+        protected ?string $customConditional,
+        protected string $case,
+        protected null|array|string $calculateValue,
+        protected mixed $defaultValue,
+        protected array $additional,
+    ) {
+        // Initialize to an array so things processing file submissions don't break if it's excluded by a condition.
+        $this->submissionValue ??= [];
+    }
+
     protected function processValidations(string $fieldKey, string $fieldLabel, mixed $submissionValue, Factory $validator): MessageBag
     {
         $rules = new RuleBag($fieldKey, []);
