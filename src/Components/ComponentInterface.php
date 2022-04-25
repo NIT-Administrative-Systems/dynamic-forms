@@ -29,6 +29,7 @@ interface ComponentInterface
         ?string $customConditional,
         string $case,
         null|array|string $calculateValue,
+        mixed $defaultValue,
         array $additional,
     );
 
@@ -123,4 +124,9 @@ interface ComponentInterface
      * @return callable[]
      */
     public function transformations(): array;
+
+    /**
+     * Returns the default value for the component, if one is configured.
+     */
+    public function defaultValue(): mixed;
 }
