@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## Unreleased
+## [v0.7.6 - 2022-04-26]
+### Fixes
+- If a component with child components is excluded by conditional logic, its children are now excluded from validation as well. This mirrors the formio.js behaviour.
+
 ## [v0.7.5 - 2022-04-25]
 ### Added
 - Added `ComponentInterface::defaultValue()`, for accessing the configured default value for a component. 
