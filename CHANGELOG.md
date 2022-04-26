@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ## [v0.7.6 - 2022-04-26]
 ### Fixes
 - If a component with child components is excluded by conditional logic, its children are now excluded from validation as well. This mirrors the formio.js behaviour.
+- When a file component was excluded by conditional logic, validating the form would cause a PHP error. This has been corrected.
 
 ## [v0.7.5 - 2022-04-25]
 ### Added
