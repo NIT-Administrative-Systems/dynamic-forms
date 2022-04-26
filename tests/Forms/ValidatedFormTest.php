@@ -189,6 +189,23 @@ class ValidatedFormTest extends TestCase
                 true,
                 ['pleaseExplainInDetailWhyApplicationForAUrgWasNotPossible' => 'bla'],
             ],
+            'false conditionals on parent components should skip validations on child components' => [
+                $components('nested_conditional_definition.json'),
+                $values('nested_conditional_submission.json'),
+                true,
+                ['decision' => '0', 'electronicSignature' => 'Mr. Jeramie Bergstrom']
+            ],
+            'false conditionals on parent components should skip validations on child components - fails' => [
+                $components('nested_conditional_definition.json'),
+                $values('nested_conditional_submission_one_level.json'),
+                false,
+                [
+                    'decision' => '1',
+                    'electronicSignature' => 'Mr. Jeramie Bergstrom',
+                    'areYouAnInternationalStudent' => 'yes',
+                    'doYouHaveASocialSecurityNumber' => null
+                ],
+            ],
         ];
     }
 
