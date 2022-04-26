@@ -193,7 +193,7 @@ class ValidatedFormTest extends TestCase
                 $components('nested_conditional_definition.json'),
                 $values('nested_conditional_submission.json'),
                 true,
-                ['decision' => '0', 'electronicSignature' => 'Mr. Jeramie Bergstrom']
+                ['decision' => '0', 'electronicSignature' => 'Mr. Jeramie Bergstrom'],
             ],
             'false conditionals on parent components should skip validations on child components - fails' => [
                 $components('nested_conditional_definition.json'),
@@ -203,7 +203,7 @@ class ValidatedFormTest extends TestCase
                     'decision' => '1',
                     'electronicSignature' => 'Mr. Jeramie Bergstrom',
                     'areYouAnInternationalStudent' => 'yes',
-                    'doYouHaveASocialSecurityNumber' => null
+                    'doYouHaveASocialSecurityNumber' => null,
                 ],
             ],
         ];

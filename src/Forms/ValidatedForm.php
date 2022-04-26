@@ -183,7 +183,6 @@ class ValidatedForm implements Validator
             ->all();
     }
 
-
     /**
      * Return a list of components that should be validated.
      *
@@ -199,10 +198,8 @@ class ValidatedForm implements Validator
     protected function processComponentTree(array $components, array $values): array
     {
 
-
         // Populate the components with their data so we can evaluate conditionals
         $data = collect($values)->only($components->keys());
-
     }
 
     /**
