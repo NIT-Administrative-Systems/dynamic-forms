@@ -4,29 +4,45 @@ namespace Northwestern\SysDev\DynamicForms\Forms;
 
 use Illuminate\Contracts\Support\MessageBag;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\MessageBag as MessageBagImpl;
 use Northwestern\SysDev\DynamicForms\Components\ComponentInterface;
 use Northwestern\SysDev\DynamicForms\FileComponentRegistry;
+use Northwestern\SysDev\DynamicForms\Forms\Concerns\HandlesTree;
 
 class ValidatedForm implements Validator
 {
+    use HandlesTree;
+
+    protected array $components;
+    protected array $flatComponents;
+    protected array $forgetComponentKeys = [];
+
     protected Collection $values;
     protected MessageBag $messages;
 
-    public function __construct(array $flatComponents, array $values)
+    public function __construct(array $components, array $values)
     {
+        $this->components = $components;
         $messageBag = new MessageBagImpl;
         $transformedValues = collect();
-        $components = $this->validatableComponents($flatComponents, $values);
 
-        foreach ($components as $component) {
+        $this->populateComponentTreeWithData($this->components, $values);
+        $this->flatComponents = $this->flattenComponents($this->components);
+
+        $this->processComponentTreeCalculations($this->components);
+        $this->processComponentTreeConditionals($this->components, shouldForget: false);
+
+        $this->flatComponents = $this->flatValidatableComponents($this->components);
+
+        foreach ($this->flatComponents as $component) {
             $messageBag->merge($component->validate());
             $transformedValues->put($component->key(), $component->submissionValue());
         }
 
         // If any components are unknown or were removed by conditional logic, discard the corresponding value
-        $this->values = $transformedValues->only(array_keys($components));
+        $this->values = $transformedValues->only(array_keys($this->flatComponents));
         $this->messages = $messageBag;
     }
 
@@ -82,7 +98,93 @@ class ValidatedForm implements Validator
     }
 
     /**
-     * Return a flat list of components that should be validated.
+     * @param ComponentInterface[] $components
+     */
+    private function populateComponentTreeWithData(array $components, array $data): void
+    {
+        foreach ($components as $component) {
+            if (Arr::has($data, $component->key())) {
+                $component->setSubmissionValue(Arr::get($data, $component->key()));
+            }
+
+            $this->populateComponentTreeWithData($component->components(), $data);
+        }
+    }
+
+    /**
+     * @param ComponentInterface[] $components
+     */
+    private function processComponentTreeCalculations(array $components): void
+    {
+        $values = $this->valuesWhileProcessingForm();
+
+        foreach ($components as $component) {
+            if ($component->isCalculated()) {
+                $calculation = $component->calculation();
+
+                $component->setSubmissionValue($calculation($values));
+            }
+
+            $this->processComponentTreeCalculations($component->components());
+        }
+    }
+
+    /**
+     * @param ComponentInterface[] $components
+     */
+    private function processComponentTreeConditionals(array $components, bool $shouldForget): void
+    {
+        $values = $this->valuesWhileProcessingForm();
+
+        foreach ($components as $component) {
+            // Once we're in forget mode, forget all the children recursively.
+            if ($shouldForget) {
+                $this->forgetComponentKeys[] = $component->key();
+                $this->processComponentTreeConditionals($component->components(), shouldForget: true);
+
+                continue;
+            }
+
+            if ($component->hasConditional()) {
+                $condition = $component->conditional();
+
+                if (! $condition($values)) {
+                    $this->forgetComponentKeys[] = $component->key();
+                    $this->processComponentTreeConditionals($component->components(), shouldForget: true);
+
+                    continue;
+                }
+            }
+
+            $this->processComponentTreeConditionals($component->components(), shouldForget: false);
+        }
+    }
+
+    /**
+     * @param ComponentInterface[] $components
+     */
+    private function flatValidatableComponents(array $components): array
+    {
+        return collect($this->flattenComponents($components))
+            ->reject(fn (ComponentInterface $c) => in_array($c->key(), $this->forgetComponentKeys))
+            ->filter(fn (ComponentInterface $c) => $c->canValidate())
+            ->all();
+    }
+
+    /**
+     * Generates the values from the components' submissionValue.
+     *
+     * This can be run multiple times during a recursive function so the freshest values are available at each step.
+     */
+    private function valuesWhileProcessingForm(): array
+    {
+        return collect($this->flatComponents)
+            ->mapWithKeys(fn (ComponentInterface $c, string $key) => [$key => $c->submissionValue()])
+            ->all();
+    }
+
+    /**
+     * Return a list of components that should be validated.
      *
      * Calculations will be run on the unvalidated data before processing
      * the conditionals (just as they would be in the UI), since those
@@ -93,38 +195,11 @@ class ValidatedForm implements Validator
      *
      * @return ComponentInterface[]
      */
-    protected function validatableComponents(array $flatComponents, array $values): array
+    protected function processComponentTree(array $components, array $values): array
     {
-        /** @var Collection $components */
-        $components = collect($flatComponents)->filter->canValidate();
 
         // Populate the components with their data so we can evaluate conditionals
         $data = collect($values)->only($components->keys());
-        $data->each(fn ($value, $key) => $components[$key]->setSubmissionValue($value));
-
-        $componentsWithConditionals = $components->filter->hasConditional();
-        $componentsWithCalculations = $components->filter->isCalculated();
-
-        // Processed via each component. Will ensure values are cast properly so calculations/logic can work.
-        $processedData = $components->map->submissionValue();
-
-        /** @var ComponentInterface $component */
-        foreach ($componentsWithCalculations as $component) {
-            $calculation = $component->calculation();
-
-            $component->setSubmissionValue($calculation($processedData->all()));
-        }
-
-        /** @var ComponentInterface $component */
-        foreach ($componentsWithConditionals as $component) {
-            $condition = $component->conditional();
-
-            if (! $condition($processedData->all())) {
-                $components->forget($component->key());
-            }
-        }
-
-        return $components->all();
     }
 
     /**

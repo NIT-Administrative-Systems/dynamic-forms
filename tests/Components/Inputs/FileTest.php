@@ -133,6 +133,9 @@ class FileTest extends InputComponentTestCase
             'FileExists fails from url consistency check' => [[], $fileURLCheckFail, false],
             'FileExists fails from file not found ' => [[], $fileNotFoundCheckFail, false],
             'FileExists passes' => [[], $filePASS, true],
+
+            // If a condition excludes this, the empty array won't be in the submitted data.
+            'Excluded from submission by condition' => [[], null, true],
         ];
     }
 
