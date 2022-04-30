@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## Unreleased
+## [v0.7.7 - 2022-04-30]
+### Fixes
+- An edge case where select & radio components in multiple-value mode when provided with a `null` submission value would trigger a runtime error has been corrected.
+
 ## [v0.7.6 - 2022-04-26]
 ### Fixes
 - If a component with child components is excluded by conditional logic, its children are now excluded from validation as well. This mirrors the formio.js behaviour.
