@@ -70,6 +70,8 @@ class Select extends BaseComponent
         $value = parent::submissionValue();
 
         if ($this->hasMultipleValues()) {
+            $value ??= [];
+
             foreach ($value as $i => $singleValue) {
                 $value[$i] = (string) $singleValue;
             }

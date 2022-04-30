@@ -23,6 +23,21 @@ class SelectTest extends InputComponentTestCase
         ],
     ];
 
+    /**
+     * @covers ::processValidations
+     * @covers ::validate
+     */
+    public function testValidationInMultipleModeWithNull(): void
+    {
+        $component = $this->getComponent(
+            hasMultipleValues: true,
+            submissionValue: null,
+        );
+
+        $bag = $component->validate();
+        $this->assertEquals(true, $bag->isEmpty());
+    }
+
     public function validationsProvider(): array
     {
         return [
