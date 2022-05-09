@@ -1,5 +1,12 @@
 # Upgrading
 
+## v0.8.0
+This version adds support for the Hidden component. There should not be any BC breaks.
+
+The `builder-sidebar.js` that comes with the package now includes the hidden component under the advanced section, albeit commented out. 
+
+To add this to your builder, add `hidden: true`. This is optional and not all dynamic-forms implementations will want to offer this to users.
+
 ## v0.7.0
 This version adds support for calculated values using JSONLogic. This is ideal for things like summing up numbers into a "total" field.
 
