@@ -86,7 +86,7 @@ class ValidatedForm implements Validator
                     if (is_array($subComponent) && array_key_exists('storage', $subComponent)) {
                         //get storage driver and check if file exists
                         $storageDriver = resolve(resolve(FileComponentRegistry::class)->get($subComponent['storage']));
-                        if ($storageDriver->findObject($subComponent['name'])) {
+                        if ($storageDriver->findObject($subComponent['key'])) {
                             $list[] = $subComponent;
                         }
                     }
