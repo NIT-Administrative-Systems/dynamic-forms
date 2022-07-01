@@ -16,6 +16,7 @@ class SurveyTest extends InputComponentTestCase
         'questions' => [
             ['label' => 'Question 1', 'value' => 'q1'],
             ['label' => 'Question 2', 'value' => 'q2'],
+            ['label' => 'Question 3 (i.e. foo bar)', 'value' => 'Question 3 (i.e. foo bar)'],
         ],
         'values' => [
             ['label' => 'Answer 1', 'value' => 'a1'],
@@ -29,7 +30,7 @@ class SurveyTest extends InputComponentTestCase
     public function testQuestions(): void
     {
         $this->assertEquals(
-            ['q1', 'q2'],
+            ['q1', 'q2', 'Question 3 (i.e. foo bar)'],
             $this->getSurvey()->questions()
         );
     }
@@ -60,18 +61,18 @@ class SurveyTest extends InputComponentTestCase
     public function validationsProvider(): array
     {
         return [
-            'empty data passes' => [[], ['q1' => '', 'q2' => ''], true],
-            'invalid value fails' => [[], ['q1' => 'invalid', 'q2' => 'a1'], false],
-            'required passes' => [['required' => true], ['q1' => 'a2', 'q2' => 'a1'], true],
-            'one missing - required fails' => [['required' => true], ['qa' => '', 'q2' => 'a1'], false],
-            'all missing - required fails' => [['required' => true], ['qa' => '', 'q2' => ''], false],
+            'empty data passes' => [[], ['q1' => '', 'q2' => '', 'Question 3 (i.e. foo bar)' => ''], true],
+            'invalid value fails' => [[], ['q1' => 'invalid', 'q2' => 'a1', 'Question 3 (i.e. foo bar)' => 'a1'], false],
+            'required passes' => [['required' => true], ['q1' => 'a2', 'q2' => 'a1', 'Question 3 (i.e. foo bar)' => 'a1'], true],
+            'one missing - required fails' => [['required' => true], ['qa' => '', 'q2' => 'a1', 'Question 3 (i.e. foo bar)' => 'a1'], false],
+            'all missing - required fails' => [['required' => true], ['qa' => '', 'q2' => '', 'Question 3 (i.e. foo bar)' => ''], false],
 
         ];
     }
 
     public function submissionValueProvider(): array
     {
-        $responses = ['q1' => 'a2', 'q2' => 'a1'];
+        $responses = ['q1' => 'a2', 'q2' => 'a1', 'Question 3 (i.e. foo bar)' => 'a1'];
 
         return [
             'no transformations' => [null, $responses, $responses],

@@ -4,6 +4,7 @@ namespace Northwestern\SysDev\DynamicForms\Components\Inputs;
 
 use Illuminate\Contracts\Support\MessageBag;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Factory;
 use Illuminate\Validation\Rule;
 use Northwestern\SysDev\DynamicForms\Components\BaseComponent;
@@ -63,13 +64,17 @@ class Survey extends BaseComponent
             : $cleaner($this->submissionValue);
     }
 
+    /**
+     * @internal This will slugify the question keys, since the Formio builder will let you enter the data_get()'s special
+     *           characters (* and .), which will break validation.
+     */
     public function processValidations(string $fieldKey, string $fieldLabel, mixed $submissionValue, Factory $validator): MessageBag
     {
         // This isn't a scalar, so our typical RuleBag pattern does not apply here.
         $rules = [];
 
         foreach ($this->questions() as $question) {
-            $key = sprintf('%s.%s', $fieldKey, $question);
+            $key = sprintf('%s.%s', $fieldKey, Str::slug($question));
 
             $fieldRules = $this->validation('required')
                             ? ['string', 'required']
@@ -79,6 +84,10 @@ class Survey extends BaseComponent
 
             $rules[$key] = $fieldRules;
         }
+
+        $submissionValue = collect($submissionValue)
+            ->mapWithKeys(fn (mixed $value, mixed $key) => [Str::slug($key) => $value])
+            ->all();
 
         return $validator->make(
             [$fieldKey => $submissionValue],
