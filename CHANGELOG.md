@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## Unreleased
+## [v0.8.2 - 2022-07-01]
+- Fixes `Survey` components failing to validate if a question's `value` included a dot (.) character.
+
 ## [v0.8.1 - 2022-05-11]
 ### Fixes
 - The `ValidatedForm::allFiles()` method would not return files if the key contained a folder prefix. This has been corrected.
