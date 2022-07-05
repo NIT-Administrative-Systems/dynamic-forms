@@ -3,6 +3,7 @@
 namespace Northwestern\SysDev\DynamicForms\Components\Inputs;
 
 use Illuminate\Support\Arr;
+use Northwestern\SysDev\DynamicForms\Errors\InvalidDefinitionError;
 
 class Textarea extends Textfield
 {
@@ -39,8 +40,19 @@ class Textarea extends Textfield
         parent::__construct($key, $label, $errorLabel, $components, $validations, $hasMultipleValues, $conditional, $customConditional, $case, $calculateValue, $defaultValue, $additional);
 
         $editor = Arr::get($this->additional, 'editor');
-        if (! in_array($editor, self::SUPPORTED_EDITORS)) {
+
+        if ($editor === "") {
             Arr::set($this->additional, 'editor', self::EDITOR_QUILL);
+        }
+
+        if (! in_array($editor, self::SUPPORTED_EDITORS)) {
+            $message = sprintf(
+                'Unsupported editor "%s", must be [%s]',
+                $editor,
+                implode(', ', self::SUPPORTED_EDITORS)
+            );
+
+            throw new InvalidDefinitionError($message, 'editor');
         }
     }
 }
