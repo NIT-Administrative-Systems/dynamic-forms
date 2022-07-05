@@ -41,7 +41,7 @@ class Textarea extends Textfield
 
         $editor = Arr::get($this->additional, 'editor');
 
-        if ($editor === "") {
+        if ($editor === '') {
             Arr::set($this->additional, 'editor', self::EDITOR_QUILL);
         }
 
