@@ -19,6 +19,7 @@ class SelectTest extends InputComponentTestCase
                 ['label' => 'Foo', 'value' => 'foo'],
                 ['label' => 'Bar', 'value' => 'bar'],
                 ['label' => 'Number', 'value' => '1', 'shortcut' => ''],
+                ['label' => 'Notrim ', 'value' => 'Notrim ', 'shortcut' => ''],
             ],
         ],
     ];
@@ -46,6 +47,7 @@ class SelectTest extends InputComponentTestCase
             'required fails' => [['required' => true], '', false],
             'invalid values always rejected' => [[], 'not a valid value', false],
             'passes with integer' => [['required' => true], 1, true],
+            'passes with trim' => [['required' => true], 'Notrim', true], // Laravel middleware would trim submitted value
         ];
     }
 
@@ -72,6 +74,6 @@ class SelectTest extends InputComponentTestCase
      */
     public function testOptionValues(): void
     {
-        $this->assertEquals(['foo', 'bar', 1], $this->getComponent()->optionValues());
+        $this->assertEquals(['foo', 'bar', 1, 'Notrim'], $this->getComponent()->optionValues());
     }
 }
