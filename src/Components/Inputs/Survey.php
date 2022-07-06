@@ -33,7 +33,11 @@ class Survey extends BaseComponent
         parent::__construct($key, $label, $errorLabel, $components, $validations, $hasMultipleValues, $conditional, $customConditional, $case, $calculateValue, $defaultValue, $additional);
 
         $this->questions = collect(Arr::get($this->additional, 'questions'))->map->value->all();
-        $this->validChoices = collect(Arr::get($this->additional, 'values'))->map->value->all();
+        $this->validChoices = collect(Arr::get($this->additional, 'values'))
+            ->map(function (array $pair) {
+                return trim(Arr::get($pair, 'value'));
+            })
+            ->all();
     }
 
     /**

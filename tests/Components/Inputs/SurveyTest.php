@@ -21,6 +21,7 @@ class SurveyTest extends InputComponentTestCase
         'values' => [
             ['label' => 'Answer 1', 'value' => 'a1'],
             ['label' => 'Answer 2', 'value' => 'a2'],
+            ['label' => 'Answer 3 with no trim ', 'value' => 'notrim '],
         ],
     ];
 
@@ -41,7 +42,7 @@ class SurveyTest extends InputComponentTestCase
     public function testValidChoices(): void
     {
         $this->assertEquals(
-            ['a1', 'a2'],
+            ['a1', 'a2', 'notrim'],
             $this->getSurvey()->validChoices()
         );
     }
@@ -66,7 +67,7 @@ class SurveyTest extends InputComponentTestCase
             'required passes' => [['required' => true], ['q1' => 'a2', 'q2' => 'a1', 'Question 3 (i.e. foo bar)' => 'a1'], true],
             'one missing - required fails' => [['required' => true], ['qa' => '', 'q2' => 'a1', 'Question 3 (i.e. foo bar)' => 'a1'], false],
             'all missing - required fails' => [['required' => true], ['qa' => '', 'q2' => '', 'Question 3 (i.e. foo bar)' => ''], false],
-
+            'passes with trim' => [['required' => true], ['q1' => 'a1', 'q2' => 'a1', 'Question 3 (i.e. foo bar)' => 'notrim'], true], // Laravel middleware would trim form value
         ];
     }
 
