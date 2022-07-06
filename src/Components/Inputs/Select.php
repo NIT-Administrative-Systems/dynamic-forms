@@ -112,7 +112,11 @@ class Select extends BaseComponent
 
     private function initSrcValues(array $additional): void
     {
-        $this->optionValues = collect($this->additional['data']['values'])->map->value->all();
+        $this->optionValues = collect($this->additional['data']['values'])
+            ->map(function (array $pair) {
+                return trim(Arr::get($pair, 'value'));
+            })
+            ->all();
     }
 
     private function initSrcUnsupported(): void
