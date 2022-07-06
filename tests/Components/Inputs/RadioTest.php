@@ -17,6 +17,7 @@ class RadioTest extends InputComponentTestCase
             ['label' => 'Foo', 'value' => 'foo', 'shortcut' => ''],
             ['label' => 'Bar', 'value' => 'bar', 'shortcut' => ''],
             ['label' => 'Number', 'value' => '1', 'shortcut' => ''],
+            ['label' => 'Untrimmed string', 'value' => 'Notrim ', 'shortcut' => ''],
         ],
     ];
 
@@ -43,6 +44,7 @@ class RadioTest extends InputComponentTestCase
             'required passes' => [['required' => true], 'foo', true],
             'required fails' => [['required' => true], '', false],
             'passes with integer' => [['required' => true], 1, true],
+            'passed with trim stuff' => [[], 'Notrim', true], // Laravel middleware would trim it
         ];
     }
 
