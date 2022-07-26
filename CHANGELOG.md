@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## Unreleased
+## [v0.8.4 - 2022-07-26]
+### Fixes
+- Allows for regular textarea editors in addition to Quill.
+
 ## [v0.8.3 - 2022-07-06]
 ### Fixes
 - Before comparing values for select, selectboxes, radio, and survey components, the values will be trimed. This matches the behaviour of the default Laravel middleware, which trims all submitted form values.
