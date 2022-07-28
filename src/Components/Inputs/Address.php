@@ -31,10 +31,12 @@ class Address extends BaseComponent
         ?array $conditional,
         ?string $customConditional,
         string $case,
+        null|array|string $calculateValue,
+        mixed $defaultValue,
         array $additional
     ) {
         // Components are discarded; these are manual mode fields, which is not supported.
-        parent::__construct($key, $label, $errorLabel, [], $validations, $hasMultipleValues, $conditional, $customConditional, $case, $additional);
+        parent::__construct($key, $label, $errorLabel, [], $validations, $hasMultipleValues, $conditional, $customConditional, $case, $calculateValue, $defaultValue, $additional);
 
         $provider = Arr::get($this->additional, 'provider');
         if (! in_array($provider, self::SUPPORTED_PROVIDERS)) {
@@ -48,7 +50,7 @@ class Address extends BaseComponent
         }
     }
 
-    protected function processValidations(string $fieldKey, mixed $submissionValue, Factory $validator): MessageBag
+    protected function processValidations(string $fieldKey, string $fieldLabel, mixed $submissionValue, Factory $validator): MessageBag
     {
         // This isn't a scalar, so our typical RuleBag pattern does not work here.
 
@@ -61,6 +63,8 @@ class Address extends BaseComponent
         return $validator->make(
             [$fieldKey => $submissionValue],
             $rules,
+            [],
+            [$fieldKey => $fieldLabel]
         )->messages();
     }
 }

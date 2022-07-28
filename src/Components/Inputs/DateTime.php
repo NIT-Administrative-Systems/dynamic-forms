@@ -39,7 +39,7 @@ class DateTime extends BaseComponent
             : $cleaner($this->submissionValue);
     }
 
-    public function processValidations(string $fieldKey, mixed $submissionValue, Factory $validator): MessageBag
+    public function processValidations(string $fieldKey, string $fieldLabel, mixed $submissionValue, Factory $validator): MessageBag
     {
         // Turn this back into a string so it works w/ the Laravel validators
         $submissionValue = $submissionValue?->toAtomString();
@@ -63,6 +63,8 @@ class DateTime extends BaseComponent
         return $validator->make(
             [$fieldKey => $submissionValue],
             $rules->rules(),
+            [],
+            [$fieldKey => $fieldLabel]
         )->messages();
     }
 }

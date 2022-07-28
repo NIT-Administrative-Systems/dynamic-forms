@@ -6,9 +6,12 @@ use Illuminate\Contracts\Support\MessageBag;
 use Illuminate\Support\Arr;
 use Illuminate\Support\MessageBag as MessageBagImpl;
 use Illuminate\Validation\Factory;
+use Northwestern\SysDev\DynamicForms\Calculation\CalculationInterface;
+use Northwestern\SysDev\DynamicForms\Calculation\JSONCalculation;
 use Northwestern\SysDev\DynamicForms\Conditional\ConditionalInterface;
 use Northwestern\SysDev\DynamicForms\Conditional\JSONConditional;
 use Northwestern\SysDev\DynamicForms\Conditional\SimpleConditional;
+use Northwestern\SysDev\DynamicForms\Errors\CalculationNotImplemented;
 use Northwestern\SysDev\DynamicForms\Errors\ConditionalNotImplemented;
 use Northwestern\SysDev\DynamicForms\Errors\InvalidDefinitionError;
 use Northwestern\SysDev\DynamicForms\Errors\ValidationNotImplementedError;
@@ -35,6 +38,8 @@ abstract class BaseComponent implements ComponentInterface
         protected ?array $conditional,
         protected ?string $customConditional,
         protected string $case,
+        protected null|array|string $calculateValue,
+        protected mixed $defaultValue,
         protected array $additional,
     ) {
         //
@@ -108,6 +113,24 @@ abstract class BaseComponent implements ComponentInterface
         );
     }
 
+    public function isCalculated(): bool
+    {
+        return $this->calculateValue !== null;
+    }
+
+    public function calculation(): ?CalculationInterface
+    {
+        if (! $this->calculateValue) {
+            return null;
+        }
+
+        if (is_string($this->calculateValue)) {
+            throw new CalculationNotImplemented($this->key(), CalculationNotImplemented::CUSTOM_JS);
+        }
+
+        return new JSONCalculation($this->calculateValue);
+    }
+
     public function submissionValue(): mixed
     {
         $value = $this->submissionValue;
@@ -126,7 +149,8 @@ abstract class BaseComponent implements ComponentInterface
 
     public function validate(): MessageBag
     {
-        $fieldKey = $this->errorLabel() ?? $this->label() ?? $this->key();
+        $fieldLabel = $this->errorLabel() ?? $this->label() ?? $this->key();
+
         $validator = app()->make('validator');
         $bag = new MessageBagImpl;
 
@@ -137,18 +161,19 @@ abstract class BaseComponent implements ComponentInterface
         if ($this->hasMultipleValuesForValidation()) {
             foreach ($this->submissionValue() as $index => $submissionValue) {
                 $bag = $this->mergeErrorBags($bag, $this->processValidations(
-                    $this->errorLabel ?? sprintf('%s %s', $fieldKey, $index),
+                    $this->key(),
+                    $this->errorLabel() ?? sprintf('%s (%s)', $fieldLabel, $index + 1),
                     $submissionValue,
                     $validator
                 ));
             }
 
-            return $bag->merge($this->postProcessValidationsForMultiple($fieldKey));
+            return $bag->merge($this->postProcessValidationsForMultiple($this->key()));
         }
 
         return $this->mergeErrorBags(
             new MessageBagImpl,
-            $this->processValidations($fieldKey, $this->submissionValue(), $validator)
+            $this->processValidations($this->key(), $fieldLabel, $this->submissionValue(), $validator)
         );
     }
 
@@ -185,6 +210,11 @@ abstract class BaseComponent implements ComponentInterface
         return $transformations;
     }
 
+    public function defaultValue(): mixed
+    {
+        return $this->defaultValue;
+    }
+
     /**
      * Populates the error bag with validation failures.
      *
@@ -202,7 +232,7 @@ abstract class BaseComponent implements ComponentInterface
      * @param Factory $validator Illuminate validation factory, usage of which is optional (but common!)
      * @return MessageBag
      */
-    protected function processValidations(string $fieldKey, mixed $submissionValue, Factory $validator): MessageBag
+    protected function processValidations(string $fieldKey, string $fieldLabel, mixed $submissionValue, Factory $validator): MessageBag
     {
         throw new ValidationNotImplementedError($this->type());
     }
@@ -226,7 +256,7 @@ abstract class BaseComponent implements ComponentInterface
         }
 
         $bag = new MessageBagImpl;
-        if ($this->validation('required') && count($this->submissionValue) == 0) {
+        if ($this->validation('required') && count($this->submissionValue ?? []) == 0) {
             $bag->add($fieldKey, __('validation.required', ['attribute' => $fieldKey]));
         }
 

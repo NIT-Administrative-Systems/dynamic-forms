@@ -10,9 +10,12 @@ use Northwestern\SysDev\DynamicForms\Components\CustomSubcomponentDeserializatio
 use Northwestern\SysDev\DynamicForms\Components\UploadInterface;
 use Northwestern\SysDev\DynamicForms\Errors\InvalidDefinitionError;
 use Northwestern\SysDev\DynamicForms\FileComponentRegistry;
+use Northwestern\SysDev\DynamicForms\Forms\Concerns\HandlesTree;
 
 class Form
 {
+    use HandlesTree;
+
     /**
      * Array of components, potentially with more components nested inside of those.
      *
@@ -63,7 +66,7 @@ class Form
      */
     public function validate(string $submissionJson): ValidatedForm
     {
-        return new ValidatedForm($this->flatComponents, json_decode($submissionJson, true));
+        return new ValidatedForm($this->components, json_decode($submissionJson, true));
     }
 
     protected function setDefinition(string $json): void
@@ -112,7 +115,9 @@ class Form
                 Arr::get($definition, 'conditional'),
                 Arr::get($definition, 'customConditional'),
                 Arr::get($definition, 'case', 'mixed'),
-                Arr::except($definition, ['key', 'label', 'components', 'validate', 'type', 'input', 'tableView', 'multiple', 'conditional', 'customConditional', 'case', 'errorLabel']),
+                Arr::get($definition, 'calculateValue'),
+                Arr::get($definition, 'defaultValue'),
+                Arr::except($definition, ['key', 'label', 'components', 'validate', 'type', 'input', 'tableView', 'multiple', 'conditional', 'customConditional', 'calculateValue', 'case', 'errorLabel', 'defaultValue']),
             );
 
             if (is_subclass_of($component, UploadInterface::class)) {
@@ -143,28 +148,5 @@ class Form
         }
 
         return $children->all();
-    }
-
-    /**
-     * Flattens the components prop into a Component key-indexed array.
-     *
-     * As far as I am aware, Form.io will NOT nest form elements (e.g. <input name="foo[bar]">),
-     * so popping it out into this flat structure indexed by the Component key isn't going to
-     * cause problems.
-     *
-     * @param array $componentsTree
-     * @return array
-     */
-    protected function flattenComponents(array $componentsTree): array
-    {
-        $flat = [];
-
-        /** @var ComponentInterface $component */
-        foreach ($componentsTree as $component) {
-            $flat[$component->key()] = $component;
-            $flat = array_merge($flat, $this->flattenComponents($component->components()));
-        }
-
-        return $flat;
     }
 }

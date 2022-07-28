@@ -84,7 +84,7 @@ class S3DriverTest extends TestCase
         $driver = $this->mockPresignDriver();
         $expected = response()->json(['url' => 'https://test.com'], 201);
 
-        $this->assertEquals($expected, $driver->getDownloadLink('foo'));
+        $this->assertEquals($expected->getData(true), $driver->getDownloadLink('foo')->getData(true));
     }
 
     /**

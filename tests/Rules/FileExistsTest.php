@@ -42,6 +42,11 @@ class FileExistsTest extends TestCase
             'storage' => S3Driver::STORAGE_S3,
         ];
 
+        $validS3WithPath = array_merge($validS3, [
+            'key' => 'folder/foo1',
+            'url' => 'http://localhost/dynamic-forms/storage/s3/folder/foo1',
+        ]);
+
         $validURL = [
             'name' => 'foo1',
             'url' => 'http://localhost/dynamic-forms/storage/url?baseUrl=https%3A%2F%2Fapi.form.io&project=&form=/foo1', // should match name with additional data fields added on
@@ -56,8 +61,8 @@ class FileExistsTest extends TestCase
             'valid S3' => [$validS3, true, true],
             'missing field S3' => [['storage' => S3Driver::STORAGE_S3], true, false],
             'unexpected url S3' => [array_merge($validS3, ['url' => '/dog']), true, false],
-            'not consistent S3' => [array_merge($validS3, ['name' => 'dog']), true, false],
             'file does not exist S3' => [$validS3, false, false],
+            'in s3 with a subfolder' => [$validS3WithPath, true, true],
 
             // file, should exist in storage, passes
             'valid URL' => [$validURL, true, true],

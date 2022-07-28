@@ -54,9 +54,11 @@ class Select extends BaseComponent
         ?array $conditional,
         ?string $customConditional,
         string $case,
+        null|array|string $calculateValue,
+        mixed $defaultValue,
         array $additional
     ) {
-        parent::__construct($key, $label, $errorLabel, $components, $validations, $hasMultipleValues, $conditional, $customConditional, $case, $additional);
+        parent::__construct($key, $label, $errorLabel, $components, $validations, $hasMultipleValues, $conditional, $customConditional, $case, $calculateValue, $defaultValue, $additional);
 
         // formiojs omits the dataSrc prop when it's 'values'; assume that's the mode when not present
         $this->dataSource = Arr::get($this->additional, 'dataSrc', self::DATA_SRC_VALUES);
@@ -68,7 +70,27 @@ class Select extends BaseComponent
         };
     }
 
-    protected function processValidations(string $fieldKey, mixed $submissionValue, Factory $validator): MessageBag
+    /**
+     * {@inheritDoc}
+     */
+    public function submissionValue(): mixed
+    {
+        $value = parent::submissionValue();
+
+        if ($this->hasMultipleValues()) {
+            $value ??= [];
+
+            foreach ($value as $i => $singleValue) {
+                $value[$i] = (string) $singleValue;
+            }
+
+            return $value;
+        }
+
+        return is_scalar($value) ? (string) $value : $value;
+    }
+
+    protected function processValidations(string $fieldKey, string $fieldLabel, mixed $submissionValue, Factory $validator): MessageBag
     {
         $rules = new RuleBag($fieldKey, ['string']);
 
@@ -82,6 +104,8 @@ class Select extends BaseComponent
         return $validator->make(
             [$fieldKey => $submissionValue],
             $rules->rules(),
+            [],
+            [$fieldKey => $fieldLabel]
         )->messages();
     }
 
@@ -97,7 +121,11 @@ class Select extends BaseComponent
 
     private function initSrcValues(array $additional): void
     {
-        $this->optionValues = collect($this->additional['data']['values'])->map->value->all();
+        $this->optionValues = collect($this->additional['data']['values'])
+            ->map(function (array $pair) {
+                return trim(Arr::get($pair, 'value'));
+            })
+            ->all();
     }
 
     private function initSrcResources(array $additional): void

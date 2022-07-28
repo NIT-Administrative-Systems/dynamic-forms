@@ -4,6 +4,7 @@ namespace Northwestern\SysDev\DynamicForms\Components\Inputs;
 
 use Illuminate\Contracts\Support\MessageBag;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Factory;
 use Illuminate\Validation\Rule;
 use Northwestern\SysDev\DynamicForms\Components\BaseComponent;
@@ -25,12 +26,18 @@ class Survey extends BaseComponent
         ?array $conditional,
         ?string $customConditional,
         string $case,
+        null|array|string $calculateValue,
+        mixed $defaultValue,
         array $additional
     ) {
-        parent::__construct($key, $label, $errorLabel, $components, $validations, $hasMultipleValues, $conditional, $customConditional, $case, $additional);
+        parent::__construct($key, $label, $errorLabel, $components, $validations, $hasMultipleValues, $conditional, $customConditional, $case, $calculateValue, $defaultValue, $additional);
 
         $this->questions = collect(Arr::get($this->additional, 'questions'))->map->value->all();
-        $this->validChoices = collect(Arr::get($this->additional, 'values'))->map->value->all();
+        $this->validChoices = collect(Arr::get($this->additional, 'values'))
+            ->map(function (array $pair) {
+                return trim(Arr::get($pair, 'value'));
+            })
+            ->all();
     }
 
     /**
@@ -61,13 +68,17 @@ class Survey extends BaseComponent
             : $cleaner($this->submissionValue);
     }
 
-    public function processValidations(string $fieldKey, mixed $submissionValue, Factory $validator): MessageBag
+    /**
+     * @internal This will slugify the question keys, since the Formio builder will let you enter the data_get()'s special
+     *           characters (* and .), which will break validation.
+     */
+    public function processValidations(string $fieldKey, string $fieldLabel, mixed $submissionValue, Factory $validator): MessageBag
     {
         // This isn't a scalar, so our typical RuleBag pattern does not apply here.
         $rules = [];
 
         foreach ($this->questions() as $question) {
-            $key = sprintf('%s.%s', $fieldKey, $question);
+            $key = sprintf('%s.%s', $fieldKey, Str::slug($question));
 
             $fieldRules = $this->validation('required')
                             ? ['string', 'required']
@@ -78,9 +89,15 @@ class Survey extends BaseComponent
             $rules[$key] = $fieldRules;
         }
 
+        $submissionValue = collect($submissionValue)
+            ->mapWithKeys(fn (mixed $value, mixed $key) => [Str::slug($key) => $value])
+            ->all();
+
         return $validator->make(
             [$fieldKey => $submissionValue],
-            $rules
+            $rules,
+            [],
+            [$fieldKey => $fieldLabel]
         )->messages();
     }
 }

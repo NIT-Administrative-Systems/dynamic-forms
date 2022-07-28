@@ -3,6 +3,7 @@
 namespace Northwestern\SysDev\DynamicForms\Components;
 
 use Illuminate\Contracts\Support\MessageBag;
+use Northwestern\SysDev\DynamicForms\Calculation\CalculationInterface;
 use Northwestern\SysDev\DynamicForms\Conditional\ConditionalInterface;
 
 interface ComponentInterface
@@ -27,6 +28,8 @@ interface ComponentInterface
         ?array $conditional,
         ?string $customConditional,
         string $case,
+        null|array|string $calculateValue,
+        mixed $defaultValue,
         array $additional,
     );
 
@@ -75,6 +78,16 @@ interface ComponentInterface
     public function canValidate(): bool;
 
     /**
+     * Whether this component's value is calculated or not.
+     *
+     * A calculated field will have its calculated value replace a value submitted
+     * by the form. The server-side calculated value is always returned.
+     *
+     * @return bool
+     */
+    public function isCalculated(): bool;
+
+    /**
      * Run validations for the component.
      */
     public function validate(): MessageBag;
@@ -101,9 +114,19 @@ interface ComponentInterface
     public function conditional(): ?ConditionalInterface;
 
     /**
+     * Returns an invokable Calculation instance.
+     */
+    public function calculation(): ?CalculationInterface;
+
+    /**
      * List of transformations to apply to the value.
      *
      * @return callable[]
      */
     public function transformations(): array;
+
+    /**
+     * Returns the default value for the component, if one is configured.
+     */
+    public function defaultValue(): mixed;
 }

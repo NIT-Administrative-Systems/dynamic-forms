@@ -13,24 +13,24 @@ jobs:
 
     strategy:
       matrix:
-        php-versions: ['8.0']
+        php-versions: ['8.0', '8.1']
 
     steps:
-      - uses: actions/checkout@v2.3.4
+      - uses: actions/checkout@v3
         with:
           ref: ${{ github.head_ref }}
 
 
       - name: Setup PHP
-        uses: shivammathur/setup-php@2.12.0
+        uses: shivammathur/setup-php@2.18.0
         with:
           php-version: ${{ matrix.php-versions }}
           coverage: xdebug
 
       - name: Run php-cs-fixer
-        uses: OskarStark/php-cs-fixer-ga@3.0.0
+        uses: OskarStark/php-cs-fixer-ga@3.7.0
 
-      - uses: stefanzweifel/git-auto-commit-action@v4.11.0
+      - uses: stefanzweifel/git-auto-commit-action@v4.13.1
         with:
           commit_message: Apply php-cs-fixer changes
 
@@ -39,7 +39,7 @@ jobs:
 
       - name: Cache Composer packages
         id: composer-cache
-        uses: actions/cache@v2.1.6
+        uses: actions/cache@v2.1.7
         with:
           path: vendor
           key: php-${{ matrix.php-versions }}-${{ hashFiles('**/composer.lock') }}
@@ -55,7 +55,7 @@ jobs:
 
       - name: Run Tests
         run: php vendor/bin/phpunit --log-junit=.build/junit.xml --coverage-clover .build/clover.xml --teamcity
-      - uses: EnricoMi/publish-unit-test-result-action@v1.19
+      - uses: EnricoMi/publish-unit-test-result-action@v1.31
         if: github.actor != 'dependabot[bot]' && always()
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}

@@ -48,7 +48,6 @@ These components are not supported at all:
     
 - HTML Element
 - Tags
-- Hidden
 - Data Map
 - Data Grid
 - Edit Grid
@@ -59,11 +58,11 @@ These components are not supported at all:
 - Nested Form
 
 ### Scripting
-Formiojs offers several methods for creating dependencies between form fields: simple UI-driven setups, JSON Logic, and custom JavaScript.
+Formiojs offers several methods for creating dependencies between form fields and calculating values: simple UI-driven setups, JSON Logic, and custom JavaScript.
 
-Dynamic Forms for Laravel only supports the simple UI-driven dependencies.
+Dynamic Forms for Laravel supports the simple UI-driven dependencies and JSON Logic.
 
-No JS eval or other scripting is supported at this point in time.
+No JS eval is supported.
 
 ### Other Features
 PDF forms and form wizards are not supported.

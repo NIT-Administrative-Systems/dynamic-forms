@@ -12,15 +12,15 @@ class Textarea extends Textfield
     /** * @var string Unsupported ACE editor */
     const EDITOR_ACE = 'ace';
 
-    /** * @var string Unsupported Quill editor */
+    /** * @var string Supported Quill editor */
     const EDITOR_QUILL = 'quill';
 
-    /** @var string */
+    /** @var string Unsupported CKEditor editor */
     const EDITOR_CKEDITOR = 'ckeditor';
 
     /** @var string[] Supported editors */
     const SUPPORTED_EDITORS = [
-        self::EDITOR_CKEDITOR,
+        self::EDITOR_QUILL,
     ];
 
     public function __construct(
@@ -33,11 +33,18 @@ class Textarea extends Textfield
         ?array $conditional,
         ?string $customConditional,
         string $case,
+        null|array|string $calculateValue,
+        mixed $defaultValue,
         array $additional
     ) {
-        parent::__construct($key, $label, $errorLabel, $components, $validations, $hasMultipleValues, $conditional, $customConditional, $case, $additional);
+        parent::__construct($key, $label, $errorLabel, $components, $validations, $hasMultipleValues, $conditional, $customConditional, $case, $calculateValue, $defaultValue, $additional);
 
         $editor = Arr::get($this->additional, 'editor');
+
+        if ($editor === '') {
+            Arr::set($this->additional, 'editor', self::EDITOR_QUILL);
+        }
+
         if (! in_array($editor, self::SUPPORTED_EDITORS)) {
             $message = sprintf(
                 'Unsupported editor "%s", must be [%s]',

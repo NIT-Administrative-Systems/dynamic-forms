@@ -10,14 +10,14 @@ class Url extends Textfield
 {
     const TYPE = 'url';
 
-    protected function processValidations(string $fieldKey, mixed $submissionValue, Factory $validator): MessageBag
+    protected function processValidations(string $fieldKey, string $fieldLabel, mixed $submissionValue, Factory $validator): MessageBag
     {
         $fieldKey = $this->label() ?? $this->key();
         $rules = new RuleBag($fieldKey, ['string']);
 
         // This has all the same stuff as a textfield (including, weirdly, word length),
         // so process it through there first.
-        $bag = parent::processValidations($fieldKey, $submissionValue, $validator);
+        $bag = parent::processValidations($fieldKey, $fieldLabel, $submissionValue, $validator);
 
         // And then URL just adds a requirement that the string be a valid-looking URL,
         // assuming the data is present. The nullable rule should make URL pass if it's
@@ -28,6 +28,8 @@ class Url extends Textfield
         $validator = app()->make('validator')->make(
             [$fieldKey => $submissionValue],
             $rules->rules(),
+            [],
+            [$fieldKey => $fieldLabel]
         );
 
         return $bag->merge($validator->messages());

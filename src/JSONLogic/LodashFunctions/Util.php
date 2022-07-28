@@ -1,6 +1,6 @@
 <?php
 
-namespace Northwestern\SysDev\DynamicForms\Conditional\LodashFunctions;
+namespace Northwestern\SysDev\DynamicForms\JSONLogic\LodashFunctions;
 
 use Closure;
 

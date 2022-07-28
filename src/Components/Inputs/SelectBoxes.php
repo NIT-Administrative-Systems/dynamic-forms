@@ -24,11 +24,17 @@ class SelectBoxes extends BaseComponent
         ?array $conditional,
         ?string $customConditional,
         string $case,
+        null|array|string $calculateValue,
+        mixed $defaultValue,
         array $additional
     ) {
-        parent::__construct($key, $label, $errorLabel, $components, $validations, $hasMultipleValues, $conditional, $customConditional, $case, $additional);
+        parent::__construct($key, $label, $errorLabel, $components, $validations, $hasMultipleValues, $conditional, $customConditional, $case, $calculateValue, $defaultValue, $additional);
 
-        $this->options = collect($this->additional['values'])->map->value->all();
+        $this->options = collect($this->additional['values'])
+            ->map(function (array $pair) {
+                return trim(Arr::get($pair, 'value'));
+            })
+            ->all();
     }
 
     public function getOptionValues(): array
@@ -62,7 +68,7 @@ class SelectBoxes extends BaseComponent
      * @param Factory $validator
      * @return MessageBag
      */
-    protected function processValidations(string $fieldKey, mixed $submissionValue, Factory $validator): MessageBag
+    protected function processValidations(string $fieldKey, string $fieldLabel, mixed $submissionValue, Factory $validator): MessageBag
     {
         $bag = new MessageBagImpl;
 
@@ -77,12 +83,12 @@ class SelectBoxes extends BaseComponent
 
         if ($minSelected !== null && $checkedNum < $minSelected) {
             $message = sprintf('You must select at least %s items.', $minSelected);
-            $bag->add($fieldKey, Arr::get($this->additional, 'minSelectedCountMessage', $message));
+            $bag->add($fieldLabel, Arr::get($this->additional, 'minSelectedCountMessage', $message));
         }
 
         if ($maxSelected !== null && $checkedNum > $maxSelected) {
             $message = sprintf('You cannot select more than %s items.', $minSelected);
-            $bag->add($fieldKey, Arr::get($this->additional, 'maxSelectedCountMessage', $message));
+            $bag->add($fieldLabel, Arr::get($this->additional, 'maxSelectedCountMessage', $message));
         }
 
         return $bag;

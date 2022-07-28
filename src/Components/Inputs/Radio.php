@@ -25,11 +25,37 @@ class Radio extends BaseComponent
         ?array $conditional,
         ?string $customConditional,
         string $case,
+        null|array|string $calculateValue,
+        mixed $defaultValue,
         array $additional
     ) {
-        parent::__construct($key, $label, $errorLabel, $components, $validations, $hasMultipleValues, $conditional, $customConditional, $case, $additional);
+        parent::__construct($key, $label, $errorLabel, $components, $validations, $hasMultipleValues, $conditional, $customConditional, $case, $calculateValue, $defaultValue, $additional);
 
-        $this->radioChoices = collect(Arr::get($this->additional, 'values'))->map->value->all();
+        $this->radioChoices = collect(Arr::get($this->additional, 'values'))
+            ->map(function (array $pair) {
+                return trim(Arr::get($pair, 'value'));
+            })
+            ->all();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function submissionValue(): mixed
+    {
+        $value = parent::submissionValue();
+
+        if ($this->hasMultipleValues()) {
+            $value ??= [];
+
+            foreach ($value as $i => $singleValue) {
+                $value[$i] = (string) $singleValue;
+            }
+
+            return $value;
+        }
+
+        return is_scalar($value) ? (string) $value : $value;
     }
 
     /**
@@ -40,7 +66,7 @@ class Radio extends BaseComponent
         return $this->radioChoices;
     }
 
-    public function processValidations(string $fieldKey, mixed $submissionValue, Factory $validator): MessageBag
+    public function processValidations(string $fieldKey, string $fieldLabel, mixed $submissionValue, Factory $validator): MessageBag
     {
         $rules = new RuleBag($fieldKey, ['string']);
 
@@ -56,6 +82,8 @@ class Radio extends BaseComponent
         return $validator->make(
             [$fieldKey => $submissionValue],
             $rules->rules(),
+            [],
+            [$fieldKey => $fieldLabel]
         )->messages();
     }
 }

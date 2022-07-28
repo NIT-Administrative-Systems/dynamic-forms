@@ -38,11 +38,14 @@ abstract class BaseComponentTestCase extends TestCase
      * @covers ::hasConditional
      * @covers ::conditional
      * @covers ::errorLabel
+     * @covers ::isCalculated
+     * @covers ::calculation
+     * @covers ::defaultValue
      */
     public function testGetters(): void
     {
         $ref = new \ReflectionClass($this->componentClass);
-        $component = $this->getComponent();
+        $component = $this->getComponent(defaultValue: 'foo');
 
         $this->assertEquals('test', $component->key());
         $this->assertEquals('Test', $component->label());
@@ -52,6 +55,9 @@ abstract class BaseComponentTestCase extends TestCase
         $this->assertFalse($component->hasConditional());
         $this->assertNull($component->conditional());
         $this->assertNull($component->errorLabel());
+        $this->assertFalse($component->isCalculated());
+        $this->assertNull($component->calculation());
+        $this->assertEquals('foo', $component->defaultValue());
     }
 
     /**
@@ -70,6 +76,8 @@ abstract class BaseComponentTestCase extends TestCase
         ?array $conditional = null,
         ?string $customConditional = null,
         string $case = 'mixed',
+        ?array $calculateValue = null,
+        mixed $defaultValue = null,
         mixed $submissionValue = null
     ): ComponentInterface {
         /** @var ComponentInterface $component */
@@ -83,6 +91,8 @@ abstract class BaseComponentTestCase extends TestCase
             $conditional,
             $customConditional,
             $case,
+            $calculateValue,
+            $defaultValue,
             array_merge($this->defaultAdditional, $additional),
         );
 

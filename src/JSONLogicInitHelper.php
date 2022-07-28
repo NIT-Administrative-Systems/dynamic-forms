@@ -3,6 +3,7 @@
 namespace Northwestern\SysDev\DynamicForms;
 
 use JWadhams\JsonLogic;
+use Northwestern\SysDev\DynamicForms\JSONLogic\LodashFunctions\___;
 
 class JSONLogicInitHelper
 {
@@ -286,7 +287,7 @@ class JSONLogicInitHelper
                 JsonLogic::add_operation('_'.$lodashfunct[0], '__::'.$lodashfunct[0]);
             }
             if ($lodashfunct[1] == 3) {
-                JsonLogic::add_operation('_'.$lodashfunct[0], 'Northwestern\SysDev\DynamicForms\Conditional\LodashFunctions\___::'.$lodashfunct[0]);
+                JsonLogic::add_operation('_'.$lodashfunct[0], [___::class, $lodashfunct[0]]);
             }
         }
     }

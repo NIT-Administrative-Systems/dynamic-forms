@@ -2,7 +2,6 @@
 
 namespace Northwestern\SysDev\DynamicForms\Tests\Forms;
 
-use Carbon\Carbon;
 use Carbon\CarbonInterface;
 use Northwestern\SysDev\DynamicForms\Components\CaseEnum;
 use Northwestern\SysDev\DynamicForms\Components\Inputs\Textfield;
@@ -36,6 +35,8 @@ class ValidatedFormTest extends TestCase
                 null,
                 null,
                 'mixed',
+                null,
+                null,
                 [],
             ),
         ];
@@ -69,6 +70,8 @@ class ValidatedFormTest extends TestCase
                 null,
                 null,
                 'mixed',
+                null,
+                null,
                 [],
             ),
         ];
@@ -163,10 +166,45 @@ class ValidatedFormTest extends TestCase
                 $values2('conditional_submission.json'),
             ],
             'transformations' => [
-                ['test' => new Textfield('test', 'Test', null, [], [], false, null, null, CaseEnum::UPPER, [])],
+                ['test' => new Textfield('test', 'Test', null, [], [], false, null, null, CaseEnum::UPPER, null, null, [])],
                 ['test' => 'lowercase'],
                 true,
                 ['test' => 'LOWERCASE'],
+            ],
+            'calculations' => [
+                $components('calculation_definition.json'),
+                ['totalCost' => 10, 'otherFunding' => 5, 'netAmount' => null], // netAmount would be set, but that doesn't make for a very good test.
+                true,
+                ['totalCost' => 10, 'otherFunding' => 5, 'netAmount' => 5],
+            ],
+            'calculations that depend on correct datatypes' => [
+                $components('calculation_definition.json'),
+                ['totalCost' => '', 'otherFunding' => 10, 'netAmount' => null],
+                false,
+                ['totalCost' => null, 'otherFunding' => 10, 'netAmount' => -10],
+            ],
+            'validation-key-significant characters in the label do not break validation' => [
+                $components('field_name_ends_with_dot.json'),
+                ['pleaseExplainInDetailWhyApplicationForAUrgWasNotPossible' => 'bla'],
+                true,
+                ['pleaseExplainInDetailWhyApplicationForAUrgWasNotPossible' => 'bla'],
+            ],
+            'false conditionals on parent components should skip validations on child components' => [
+                $components('nested_conditional_definition.json'),
+                $values('nested_conditional_submission.json'),
+                true,
+                ['decision' => '0', 'electronicSignature' => 'Mr. Jeramie Bergstrom'],
+            ],
+            'false conditionals on parent components should skip validations on child components - fails' => [
+                $components('nested_conditional_definition.json'),
+                $values('nested_conditional_submission_one_level.json'),
+                false,
+                [
+                    'decision' => '1',
+                    'electronicSignature' => 'Mr. Jeramie Bergstrom',
+                    'areYouAnInternationalStudent' => 'yes',
+                    'doYouHaveASocialSecurityNumber' => null,
+                ],
             ],
         ];
     }

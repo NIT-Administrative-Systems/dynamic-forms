@@ -7,14 +7,21 @@ use Northwestern\SysDev\DynamicForms\JSONLogicInitHelper;
 use Orchestra\Testbench\TestCase;
 
 /**
- * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Conditional\
+ * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Conditional\JSONConditional
  */
 class JSONConditionalTest extends TestCase
 {
     /**
-     * @covers JSONConditional::__construct
-     * @covers JSONConditional::__invoke
-     * @covers LodashFunctions\___
+     * @covers ::__construct
+     * @covers ::__invoke
+     * @covers \Northwestern\SysDev\DynamicForms\JSONLogic\LodashFunctions\___
+     * @covers \Northwestern\SysDev\DynamicForms\JSONLogic\LodashFunctions\Arrays
+     * @covers \Northwestern\SysDev\DynamicForms\JSONLogic\LodashFunctions\Collection
+     * @covers \Northwestern\SysDev\DynamicForms\JSONLogic\LodashFunctions\Lang
+     * @covers \Northwestern\SysDev\DynamicForms\JSONLogic\LodashFunctions\Math
+     * @covers \Northwestern\SysDev\DynamicForms\JSONLogic\LodashFunctions\Objects
+     * @covers \Northwestern\SysDev\DynamicForms\JSONLogic\LodashFunctions\Util
+     * @covers \Northwestern\SysDev\DynamicForms\JSONLogicInitHelper
      * @dataProvider invokeDataProvider
      */
     public function testInvoke(array $jsonLogic, array $submissionValues, bool $expected): void

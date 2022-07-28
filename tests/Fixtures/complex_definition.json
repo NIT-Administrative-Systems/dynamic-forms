@@ -269,7 +269,7 @@
         },
         {
             "label":"Proposal",
-            "editor":"ckeditor",
+            "editor":"quill",
             "hideLabel":true,
             "tableView":true,
             "validate":{

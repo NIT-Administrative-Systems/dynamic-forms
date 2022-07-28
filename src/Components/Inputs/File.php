@@ -3,6 +3,7 @@
 namespace Northwestern\SysDev\DynamicForms\Components\Inputs;
 
 use Illuminate\Contracts\Support\MessageBag;
+use Illuminate\Support\Arr;
 use Illuminate\Validation\Factory;
 use Northwestern\SysDev\DynamicForms\Components\BaseComponent;
 use Northwestern\SysDev\DynamicForms\Components\UploadInterface;
@@ -15,7 +16,18 @@ class File extends BaseComponent implements UploadInterface
     const TYPE = 'file';
     protected StorageInterface $storage;
 
-    protected function processValidations(string $fieldKey, mixed $submissionValue, Factory $validator): MessageBag
+    public function submissionValue(): array
+    {
+        $value = $this->submissionValue;
+
+        foreach ($this->transformations() as $transform) {
+            $value = $transform($value);
+        }
+
+        return $value ?? [];
+    }
+
+    protected function processValidations(string $fieldKey, string $fieldLabel, mixed $submissionValue, Factory $validator): MessageBag
     {
         $rules = new RuleBag($fieldKey, []);
         if ($this->validation('required')) {
@@ -28,6 +40,8 @@ class File extends BaseComponent implements UploadInterface
         return $validator->make(
             [$fieldKey => $submissionValue],
             $rules->rules(),
+            [],
+            [$fieldKey => $fieldLabel]
         )->messages();
     }
 
@@ -49,11 +63,13 @@ class File extends BaseComponent implements UploadInterface
         return true;
     }
 
-    /**
-     * @return string
-     */
     public function getStorageType(): string
     {
-        return $this->additional['storage'];
+        return Arr::get($this->additional, 'storage', '');
+    }
+
+    public function getStorageDirectory(): string
+    {
+        return Arr::get($this->additional, 'dir', '');
     }
 }

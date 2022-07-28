@@ -18,9 +18,26 @@ class SelectTest extends InputComponentTestCase
             'values' => [
                 ['label' => 'Foo', 'value' => 'foo'],
                 ['label' => 'Bar', 'value' => 'bar'],
+                ['label' => 'Number', 'value' => '1', 'shortcut' => ''],
+                ['label' => 'Notrim ', 'value' => 'Notrim ', 'shortcut' => ''],
             ],
         ],
     ];
+
+    /**
+     * @covers ::processValidations
+     * @covers ::validate
+     */
+    public function testValidationInMultipleModeWithNull(): void
+    {
+        $component = $this->getComponent(
+            hasMultipleValues: true,
+            submissionValue: null,
+        );
+
+        $bag = $component->validate();
+        $this->assertEquals(true, $bag->isEmpty());
+    }
 
     public function validationsProvider(): array
     {
@@ -29,6 +46,8 @@ class SelectTest extends InputComponentTestCase
             'required passes' => [['required' => true], 'foo', true],
             'required fails' => [['required' => true], '', false],
             'invalid values always rejected' => [[], 'not a valid value', false],
+            'passes with integer' => [['required' => true], 1, true],
+            'passes with trim' => [['required' => true], 'Notrim', true], // Laravel middleware would trim submitted value
         ];
     }
 
@@ -36,6 +55,7 @@ class SelectTest extends InputComponentTestCase
     {
         return [
             'no transformations' => [null, 'foo', 'foo'],
+            'integer' => [null, 1, '1'],
             'upper' => [CaseEnum::UPPER, 'foo', 'foo'],
             'lower' => [CaseEnum::LOWER, 'foo', 'foo'],
         ];
@@ -54,6 +74,6 @@ class SelectTest extends InputComponentTestCase
      */
     public function testOptionValues(): void
     {
-        $this->assertEquals(['foo', 'bar'], $this->getComponent()->optionValues());
+        $this->assertEquals(['foo', 'bar', 1, 'Notrim'], $this->getComponent()->optionValues());
     }
 }

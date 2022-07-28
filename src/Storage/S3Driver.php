@@ -45,40 +45,71 @@ class S3Driver implements StorageInterface
         $this->client = $client;
     }
 
-    public function getDirectDownloadLink(string $key, ?string $originalName = null): string
-    {
+    /**
+     * @param string $urlValidityPeriod The time at which the URL should expire. This can be a Unix timestamp, a PHP DateTime object, or a string that can be evaluated by strtotime().
+     */
+    public function getDirectDownloadLink(
+        string $key,
+        ?string $originalName = null,
+        bool $forceDownload = true,
+        string $urlValidityPeriod = '+5 minutes',
+        array $additionalCommandParameters = []
+    ): string {
         $client = $this->storageClient();
+        $disposition = [$forceDownload ? 'attachment' : 'inline'];
+
+        if ($originalName) {
+            $disposition[] = sprintf('filename="%s"', str_replace('"', '\"', $originalName));
+        }
+
+        $parameters = array_merge([
+            'Bucket' => $this->bucket,
+            'Key' => $key,
+            'ResponseContentDisposition' => implode('; ', $disposition),
+        ], $additionalCommandParameters);
+
         $signedRequest =
             $client->createPresignedRequest(
-                $client->getCommand('getObject', array_filter([
-                    'Bucket' => $this->bucket,
-                    'Key' => $key,
-                    'ResponseContentDisposition' => 'attachment; filename ="'.$originalName.'"',
-                ])),
-                '+50 minutes'
+                $client->getCommand('getObject', array_filter($parameters)),
+                $urlValidityPeriod
             );
 
         return $signedRequest->getUri();
     }
 
-    public function getDownloadLink(string $key, ?string $originalName = null): JsonResponse
-    {
+    public function getDownloadLink(
+        string $key,
+        ?string $originalName = null,
+        string $urlValidityPeriod = '+5 minutes',
+        array $additionalCommandParameters = []
+    ): JsonResponse {
         return response()->json([
-            'url' => $this->getDirectDownloadLink($key, $originalName),
+            'url' => $this->getDirectDownloadLink($key, $originalName, true, $urlValidityPeriod, $additionalCommandParameters),
         ], 201);
     }
 
-    public function getUploadLink(string $key): JsonResponse
-    {
+    /**
+     * @param string $urlValidityPeriod The time at which the URL should expire. This can be a Unix timestamp, a PHP DateTime object, or a string that can be evaluated by strtotime().
+     */
+    public function getUploadLink(
+        string $key,
+        string $urlValidityPeriod = '+5 minutes',
+        array $additionalCommandParameters = []
+    ): JsonResponse {
         $client = $this->storageClient();
-        $signedRequest = $client->createPresignedRequest(
-            $client->getCommand('putObject', array_filter([
+        $parameters = array_merge(
+            [
                 'Bucket' => $this->bucket,
                 'Key' => $key,
                 'ACL' => 'private',
                 'ContentType' => 'application/octet-stream',
-            ])),
-            '+5 minutes'
+            ],
+            $additionalCommandParameters
+        );
+
+        $signedRequest = $client->createPresignedRequest(
+            $client->getCommand('putObject', array_filter($parameters)),
+            $urlValidityPeriod
         );
 
         return response()->json([
@@ -103,13 +134,18 @@ class S3Driver implements StorageInterface
             return false;
         }
 
-        // Check consistency of fields
-        $expectedUrl = route('dynamic-forms.S3-file-redirect', ['fileKey' => $value['name']]);
-        if ($value['name'] != $value['key'] || $expectedUrl != $value['url']) {
+        /**
+         * Check consistency of fields.
+         *
+         * Laravel's route() helper will provide a URL-encoded URL, but Formio will not. Rectify the difference
+         * before trying to validate.
+         */
+        $expectedUrl = urldecode(route('dynamic-forms.S3-file-redirect', ['fileKey' => $value['key']]));
+        if ($expectedUrl != $value['url']) {
             return false;
         }
 
-        return $this->findObject($value['name']);
+        return $this->findObject($value['key']);
     }
 
     public static function getStorageMethod(): string

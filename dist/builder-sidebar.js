@@ -29,6 +29,7 @@ export default {
             currency: true,
             survey: true,
             signature: true,
+            // hidden: true,
         },
     },
     customLayout: {

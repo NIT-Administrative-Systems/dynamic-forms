@@ -1,5 +1,48 @@
 # Upgrading
 
+## v0.8.0
+This version adds support for the Hidden component. There should not be any BC breaks.
+
+The `builder-sidebar.js` that comes with the package now includes the hidden component under the advanced section, albeit commented out. 
+
+To add this to your builder, add `hidden: true`. This is optional and not all dynamic-forms implementations will want to offer this to users.
+
+## v0.7.0
+This version adds support for calculated values using JSONLogic. This is ideal for things like summing up numbers into a "total" field.
+
+If you implement the `ComponentInterface`, there is a new parameter in the constructor. Similarly, if you are instantiating any components on your own, the paramater will need to be added.
+
+In the `defaults.js` file, there is a change required to show the calculated value UI in the builder. Inside the `global` function, the `calculateValuePanel`'s `ignore` value should be changed to false. 
+
+## v0.6.0
+This version adjusted the `composer.json` constraint to make it compatible with Laravel 9. No changes are necessary. 
+
+## v0.5.0
+This version switches the default editor to Quill (and removes support for CKEditor)
+
+To enable support, edit the `resources/js/formio/default.js` file. The `textarea` function has a section default editor swithc that from ckeditor to quill:
+
+```js
+       textarea: [
+    {
+        key: 'display',
+        ignore: false,
+        components: [
+            { key: 'editor', defaultValue: 'quill', disabled: true }, // do not set hidden, it won't change to ckeditor if you do that
+            { key: 'wysiwyg', ignore: true },
+        ],
+    },
+    {
+        key: 'data',
+        ignore: false,
+        components: [
+            { key: 'inputFormat', defaultValue: 'html', disabled: true },
+        ],
+    }
+],
+```
+
+
 ## v0.4.0
 This version adds support for JSONLogic conditionals.
 

@@ -16,8 +16,25 @@ class RadioTest extends InputComponentTestCase
         'values' => [
             ['label' => 'Foo', 'value' => 'foo', 'shortcut' => ''],
             ['label' => 'Bar', 'value' => 'bar', 'shortcut' => ''],
+            ['label' => 'Number', 'value' => '1', 'shortcut' => ''],
+            ['label' => 'Untrimmed string', 'value' => 'Notrim ', 'shortcut' => ''],
         ],
     ];
+
+    /**
+     * @covers ::processValidations
+     * @covers ::validate
+     */
+    public function testValidationInMultipleModeWithNull(): void
+    {
+        $component = $this->getComponent(
+            hasMultipleValues: true,
+            submissionValue: null,
+        );
+
+        $bag = $component->validate();
+        $this->assertEquals(true, $bag->isEmpty());
+    }
 
     public function validationsProvider(): array
     {
@@ -26,6 +43,8 @@ class RadioTest extends InputComponentTestCase
             'fails with invalid data' => [[], 'invalid option', false],
             'required passes' => [['required' => true], 'foo', true],
             'required fails' => [['required' => true], '', false],
+            'passes with integer' => [['required' => true], 1, true],
+            'passed with trim stuff' => [[], 'Notrim', true], // Laravel middleware would trim it
         ];
     }
 

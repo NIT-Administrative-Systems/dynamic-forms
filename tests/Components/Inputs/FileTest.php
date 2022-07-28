@@ -24,6 +24,21 @@ class FileTest extends InputComponentTestCase
     }
 
     /**
+     * @covers ::getStorageType
+     * @covers ::getStorageDirectory
+     */
+    public function testFileGetters(): void
+    {
+        $component = $this->getComponent(additional: [
+            'storage' => 'dog',
+            'dir' => 'cat/',
+        ]);
+
+        $this->assertEquals('dog', $component->getStorageType());
+        $this->assertEquals('cat/', $component->getStorageDirectory());
+    }
+
+    /**
      * @covers ::processValidations
      * @covers ::validate
      * @dataProvider validationsProvider
@@ -115,11 +130,12 @@ class FileTest extends InputComponentTestCase
             'valid file passes' => [[], $filePASS, true],
             'required passes' => [['required' => true], $filePASS, true],
             'required fails' => [['required' => true], [], false],
-            'FileExists fails from name consistency check' => [[], $fileNameCheckFail, false],
-            'FileExists fails from key consistency check' => [[], $fileKeyCheckFail, false],
             'FileExists fails from url consistency check' => [[], $fileURLCheckFail, false],
             'FileExists fails from file not found ' => [[], $fileNotFoundCheckFail, false],
             'FileExists passes' => [[], $filePASS, true],
+
+            // If a condition excludes this, the empty array won't be in the submitted data.
+            'Excluded from submission by condition' => [[], null, true],
         ];
     }
 
@@ -141,6 +157,8 @@ class FileTest extends InputComponentTestCase
         ?array $conditional = null,
         ?string $customConditional = null,
         string $case = 'mixed',
+        ?array $calculateValue = null,
+        mixed $defaultValue = null,
         mixed $submissionValue = null
     ): File {
         /** @var File $component */
@@ -155,6 +173,8 @@ class FileTest extends InputComponentTestCase
             $conditional,
             $customConditional,
             $case,
+            $calculateValue,
+            $defaultValue,
             $submissionValue
         );
 
