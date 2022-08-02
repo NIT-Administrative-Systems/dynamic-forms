@@ -19,7 +19,8 @@ FormioUtils.Evaluator.noeval = true;
  * with the typical way of adjusting editForms.
  */
 Defaults.globalButtonCustomization();
-Defaults.globalFileCustomization()
+Defaults.globalFileCustomization();
+Defaults.globalResourceCustomization();
 
 /**
  * Apply any custom templates.
@@ -46,7 +47,7 @@ window.DynamicFormsBuilderSidebar = BuilderSidebar;
  */
 const origFormioBuilder = Formio.builder;
 Formio.builder = function (element, form, options) {
-    options = options || { editForm: {} };
+    options = options || {project: process.env.MIX_APP_URL};
 
     options.editForm = Defaults.configMerge(
         Defaults.configMerge(Defaults.global(), Defaults.specificFields),

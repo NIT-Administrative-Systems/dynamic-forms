@@ -11,19 +11,19 @@ use ReflectionMethod;
  */
 class InstallTest extends TestCase
 {
-    /**
-     * @covers ::getStub
-     * @covers ::getDefaultNamespace
-     * @covers ::getNameInput
-     */
-    public function testGeneratorMethods(): void
-    {
-        $cmd = $this->installCommand();
-
-        $this->assertStringContainsString('Controller', $this->invokeProtected($cmd, 'getNameInput'));
-        $this->assertStringContainsString('stubs', $this->invokeProtected($cmd, 'getStub'));
-        $this->assertEquals('App\Http\Controllers', $this->invokeProtected($cmd, 'getDefaultNamespace', ['App']));
-    }
+//    /**
+//     * @covers ::getStub
+//     * @covers ::getDefaultNamespace
+//     * @covers ::getNameInput
+//     */
+//    public function testGeneratorMethods(): void
+//    {
+//        $cmd = $this->installCommand();
+//
+//        $this->assertStringContainsString('Controller', $this->invokeProtected($cmd, 'getNameInput'));
+//        $this->assertStringContainsString('stubs', $this->invokeProtected($cmd, 'getStub'));
+//        $this->assertEquals('App\Http\Controllers', $this->invokeProtected($cmd, 'getDefaultNamespace', ['App']));
+//    }
 
     /**
      * @covers ::ejectRoutes
