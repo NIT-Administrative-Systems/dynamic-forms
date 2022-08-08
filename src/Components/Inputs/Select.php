@@ -137,11 +137,6 @@ class Select extends BaseComponent
         }
 
         $this->optionValues = collect($resourceList[$resource]::submissions(-1, 0, '', ''))->transform(function ($val) {
-            $prop = substr($this->additional['valueProperty'], 5);
-            if ($prop !== '') {
-                return $val[$prop];
-            }
-
             return json_encode($val);
         })->all();
     }
