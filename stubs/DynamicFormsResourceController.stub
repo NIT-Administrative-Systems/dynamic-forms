@@ -61,7 +61,7 @@ class ResourceController extends Controller
             abort(404, 'Given Resource does not exist');
         }
         $componentList = $resourceList[$resource]::components();
-        $str = '{"type":"resource", "components":' . $componentList . '}';
+        $str = '{"type":"resource", "components": [' . $componentList . ']}';
         return response($str)->header('Content-Type', 'application/json');
     }
 
@@ -113,22 +113,27 @@ class ResourceController extends Controller
 
             $resourceSubmissions = array_slice($resourceSubmissions, $skip, $limit);
         }
+
+        $count = 0;
         $str = '[';
-        foreach ($resourceSubmissions as $submission)
-        {
-            $str .= '{ "data": {';
+        foreach ($resourceSubmissions as $submission) {
             foreach ($submission as $label => $value)
             {
-                $str.= '"'.$label.'": '.'"'.$value.'",';
+                $subStr = '{"_id": "ListOfSchools'.$count.'", "roles": [], "state": "submitted", "access": [], "data": {';
+                $subStr.= '"label": "'.$label.'", '.'"value": "'.$value.'",';
+                $subStr = substr($subStr, 0, -1);
+                $str .= $subStr .'}}, ';
+                $count++;
             }
-            $str = substr($str, 0, -1);
-            $str .= '}},';
+
         }
         if(count($resourceSubmissions) > 0)
         {
             $str = substr($str, 0, -1);
         }
+        $str = rtrim(trim($str, ','));
         $str .= ']';
+
         return response($str)->header('Content-Type', 'application/json');
     }
 
@@ -140,17 +145,19 @@ class ResourceController extends Controller
         $ret = [];
         $files = Finder::create()
             ->in([
-                __DIR__.DIRECTORY_SEPARATOR.'Resources',
+//                @TODO: replace with path to your folder of resources
+                base_path().'/App/Domains/Form/DynamicForms/FormioResources'
             ])
             ->name('*.php')
             ->files();
 
         foreach ($files as $file) {
-            $resource = __NAMESPACE__.'\\'.str_replace(
-                    ['/', '.php'],
-                    ['\\', ''],
-                    Str::after($file->getRealPath(), __DIR__.DIRECTORY_SEPARATOR)
-                );
+            /** @var ResourceInterface $resource */
+            $resource = str_replace(
+                ['/', '.php'],
+                ['\\', ''],
+                Str::after($file->getRealPath(), base_path().DIRECTORY_SEPARATOR)
+            );
 
             if (
                 is_subclass_of($resource, ResourceInterface::class)
@@ -159,6 +166,7 @@ class ResourceController extends Controller
                 $ret[$resource::indexName()] = $resource;
             }
         }
+
         return $ret;
     }
 }
