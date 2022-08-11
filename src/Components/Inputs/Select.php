@@ -9,6 +9,7 @@ use Illuminate\Validation\Rule;
 use Northwestern\SysDev\DynamicForms\Components\BaseComponent;
 use Northwestern\SysDev\DynamicForms\Errors\InvalidDefinitionError;
 use Northwestern\SysDev\DynamicForms\Errors\UnknownResourceError;
+use Northwestern\SysDev\DynamicForms\ResourceRegistry;
 use Northwestern\SysDev\DynamicForms\RuleBag;
 
 class Select extends BaseComponent
@@ -127,10 +128,10 @@ class Select extends BaseComponent
             ->all();
     }
 
-    private function initSrcResources(array $additional): void
+    private function initSrcResources(array $additional, ResourceRegistry $resourceRegistry): void
     {
         //add in stuff for valueProperty
-        $resourceList = \App\Http\Controllers\ResourceController::getResourceList();
+        $resourceList = $resourceRegistry->registered();
         $resource = $additional['data']['resource'];
         if (! isset($resourceList[$resource])) {
             throw new UnknownResourceError($resource);

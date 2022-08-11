@@ -22,6 +22,10 @@ class DynamicFormsProvider extends ServiceProvider
             return new ComponentRegistry;
         });
 
+        $this->app->singleton(ResourceRegistry::class, function ($app) {
+            return new ResourceRegistry();
+        });
+
         $this->app->singleton(JSONLogicInitHelper::class, function ($app) {
             return new JSONLogicInitHelper;
         });
@@ -66,7 +70,8 @@ class DynamicFormsProvider extends ServiceProvider
 
         /** @var ComponentRegistry $registry */
         $registry = $this->app->make(ComponentRegistry::class);
-
+        /** @var ResourceRegistry $resourceRegistry */
+        $resourceRegistry = $this->app->make(ResourceRegistry::class);
         /** @var JSONLogicInitHelper $jsonHelper */
         $jsonHelper = $this->app->make(JSONLogicInitHelper::class);
         /** @var FileComponentRegistry $fileRegistry */
