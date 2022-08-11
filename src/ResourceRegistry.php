@@ -36,7 +36,6 @@ class ResourceRegistry
         return $this->components[$type];
     }
 
-
     /**
      * Registers a resource class.
      *
