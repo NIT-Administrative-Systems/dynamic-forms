@@ -29,20 +29,20 @@ class ResourceRegistry
      */
     public function get(string $type): string
     {
-        if (! Arr::has($this->components, $type)) {
+        if (! Arr::has($this->resources, $type)) {
             throw new UnknownResourceError($type);
         }
 
-        return $this->components[$type];
+        return $this->resources[$type];
     }
 
     /**
      * Registers a resource class.
      *
-     * @param string $component
+     * @param ResourceInterface $resource
      */
     public function register(ResourceInterface $resource): void
     {
-        $this->resources[$resource::type()] = $resource;
+        $this->resources[$resource::indexName()] = $resource;
     }
 }
