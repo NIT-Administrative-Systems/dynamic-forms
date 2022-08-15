@@ -41,7 +41,7 @@ class ResourceRegistry
      *
      * @param string $component
      */
-    public function register(string $resource): void
+    public function register(ResourceInterface $resource): void
     {
         $this->resources[$resource::type()] = $resource;
     }

@@ -32,17 +32,15 @@ class ResourceController extends Controller
     {
         $resourceIndexList = array_keys($resourceRegistry->registered());
 
-        $retString = '[';
-        foreach ($resourceIndexList as $name)
-        {
-            $retString .= '{"_id":"'.$name.'","title":"'.$name.'"},';
+        $resources = [];
+        foreach ($resourceIndexList as $resourceName) {
+            $resources[] = [
+                '_id' => $resourceName,
+                'title' => $resourceName
+            ];
+        }
 
-        }
-        if(count($resourceIndexList) > 0)
-        {
-            $retString = substr($retString, 0, -1);
-        }
-        $retString .= ']';
+        $retString = json_encode($resources);
 
         return response(
             $retString
@@ -61,8 +59,8 @@ class ResourceController extends Controller
         {
             abort(404, 'Given Resource does not exist');
         }
-        $componentList = $resourceList[$resource]::components();
-        $str = '{"type":"resource", "components": [' . $componentList . ']}';
+        $componentList = json_encode($resourceList[$resource]::components());
+        $str = '{"type":"resource", "components": '.$componentList.'}';
         return response($str)->header('Content-Type', 'application/json');
     }
 
@@ -116,24 +114,24 @@ class ResourceController extends Controller
         }
 
         $count = 0;
-        $str = '[';
-        foreach ($resourceSubmissions as $submission) {
-            foreach ($submission as $label => $value)
-            {
-                $subStr = '{"_id": "ListOfSchools'.$count.'", "roles": [], "state": "submitted", "access": [], "data": {';
-                $subStr.= '"label": "'.$label.'", '.'"value": "'.$value.'",';
-                $subStr = substr($subStr, 0, -1);
-                $str .= $subStr .'}}, ';
+        $submissions = [];
+        foreach ($resourceSubmissions as $componentName => $submission) {
+            foreach ($submission as $label => $value) {
+                $submissions[] = [
+                    '_id' => $componentName.$count,
+                    'roles' => [],
+                    'state' => 'submitted',
+                    'access' => [],
+                    'data' => [
+                        'label' => $label,
+                        'value' => $value
+                    ]
+                ];
                 $count++;
             }
 
         }
-        if(count($resourceSubmissions) > 0)
-        {
-            $str = substr($str, 0, -1);
-        }
-        $str = rtrim(trim($str, ','));
-        $str .= ']';
+        $str = json_encode($submissions);
 
         return response($str)->header('Content-Type', 'application/json');
     }
