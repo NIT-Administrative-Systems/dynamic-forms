@@ -11,7 +11,6 @@ use ReflectionMethod;
  */
 class InstallTest extends TestCase
 {
-
     /**
      * @covers ::ejectRoutes
      */
