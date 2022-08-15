@@ -12,7 +12,7 @@ interface ResourceInterface
     /**
      * Will provide the list of components that will contain the Resource.
      */
-    public static function components(): string;
+    public static function components(): array;
 
     /**
      * Will provide the submissions that backs this resource,
