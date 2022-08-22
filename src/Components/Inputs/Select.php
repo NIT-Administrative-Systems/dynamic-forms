@@ -93,6 +93,7 @@ class Select extends BaseComponent implements ResourceValues
         return is_scalar($value) ? (string) $value : $value;
     }
 
+//    TODO: a select with no values will error out
     protected function processValidations(string $fieldKey, string $fieldLabel, mixed $submissionValue, Factory $validator): MessageBag
     {
         $rules = new RuleBag($fieldKey, ['string']);
@@ -101,7 +102,7 @@ class Select extends BaseComponent implements ResourceValues
         $rules->addIfNotNull('required', $this->validation('required'));
         $rules->addIf('nullable', ! $this->validation('required'));
 
-        $rules->addIf(Rule::in($this->optionValues()), $this->dataSource === self::DATA_SRC_VALUES || $this->dataSource === self::DATA_SRC_RESOURCE);
+        $rules->addIf(Rule::in($this->optionValues()), $this->dataSource === self::DATA_SRC_VALUES);
 
         return $validator->make(
             [$fieldKey => $submissionValue],
@@ -130,10 +131,10 @@ class Select extends BaseComponent implements ResourceValues
             ->all();
     }
 
-    private function initSrcResources(array $additional, ResourceRegistry $resourceRegistry): void
+    private function initSrcResources(array $additional): void
     {
         //add in stuff for valueProperty
-        $resourceList = $resourceRegistry->registered();
+        $resourceList = $this->resourceRegistry->registered();
         $resource = $additional['data']['resource'];
         if (! isset($resourceList[$resource])) {
             throw new UnknownResourceError($resource);
