@@ -65,11 +65,10 @@ class Select extends BaseComponent implements ResourceValues
 
         // formiojs omits the dataSrc prop when it's 'values'; assume that's the mode when not present
         $this->dataSource = Arr::get($this->additional, 'dataSrc', self::DATA_SRC_VALUES);
-        $this->resourceRegistry = Arr::get($this->additional, 'resourceRegistry');
 
         match ($this->dataSource) {
             self::DATA_SRC_VALUES => $this->initSrcValues($additional),
-            self::DATA_SRC_RESOURCE => $this->initSrcResources($additional, $this->resourceRegistry),
+//            self::DATA_SRC_RESOURCE => $this->initSrcResources($additional, $this->resourceRegistry),
             default => $this->initSrcUnsupported(),
         };
     }
@@ -139,6 +138,11 @@ class Select extends BaseComponent implements ResourceValues
                 return trim(Arr::get($pair, 'value'));
             })
             ->all();
+    }
+
+    public function activateResources(): void
+    {
+        $this->initSrcResources($this->additional, $this->resourceRegistry);
     }
 
     private function initSrcResources(array $additional, ResourceRegistry $resourceRegistry): void

@@ -7,6 +7,7 @@ use Northwestern\SysDev\DynamicForms\ComponentRegistry;
 use Northwestern\SysDev\DynamicForms\Components\BaseComponent;
 use Northwestern\SysDev\DynamicForms\Components\ComponentInterface;
 use Northwestern\SysDev\DynamicForms\Components\CustomSubcomponentDeserialization;
+use Northwestern\SysDev\DynamicForms\Components\Inputs\Select;
 use Northwestern\SysDev\DynamicForms\Components\ResourceValues;
 use Northwestern\SysDev\DynamicForms\Components\UploadInterface;
 use Northwestern\SysDev\DynamicForms\Errors\InvalidDefinitionError;
@@ -140,9 +141,12 @@ class Form
                 $component->setStorageDriver(resolve($storageDriver));
             }
 
-//            if (is_subclass_of($component, ResourceValues::class)) {
-//                $component->setResourceRegistry($this->resourceRegistry);
-//            }
+            if (is_subclass_of($component, ResourceValues::class)) {
+                $component->setResourceRegistry($this->resourceRegistry);
+                if ($component->dataSource() == Select::DATA_SRC_RESOURCE) {
+                    $component->activateResources();
+                }
+            }
 
             $components[] = $component;
         }
