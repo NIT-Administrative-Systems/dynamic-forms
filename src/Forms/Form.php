@@ -108,7 +108,7 @@ class Form
             }
 
             $class = $this->componentRegistry->get($definition['type']);
-            
+
             // Some components (columns + tables) don't keep children in 'components' like they ought to
             if (is_subclass_of($class, CustomSubcomponentDeserialization::class)) {
                 $children = $this->getCustomChildren($class, $definition, $path);
@@ -136,7 +136,7 @@ class Form
                 $component->setStorageDriver(resolve($storageDriver));
             }
 
-            if (is_subclass_of($component,ResourceValues::class)) {
+            if (is_subclass_of($component, ResourceValues::class)) {
                 $component->setResourceRegistry($this->resourceRegistry);
             }
 
