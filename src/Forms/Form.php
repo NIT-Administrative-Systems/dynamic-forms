@@ -43,7 +43,7 @@ class Form
         $this->componentRegistry = resolve(ComponentRegistry::class);
         $this->fileComponentRegistry = resolve(FileComponentRegistry::class);
 
-        if (!isset($resourceRegistry)) {
+        if (! isset($resourceRegistry)) {
             $this->resourceRegistry = resolve(ResourceRegistry::class);
         } else {
             $this->resourceRegistry = $resourceRegistry;
@@ -109,7 +109,7 @@ class Form
 
             $class = $this->componentRegistry->get($definition['type']);
 
-            if (is_subclass_of($class,ResourceValues::class)) {
+            if (is_subclass_of($class, ResourceValues::class)) {
                 $class->setResourceRegistry($this->resourceRegistry);
             }
 

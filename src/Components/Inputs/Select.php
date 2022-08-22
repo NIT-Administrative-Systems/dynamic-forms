@@ -12,7 +12,6 @@ use Northwestern\SysDev\DynamicForms\Errors\InvalidDefinitionError;
 use Northwestern\SysDev\DynamicForms\Errors\UnknownResourceError;
 use Northwestern\SysDev\DynamicForms\ResourceRegistry;
 use Northwestern\SysDev\DynamicForms\RuleBag;
-use Northwestern\SysDev\DynamicForms\Storage\StorageInterface;
 
 class Select extends BaseComponent implements ResourceValues
 {
