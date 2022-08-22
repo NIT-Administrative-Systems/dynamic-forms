@@ -134,7 +134,7 @@ class Select extends BaseComponent implements ResourceValues
     private function initSrcResources(array $additional): void
     {
         //add in stuff for valueProperty
-        $resourceList = $this->resourceRegistry->registered();
+        $resourceList = ResourceRegistry::class;
         $resource = $additional['data']['resource'];
         if (! isset($resourceList[$resource])) {
             throw new UnknownResourceError($resource);
