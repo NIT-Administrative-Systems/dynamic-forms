@@ -43,7 +43,7 @@ class Form
         $this->componentRegistry = resolve(ComponentRegistry::class);
         $this->fileComponentRegistry = resolve(FileComponentRegistry::class);
 
-        if (!isset($resourceRegistry)) {
+        if (! isset($resourceRegistry)) {
             $this->resourceRegistry = resolve(ResourceRegistry::class);
         } else {
             $this->resourceRegistry = $resourceRegistry;
@@ -108,7 +108,7 @@ class Form
             }
 
             $class = $this->componentRegistry->get($definition['type']);
-
+            
             // Some components (columns + tables) don't keep children in 'components' like they ought to
             if (is_subclass_of($class, CustomSubcomponentDeserialization::class)) {
                 $children = $this->getCustomChildren($class, $definition, $path);
