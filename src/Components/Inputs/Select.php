@@ -68,7 +68,8 @@ class Select extends BaseComponent implements ResourceValues
 
         match ($this->dataSource) {
             self::DATA_SRC_VALUES => $this->initSrcValues($additional),
-//            self::DATA_SRC_RESOURCE => $this->initSrcResources($additional, $this->resourceRegistry),
+//            self::DATA_SRC_RESOURCE => 'initialized in Form.php?',
+            self::DATA_SRC_RESOURCE => $this->initSrcResources($additional, $this->resourceRegistry),
             default => $this->initSrcUnsupported(),
         };
     }
