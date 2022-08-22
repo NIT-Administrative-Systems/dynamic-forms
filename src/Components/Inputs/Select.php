@@ -7,14 +7,17 @@ use Illuminate\Support\Arr;
 use Illuminate\Validation\Factory;
 use Illuminate\Validation\Rule;
 use Northwestern\SysDev\DynamicForms\Components\BaseComponent;
+use Northwestern\SysDev\DynamicForms\Components\ResourceValues;
 use Northwestern\SysDev\DynamicForms\Errors\InvalidDefinitionError;
 use Northwestern\SysDev\DynamicForms\Errors\UnknownResourceError;
 use Northwestern\SysDev\DynamicForms\ResourceRegistry;
 use Northwestern\SysDev\DynamicForms\RuleBag;
+use Northwestern\SysDev\DynamicForms\Storage\StorageInterface;
 
-class Select extends BaseComponent
+class Select extends BaseComponent implements ResourceValues
 {
     const TYPE = 'select';
+    protected ResourceRegistry $resourceRegistry;
 
     const DATA_SRC_VALUES = 'values';
     const DATA_SRC_URL = 'url';
@@ -154,5 +157,15 @@ class Select extends BaseComponent
     {
         // Field does not support transformations
         return [];
+    }
+
+    public function getResourceRegistry(): ResourceRegistry
+    {
+        return $this->resourceRegistry;
+    }
+
+    public function setResourceRegistry(ResourceRegistry $resourceRegistry): void
+    {
+        $this->resourceRegistry = $resourceRegistry;
     }
 }

@@ -70,15 +70,15 @@ class DynamicFormsProvider extends ServiceProvider
 
         /** @var ComponentRegistry $registry */
         $registry = $this->app->make(ComponentRegistry::class);
-        /** @var ResourceRegistry $resourceRegistry */
+        /** @var ResourceRegistry|null $resourceRegistry */
         $resourceRegistry = $this->app->make(ResourceRegistry::class);
         /** @var JSONLogicInitHelper $jsonHelper */
         $jsonHelper = $this->app->make(JSONLogicInitHelper::class);
         /** @var FileComponentRegistry $fileRegistry */
         $fileRegistry = $this->app->make(FileComponentRegistry::class);
 
-        Request::macro('validateDynamicForm', function (string $definitionJson, string $submissionJson) {
-            $formDefinition = new Form($definitionJson); // @TODO pass registry
+        Request::macro('validateDynamicForm', function (string $definitionJson, string $submissionJson) use ($resourceRegistry) {
+            $formDefinition = new Form($definitionJson, $resourceRegistry); // @TODO pass registry
             $validator = $formDefinition->validate($submissionJson);
 
             if (! $validator->isValid()) {

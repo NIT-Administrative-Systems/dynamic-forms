@@ -7,10 +7,12 @@ use Northwestern\SysDev\DynamicForms\ComponentRegistry;
 use Northwestern\SysDev\DynamicForms\Components\BaseComponent;
 use Northwestern\SysDev\DynamicForms\Components\ComponentInterface;
 use Northwestern\SysDev\DynamicForms\Components\CustomSubcomponentDeserialization;
+use Northwestern\SysDev\DynamicForms\Components\ResourceValues;
 use Northwestern\SysDev\DynamicForms\Components\UploadInterface;
 use Northwestern\SysDev\DynamicForms\Errors\InvalidDefinitionError;
 use Northwestern\SysDev\DynamicForms\FileComponentRegistry;
 use Northwestern\SysDev\DynamicForms\Forms\Concerns\HandlesTree;
+use Northwestern\SysDev\DynamicForms\ResourceRegistry;
 
 class Form
 {
@@ -34,10 +36,19 @@ class Form
 
     protected FileComponentRegistry $fileComponentRegistry;
 
-    public function __construct(string $definitionJson)
+    protected ?ResourceRegistry $resourceRegistry;
+
+    public function __construct(string $definitionJson, ?ResourceRegistry $resourceRegistry = null)
     {
         $this->componentRegistry = resolve(ComponentRegistry::class);
         $this->fileComponentRegistry = resolve(FileComponentRegistry::class);
+
+        if (!isset($resourceRegistry)) {
+            $this->resourceRegistry = resolve(ResourceRegistry::class);
+        } else {
+            $this->resourceRegistry = $resourceRegistry;
+        }
+
         $this->setDefinition($definitionJson);
     }
 
@@ -97,6 +108,10 @@ class Form
             }
 
             $class = $this->componentRegistry->get($definition['type']);
+
+            if (is_subclass_of($class,ResourceValues::class)) {
+                $class->setResourceRegistry($this->resourceRegistry);
+            }
 
             // Some components (columns + tables) don't keep children in 'components' like they ought to
             if (is_subclass_of($class, CustomSubcomponentDeserialization::class)) {
