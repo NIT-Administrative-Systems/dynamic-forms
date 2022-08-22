@@ -116,6 +116,10 @@ class Form
                 $children = $this->processComponentDefinition($definition, $path.'.'.$definition['key'].'.components');
             }
 
+            if (is_subclass_of($class, ResourceValues::class)) {
+                $definition[] = ['resourceRegistry' => $this->resourceRegistry];
+            }
+
             $component = new $class(
                 $definition['key'],
                 Arr::get($definition, 'label'),
@@ -136,10 +140,9 @@ class Form
                 $component->setStorageDriver(resolve($storageDriver));
             }
 
-            if (is_subclass_of($component, ResourceValues::class)) {
-                $component->setResourceRegistry($this->resourceRegistry);
-                $component->setOptionValues();
-            }
+//            if (is_subclass_of($component, ResourceValues::class)) {
+//                $component->setResourceRegistry($this->resourceRegistry);
+//            }
 
             $components[] = $component;
         }

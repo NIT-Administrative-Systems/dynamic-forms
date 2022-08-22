@@ -59,28 +59,29 @@ class Select extends BaseComponent implements ResourceValues
         string $case,
         null|array|string $calculateValue,
         mixed $defaultValue,
-        array $additional
+        array $additional,
     ) {
         parent::__construct($key, $label, $errorLabel, $components, $validations, $hasMultipleValues, $conditional, $customConditional, $case, $calculateValue, $defaultValue, $additional);
 
         // formiojs omits the dataSrc prop when it's 'values'; assume that's the mode when not present
         $this->dataSource = Arr::get($this->additional, 'dataSrc', self::DATA_SRC_VALUES);
+        $this->resourceRegistry = Arr::get($this->additional, 'resourceRegistry');
 
-//        match ($this->dataSource) {
-//            self::DATA_SRC_VALUES => $this->initSrcValues($additional),
-//            self::DATA_SRC_RESOURCE => $this->initSrcResources($additional),
-//            default => $this->initSrcUnsupported(),
-//        };
-    }
-
-    public function setOptionValues(): void
-    {
         match ($this->dataSource) {
-            self::DATA_SRC_VALUES => $this->initSrcValues($this->additional),
-            self::DATA_SRC_RESOURCE => $this->initSrcResources($this->additional, $this->resourceRegistry),
+            self::DATA_SRC_VALUES => $this->initSrcValues($additional),
+            self::DATA_SRC_RESOURCE => $this->initSrcResources($additional, $this->resourceRegistry),
             default => $this->initSrcUnsupported(),
         };
     }
+
+//    public function setOptionValues(): void
+//    {
+//        match ($this->dataSource) {
+//            self::DATA_SRC_VALUES => $this->initSrcValues($this->additional),
+//            self::DATA_SRC_RESOURCE => $this->initSrcResources($this->additional, $this->resourceRegistry),
+//            default => $this->initSrcUnsupported(),
+//        };
+//    }
 
     /**
      * {@inheritDoc}

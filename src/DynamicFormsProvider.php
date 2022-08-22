@@ -70,7 +70,7 @@ class DynamicFormsProvider extends ServiceProvider
 
         /** @var ComponentRegistry $registry */
         $registry = $this->app->make(ComponentRegistry::class);
-        /** @var ResourceRegistry|null $resourceRegistry */
+        /** @var ResourceRegistry $resourceRegistry */
         $resourceRegistry = $this->app->make(ResourceRegistry::class);
         /** @var JSONLogicInitHelper $jsonHelper */
         $jsonHelper = $this->app->make(JSONLogicInitHelper::class);
