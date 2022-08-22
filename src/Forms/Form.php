@@ -137,8 +137,7 @@ class Form
             }
 
             if (is_subclass_of($component, ResourceValues::class)) {
-                $registry = $this->resourceRegistry;
-                $component->setResourceRegistry(resolve($registry));
+                $component->setResourceRegistry($this->resourceRegistry);
             }
 
             $components[] = $component;
