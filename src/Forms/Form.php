@@ -109,10 +109,6 @@ class Form
 
             $class = $this->componentRegistry->get($definition['type']);
 
-            if (is_subclass_of($class,ResourceValues::class)) {
-                $class->setResourceRegistry($this->resourceRegistry);
-            }
-
             // Some components (columns + tables) don't keep children in 'components' like they ought to
             if (is_subclass_of($class, CustomSubcomponentDeserialization::class)) {
                 $children = $this->getCustomChildren($class, $definition, $path);
@@ -138,6 +134,10 @@ class Form
             if (is_subclass_of($component, UploadInterface::class)) {
                 $storageDriver = $this->fileComponentRegistry->get($component->getStorageType());
                 $component->setStorageDriver(resolve($storageDriver));
+            }
+
+            if (is_subclass_of($component,ResourceValues::class)) {
+                $component->setResourceRegistry($this->resourceRegistry);
             }
 
             $components[] = $component;
