@@ -77,7 +77,7 @@ class Select extends BaseComponent implements ResourceValues
     {
         match ($this->dataSource) {
             self::DATA_SRC_VALUES => $this->initSrcValues($this->additional),
-            self::DATA_SRC_RESOURCE => $this->initSrcResources($this->additional),
+            self::DATA_SRC_RESOURCE => $this->initSrcResources($this->additional, $this->resourceRegistry),
             default => $this->initSrcUnsupported(),
         };
     }
