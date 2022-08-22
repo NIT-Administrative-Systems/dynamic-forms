@@ -9,4 +9,6 @@ interface ResourceValues
     public function getResourceRegistry(): ResourceRegistry;
 
     public function setResourceRegistry(ResourceRegistry $resourceRegistry): void;
+
+    public function setOptionValues(): void;
 }

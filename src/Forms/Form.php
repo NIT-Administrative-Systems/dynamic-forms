@@ -138,6 +138,7 @@ class Form
 
             if (is_subclass_of($component, ResourceValues::class)) {
                 $component->setResourceRegistry($this->resourceRegistry);
+                $component->setOptionValues();
             }
 
             $components[] = $component;

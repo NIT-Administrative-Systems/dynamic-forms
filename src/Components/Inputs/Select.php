@@ -66,9 +66,18 @@ class Select extends BaseComponent implements ResourceValues
         // formiojs omits the dataSrc prop when it's 'values'; assume that's the mode when not present
         $this->dataSource = Arr::get($this->additional, 'dataSrc', self::DATA_SRC_VALUES);
 
+//        match ($this->dataSource) {
+//            self::DATA_SRC_VALUES => $this->initSrcValues($additional),
+//            self::DATA_SRC_RESOURCE => $this->initSrcResources($additional),
+//            default => $this->initSrcUnsupported(),
+//        };
+    }
+
+    public function setOptionValues(): void
+    {
         match ($this->dataSource) {
-            self::DATA_SRC_VALUES => $this->initSrcValues($additional),
-            self::DATA_SRC_RESOURCE => $this->initSrcResources($additional),
+            self::DATA_SRC_VALUES => $this->initSrcValues($this->additional),
+            self::DATA_SRC_RESOURCE => $this->initSrcResources($this->additional),
             default => $this->initSrcUnsupported(),
         };
     }
@@ -131,11 +140,12 @@ class Select extends BaseComponent implements ResourceValues
             ->all();
     }
 
-    private function initSrcResources(array $additional): void
+    private function initSrcResources(array $additional, ResourceRegistry $resourceRegistry): void
     {
         //add in stuff for valueProperty
-        $resourceList = ResourceRegistry::class;
+        $resourceList = $resourceRegistry->registered();
         $resource = $additional['data']['resource'];
+
         if (! isset($resourceList[$resource])) {
             throw new UnknownResourceError($resource);
         }
