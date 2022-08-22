@@ -74,7 +74,6 @@ class Select extends BaseComponent implements ResourceValues
         };
     }
 
-
     public function activateResources(): void
     {
         $this->initSrcResources($this->additional, $this->resourceRegistry);
