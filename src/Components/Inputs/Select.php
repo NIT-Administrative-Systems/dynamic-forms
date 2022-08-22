@@ -156,7 +156,7 @@ class Select extends BaseComponent implements ResourceValues
     private function initSrcOther(): void
     {
         if ($this->dataSource == self::DATA_SRC_RESOURCE) {
-            $this->initSrcResources($this->additional, $this->resourceRegistry);
+            //
         } else {
             $this->initSrcUnsupported();
         }
