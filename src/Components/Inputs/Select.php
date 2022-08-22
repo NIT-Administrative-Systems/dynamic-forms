@@ -69,19 +69,16 @@ class Select extends BaseComponent implements ResourceValues
         match ($this->dataSource) {
             self::DATA_SRC_VALUES => $this->initSrcValues($additional),
 //            self::DATA_SRC_RESOURCE => 'initialized in Form.php?',
-            self::DATA_SRC_RESOURCE => $this->initSrcResources($additional, $this->resourceRegistry),
-            default => $this->initSrcUnsupported(),
+//            self::DATA_SRC_RESOURCE => $this->initSrcResources($additional, $this->resourceRegistry),
+            default => $this->initSrcOther(),
         };
     }
 
-//    public function setOptionValues(): void
-//    {
-//        match ($this->dataSource) {
-//            self::DATA_SRC_VALUES => $this->initSrcValues($this->additional),
-//            self::DATA_SRC_RESOURCE => $this->initSrcResources($this->additional, $this->resourceRegistry),
-//            default => $this->initSrcUnsupported(),
-//        };
-//    }
+
+    public function activateResources(): void
+    {
+        $this->initSrcResources($this->additional, $this->resourceRegistry);
+    }
 
     /**
      * {@inheritDoc}
@@ -141,11 +138,6 @@ class Select extends BaseComponent implements ResourceValues
             ->all();
     }
 
-    public function activateResources(): void
-    {
-        $this->initSrcResources($this->additional, $this->resourceRegistry);
-    }
-
     private function initSrcResources(array $additional, ResourceRegistry $resourceRegistry): void
     {
         //add in stuff for valueProperty
@@ -159,6 +151,15 @@ class Select extends BaseComponent implements ResourceValues
         $this->optionValues = collect($resourceList[$resource]::submissions(-1, 0, '', ''))->transform(function ($val) {
             return json_encode($val);
         })->all();
+    }
+
+    private function initSrcOther(): void
+    {
+        if ($this->dataSource == self::DATA_SRC_RESOURCE) {
+            $this->initSrcResources($this->additional, $this->resourceRegistry);
+        } else {
+            $this->initSrcUnsupported();
+        }
     }
 
     private function initSrcUnsupported(): void
