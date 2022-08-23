@@ -155,7 +155,8 @@ class Select extends BaseComponent implements ResourceValues
     private function initSrcOther(): void
     {
         if ($this->dataSource == self::DATA_SRC_RESOURCE) {
-            //
+            // This is left blank because initSrcResources cannot be called in the constructor
+            // because resourceRegistry is initialized after calling the component's constructor in Form.php
         } else {
             $this->initSrcUnsupported();
         }
