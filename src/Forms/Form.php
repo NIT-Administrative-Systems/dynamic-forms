@@ -117,10 +117,6 @@ class Form
                 $children = $this->processComponentDefinition($definition, $path.'.'.$definition['key'].'.components');
             }
 
-            if (is_subclass_of($class, ResourceValues::class)) {
-                $definition[] = ['resourceRegistry' => $this->resourceRegistry];
-            }
-
             $component = new $class(
                 $definition['key'],
                 Arr::get($definition, 'label'),
@@ -144,7 +140,7 @@ class Form
 //            Because component is instantiated above, its constructor can't call methods that use resourceRegistry
             if (is_subclass_of($component, ResourceValues::class)) {
                 $component->setResourceRegistry($this->resourceRegistry);
-                if ($component->dataSource() == Select::DATA_SRC_RESOURCE) {
+                if ($component->type() == 'select' && $component->dataSource() == Select::DATA_SRC_RESOURCE) {
                     $component->activateResources();
                 }
             }
