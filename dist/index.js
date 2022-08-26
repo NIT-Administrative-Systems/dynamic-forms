@@ -47,7 +47,7 @@ window.DynamicFormsBuilderSidebar = BuilderSidebar;
  */
 const origFormioBuilder = Formio.builder;
 Formio.builder = function (element, form, options) {
-    options = options || {project: process.env.MIX_APP_URL};
+    options = options || { editForm: {} };
 
     options.editForm = Defaults.configMerge(
         Defaults.configMerge(Defaults.global(), Defaults.specificFields),

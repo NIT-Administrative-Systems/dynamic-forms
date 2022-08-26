@@ -68,12 +68,13 @@ class Select extends BaseComponent implements ResourceValues
 
         match ($this->dataSource) {
             self::DATA_SRC_VALUES => $this->initSrcValues($additional),
-//            self::DATA_SRC_RESOURCE => 'initialized in Form.php?',
-//            self::DATA_SRC_RESOURCE => $this->initSrcResources($additional, $this->resourceRegistry),
             default => $this->initSrcOther(),
         };
     }
 
+    /**
+     * This function must be run during component or form instantiation. Allows user's application to use the resources they've registered.
+     */
     public function activateResources(): void
     {
         $this->initSrcResources($this->additional, $this->resourceRegistry);
@@ -158,7 +159,7 @@ class Select extends BaseComponent implements ResourceValues
             // This is left blank because initSrcResources cannot be called in the constructor
             // because resourceRegistry is initialized after calling the component's constructor in Form.php
         } else {
-            $this->initSrcUnsupported();
+            $this->initSrcUnsupported(); // we still want to catch unsupported data sources
         }
     }
 
@@ -184,5 +185,8 @@ class Select extends BaseComponent implements ResourceValues
     public function setResourceRegistry(ResourceRegistry $resourceRegistry): void
     {
         $this->resourceRegistry = $resourceRegistry;
+        if ($this->dataSource() === self::DATA_SRC_RESOURCE) {
+            $this->activateResources();
+        }
     }
 }

@@ -140,9 +140,6 @@ class Form
 //            Because component is instantiated above, its constructor can't call methods that use resourceRegistry
             if (is_subclass_of($component, ResourceValues::class)) {
                 $component->setResourceRegistry($this->resourceRegistry);
-                if ($component->type() == 'select' && $component->dataSource() == Select::DATA_SRC_RESOURCE) {
-                    $component->activateResources();
-                }
             }
 
             $components[] = $component;
