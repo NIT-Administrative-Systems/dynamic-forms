@@ -124,7 +124,7 @@ class SelectTest extends InputComponentTestCase
 
         $this->assertNotNull($valuesComponent->getResourceRegistry());
         $this->assertNotNull($valuesComponent->optionValues());
-        $this->assertEquals($valuesComponent->dataSource(), Select::DATA_SRC_VALUES);
+        $this->assertEquals(Select::DATA_SRC_VALUES, $valuesComponent->dataSource());
 
 //        Ensure that activateResources() was not called
         $this->expectException(\Error::class);
@@ -170,7 +170,7 @@ class SelectTest extends InputComponentTestCase
 
         $this->assertArrayHasKey(TestResource::INDEX_NAME, $resourceRegistry->registered());
         $this->assertNotNull($resourcesComponent->getResourceRegistry());
-        $this->assertEquals($resourcesComponent->dataSource(), Select::DATA_SRC_RESOURCE);
+        $this->assertEquals(Select::DATA_SRC_RESOURCE, $resourcesComponent->dataSource());
     }
 }
 
