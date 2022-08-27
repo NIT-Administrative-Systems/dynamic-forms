@@ -27,6 +27,8 @@ yarn run prod
 If you are going to use S3 for file uploads, you will want to ensure you have configured your Laravel app with a bucket name and credentials. If you are deploying to Laravel Vapor, no additional config is needed for file uploads.
 
 ## Post-Installation Tasks
+
+### Storage
 The installation command creates `App\Http\Controllers\DynamicFormsStorageController`. This controller is responsible for interactions from the form to backend storage providers such as Amazon S3 to upload & download files.
 
 Out of the box, this controller will deny all requests. You need to implement the `authorizeFileAction` method to check a gate or perform some other authorization check.
@@ -34,3 +36,8 @@ Out of the box, this controller will deny all requests. You need to implement th
 Depending on who will be uploading, you may also want to add the `auth` middleware to verify a user is logged in.
 
 For file uploads, S3 and direct server uploads are both options available in the builder. You can set the env variable `MIX_STORAGE_DEFAULT_VALUE` to `s3` or `url` if you do not need to give people a choice.
+
+### Resources
+The installation command creates `App\Http\Controllers\DynamicFormsResourceController`. This controller is responsible for handling Resource Requests for Select components that utilize the Resource Source.
+
+This controller presents Resources for any php files in `App\Http\Controllers\Resources` that implements ResourceInterface.

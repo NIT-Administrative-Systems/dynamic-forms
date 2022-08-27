@@ -1,3 +1,5 @@
+import {Formio} from "formiojs";
+
 export default {
     /**
      * Merges user-supplied editForm options into the system default editOptions.
@@ -110,7 +112,7 @@ export default {
                         {key: 'custom-validation-js', ignore: true},
                         {key: 'json-validation-json', ignore: true},
                     ]
-                },
+                }
             ];
         })
     },
@@ -184,15 +186,30 @@ export default {
                 key: 'data',
                 ignore: false,
                 components: [
-                    { key: 'dataSrc', defaultValue: 'values', disabled: true },
                     { key: 'idPath', ignore: true },
-                    { key: 'template', ignore: true },
+                    // { key: 'template', ignore: true }, // needs to be enabled for resources to work
                     { key: 'refreshOn', ignore: true },
                     { key: 'refreshOnBlur', ignore: true },
                     { key: 'clearOnRefresh', ignore: true },
                     { key: 'customOptions', ignore: true },
+                    { key: 'readOnlyValue', ignore: true },
+                    { key: 'useExactSearch', ignore: true },
+                    { key: 'sort', ignore: true },
+                    { key: 'ignoreCache', ignore: true },
+                    { key: 'selectThreshold', ignore: true },
+                    { key: 'filter', ignore: true },
+                    { key: 'addResource', ignore: true },
+                    { key: 'reference', ignore: true },
+                    { key: 'selectFields', ignore: true },
                 ],
-            }
+            },
+            {
+                key: 'display',
+                ignore: false,
+                components: [
+                    { key: 'widget', ignore: true }, //The html5 one doesn't support search and choicesjs also looks better
+                ],
+            },
         ],
         time: [
             {
@@ -280,6 +297,32 @@ export default {
 
         Formio.Components.components.file.editForm = function() { return editForm; };
 
+    },
+
+    /**
+     * Builder defaults to form.io url for resources this changes that.
+     * Also restricts the dropdown for Select data source.
+     */
+    globalResourceCustomization: () => {
+        //project URL has to be set or it will redirect to https://form.io
+        //"add resource" button needs the base url to be set
+        Formio.setProjectUrl(process.env.MIX_APP_URL + '/dynamic-forms');
+        Formio.setBaseUrl(process.env.MIX_APP_URL + '/dynamic-forms');
+
+        //Limit options to only Resource and Values
+        var editForm = Formio.Components.components.select.editForm();
+
+        Formio.Utils.getComponent(editForm.components, 'select').data.values = [
+            { label: 'Values', value: 'values' },
+            //{ label: 'URL', value: 'url' },
+            { label: 'Resource', value: 'resource' },
+            //{ label: 'Custom', value: 'custom' },
+            //{ label: 'Raw JSON', value: 'json' },
+            //{ label: 'IndexedDB', value: 'indexeddb' },
+        ];
+
+
+        Formio.Components.components.select.editForm = function() { return editForm; };
     }
 
 }

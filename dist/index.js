@@ -19,7 +19,8 @@ FormioUtils.Evaluator.noeval = true;
  * with the typical way of adjusting editForms.
  */
 Defaults.globalButtonCustomization();
-Defaults.globalFileCustomization()
+Defaults.globalFileCustomization();
+Defaults.globalResourceCustomization();
 
 /**
  * Apply any custom templates.

@@ -7,12 +7,16 @@ use Illuminate\Support\Arr;
 use Illuminate\Validation\Factory;
 use Illuminate\Validation\Rule;
 use Northwestern\SysDev\DynamicForms\Components\BaseComponent;
+use Northwestern\SysDev\DynamicForms\Components\ResourceValues;
 use Northwestern\SysDev\DynamicForms\Errors\InvalidDefinitionError;
+use Northwestern\SysDev\DynamicForms\Errors\UnknownResourceError;
+use Northwestern\SysDev\DynamicForms\ResourceRegistry;
 use Northwestern\SysDev\DynamicForms\RuleBag;
 
-class Select extends BaseComponent
+class Select extends BaseComponent implements ResourceValues
 {
     const TYPE = 'select';
+    protected ResourceRegistry $resourceRegistry;
 
     const DATA_SRC_VALUES = 'values';
     const DATA_SRC_URL = 'url';
@@ -28,6 +32,7 @@ class Select extends BaseComponent
      */
     const SUPPORTED_DATA_SRC = [
         self::DATA_SRC_VALUES,
+        self::DATA_SRC_RESOURCE,
     ];
 
     protected string $dataSource;
@@ -36,6 +41,11 @@ class Select extends BaseComponent
      * Valid values from the definition, for DATA_SRC_VALUES mode.
      */
     protected array $optionValues;
+
+    /**
+     * Valid resources from the definition, for DATA_SRC_RESOURCE mode.
+     */
+    protected array $optionResources;
 
     public function __construct(
         string $key,
@@ -49,7 +59,7 @@ class Select extends BaseComponent
         string $case,
         null|array|string $calculateValue,
         mixed $defaultValue,
-        array $additional
+        array $additional,
     ) {
         parent::__construct($key, $label, $errorLabel, $components, $validations, $hasMultipleValues, $conditional, $customConditional, $case, $calculateValue, $defaultValue, $additional);
 
@@ -58,8 +68,16 @@ class Select extends BaseComponent
 
         match ($this->dataSource) {
             self::DATA_SRC_VALUES => $this->initSrcValues($additional),
-            default => $this->initSrcUnsupported(),
+            default => $this->initSrcOther(),
         };
+    }
+
+    /**
+     * This function must be run during component or form instantiation. Allows user's application to use the resources they've registered.
+     */
+    public function activateResources(): void
+    {
+        $this->initSrcResources($this->additional, $this->resourceRegistry);
     }
 
     /**
@@ -82,6 +100,7 @@ class Select extends BaseComponent
         return is_scalar($value) ? (string) $value : $value;
     }
 
+//    TODO: a select with no values will error out
     protected function processValidations(string $fieldKey, string $fieldLabel, mixed $submissionValue, Factory $validator): MessageBag
     {
         $rules = new RuleBag($fieldKey, ['string']);
@@ -119,6 +138,31 @@ class Select extends BaseComponent
             ->all();
     }
 
+    private function initSrcResources(array $additional, ResourceRegistry $resourceRegistry): void
+    {
+        //add in stuff for valueProperty
+        $resourceList = $resourceRegistry->registered();
+        $resource = $additional['data']['resource'];
+
+        if (! isset($resourceList[$resource])) {
+            throw new UnknownResourceError($resource);
+        }
+
+        $this->optionValues = collect($resourceList[$resource]::submissions(-1, 0, '', ''))->transform(function ($val) {
+            return json_encode($val);
+        })->all();
+    }
+
+    private function initSrcOther(): void
+    {
+        if ($this->dataSource == self::DATA_SRC_RESOURCE) {
+            // This is left blank because initSrcResources cannot be called in the constructor
+            // because resourceRegistry is initialized after calling the component's constructor in Form.php
+        } else {
+            $this->initSrcUnsupported(); // we still want to catch unsupported data sources
+        }
+    }
+
     private function initSrcUnsupported(): void
     {
         throw new InvalidDefinitionError(
@@ -131,5 +175,18 @@ class Select extends BaseComponent
     {
         // Field does not support transformations
         return [];
+    }
+
+    public function getResourceRegistry(): ResourceRegistry
+    {
+        return $this->resourceRegistry;
+    }
+
+    public function setResourceRegistry(ResourceRegistry $resourceRegistry): void
+    {
+        $this->resourceRegistry = $resourceRegistry;
+        if ($this->dataSource() === self::DATA_SRC_RESOURCE) {
+            $this->activateResources();
+        }
     }
 }
