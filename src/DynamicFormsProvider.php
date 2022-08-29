@@ -8,6 +8,8 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\ValidationException;
 use Northwestern\SysDev\DynamicForms\Console\Commands\Install;
+use Northwestern\SysDev\DynamicForms\Console\Commands\InstallResourceController;
+use Northwestern\SysDev\DynamicForms\Console\Commands\InstallStorageController;
 use Northwestern\SysDev\DynamicForms\Forms\Form;
 use Northwestern\SysDev\DynamicForms\Storage\S3Driver;
 
@@ -103,6 +105,8 @@ class DynamicFormsProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->commands([
                 Install::class,
+                InstallResourceController::class,
+                InstallStorageController::class,
             ]);
         }
     }
