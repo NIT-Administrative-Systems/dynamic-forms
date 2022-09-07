@@ -39,9 +39,9 @@ class ResourceRegistry
     /**
      * Registers a resource class.
      *
-     * @param ResourceInterface $resource
+     * @param string $resource
      */
-    public function register(ResourceInterface $resource): void
+    public function register(string $resource): void
     {
         $this->resources[$resource::indexName()] = $resource;
     }

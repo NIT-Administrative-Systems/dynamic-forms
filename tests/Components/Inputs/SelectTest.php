@@ -164,8 +164,7 @@ class SelectTest extends InputComponentTestCase
             ]
         );
         $resourceRegistry = $this->app->make(ResourceRegistry::class);
-        $resource = new TestResource();
-        $resourceRegistry->register($resource);
+        $resourceRegistry->register(TestResource::class);
         $resourcesComponent->setResourceRegistry($resourceRegistry);
 
         $this->assertArrayHasKey(TestResource::INDEX_NAME, $resourceRegistry->registered());
