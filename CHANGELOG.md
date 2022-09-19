@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## Unreleased
+## [v0.9.2 - 2022-09-19]
+### Added
+- The `Survey` component has two new methods, `questionsWithLabels()` and `choicesWithLabels()`. These are used to get the key/label lookups for both the questions and answers, which were not previously available.
+
 ## [v0.9.1 - 2022-09-08]
 ### Changed
 - Fixing how the resource registry stores its list of resources.
