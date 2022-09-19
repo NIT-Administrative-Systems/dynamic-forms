@@ -27,6 +27,7 @@ class SurveyTest extends InputComponentTestCase
 
     /**
      * @covers ::questions
+     * @covers ::questionsWithLabels
      */
     public function testQuestions(): void
     {
@@ -34,16 +35,27 @@ class SurveyTest extends InputComponentTestCase
             ['q1', 'q2', 'Question 3 (i.e. foo bar)'],
             $this->getSurvey()->questions()
         );
+
+        $this->assertEquals(
+            ['q1' => 'Question 1', 'q2' => 'Question 2', 'Question 3 (i.e. foo bar)' => 'Question 3 (i.e. foo bar)'],
+            $this->getSurvey()->questionsWithLabels(),
+        );
     }
 
     /**
      * @covers ::validChoices
+     * @covers ::choicesWithLabels
      */
     public function testValidChoices(): void
     {
         $this->assertEquals(
             ['a1', 'a2', 'notrim'],
             $this->getSurvey()->validChoices()
+        );
+
+        $this->assertEquals(
+            ['a1' => 'Answer 1', 'a2' => 'Answer 2', 'notrim ' => 'Answer 3 with no trim '],
+            $this->getSurvey()->choicesWithlabels()
         );
     }
 

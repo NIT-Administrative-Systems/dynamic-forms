@@ -16,6 +16,9 @@ class Survey extends BaseComponent
     protected array $questions;
     protected array $validChoices;
 
+    protected array $questionLabels;
+    protected array $choiceLabels;
+
     public function __construct(
         string $key,
         ?string $label,
@@ -38,6 +41,10 @@ class Survey extends BaseComponent
                 return trim(Arr::get($pair, 'value'));
             })
             ->all();
+
+        $mapper = fn (array $item) => [$item['value'] => $item['label']];
+        $this->questionLabels = collect(Arr::get($this->additional, 'questions'))->mapWithKeys($mapper)->all();
+        $this->choiceLabels = collect(Arr::get($this->additional, 'values'))->mapWithKeys($mapper)->all();
     }
 
     /**
@@ -54,6 +61,22 @@ class Survey extends BaseComponent
     public function validChoices(): array
     {
         return $this->validChoices;
+    }
+
+    /**
+     * Question key => label mappings.
+     */
+    public function questionsWithLabels(): array
+    {
+        return $this->questionLabels;
+    }
+
+    /**
+     * Answer key => label mappings.
+     */
+    public function choicesWithlabels(): array
+    {
+        return $this->choiceLabels;
     }
 
     /**
