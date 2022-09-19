@@ -37,8 +37,8 @@ class SurveyTest extends InputComponentTestCase
         );
 
         $this->assertEquals(
-          ['q1' => 'Question 1', 'q2' => 'Question 2', 'Question 3 (i.e. foo bar)' => 'Question 3 (i.e. foo bar)'],
-          $this->getSurvey()->questionsWithLabels(),
+            ['q1' => 'Question 1', 'q2' => 'Question 2', 'Question 3 (i.e. foo bar)' => 'Question 3 (i.e. foo bar)'],
+            $this->getSurvey()->questionsWithLabels(),
         );
     }
 
