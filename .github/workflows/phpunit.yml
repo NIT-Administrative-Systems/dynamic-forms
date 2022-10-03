@@ -39,7 +39,7 @@ jobs:
 
       - name: Cache Composer packages
         id: composer-cache
-        uses: actions/cache@v2.1.7
+        uses: actions/cache@v3.0.10
         with:
           path: vendor
           key: php-${{ matrix.php-versions }}-${{ hashFiles('**/composer.lock') }}
