@@ -27,6 +27,9 @@ class Install extends Command
 
         $this->comment('Publishing JS assets...');
         $this->callSilent('vendor:publish', ['--tag' => 'dynamic-forms-js']);
+
+        @mkdir(resource_path('sass'));
+
         $this->ejectJsInclude(resource_path('js/app.js'));
         $this->ejectCssInclude(resource_path('sass/app.scss'));
         $this->updatePackages(base_path('package.json'));
