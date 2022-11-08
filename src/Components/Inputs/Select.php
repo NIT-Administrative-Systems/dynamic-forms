@@ -41,6 +41,7 @@ class Select extends BaseComponent implements ResourceValues
      * Valid values from the definition, for DATA_SRC_VALUES mode.
      */
     protected array $optionValues;
+    protected ?array $optionValuesWithLabels = null;
 
     /**
      * Valid resources from the definition, for DATA_SRC_RESOURCE mode.
@@ -100,7 +101,7 @@ class Select extends BaseComponent implements ResourceValues
         return is_scalar($value) ? (string) $value : $value;
     }
 
-//    TODO: a select with no values will error out
+    // TODO: a select with no values will error out
     protected function processValidations(string $fieldKey, string $fieldLabel, mixed $submissionValue, Factory $validator): MessageBag
     {
         $rules = new RuleBag($fieldKey, ['string']);
@@ -124,16 +125,42 @@ class Select extends BaseComponent implements ResourceValues
         return $this->dataSource;
     }
 
+    /**
+     * List of valid option values.
+     *
+     * Will be empty when the data source is not {@see Select::DATA_SRC_VALUES}.
+     */
     public function optionValues(): array
     {
         return $this->optionValues;
     }
 
+    /**
+     * Values and their corresponding labels.
+     *
+     * Will be null when the datasource is not {@see Select::DATA_SRC_VALUES}.
+     */
+    public function options(): ?array
+    {
+        return $this->optionValuesWithLabels;
+    }
+
     private function initSrcValues(array $additional): void
     {
-        $this->optionValues = collect($this->additional['data']['values'])
+        $options = collect($this->additional['data']['values']);
+
+        $this->optionValues = $options
             ->map(function (array $pair) {
                 return trim(Arr::get($pair, 'value'));
+            })
+            ->all();
+
+        $this->optionValuesWithLabels = $options
+            ->mapWithKeys(function (array $pair) {
+                $value = trim(Arr::get($pair, 'value'));
+                $label = trim(Arr::get($pair, 'label'));
+
+                return [$value => $label];
             })
             ->all();
     }
