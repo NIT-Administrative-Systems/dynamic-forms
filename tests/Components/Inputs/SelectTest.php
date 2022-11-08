@@ -81,6 +81,21 @@ class SelectTest extends InputComponentTestCase
     }
 
     /**
+     * @covers ::options
+     */
+    public function testOptions(): void
+    {
+        $expected = [
+            'foo' => 'Foo',
+            'bar' => 'Bar',
+            '1' => 'Number',
+            'Notrim' => 'Notrim',
+        ];
+
+        $this->assertEquals($expected, $this->getComponent()->options());
+    }
+
+    /**
      * @covers ::initSrcOther
      * This will need to be updated every time support for a new data source is added
      */
