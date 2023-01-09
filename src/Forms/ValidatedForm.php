@@ -197,7 +197,6 @@ class ValidatedForm implements Validator
      */
     protected function processComponentTree(array $components, array $values): array
     {
-
         // Populate the components with their data so we can evaluate conditionals
         $data = collect($values)->only($components->keys());
     }
