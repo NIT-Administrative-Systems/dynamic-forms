@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## Unreleased
+## [v.11.0 - 2023-01-09]
+### Added
+- The `Button` component has a new method, `action()` which exposes the button's action type.
+
+### Infra
+- PHP 8.2 has been added to the test matrix.
+
 ## [v0.10.0 - 2022-11-08]
 ### Added
 - The `Select` component has a new method, `options()`, which exposes the labels for options.
