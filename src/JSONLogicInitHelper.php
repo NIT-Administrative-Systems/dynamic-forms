@@ -17,7 +17,6 @@ class JSONLogicInitHelper
      */
     private function registerLodash(): void
     {
-
         //This list contains all the lodash functions (supported by formsio) and implementation source
         // (0 is missing, 1 is lodash-php library, 2 is php-lodash library, and 3 is from this repo)
         $lodashList = [

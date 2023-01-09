@@ -13,7 +13,7 @@ jobs:
 
     strategy:
       matrix:
-        php-versions: ['8.1']
+        php-versions: ['8.1', '8.2']
 
     steps:
       - uses: actions/checkout@v3
@@ -22,15 +22,15 @@ jobs:
 
 
       - name: Setup PHP
-        uses: shivammathur/setup-php@2.22.0
+        uses: shivammathur/setup-php@2.23.0
         with:
           php-version: ${{ matrix.php-versions }}
           coverage: xdebug
 
       - name: Run php-cs-fixer
-        uses: OskarStark/php-cs-fixer-ga@3.7.0
+        uses: OskarStark/php-cs-fixer-ga@3.13.0
 
-      - uses: stefanzweifel/git-auto-commit-action@v4.15.3
+      - uses: stefanzweifel/git-auto-commit-action@v4.16.0
         with:
           commit_message: Apply php-cs-fixer changes
 
@@ -39,7 +39,7 @@ jobs:
 
       - name: Cache Composer packages
         id: composer-cache
-        uses: actions/cache@v3.0.11
+        uses: actions/cache@v3.2.2
         with:
           path: vendor
           key: php-${{ matrix.php-versions }}-${{ hashFiles('**/composer.lock') }}
