@@ -28,6 +28,17 @@ class SelectTest extends InputComponentTestCase
     ];
 
     /**
+     * @covers ::validate
+     */
+    public function testWithNoValuesProvided(): void
+    {
+        $component = $this->getComponent(additional: ['data' => null]);
+
+        $bag = $component->validate();
+        $this->assertEquals(true, $bag->isEmpty());
+    }
+
+    /**
      * @covers ::processValidations
      * @covers ::validate
      */
