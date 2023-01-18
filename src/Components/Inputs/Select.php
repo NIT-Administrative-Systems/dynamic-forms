@@ -68,7 +68,7 @@ class Select extends BaseComponent implements ResourceValues
         $this->dataSource = Arr::get($this->additional, 'dataSrc', self::DATA_SRC_VALUES);
 
         match ($this->dataSource) {
-            self::DATA_SRC_VALUES => $this->initSrcValues($additional),
+            self::DATA_SRC_VALUES => $this->initSrcValues(),
             default => $this->initSrcOther(),
         };
     }
@@ -145,9 +145,9 @@ class Select extends BaseComponent implements ResourceValues
         return $this->optionValuesWithLabels;
     }
 
-    private function initSrcValues(array $additional): void
+    private function initSrcValues(): void
     {
-        $options = collect($this->additional['data']['values']);
+        $options = collect(Arr::get($this->additional, 'data.values', []));
 
         $this->optionValues = $options
             ->map(function (array $pair) {
