@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## Unreleased
+### Fixed
+- The `Select` component's `initSrcValues()` method has been updated by setting an empty array for dropdowns that lack options instead of `null`.
+
 ## [v0.11.0 - 2023-01-09]
 ### Added
 - The `Button` component has a new method, `action()` which exposes the button's action type.
