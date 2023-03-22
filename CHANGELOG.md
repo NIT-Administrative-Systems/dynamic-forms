@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## Unreleased
+## [v0.11.2 - 2023-03-22]
+### Internal
+- Swapped to a fork of the lodash-php package that has PHP 8.2 compatibility fixes.
+
 ## [v0.11.1 - 2023-01-18]
 ### Fixed
 - The `Select` component's `initSrcValues()` method has been updated by setting an empty array for dropdowns that lack options instead of `null`.
