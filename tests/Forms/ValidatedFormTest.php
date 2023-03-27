@@ -48,6 +48,7 @@ class ValidatedFormTest extends TestCase
         $this->assertTrue($validatedForm->isValid());
         $this->assertEmpty($validatedForm->messages());
         $this->assertEquals($values, $validatedForm->values());
+        $this->assertNotNull($validatedForm->getTranslator());
     }
 
     /**

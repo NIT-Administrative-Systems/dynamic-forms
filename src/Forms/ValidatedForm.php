@@ -3,6 +3,7 @@
 namespace Northwestern\SysDev\DynamicForms\Forms;
 
 use Illuminate\Contracts\Support\MessageBag;
+use Illuminate\Contracts\Translation\Translator;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
@@ -263,5 +264,19 @@ class ValidatedForm implements Validator
     public function errors()
     {
         return $this->messages();
+    }
+
+    /**
+     * Gets the Laravel translator class.
+     *
+     * DO NOT CALL THIS! This exists to address a bug present in some later versions of Laravel 9.x and all versions
+     * of 10.x. The method exists for compatibility with the impacted versions of Laravel.
+     *
+     * @see https://github.com/laravel/framework/pull/46378
+     * @internal
+     */
+    public function getTranslator(): Translator
+    {
+        return resolve(Translator::class);
     }
 }
