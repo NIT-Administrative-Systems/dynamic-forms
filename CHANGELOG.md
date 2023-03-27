@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## Unreleased
+## [v0.11.4 - 2023-03-27]
+### Internal
+- Works around [an issue concerning the translation of errors](https://github.com/laravel/framework/pull/46378) from `ValidatedForm` in later versions of Laravel 9.x and 10.
+
 ## [v0.11.2 - 2023-03-22]
 ### Internal
 - Swapped to a fork of the lodash-php package that has PHP 8.2 compatibility fixes.
