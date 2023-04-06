@@ -7,6 +7,8 @@ use Northwestern\SysDev\DynamicForms\JSONLogic\JsonLogicHelpers;
 
 class JSONCalculation implements CalculationInterface
 {
+    protected array $jsonLogic;
+
     public function __construct(array $jsonLogic)
     {
         $this->jsonLogic = JsonLogicHelpers::convertDataVars($jsonLogic);

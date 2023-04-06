@@ -55,7 +55,7 @@ class Number extends BaseComponent
             }
 
             if ($significantDigits) {
-                $number = (float) sprintf("%.${significantDigits}f", $number);
+                $number = (float) sprintf("%.{$significantDigits}f", $number);
             }
 
             return $number;
