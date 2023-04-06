@@ -21,10 +21,10 @@
     "require": {
         "php": "^8",
         "aws/aws-sdk-php": "^3.80",
-        "illuminate/support": "^8|^9",
-        "illuminate/validation": "^8|^9",
-        "illuminate/contracts": "^8|^9",
-        "illuminate/http": "^8|^9",
+        "illuminate/support": "^8|^9|^10",
+        "illuminate/validation": "^8|^9|^10",
+        "illuminate/contracts": "^8|^9|^10",
+        "illuminate/http": "^8|^9|^10",
         "symfony/finder": "^6",
         "nesbot/carbon": "^2",
         "jwadhams/json-logic-php": "^1.4",
@@ -32,7 +32,7 @@
         "me-io/php-lodash": "^2.0"
     },
     "require-dev": {
-        "orchestra/testbench": "^7",
+        "orchestra/testbench": "^8",
         "phpunit/phpunit": "^9",
         "php-coveralls/php-coveralls": "^2.4"
     },
