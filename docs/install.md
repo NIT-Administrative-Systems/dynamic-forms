@@ -10,9 +10,9 @@ You will need the following:
 - FontAwesome 5
 - (optional) An Amazon S3 bucket & access token, if you are going to handle file uploads via S3 for your dynamic forms
 
-Dynamic Forms assumes that you are using [Laravel Mix](https://laravel.com/docs/8.x/mix) to prepare your JS/CSS assets. If you are not, you will need to transpile/minify the JavaScript that is installed into your `resources/js` folder using your own build system.
+Dynamic Forms assumes that you are using [Laravel Vite](https://laravel.com/docs/10.x/vite) or [Laravel Mix](https://laravel.com/docs/8.x/mix) to prepare your JS/CSS assets. If you are not, you will need to transpile/minify the JavaScript that is installed into your `resources/js` folder using your own build system.
 
-There is no Tailwind version at this time. This is driven by Formiojs' support for different CSS frameworks. Bootstrap 4, Bootstrap 3, and Semantic UI are the available options.
+There is no Tailwind or Bootstrap 5 version at this time. This is driven by Formiojs' support for different CSS frameworks. Bootstrap 4, Bootstrap 3, and Semantic UI are the available options.
 
 ## Installation
 Install the package, run the installation command, and build your frontend assets:
