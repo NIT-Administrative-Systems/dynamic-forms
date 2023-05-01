@@ -150,7 +150,7 @@ class ValidatedForm implements Validator
                 $condition = $component->conditional();
 
                 if ($condition) {
-                    if (!$condition($values)) {
+                    if (! $condition($values)) {
                         $this->forgetComponentKeys[] = $component->key();
                         $this->processComponentTreeConditionals($component->components(), shouldForget: true);
 
