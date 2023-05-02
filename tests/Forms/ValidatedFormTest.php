@@ -207,6 +207,16 @@ class ValidatedFormTest extends TestCase
                     'doYouHaveASocialSecurityNumber' => null,
                 ],
             ],
+            'simple conditional missing properties is ignored instead of erroring - passes' => [
+                $components('simple_incomplete_conditional_definition.json'),
+                $values('simple_incomplete_conditional_submission.json'),
+                true,
+                [
+                    "select1" => "sophomore",
+                    "freshmanIncomingStartDate" => "a",
+                    "sophomoreHousing" => "b",
+                ]
+            ],
         ];
     }
 
