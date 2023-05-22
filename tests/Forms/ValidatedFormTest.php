@@ -212,19 +212,19 @@ class ValidatedFormTest extends TestCase
                 $values('simple_incomplete_conditional_submission.json'),
                 true,
                 [
-                    "select1" => "sophomore",
-                    "freshmanIncomingStartDate" => "a",
-                    "sophomoreHousing" => "b",
-                ]
+                    'select1' => 'sophomore',
+                    'freshmanIncomingStartDate' => 'a',
+                    'sophomoreHousing' => 'b',
+                ],
             ],
             'form with show:false conditional field passes; it does not ignore the condition' => [
                 $components('show_false_conditional_definition.json'),
                 $values('show_false_conditional_submission.json'),
                 true,
                 [
-                    "select1" => "senior",
-                    "textField2" => "b"
-                ]
+                    'select1' => 'senior',
+                    'textField2' => 'b',
+                ],
             ],
         ];
     }
