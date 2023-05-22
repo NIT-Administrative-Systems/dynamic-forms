@@ -217,6 +217,15 @@ class ValidatedFormTest extends TestCase
                     "sophomoreHousing" => "b",
                 ]
             ],
+            'form with show:false conditional field passes; it does not ignore the condition' => [
+                $components('show_false_conditional_definition.json'),
+                $values('show_false_conditional_submission.json'),
+                true,
+                [
+                    "select1" => "senior",
+                    "textField2" => "b"
+                ]
+            ],
         ];
     }
 
