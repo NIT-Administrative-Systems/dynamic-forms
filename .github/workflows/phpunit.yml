@@ -22,7 +22,7 @@ jobs:
 
 
       - name: Setup PHP
-        uses: shivammathur/setup-php@2.23.0
+        uses: shivammathur/setup-php@2.25.3
         with:
           php-version: ${{ matrix.php-versions }}
           coverage: xdebug
