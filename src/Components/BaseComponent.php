@@ -267,8 +267,13 @@ abstract class BaseComponent implements ComponentInterface
         return $bag;
     }
 
-    protected function validation(string $name): mixed
+    public function validation(string $name): mixed
     {
         return Arr::get($this->validations, $name);
+    }
+
+    public function validations(): array
+    {
+        return $this->validations;
     }
 }

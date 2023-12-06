@@ -129,4 +129,14 @@ interface ComponentInterface
      * Returns the default value for the component, if one is configured.
      */
     public function defaultValue(): mixed;
+
+    /**
+     * Get a validation rule by name.
+     */
+    public function validation(string $name): mixed;
+
+    /**
+     * Get all validations for the component.
+     */
+    public function validations(): array;
 }
