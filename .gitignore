@@ -21,3 +21,4 @@ yarn-error.log
 /.php_cs.cache
 .vapor/
 /.idea
+composer.lock
