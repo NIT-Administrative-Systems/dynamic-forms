@@ -47,7 +47,7 @@ abstract class BaseComponentTestCase extends TestCase
     public function testGetters(): void
     {
         $ref = new \ReflectionClass($this->componentClass);
-        $component = $this->getComponent(defaultValue: 'foo');
+        $component = $this->getComponent(additional: ['disabled' => true], defaultValue: 'foo');
 
         $this->assertEquals('test', $component->key());
         $this->assertEquals('Test', $component->label());
@@ -62,6 +62,7 @@ abstract class BaseComponentTestCase extends TestCase
         $this->assertEquals('foo', $component->defaultValue());
         $this->assertNull($component->validation('required'));
         $this->assertEmpty($component->validations());
+        $this->assertTrue($component->additional('disabled'));
     }
 
     /**

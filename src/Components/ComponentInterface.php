@@ -139,4 +139,9 @@ interface ComponentInterface
      * Get all validations for the component.
      */
     public function validations(): array;
+
+    /**
+     * Get other settings that are not used directly by the library, but may be present in the component schema.
+     */
+    public function additional(string $key): mixed;
 }
