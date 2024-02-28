@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## Unreleased
+## [v0.14.0 - 2024-02-28]
+### Added
+- Added `additional()` getter to the `ComponentInterface` for getting other settings that are not used by the dynamic-forms package directly.
+
 ## [v0.13.0 - 2023-12-06]
 ### Added
 - Added getters to the `ComponentInterface` for validation rules.

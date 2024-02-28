@@ -276,4 +276,9 @@ abstract class BaseComponent implements ComponentInterface
     {
         return $this->validations;
     }
+
+    public function additional(string $key): mixed
+    {
+        return Arr::get($this->additional, $key);
+    }
 }
