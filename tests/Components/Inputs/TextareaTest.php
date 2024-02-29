@@ -22,6 +22,17 @@ class TextareaTest extends InputComponentTestCase
         $this->getComponent(additional: ['editor' => Textarea::EDITOR_ACE]);
     }
 
+    public function testEmptyEditorDefaultsToQuill(): void
+    {
+        // Blank key
+        $component = $this->getComponent(additional: ['editor' => '']);
+        $this->assertEquals(Textarea::EDITOR_QUILL, $component->additional('editor'));
+
+        // Without the key entirely
+        $component = $this->getComponent(additional: []);
+        $this->assertEquals(Textarea::EDITOR_QUILL, $component->additional('editor'));
+    }
+
     public function validationsProvider(): array
     {
         return [
