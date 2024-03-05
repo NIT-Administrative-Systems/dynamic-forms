@@ -22,6 +22,7 @@ class SelectTest extends InputComponentTestCase
                 ['label' => 'Foo', 'value' => 'foo'],
                 ['label' => 'Bar', 'value' => 'bar'],
                 ['label' => 'Number', 'value' => '1', 'shortcut' => ''],
+                ['label' => 'Array', 'value' => ['foo' => 'bar'], 'shortcut' => ''],
                 ['label' => 'Notrim ', 'value' => 'Notrim ', 'shortcut' => ''],
             ],
         ],
@@ -88,7 +89,7 @@ class SelectTest extends InputComponentTestCase
      */
     public function testOptionValues(): void
     {
-        $this->assertEquals(['foo', 'bar', 1, 'Notrim'], $this->getComponent()->optionValues());
+        $this->assertEquals(['foo', 'bar', 1, '{"foo":"bar"}', 'Notrim'], $this->getComponent()->optionValues());
     }
 
     /**
@@ -101,6 +102,7 @@ class SelectTest extends InputComponentTestCase
             'bar' => 'Bar',
             '1' => 'Number',
             'Notrim' => 'Notrim',
+            '{"foo":"bar"}' => 'Array',
         ];
 
         $this->assertEquals($expected, $this->getComponent()->options());
@@ -213,7 +215,7 @@ class TestResource implements ResourceInterface
         return ['test'];
     }
 
-    public static function submissions(int $limit, int $skip, string $key, string $needle): array
+    public static function submissions(int $limit, int $skip, string $key, string $needle, ?array $context = []): array
     {
         return ['test' => 'test'];
     }

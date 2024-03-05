@@ -152,19 +152,24 @@ class Select extends BaseComponent implements ResourceValues
     private function initSrcValues(): void
     {
         $options = collect(Arr::get($this->additional, 'data.values', []));
+        ray($options);
 
         $this->optionValues = $options
             ->map(function (array $pair) {
-                return trim(Arr::get($pair, 'value'));
+                $value = Arr::get($pair, 'value');
+
+                return is_array($value) ? json_encode($value) : trim($value);
             })
             ->all();
 
         $this->optionValuesWithLabels = $options
             ->mapWithKeys(function (array $pair) {
-                $value = trim(Arr::get($pair, 'value'));
+                $value = Arr::get($pair, 'value');
                 $label = trim(Arr::get($pair, 'label'));
 
-                return [$value => $label];
+                $key = is_array($value) ? json_encode($value) : trim($value);
+
+                return [$key => $label];
             })
             ->all();
     }
