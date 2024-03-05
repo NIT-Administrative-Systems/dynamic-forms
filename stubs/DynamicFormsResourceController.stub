@@ -91,7 +91,7 @@ class ResourceController extends Controller
                 break;
             }
         }
-        $resourceSubmissions = $resourceList[$resource]::submissions($limit, $skip, $searchKey, $searchValue);
+        $resourceSubmissions = $resourceList[$resource]::submissions($limit, $skip, $searchKey, $searchValue, $request->headers->all());
         $handlesPaginationAndSearch = $resourceList[$resource]::handlesPaginationAndSearch();
 
         if(!$handlesPaginationAndSearch)
