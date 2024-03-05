@@ -25,8 +25,9 @@ interface ResourceInterface
      * @param int $skip the entrie index to start at for the returned data
      * @param string $key the label to search by or '' if the entire object should be searched
      * @param string $needle the value to search for or '' if there is no search
+     * @param array|null $context optional context to provide information for the search
      */
-    public static function submissions(int $limit, int $skip, string $key, string $needle): array;
+    public static function submissions(int $limit, int $skip, string $key, string $needle, ?array $context = []): array;
 
     /**
      * Returns if this Resource will handle pagination and search when submissions() is called

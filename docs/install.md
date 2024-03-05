@@ -41,3 +41,15 @@ For file uploads, S3 and direct server uploads are both options available in the
 The installation command creates `App\Http\Controllers\DynamicFormsResourceController`. This controller is responsible for handling Resource Requests for Select components that utilize the Resource Source.
 
 This controller presents Resources for any php files in `App\Http\Controllers\Resources` that implements ResourceInterface.
+
+Request headers are made available through the `$context` parameter in `ResourceInterface::submissions` if additional information is required to fetch the resources. To include information in the request header, a [Formio `preRequest` plugin hook](https://help.form.io/developers/fetch-plugin-api#prerequest-requestargs) can be configured. Provided below is an example of what that may look like.
+```javascript
+Formio.registerPlugin({
+    preRequest: (requestArgs) => {
+        const exampleElement = document.querySelector('#exampleElement');
+        if (exampleElement) {
+            requestArgs.opts.header.set('X-Foo-Bar', exampleElement.dataset.fooBar);
+        }
+    }
+}, 'exampleContext');
+```

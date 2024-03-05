@@ -92,7 +92,11 @@ class Select extends BaseComponent implements ResourceValues
             $value ??= [];
 
             foreach ($value as $i => $singleValue) {
-                $value[$i] = (string) $singleValue;
+                if (is_array($singleValue)) {
+                    $value[$i] = $singleValue;
+                } else {
+                    $value[$i] = (string) $singleValue;
+                }
             }
 
             return $value;
@@ -151,16 +155,20 @@ class Select extends BaseComponent implements ResourceValues
 
         $this->optionValues = $options
             ->map(function (array $pair) {
-                return trim(Arr::get($pair, 'value'));
+                $value = Arr::get($pair, 'value');
+
+                return is_array($value) ? json_encode($value) : trim($value);
             })
             ->all();
 
         $this->optionValuesWithLabels = $options
             ->mapWithKeys(function (array $pair) {
-                $value = trim(Arr::get($pair, 'value'));
+                $value = Arr::get($pair, 'value');
                 $label = trim(Arr::get($pair, 'label'));
 
-                return [$value => $label];
+                $key = is_array($value) ? json_encode($value) : trim($value);
+
+                return [$key => $label];
             })
             ->all();
     }
