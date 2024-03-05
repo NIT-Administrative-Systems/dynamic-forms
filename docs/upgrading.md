@@ -1,5 +1,16 @@
 # Upgrading
 
+## v0.15.0
+This version changes the `ResourceInterface::submissions()` method signature. There is a new parameter, `$context`:
+
+```php
+public static function submissions(int $limit, int $skip, string $key, string $needle, ?array $context = []): array;
+```
+
+If you have implemented this interface, you should update your implementations.
+
+The `ResourceController` stub has been updated to pass the request headers as context. You can [review the updated stub](https://github.com/NIT-Administrative-Systems/dynamic-forms/blob/develop/stubs/DynamicFormsResourceController.stub) and adopt it as-is if you have not changed it, or [check the diff](https://github.com/NIT-Administrative-Systems/dynamic-forms/commit/c6a295f13aea332a3a384f8a36faf21e1a459c43#diff-6fece68af8c7cc8d9a0016ee539fa9315ee6c9ef07e7827093f4cbd9d09deb01) and apply the changes manually.
+
 ## v0.8.0
 This version adds support for the Hidden component. There should not be any BC breaks.
 

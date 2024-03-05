@@ -4,13 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## Unreleased
+## [v0.15.0 - 2024-03-05]
 ### Breaking Change
 - The `ResourceInterface::submissions` method signature now includes an optional `$context` parameter. To migrate, ensure that all custom resources classes incorporate the new parameter.
 
 ### Added
 - Support for non-scalar option values in the `Select` component.
 
-## [v0.14.1 -2024-02-29]
+## [v0.14.1 - 2024-02-29]
 ### Fixes
 - Fixes the check to ensure Quill is the default Textarea editor.
 
