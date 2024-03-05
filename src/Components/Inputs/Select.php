@@ -92,7 +92,11 @@ class Select extends BaseComponent implements ResourceValues
             $value ??= [];
 
             foreach ($value as $i => $singleValue) {
-                $value[$i] = (string) $singleValue;
+                if (is_array($singleValue)) {
+                    $value[$i] = $singleValue;
+                } else {
+                    $value[$i] = (string) $singleValue;
+                }
             }
 
             return $value;
