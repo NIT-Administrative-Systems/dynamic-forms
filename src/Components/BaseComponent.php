@@ -162,7 +162,7 @@ abstract class BaseComponent implements ComponentInterface
             return $bag;
         }
 
-        if ($this->hasMultipleValuesForValidation() && !is_null($this->submissionValue())) {
+        if ($this->hasMultipleValuesForValidation() && ! is_null($this->submissionValue())) {
             foreach ($this->submissionValue() as $index => $submissionValue) {
                 $bag = $this->mergeErrorBags($bag, $this->processValidations(
                     $this->key(),
