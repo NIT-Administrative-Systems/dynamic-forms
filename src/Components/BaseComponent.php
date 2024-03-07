@@ -162,6 +162,7 @@ abstract class BaseComponent implements ComponentInterface
             return $bag;
         }
 
+        // Some components made up of sub-components can have a null submission value
         if ($this->hasMultipleValuesForValidation() && ! is_null($this->submissionValue())) {
             foreach ($this->submissionValue() as $index => $submissionValue) {
                 $bag = $this->mergeErrorBags($bag, $this->processValidations(
