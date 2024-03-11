@@ -75,6 +75,21 @@ abstract class InputComponentTestCase extends BaseComponentTestCase
     }
 
     /**
+     * @covers ::processValidations
+     * @covers ::validate
+     */
+    public function testValidationsOnMultipleValuesForNullSubmissionValue()
+    {
+        $component = $this->getComponent(
+            hasMultipleValues: true,
+            submissionValue: null,
+        );
+
+        $bag = $component->validate();
+        $this->assertTrue($bag->isEmpty());
+    }
+
+    /**
      * @covers ::submissionValue
      * @dataProvider submissionValueProvider
      */
