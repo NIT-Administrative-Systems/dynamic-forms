@@ -137,13 +137,17 @@ abstract class BaseComponent implements ComponentInterface
 
     public function submissionValue(): mixed
     {
-        $value = $this->submissionValue;
+        $cleaner = function (mixed $value) {
+            foreach ($this->transformations() as $transform) {
+                $value = $transform($value);
+            }
 
-        foreach ($this->transformations() as $transform) {
-            $value = $transform($value);
-        }
+            return $value;
+        };
 
-        return $value;
+        return $this->hasMultipleValues()
+            ? collect($this->submissionValue)->map($cleaner)->all()
+            : $cleaner($this->submissionValue);
     }
 
     public function setSubmissionValue(mixed $value): void
@@ -162,6 +166,7 @@ abstract class BaseComponent implements ComponentInterface
             return $bag;
         }
 
+        // Some components made up of sub-components can have a null submission value
         if ($this->hasMultipleValuesForValidation()) {
             foreach ($this->submissionValue() as $index => $submissionValue) {
                 $bag = $this->mergeErrorBags($bag, $this->processValidations(
