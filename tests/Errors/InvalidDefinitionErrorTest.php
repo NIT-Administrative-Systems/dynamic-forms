@@ -8,7 +8,7 @@ use Orchestra\Testbench\TestCase;
 /**
  * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Errors\InvalidDefinitionError
  */
-class InvalidDefinitionErrorTest extends TestCase
+final class InvalidDefinitionErrorTest extends TestCase
 {
     /**
      * @covers ::__construct

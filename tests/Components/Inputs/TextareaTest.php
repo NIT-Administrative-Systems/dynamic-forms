@@ -10,7 +10,7 @@ use Northwestern\SysDev\DynamicForms\Tests\Components\TestCases\InputComponentTe
 /**
  * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Components\Inputs\Textarea
  */
-class TextareaTest extends InputComponentTestCase
+final class TextareaTest extends InputComponentTestCase
 {
     protected string $componentClass = Textarea::class;
     protected array $defaultAdditional = ['editor' => Textarea::EDITOR_QUILL];

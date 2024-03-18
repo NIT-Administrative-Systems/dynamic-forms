@@ -8,7 +8,7 @@ use Orchestra\Testbench\TestCase;
 /**
  * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Errors\ValidationNotImplementedError
  */
-class ValidationNotImplementedErrorTest extends TestCase
+final class ValidationNotImplementedErrorTest extends TestCase
 {
     /**
      * @covers ::__construct

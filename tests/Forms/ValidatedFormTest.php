@@ -14,7 +14,7 @@ use Orchestra\Testbench\TestCase;
 /**
  * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Forms\ValidatedForm
  */
-class ValidatedFormTest extends TestCase
+final class ValidatedFormTest extends TestCase
 {
     /**
      * @covers ::__construct

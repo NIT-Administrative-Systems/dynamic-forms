@@ -9,7 +9,7 @@ use Northwestern\SysDev\DynamicForms\Tests\Components\TestCases\BaseComponentTes
 /**
  * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Components\Layout\Columns
  */
-class ColumnsTest extends BaseComponentTestCase
+final class ColumnsTest extends BaseComponentTestCase
 {
     protected string $componentClass = Columns::class;
 

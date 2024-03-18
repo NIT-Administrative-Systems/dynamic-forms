@@ -8,7 +8,7 @@ use Orchestra\Testbench\TestCase;
 /**
  * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Errors\UnknownComponentError
  */
-class UnknownComponentErrorTest extends TestCase
+final class UnknownComponentErrorTest extends TestCase
 {
     /**
      * @covers ::__construct

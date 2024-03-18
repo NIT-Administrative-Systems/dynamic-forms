@@ -9,7 +9,7 @@ use ReflectionMethod;
 /**
  * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Console\Commands\Install
  */
-class InstallTest extends TestCase
+final class InstallTest extends TestCase
 {
     /**
      * @covers ::ejectRoutes

@@ -9,7 +9,7 @@ use Orchestra\Testbench\TestCase;
 /**
  * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Rules\NotWeekday
  */
-class NotWeekdayTest extends TestCase
+final class NotWeekdayTest extends TestCase
 {
     /**
      * @covers ::message

@@ -11,7 +11,7 @@ use Northwestern\SysDev\DynamicForms\Tests\Components\TestCases\InputComponentTe
 /**
  * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Components\Inputs\DateTime
  */
-class DateTimeTest extends InputComponentTestCase
+final class DateTimeTest extends InputComponentTestCase
 {
     protected string $componentClass = DateTime::class;
 

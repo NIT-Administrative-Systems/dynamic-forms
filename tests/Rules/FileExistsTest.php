@@ -11,7 +11,7 @@ use Orchestra\Testbench\TestCase;
 /**
  * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Rules\FileExists
  */
-class FileExistsTest extends TestCase
+final class FileExistsTest extends TestCase
 {
     #[DataProvider('passesProvider')]
     public function testPasses(array $file, bool $shouldExist, bool $passes): void

@@ -9,7 +9,7 @@ use Northwestern\SysDev\DynamicForms\Tests\Components\TestCases\InputComponentTe
 /**
  * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Components\Inputs\SelectBoxes
  */
-class SelectBoxesTest extends InputComponentTestCase
+final class SelectBoxesTest extends InputComponentTestCase
 {
     protected string $componentClass = SelectBoxes::class;
     protected array $defaultAdditional = [

@@ -9,7 +9,7 @@ use Orchestra\Testbench\TestCase;
 /**
  * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Rules\TimeFormat
  */
-class TimeFormatTest extends TestCase
+final class TimeFormatTest extends TestCase
 {
     #[DataProvider('passesDataProvider')]
     public function testPasses(?string $format, string $value, bool $passes): void

@@ -10,7 +10,7 @@ use Northwestern\SysDev\DynamicForms\Tests\Components\TestCases\InputComponentTe
 /**
  * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Components\Inputs\Number
  */
-class NumberTest extends InputComponentTestCase
+final class NumberTest extends InputComponentTestCase
 {
     protected string $componentClass = Number::class;
 

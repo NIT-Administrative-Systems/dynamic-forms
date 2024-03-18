@@ -9,7 +9,7 @@ use Orchestra\Testbench\TestCase;
 /**
  * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Forms\Form
  */
-class FormTest extends TestCase
+final class FormTest extends TestCase
 {
     #[DataProvider('formDataProvider')]
     public function testFormDeserialization(string $definition, int $componentCount): void

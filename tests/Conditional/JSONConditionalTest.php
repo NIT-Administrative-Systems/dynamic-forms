@@ -10,7 +10,7 @@ use Orchestra\Testbench\TestCase;
 /**
  * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Conditional\JSONConditional
  */
-class JSONConditionalTest extends TestCase
+final class JSONConditionalTest extends TestCase
 {
     #[DataProvider('invokeDataProvider')]
     public function testInvoke(array $jsonLogic, array $submissionValues, bool $expected): void

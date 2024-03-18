@@ -10,7 +10,7 @@ use Northwestern\SysDev\DynamicForms\Tests\Components\TestCases\InputComponentTe
 /**
  * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Components\Inputs\Day
  */
-class DayTest extends InputComponentTestCase
+final class DayTest extends InputComponentTestCase
 {
     protected string $componentClass = Day::class;
 

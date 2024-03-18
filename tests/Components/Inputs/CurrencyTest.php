@@ -10,7 +10,7 @@ use Northwestern\SysDev\DynamicForms\Tests\Components\TestCases\InputComponentTe
 /**
  * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Components\Inputs\Currency
  */
-class CurrencyTest extends InputComponentTestCase
+final class CurrencyTest extends InputComponentTestCase
 {
     protected string $componentClass = Currency::class;
 

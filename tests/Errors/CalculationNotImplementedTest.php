@@ -8,7 +8,7 @@ use Northwestern\SysDev\DynamicForms\Errors\CalculationNotImplemented;
 /**
  * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Errors\CalculationNotImplemented
  */
-class CalculationNotImplementedTest extends TestCase
+final class CalculationNotImplementedTest extends TestCase
 {
     /**
      * @covers ::__construct

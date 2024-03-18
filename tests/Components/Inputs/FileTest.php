@@ -11,7 +11,7 @@ use Northwestern\SysDev\DynamicForms\Tests\Components\TestCases\InputComponentTe
 /**
  * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Components\Inputs\File
  */
-class FileTest extends InputComponentTestCase
+final class FileTest extends InputComponentTestCase
 {
     protected string $componentClass = File::class;
 

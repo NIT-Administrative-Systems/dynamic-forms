@@ -9,7 +9,7 @@ use Orchestra\Testbench\TestCase;
 /**
  * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Conditional\SimpleConditional
  */
-class SimpleConditionalTest extends TestCase
+final class SimpleConditionalTest extends TestCase
 {
     #[DataProvider('invokeDataProvider')]
     public function testInvoke(bool $show, string $when, string $equalTo, array $submissionValues, bool $expected): void

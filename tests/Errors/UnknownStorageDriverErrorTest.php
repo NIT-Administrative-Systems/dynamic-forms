@@ -8,7 +8,7 @@ use Orchestra\Testbench\TestCase;
 /**
  * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Errors\UnknownStorageDriverError
  */
-class UnknownStorageDriverErrorTest extends TestCase
+final class UnknownStorageDriverErrorTest extends TestCase
 {
     /**
      * @covers ::__construct

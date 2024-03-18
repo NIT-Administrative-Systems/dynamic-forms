@@ -9,7 +9,7 @@ use Orchestra\Testbench\TestCase;
 /**
  * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Rules\CheckWordCount
  */
-class CheckWordCountTest extends TestCase
+final class CheckWordCountTest extends TestCase
 {
     /**
      * @covers ::__construct

@@ -9,7 +9,7 @@ use Northwestern\SysDev\DynamicForms\Tests\Components\TestCases\BaseComponentTes
 /**
  * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Components\Inputs\Button
  */
-class ButtonTest extends BaseComponentTestCase
+final class ButtonTest extends BaseComponentTestCase
 {
     protected string $componentClass = Button::class;
 

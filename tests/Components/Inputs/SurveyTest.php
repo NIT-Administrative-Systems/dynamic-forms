@@ -9,7 +9,7 @@ use Northwestern\SysDev\DynamicForms\Tests\Components\TestCases\InputComponentTe
 /**
  * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Components\Inputs\Survey
  */
-class SurveyTest extends InputComponentTestCase
+final class SurveyTest extends InputComponentTestCase
 {
     protected string $componentClass = Survey::class;
     protected array $defaultAdditional = [

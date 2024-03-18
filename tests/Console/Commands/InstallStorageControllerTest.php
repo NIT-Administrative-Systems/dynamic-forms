@@ -9,7 +9,7 @@ use ReflectionMethod;
 /**
  * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Console\Commands\InstallStorageController
  */
-class InstallStorageControllerTest extends TestCase
+final class InstallStorageControllerTest extends TestCase
 {
     /**
      * @covers ::getStub

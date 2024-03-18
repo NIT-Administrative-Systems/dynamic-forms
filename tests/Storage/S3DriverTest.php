@@ -12,7 +12,7 @@ use Orchestra\Testbench\TestCase;
 /**
  * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Storage\S3Driver
  */
-class S3DriverTest extends TestCase
+final class S3DriverTest extends TestCase
 {
     const DUMMY_S3_CONF = [
         'region' => 'us-east-1',

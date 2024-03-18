@@ -8,7 +8,7 @@ use Orchestra\Testbench\TestCase;
 /**
  * @coversDefaultClass \Northwestern\SysDev\DynamicForms\RuleBag
  */
-class RuleBagTest extends TestCase
+final class RuleBagTest extends TestCase
 {
     /**
      * @covers ::add

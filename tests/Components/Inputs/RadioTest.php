@@ -9,7 +9,7 @@ use Northwestern\SysDev\DynamicForms\Tests\Components\TestCases\InputComponentTe
 /**
  * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Components\Inputs\Radio
  */
-class RadioTest extends InputComponentTestCase
+final class RadioTest extends InputComponentTestCase
 {
     protected string $componentClass = Radio::class;
     protected array $defaultAdditional = [
