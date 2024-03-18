@@ -1,3 +1,5 @@
+import FontAwesome6IconClass from './font-awesome-6';
+
 export default {
     /**
      * This is the bar you see on-hover in the builder that has the edit, copy, delete, etc icons.
@@ -37,5 +39,6 @@ export default {
 
             return template.trim();
         },
+        iconClass: FontAwesome6IconClass,
     }
 }

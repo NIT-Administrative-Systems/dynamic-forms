@@ -1,7 +1,11 @@
-import 'formiojs';
+import {Formio} from 'formiojs';
+import * as FormioUtils from 'formiojs/utils/utils';
+import _ from 'lodash-es';
 import Defaults from './defaults';
 import CustomTemplates from "./custom-templates";
 import BuilderSidebar from "./builder-sidebar"
+import S3 from "./providers/s3"
+import CustomSurvey from "./components/CustomSurvey";
 
 /*
 * We explicitly do NOT support JS evaluation stuff, so disable all of it.
@@ -14,6 +18,12 @@ FormioUtils.Evaluator.noeval = true;
 // If you want to load custom code (like additional components), do it here!
 // -------------------------------------------------------------------------
 
+Formio.use({
+    components: {
+        survey: CustomSurvey
+    }
+});
+
 /**
  * Runs global customizations for the Button and File component's editForm that were not possible
  * with the typical way of adjusting editForms.
@@ -21,6 +31,18 @@ FormioUtils.Evaluator.noeval = true;
 Defaults.globalButtonCustomization();
 Defaults.globalFileCustomization();
 Defaults.globalResourceCustomization();
+Defaults.globalTextareaCustomizations();
+
+/**
+ * The S3 PutObject needs to include the headers that the server advises it to include.
+ * There was no way to do this with the stock implementation, so we've ejected it and hacked it up.
+ */
+Formio.Providers.addProvider('storage', 's3', S3);
+
+const port = window.location.port ? `:${window.location.port}`: '';
+const formioUrl = `${window.location.protocol}//${window.location.hostname}${port}/dynamic-forms`;
+Formio.setProjectUrl(formioUrl);
+Formio.setBaseUrl(formioUrl);
 
 /**
  * Apply any custom templates.
@@ -58,6 +80,12 @@ Formio.builder = function (element, form, options) {
         options.builder = BuilderSidebar;
     }
 
+    if (options.requiredComponents) {
+        options.builder.custom.components = options.requiredComponents;
+    } else {
+        delete options.builder.custom;
+    }
+
     return origFormioBuilder(element, form, options);
 };
 
@@ -74,3 +102,5 @@ Formio.createForm = function (element, form, options) {
 
     return origFormioCreateForm(element, form, options);
 }
+
+window.Formio = Formio;

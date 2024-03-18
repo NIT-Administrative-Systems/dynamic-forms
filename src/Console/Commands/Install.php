@@ -6,7 +6,7 @@ use Illuminate\Console\Command;
 
 class Install extends Command
 {
-    public const FORMIOJS_VERSION = '^4.12.7';
+    public const FORMIOJS_VERSION = '5.0.0-rc.4';
 
     protected $signature = 'dynamic-forms:install';
 
@@ -43,23 +43,8 @@ class Install extends Command
 
         $this->newLine();
         $this->info('Please review the new controller and implement appropriate authorization rules.');
-        $this->info('And remember to run `yarn install and Laravel Mix!');
+        $this->info('And remember to run npm install && npm run build');
     }
-
-//    protected function getNameInput(): string
-//    {
-//        return 'DynamicFormsStorageController';
-//    }
-//
-//    protected function getStub(): string
-//    {
-//        return __DIR__.'/../../../stubs/DynamicFormsStorageController.stub';
-//    }
-//
-//    protected function getDefaultNamespace($rootNamespace): string
-//    {
-//        return $rootNamespace.'\Http\Controllers';
-//    }
 
     protected function ejectRoutes(string $routesFile): void
     {
@@ -74,7 +59,7 @@ class Install extends Command
     {
         file_put_contents(
             $appJsFile,
-            "require('./formio');",
+            "import './formio';",
             FILE_APPEND
         );
     }
@@ -92,7 +77,7 @@ class Install extends Command
     {
         file_put_contents(
             $appCssFile,
-            "@import '~formiojs/dist/formio.full';",
+            "@import '/node_modules/formiojs/dist/formio.full.css';",
             FILE_APPEND
         );
     }

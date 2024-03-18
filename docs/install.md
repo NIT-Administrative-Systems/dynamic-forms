@@ -4,15 +4,17 @@ Dynamic Forms for Laravel is available via composer.
 ## Prerequisites
 You will need the following:
 
-- PHP 8.0+
-- Laravel 8+
-- Bootstrap 4 
-- FontAwesome 5
+- PHP 8.2+
+- Laravel 11+
+- Bootstrap 5 
+- FontAwesome 6
 - (optional) An Amazon S3 bucket & access token, if you are going to handle file uploads via S3 for your dynamic forms
 
-Dynamic Forms assumes that you are using [Laravel Vite](https://laravel.com/docs/10.x/vite) or [Laravel Mix](https://laravel.com/docs/8.x/mix) to prepare your JS/CSS assets. If you are not, you will need to transpile/minify the JavaScript that is installed into your `resources/js` folder using your own build system.
+Dynamic Forms assumes that you are using [Laravel Vite](https://laravel.com/docs/10.x/vite). If you are not, you will need to transpile/minify the JavaScript that is installed into your `resources/js` folder using your own build system.
 
-There is no Tailwind or Bootstrap 5 version at this time. This is driven by Formiojs' support for different CSS frameworks. Bootstrap 4, Bootstrap 3, and Semantic UI are the available options.
+The guide assumes you have switched from the Laravel default `resources/css/app.css` to `resources/sass/app.scss` and updated the `vite.config.js` file, plus any `@vite('resources/css/app.css')` references in the layout. This is necessary to bundle Bootstrap.
+
+There is no Tailwind version at this time. This is driven by Formiojs' support for different CSS frameworks. Bootstrap v3 through v5 and Semantic UI are the available options.
 
 ## Installation
 Install the package, run the installation command, and build your frontend assets:
@@ -35,7 +37,7 @@ Out of the box, this controller will deny all requests. You need to implement th
 
 Depending on who will be uploading, you may also want to add the `auth` middleware to verify a user is logged in.
 
-For file uploads, S3 and direct server uploads are both options available in the builder. You can set the env variable `MIX_STORAGE_DEFAULT_VALUE` to `s3` or `url` if you do not need to give people a choice.
+For file uploads, S3 and direct server uploads are both options available in the builder. You can set the env variable `VITE_STORAGE_DEFAULT_VALUE` to `s3` or `url` if you do not need to give people a choice.
 
 ### Resources
 The installation command creates `App\Http\Controllers\DynamicFormsResourceController`. This controller is responsible for handling Resource Requests for Select components that utilize the Resource Source.

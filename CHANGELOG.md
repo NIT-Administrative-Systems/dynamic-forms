@@ -5,7 +5,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## Unreleased
 ### Changed
-- Support for PHP 8.1 was removed. The minimum version is now 8.2.
+- The minimum versions for dependencies have changed. The new requirements are:
+    - PHP 8.2
+    - Laravel 11
+    - Bootstrap 5
+    - FontAwesome 6
+
+- The JS file `default.js` references the `.env` value `VITE_STORAGE_DEFAULT_VALUE` instead of `MIX_STORAGE_DEFAULT_VALUE`. If you are using Laravel Mix or another build system, you may need to adjust this code.
+
+- The routes file now removes the `\Illuminate\Foundation\Http\Middleware\VerifyCsrfToken` middleware from the POSTs that formio makes, as `App\Http\Middleware\VerifyCsrfToken` is no longer part of the Laravel skeleton. If you are upgrading from Laravel 10 and have not removed your stock middleware, this does not need to be updated.
 
 ## [v0.15.1 - 2024-03-11]
 ### Fixes
