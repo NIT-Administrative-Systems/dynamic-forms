@@ -2,10 +2,10 @@
 
 namespace Northwestern\SysDev\DynamicForms\Tests\Conditional;
 
-use PHPUnit\Framework\Attributes\DataProvider;
 use Northwestern\SysDev\DynamicForms\Conditional\JSONConditional;
 use Northwestern\SysDev\DynamicForms\JSONLogicInitHelper;
 use Orchestra\Testbench\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
  * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Conditional\JSONConditional

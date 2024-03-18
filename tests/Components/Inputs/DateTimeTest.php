@@ -2,11 +2,11 @@
 
 namespace Northwestern\SysDev\DynamicForms\Tests\Components\Inputs;
 
-use PHPUnit\Framework\Attributes\TestWith;
 use Illuminate\Support\Carbon;
 use Northwestern\SysDev\DynamicForms\Components\CaseEnum;
 use Northwestern\SysDev\DynamicForms\Components\Inputs\DateTime;
 use Northwestern\SysDev\DynamicForms\Tests\Components\TestCases\InputComponentTestCase;
+use PHPUnit\Framework\Attributes\TestWith;
 
 /**
  * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Components\Inputs\DateTime
@@ -16,7 +16,7 @@ final class DateTimeTest extends InputComponentTestCase
     protected string $componentClass = DateTime::class;
 
     /**
-     *           ["garbage"]
+     *           ["garbage"].
      */
     #[TestWith('[""]
 ["garbage"]')]

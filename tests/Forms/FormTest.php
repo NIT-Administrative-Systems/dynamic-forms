@@ -2,9 +2,9 @@
 
 namespace Northwestern\SysDev\DynamicForms\Tests\Forms;
 
-use PHPUnit\Framework\Attributes\DataProvider;
 use Northwestern\SysDev\DynamicForms\Forms\Form;
 use Orchestra\Testbench\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
  * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Forms\Form

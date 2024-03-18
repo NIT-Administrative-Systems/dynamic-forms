@@ -2,11 +2,11 @@
 
 namespace Northwestern\SysDev\DynamicForms\Tests\Components\Inputs;
 
-use PHPUnit\Framework\Attributes\DataProvider;
 use Illuminate\Support\Arr;
 use Northwestern\SysDev\DynamicForms\Components\Inputs\File;
 use Northwestern\SysDev\DynamicForms\Storage\S3Driver;
 use Northwestern\SysDev\DynamicForms\Tests\Components\TestCases\InputComponentTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
  * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Components\Inputs\File

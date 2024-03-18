@@ -2,8 +2,8 @@
 
 namespace Northwestern\SysDev\DynamicForms\Tests\Components\TestCases;
 
-use PHPUnit\Framework\Attributes\DataProvider;
 use function app;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
  * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Components\BaseComponent

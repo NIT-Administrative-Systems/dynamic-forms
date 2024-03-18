@@ -2,9 +2,9 @@
 
 namespace Northwestern\SysDev\DynamicForms\Tests\Components\Layout;
 
-use PHPUnit\Framework\Attributes\DataProvider;
 use Northwestern\SysDev\DynamicForms\Components\Layout\Columns;
 use Northwestern\SysDev\DynamicForms\Tests\Components\TestCases\BaseComponentTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
  * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Components\Layout\Columns
