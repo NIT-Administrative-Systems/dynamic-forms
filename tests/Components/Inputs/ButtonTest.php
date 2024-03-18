@@ -4,19 +4,16 @@ namespace Northwestern\SysDev\DynamicForms\Tests\Components\Inputs;
 
 use Northwestern\SysDev\DynamicForms\Components\Inputs\Button;
 use Northwestern\SysDev\DynamicForms\Tests\Components\TestCases\BaseComponentTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
  * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Components\Inputs\Button
  */
-class ButtonTest extends BaseComponentTestCase
+final class ButtonTest extends BaseComponentTestCase
 {
     protected string $componentClass = Button::class;
 
-    /**
-     * @covers ::action
-     *
-     * @dataProvider actionProvider
-     */
+    #[DataProvider('actionProvider')]
     public function testAction(array $additional, string $expectedAction): void
     {
         /** @var Button $component */
@@ -25,7 +22,7 @@ class ButtonTest extends BaseComponentTestCase
         $this->assertEquals($expectedAction, $component->action());
     }
 
-    public function actionProvider(): array
+    public static function actionProvider(): array
     {
         return [
             'key not present' => [[], Button::ACTION_SUBMIT],

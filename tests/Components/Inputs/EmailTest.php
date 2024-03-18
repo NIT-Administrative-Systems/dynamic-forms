@@ -13,7 +13,7 @@ class EmailTest extends InputComponentTestCase
 {
     protected string $componentClass = Email::class;
 
-    public function validationsProvider(): array
+    public static function validationsProvider(): array
     {
         return [
             'passes when no value is supplied' => [[], '', true],
@@ -32,7 +32,7 @@ class EmailTest extends InputComponentTestCase
         ];
     }
 
-    public function submissionValueProvider(): array
+    public static function submissionValueProvider(): array
     {
         return [
             'no transformations' => [null, 'foo@bar.com', 'foo@bar.com'],

@@ -3,6 +3,7 @@
 namespace Northwestern\SysDev\DynamicForms\Tests\Components\TestCases;
 
 use function app;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
  * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Components\BaseComponent
@@ -17,11 +18,7 @@ abstract class InputComponentTestCase extends BaseComponentTestCase
         $this->assertTrue($this->getComponent()->canValidate());
     }
 
-    /**
-     * @covers ::processValidations
-     * @covers ::validate
-     * @dataProvider validationsProvider
-     */
+    #[DataProvider('validationsProvider')]
     public function testValidations(
         array $validations,
         mixed $submissionValue,
@@ -45,11 +42,7 @@ abstract class InputComponentTestCase extends BaseComponentTestCase
         }
     }
 
-    /**
-     * @covers ::processValidations
-     * @covers ::validate
-     * @dataProvider validationsProvider
-     */
+    #[DataProvider('validationsProvider')]
     public function testValidationsOnMultipleValues(
         array $validations,
         mixed $submissionValue,
@@ -57,7 +50,7 @@ abstract class InputComponentTestCase extends BaseComponentTestCase
         ?string $message = null,
         array $additional = [],
         ?string $errorLabel = null
-    ) {
+    ): void {
         $component = $this->getComponent(
             errorLabel: $errorLabel,
             validations: $validations,
@@ -78,7 +71,7 @@ abstract class InputComponentTestCase extends BaseComponentTestCase
      * @covers ::processValidations
      * @covers ::validate
      */
-    public function testValidationsOnMultipleValuesForNullSubmissionValue()
+    public function testValidationsOnMultipleValuesForNullSubmissionValue(): void
     {
         $component = $this->getComponent(
             hasMultipleValues: true,
@@ -89,10 +82,7 @@ abstract class InputComponentTestCase extends BaseComponentTestCase
         $this->assertTrue($bag->isEmpty());
     }
 
-    /**
-     * @covers ::submissionValue
-     * @dataProvider submissionValueProvider
-     */
+    #[DataProvider('submissionValueProvider')]
     public function testSubmissionValue(?string $case, mixed $submissionValue, mixed $expected): void
     {
         $component = $this->getComponent(case: $case ?? 'mixed');

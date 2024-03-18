@@ -6,15 +6,16 @@ use Illuminate\Support\Arr;
 use Northwestern\SysDev\DynamicForms\Components\Inputs\File;
 use Northwestern\SysDev\DynamicForms\Storage\S3Driver;
 use Northwestern\SysDev\DynamicForms\Tests\Components\TestCases\InputComponentTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
  * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Components\Inputs\File
  */
-class FileTest extends InputComponentTestCase
+final class FileTest extends InputComponentTestCase
 {
     protected string $componentClass = File::class;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -38,11 +39,7 @@ class FileTest extends InputComponentTestCase
         $this->assertEquals('cat/', $component->getStorageDirectory());
     }
 
-    /**
-     * @covers ::processValidations
-     * @covers ::validate
-     * @dataProvider validationsProvider
-     */
+    #[DataProvider('validationsProvider')]
     public function testValidations(
         array $validations,
         mixed $submissionValue,
@@ -56,11 +53,7 @@ class FileTest extends InputComponentTestCase
         parent::testValidations($validations, $submissionValue, $passes, $message, $additional, $errorLabel);
     }
 
-    /**
-     * @covers ::processValidations
-     * @covers ::validate
-     * @dataProvider validationsProvider
-     */
+    #[DataProvider('validationsProvider')]
     public function testValidationsOnMultipleValues(
         array $validations,
         mixed $submissionValue,
@@ -68,7 +61,7 @@ class FileTest extends InputComponentTestCase
         ?string $message = null,
         array $additional = [],
         ?string $errorLabel = null
-    ) {
+    ): void {
         $component = $this->getComponent(
             errorLabel: $errorLabel,
             validations: $validations,
@@ -101,7 +94,7 @@ class FileTest extends InputComponentTestCase
         return $submissionValue;
     }
 
-    public function validationsProvider(): array
+    public static function validationsProvider(): array
     {
         $filePASS = json_decode('[{
             "storage": "s3",
@@ -139,7 +132,7 @@ class FileTest extends InputComponentTestCase
         ];
     }
 
-    public function submissionValueProvider(): array
+    public static function submissionValueProvider(): array
     {
         return [
             'empty passes through' => [null, [], []],

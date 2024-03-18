@@ -6,19 +6,17 @@ use Illuminate\Support\Carbon;
 use Northwestern\SysDev\DynamicForms\Components\CaseEnum;
 use Northwestern\SysDev\DynamicForms\Components\Inputs\DateTime;
 use Northwestern\SysDev\DynamicForms\Tests\Components\TestCases\InputComponentTestCase;
+use PHPUnit\Framework\Attributes\TestWith;
 
 /**
  * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Components\Inputs\DateTime
  */
-class DateTimeTest extends InputComponentTestCase
+final class DateTimeTest extends InputComponentTestCase
 {
     protected string $componentClass = DateTime::class;
 
-    /**
-     * @testWith [""]
-     *           ["garbage"]
-     * @covers ::submissionValue
-     */
+    #[TestWith([''])]
+    #[TestWith(['garbage'])]
     public function testSubmissionValueHandlesNulls(string $value): void
     {
         $date = $this->getComponent(submissionValue: $value);
@@ -34,7 +32,7 @@ class DateTimeTest extends InputComponentTestCase
         $this->assertEquals('2021-03-25 17:00:00', $date->submissionValue());
     }
 
-    public function validationsProvider(): array
+    public static function validationsProvider(): array
     {
         return [
             'passes with blank' => [[], '', true, null],
@@ -50,7 +48,7 @@ class DateTimeTest extends InputComponentTestCase
         ];
     }
 
-    public function submissionValueProvider(): array
+    public static function submissionValueProvider(): array
     {
         return [
             'no transformations' => [null, '2021-03-25T12:00:00-05:00', Carbon::parse('2021-03-25T12:00:00-05:00')],

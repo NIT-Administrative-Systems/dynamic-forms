@@ -13,7 +13,7 @@ class TextfieldTest extends InputComponentTestCase
 {
     protected string $componentClass = Textfield::class;
 
-    public function validationsProvider(): array
+    public static function validationsProvider(): array
     {
         return [
             'required passes' => [['required' => true], 'Present', true],
@@ -33,7 +33,7 @@ class TextfieldTest extends InputComponentTestCase
         ];
     }
 
-    public function submissionValueProvider(): array
+    public static function submissionValueProvider(): array
     {
         return [
             'no transformations' => [null, 'foo', 'foo'],

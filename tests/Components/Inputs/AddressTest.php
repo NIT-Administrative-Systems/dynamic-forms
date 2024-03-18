@@ -10,7 +10,7 @@ use Northwestern\SysDev\DynamicForms\Tests\Components\TestCases\InputComponentTe
 /**
  * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Components\Inputs\Address
  */
-class AddressTest extends InputComponentTestCase
+final class AddressTest extends InputComponentTestCase
 {
     public string $componentClass = Address::class;
     public array $defaultAdditional = ['provider' => Address::PROVIDER_OPENSTREETMAP];
@@ -54,7 +54,7 @@ class AddressTest extends InputComponentTestCase
         $this->getComponent(additional: ['provider' => Address::PROVIDER_AZURE]);
     }
 
-    public function validationsProvider(): array
+    public static function validationsProvider(): array
     {
         return [
             'no data passes' => [[], [], true],
@@ -63,7 +63,7 @@ class AddressTest extends InputComponentTestCase
         ];
     }
 
-    public function submissionValueProvider(): array
+    public static function submissionValueProvider(): array
     {
         return [
             'no transformations' => [null, self::VALID_ADDR, self::VALID_ADDR],

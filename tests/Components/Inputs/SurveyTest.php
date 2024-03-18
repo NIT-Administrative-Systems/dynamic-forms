@@ -9,7 +9,7 @@ use Northwestern\SysDev\DynamicForms\Tests\Components\TestCases\InputComponentTe
 /**
  * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Components\Inputs\Survey
  */
-class SurveyTest extends InputComponentTestCase
+final class SurveyTest extends InputComponentTestCase
 {
     protected string $componentClass = Survey::class;
     protected array $defaultAdditional = [
@@ -71,7 +71,7 @@ class SurveyTest extends InputComponentTestCase
         $this->assertEquals(['q1' => 'a', 'q2' => 'a'], $survey->submissionValue());
     }
 
-    public function validationsProvider(): array
+    public static function validationsProvider(): array
     {
         return [
             'empty data passes' => [[], ['q1' => '', 'q2' => '', 'Question 3 (i.e. foo bar)' => ''], true],
@@ -83,7 +83,7 @@ class SurveyTest extends InputComponentTestCase
         ];
     }
 
-    public function submissionValueProvider(): array
+    public static function submissionValueProvider(): array
     {
         $responses = ['q1' => 'a2', 'q2' => 'a1', 'Question 3 (i.e. foo bar)' => 'a1'];
 

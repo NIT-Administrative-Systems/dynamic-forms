@@ -5,15 +5,16 @@ namespace Northwestern\SysDev\DynamicForms\Tests\Components\Inputs;
 use Northwestern\SysDev\DynamicForms\Components\CaseEnum;
 use Northwestern\SysDev\DynamicForms\Components\Inputs\Currency;
 use Northwestern\SysDev\DynamicForms\Tests\Components\TestCases\InputComponentTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
  * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Components\Inputs\Currency
  */
-class CurrencyTest extends InputComponentTestCase
+final class CurrencyTest extends InputComponentTestCase
 {
     protected string $componentClass = Currency::class;
 
-    public function validationsProvider(): array
+    public static function validationsProvider(): array
     {
         return [
             'passes with blank data' => [[], '', true],
@@ -22,10 +23,7 @@ class CurrencyTest extends InputComponentTestCase
         ];
     }
 
-    /**
-     * @dataProvider submissionValueNumericsDataProvider
-     * @covers ::submissionValue
-     */
+    #[DataProvider('submissionValueNumericsDataProvider')]
     public function testSubmissionValueHandlesNumerics(int | float | array $submissionValue, bool $hasMultipleValues, array | int | float $expected): void
     {
         $currency = $this->getComponent(hasMultipleValues: $hasMultipleValues, submissionValue: $submissionValue);
@@ -33,7 +31,7 @@ class CurrencyTest extends InputComponentTestCase
         $this->assertEquals($expected, $currency->submissionValue());
     }
 
-    public function submissionValueNumericsDataProvider(): array
+    public static function submissionValueNumericsDataProvider(): array
     {
         return [
             'integer is untouched' => [100, false, 100],
@@ -43,7 +41,7 @@ class CurrencyTest extends InputComponentTestCase
         ];
     }
 
-    public function submissionValueProvider(): array
+    public static function submissionValueProvider(): array
     {
         return [
             'no transformations' => [null, 1.00, 1.00],

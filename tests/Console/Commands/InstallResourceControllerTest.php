@@ -9,7 +9,7 @@ use ReflectionMethod;
 /**
  * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Console\Commands\InstallResourceController
  */
-class InstallResourceControllerTest extends TestCase
+final class InstallResourceControllerTest extends TestCase
 {
     /**
      * @covers ::getStub

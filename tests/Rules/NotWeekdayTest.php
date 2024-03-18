@@ -4,11 +4,12 @@ namespace Northwestern\SysDev\DynamicForms\Tests\Rules;
 
 use Northwestern\SysDev\DynamicForms\Rules\NotWeekday;
 use Orchestra\Testbench\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
  * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Rules\NotWeekday
  */
-class NotWeekdayTest extends TestCase
+final class NotWeekdayTest extends TestCase
 {
     /**
      * @covers ::message
@@ -20,16 +21,13 @@ class NotWeekdayTest extends TestCase
         $this->assertStringContainsString(':attribute', $rule->message());
     }
 
-    /**
-     * @dataProvider passesDataProvider
-     * @covers ::passes
-     */
+    #[DataProvider('passesDataProvider')]
     public function testPasses(string $value, bool $passes): void
     {
         $this->assertEquals($passes, (new NotWeekday)->passes('Test', $value));
     }
 
-    public function passesDataProvider(): array
+    public static function passesDataProvider(): array
     {
         return [
             'tuesday fails' => ['2021-03-30', false],

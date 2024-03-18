@@ -8,12 +8,12 @@ use Orchestra\Testbench\TestCase;
 /**
  * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Errors\UnknownComponentError
  */
-class UnknownComponentErrorTest extends TestCase
+final class UnknownComponentErrorTest extends TestCase
 {
     /**
      * @covers ::__construct
      */
-    public function testConstruct()
+    public function testConstruct(): void
     {
         $this->expectException(UnknownComponentError::class);
 

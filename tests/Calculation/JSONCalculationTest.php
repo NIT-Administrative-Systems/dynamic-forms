@@ -8,7 +8,7 @@ use Northwestern\SysDev\DynamicForms\Calculation\JSONCalculation;
 /**
  * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Calculation\JSONCalculation
  */
-class JSONCalculationTest extends TestCase
+final class JSONCalculationTest extends TestCase
 {
     /**
      * @covers ::__invoke

@@ -5,25 +5,14 @@ namespace Northwestern\SysDev\DynamicForms\Tests\Conditional;
 use Northwestern\SysDev\DynamicForms\Conditional\JSONConditional;
 use Northwestern\SysDev\DynamicForms\JSONLogicInitHelper;
 use Orchestra\Testbench\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
  * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Conditional\JSONConditional
  */
-class JSONConditionalTest extends TestCase
+final class JSONConditionalTest extends TestCase
 {
-    /**
-     * @covers ::__construct
-     * @covers ::__invoke
-     * @covers \Northwestern\SysDev\DynamicForms\JSONLogic\LodashFunctions\___
-     * @covers \Northwestern\SysDev\DynamicForms\JSONLogic\LodashFunctions\Arrays
-     * @covers \Northwestern\SysDev\DynamicForms\JSONLogic\LodashFunctions\Collection
-     * @covers \Northwestern\SysDev\DynamicForms\JSONLogic\LodashFunctions\Lang
-     * @covers \Northwestern\SysDev\DynamicForms\JSONLogic\LodashFunctions\Math
-     * @covers \Northwestern\SysDev\DynamicForms\JSONLogic\LodashFunctions\Objects
-     * @covers \Northwestern\SysDev\DynamicForms\JSONLogic\LodashFunctions\Util
-     * @covers \Northwestern\SysDev\DynamicForms\JSONLogicInitHelper
-     * @dataProvider invokeDataProvider
-     */
+    #[DataProvider('invokeDataProvider')]
     public function testInvoke(array $jsonLogic, array $submissionValues, bool $expected): void
     {
         new JSONLogicInitHelper();
@@ -32,7 +21,7 @@ class JSONConditionalTest extends TestCase
         $this->assertEquals($expected, $condition($submissionValues));
     }
 
-    public function invokeDataProvider(): array
+    public static function invokeDataProvider(): array
     {
         return [
             //Basic JSONLOGIC

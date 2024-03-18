@@ -8,12 +8,12 @@ use Orchestra\Testbench\TestCase;
 /**
  * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Errors\ValidationNotImplementedError
  */
-class ValidationNotImplementedErrorTest extends TestCase
+final class ValidationNotImplementedErrorTest extends TestCase
 {
     /**
      * @covers ::__construct
      */
-    public function testConstruct()
+    public function testConstruct(): void
     {
         $this->expectException(ValidationNotImplementedError::class);
 

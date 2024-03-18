@@ -4,17 +4,14 @@ namespace Northwestern\SysDev\DynamicForms\Tests\Conditional;
 
 use Northwestern\SysDev\DynamicForms\Conditional\SimpleConditional;
 use Orchestra\Testbench\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
  * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Conditional\SimpleConditional
  */
-class SimpleConditionalTest extends TestCase
+final class SimpleConditionalTest extends TestCase
 {
-    /**
-     * @covers ::__construct
-     * @covers ::__invoke
-     * @dataProvider invokeDataProvider
-     */
+    #[DataProvider('invokeDataProvider')]
     public function testInvoke(bool $show, string $when, string $equalTo, array $submissionValues, bool $expected): void
     {
         $condition = new SimpleConditional($show, $when, $equalTo);
@@ -22,7 +19,7 @@ class SimpleConditionalTest extends TestCase
         $this->assertEquals($expected, $condition($submissionValues));
     }
 
-    public function invokeDataProvider(): array
+    public static function invokeDataProvider(): array
     {
         return [
             'should show' => [

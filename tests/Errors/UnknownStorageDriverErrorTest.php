@@ -8,12 +8,12 @@ use Orchestra\Testbench\TestCase;
 /**
  * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Errors\UnknownStorageDriverError
  */
-class UnknownStorageDriverErrorTest extends TestCase
+final class UnknownStorageDriverErrorTest extends TestCase
 {
     /**
      * @covers ::__construct
      */
-    public function testConstruct()
+    public function testConstruct(): void
     {
         $this->expectException(UnknownStorageDriverError::class);
 

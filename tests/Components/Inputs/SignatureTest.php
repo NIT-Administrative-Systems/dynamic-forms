@@ -13,7 +13,7 @@ class SignatureTest extends InputComponentTestCase
 {
     protected string $componentClass = Signature::class;
 
-    public function validationsProvider(): array
+    public static function validationsProvider(): array
     {
         return [
             'garbage data fails' => [[], 'not an image', false],
@@ -23,7 +23,7 @@ class SignatureTest extends InputComponentTestCase
         ];
     }
 
-    public function submissionValueProvider(): array
+    public static function submissionValueProvider(): array
     {
         $data = 'data:image/png;base64,iVBORw0KG...';
 

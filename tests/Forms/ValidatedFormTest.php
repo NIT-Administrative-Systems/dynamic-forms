@@ -9,18 +9,19 @@ use Northwestern\SysDev\DynamicForms\Forms\Form;
 use Northwestern\SysDev\DynamicForms\Forms\ValidatedForm;
 use Northwestern\SysDev\DynamicForms\Storage\S3Driver;
 use Orchestra\Testbench\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
  * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Forms\ValidatedForm
  */
-class ValidatedFormTest extends TestCase
+final class ValidatedFormTest extends TestCase
 {
     /**
      * @covers ::__construct
      * @covers ::messages
      * @covers ::isValid
      * @covers ::values
-     * @covers ::validatableComponents
+     * @covers ::flatValidatableComponents
      */
     public function testGetters(): void
     {
@@ -88,11 +89,7 @@ class ValidatedFormTest extends TestCase
         $this->assertTrue($validatedForm->errors()->isEmpty());
     }
 
-    /**
-     * @covers ::__construct
-     * @covers ::validatableComponents
-     * @dataProvider  validationDataProvider
-     */
+    #[DataProvider('validationDataProvider')]
     public function testValidation(array $flatComponents, array $submission, bool $passes, array $expectedValues): void
     {
         $validatedForm = new ValidatedForm($flatComponents, $submission);
@@ -111,7 +108,7 @@ class ValidatedFormTest extends TestCase
         $this->assertEquals($expectedValues, $values->all());
     }
 
-    public function validationDataProvider(): array
+    public static function validationDataProvider(): array
     {
         $json = fn (string $filename) => file_get_contents(implode(DIRECTORY_SEPARATOR, [__DIR__, '..', 'Fixtures', $filename]));
         $components = fn (string $filename) => (new Form($json($filename)))->flatComponents();
@@ -229,10 +226,7 @@ class ValidatedFormTest extends TestCase
         ];
     }
 
-    /**
-     * @covers ::allFiles
-     * @dataProvider  filesDataProvider
-     */
+    #[DataProvider('filesDataProvider')]
     public function testAllFiles(callable $flatComponents, array $submission, array $expectedAllFiles): void
     {
         $this->app->singleton(S3Driver::class, function ($app) {
@@ -256,7 +250,7 @@ class ValidatedFormTest extends TestCase
         $this->assertEquals($expectedAllFiles, $allFilesActual->all());
     }
 
-    public function filesDataProvider(): array
+    public static function filesDataProvider(): array
     {
         $json = fn (string $filename) => file_get_contents(implode(DIRECTORY_SEPARATOR, [__DIR__, '..', 'Fixtures', $filename]));
         $components = fn (string $filename) => (new Form($json($filename)))->flatComponents();

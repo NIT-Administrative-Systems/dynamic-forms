@@ -9,7 +9,7 @@ use Orchestra\Testbench\TestCase;
 /**
  * @coversDefaultClass \Northwestern\SysDev\DynamicForms\ComponentRegistry
  */
-class ComponentRegistryTest extends TestCase
+final class ComponentRegistryTest extends TestCase
 {
     /**
      * @covers ::__construct

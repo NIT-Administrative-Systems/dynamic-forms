@@ -4,21 +4,14 @@ namespace Northwestern\SysDev\DynamicForms\Tests\Forms;
 
 use Northwestern\SysDev\DynamicForms\Forms\Form;
 use Orchestra\Testbench\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
  * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Forms\Form
  */
-class FormTest extends TestCase
+final class FormTest extends TestCase
 {
-    /**
-     * @dataProvider formDataProvider
-     * @covers ::setDefinition
-     * @covers ::__construct
-     * @covers ::processComponentDefinition
-     * @covers ::getCustomChildren
-     * @covers ::flattenComponents
-     * @covers ::flatComponents
-     */
+    #[DataProvider('formDataProvider')]
     public function testFormDeserialization(string $definition, int $componentCount): void
     {
         $form = new Form($definition);
@@ -26,7 +19,7 @@ class FormTest extends TestCase
         $this->assertEquals($componentCount, count($form->flatComponents()));
     }
 
-    public function formDataProvider(): array
+    public static function formDataProvider(): array
     {
         $json = fn (string $filename) => file_get_contents(implode(DIRECTORY_SEPARATOR, [__DIR__, '..', 'Fixtures', $filename]));
 

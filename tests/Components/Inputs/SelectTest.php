@@ -12,7 +12,7 @@ use Northwestern\SysDev\DynamicForms\Tests\Components\TestCases\InputComponentTe
 /**
  * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Components\Inputs\Select
  */
-class SelectTest extends InputComponentTestCase
+final class SelectTest extends InputComponentTestCase
 {
     protected string $componentClass = Select::class;
     protected array $defaultAdditional = [
@@ -54,7 +54,7 @@ class SelectTest extends InputComponentTestCase
         $this->assertEquals(true, $bag->isEmpty());
     }
 
-    public function validationsProvider(): array
+    public static function validationsProvider(): array
     {
         return [
             'not required passes' => [[], '', true],
@@ -66,7 +66,7 @@ class SelectTest extends InputComponentTestCase
         ];
     }
 
-    public function submissionValueProvider(): array
+    public static function submissionValueProvider(): array
     {
         return [
             'no transformations' => [null, 'foo', 'foo'],

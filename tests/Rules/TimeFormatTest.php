@@ -4,17 +4,14 @@ namespace Northwestern\SysDev\DynamicForms\Tests\Rules;
 
 use Northwestern\SysDev\DynamicForms\Rules\TimeFormat;
 use Orchestra\Testbench\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
  * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Rules\TimeFormat
  */
-class TimeFormatTest extends TestCase
+final class TimeFormatTest extends TestCase
 {
-    /**
-     * @dataProvider passesDataProvider
-     * @covers ::__construct
-     * @covers ::passes
-     */
+    #[DataProvider('passesDataProvider')]
     public function testPasses(?string $format, string $value, bool $passes): void
     {
         $check = $format ? new TimeFormat($format) : new TimeFormat;
@@ -22,7 +19,7 @@ class TimeFormatTest extends TestCase
         $this->assertEquals($passes, $check->passes('test', $value));
     }
 
-    public function passesDataProvider(): array
+    public static function passesDataProvider(): array
     {
         return [
             'default format passes' => [null, '03:22:00', true],

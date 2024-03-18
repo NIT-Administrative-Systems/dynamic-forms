@@ -10,7 +10,7 @@ use Northwestern\SysDev\DynamicForms\Storage\Concerns\HandlesDynamicFormsStorage
 /**
  * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Storage\Concerns\LocalStorage
  */
-class LocalStorageTest extends \Orchestra\Testbench\TestCase
+final class LocalStorageTest extends \Orchestra\Testbench\TestCase
 {
     /**
      * @covers ::storeURL

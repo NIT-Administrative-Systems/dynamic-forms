@@ -9,7 +9,7 @@ use Northwestern\SysDev\DynamicForms\Tests\Components\TestCases\InputComponentTe
 /**
  * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Components\Inputs\SelectBoxes
  */
-class SelectBoxesTest extends InputComponentTestCase
+final class SelectBoxesTest extends InputComponentTestCase
 {
     protected string $componentClass = SelectBoxes::class;
     protected array $defaultAdditional = [
@@ -78,7 +78,7 @@ class SelectBoxesTest extends InputComponentTestCase
         $this->assertEquals($expected, $component->submissionValue());
     }
 
-    public function validationsProvider(): array
+    public static function validationsProvider(): array
     {
         return [
             'required passes' => [['required' => true], ['foo' => true, 'bar' => true], true],
@@ -90,7 +90,7 @@ class SelectBoxesTest extends InputComponentTestCase
         ];
     }
 
-    public function submissionValueProvider(): array
+    public static function submissionValueProvider(): array
     {
         $boxes = ['foo' => true, 'bar' => false];
 

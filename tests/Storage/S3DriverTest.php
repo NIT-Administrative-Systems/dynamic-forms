@@ -7,11 +7,12 @@ use Aws\S3\Exception\S3Exception;
 use Aws\S3\S3Client;
 use Northwestern\SysDev\DynamicForms\Storage\S3Driver;
 use Orchestra\Testbench\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
  * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Storage\S3Driver
  */
-class S3DriverTest extends TestCase
+final class S3DriverTest extends TestCase
 {
     const DUMMY_S3_CONF = [
         'region' => 'us-east-1',
@@ -36,33 +37,46 @@ class S3DriverTest extends TestCase
     }
 
     /**
-     * @covers ::findObject
-     * @dataProvider findObjectProvider
+     * @param Closure(): S3Client $client
      */
-    public function testFindObject(S3Client $client, bool $expected): void
+    #[DataProvider('findObjectProvider')]
+    public function testFindObject(callable $client, bool $expected): void
     {
+        // Rebind to current context for access to $this
+        $client = $client->bindTo($this)();
+
         $driver = new S3Driver(self::DUMMY_S3_CONF, 'test');
         $driver->setStorageClient($client);
 
         $this->assertEquals($expected, $driver->findObject('foo'));
     }
 
-    public function findObjectProvider(): array
+    public static function findObjectProvider(): array
     {
-        $cmd = $this->createStub(CommandInterface::class);
+        $mock_s3_found_fn = function () {
+            $cmd = $this->createStub(CommandInterface::class);
 
-        $mock_s3_found = $this->createStub(S3Client::class);
-        $mock_s3_found->method('getCommand')->willReturn($cmd);
-        $mock_s3_found->method('execute')->willReturn(true);
+            $mock_s3_found = $this->createStub(S3Client::class);
+            $mock_s3_found->method('getCommand')->willReturn($cmd);
+            $mock_s3_found->method('execute')->willReturn(true);
 
-        $mock_s3_fail = $this->createStub(S3Client::class);
-        $mock_s3_fail->method('getCommand')->willReturn($cmd);
-        $mock_s3_fail->method('execute')
-            ->willThrowException($this->createStub(S3Exception::class));
+            return $mock_s3_found;
+        };
+
+        $mock_s3_fail_fn = function () {
+            $cmd = $this->createStub(CommandInterface::class);
+
+            $mock_s3_fail = $this->createStub(S3Client::class);
+            $mock_s3_fail->method('getCommand')->willReturn($cmd);
+            $mock_s3_fail->method('execute')
+                ->willThrowException($this->createStub(S3Exception::class));
+
+            return $mock_s3_fail;
+        };
 
         return [
-            'found' => [$mock_s3_found, true],
-            'not found' => [$mock_s3_fail, false],
+            'found' => [$mock_s3_found_fn, true],
+            'not found' => [$mock_s3_fail_fn, false],
         ];
     }
 

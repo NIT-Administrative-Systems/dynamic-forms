@@ -13,7 +13,7 @@ class UrlTest extends InputComponentTestCase
 {
     protected string $componentClass = Url::class;
 
-    public function validationsProvider(): array
+    public static function validationsProvider(): array
     {
         return [
             'passes when no value is supplied' => [[], '', true],
@@ -32,7 +32,7 @@ class UrlTest extends InputComponentTestCase
         ];
     }
 
-    public function submissionValueProvider(): array
+    public static function submissionValueProvider(): array
     {
         $url = 'https://google.com';
 

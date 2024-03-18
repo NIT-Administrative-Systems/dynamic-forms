@@ -8,7 +8,7 @@ use Orchestra\Testbench\TestCase;
 /**
  * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Errors\ConditionalNotImplemented
  */
-class ConditionalNotImplementedTest extends TestCase
+final class ConditionalNotImplementedTest extends TestCase
 {
     /**
      * @covers ::__construct

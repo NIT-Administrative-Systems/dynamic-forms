@@ -12,7 +12,7 @@ use Orchestra\Testbench\TestCase;
 /**
  * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Storage\Concerns\S3Storage
  */
-class S3StorageTest extends TestCase
+final class S3StorageTest extends TestCase
 {
     /**
      * @covers ::storeS3

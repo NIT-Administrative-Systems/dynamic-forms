@@ -5,18 +5,16 @@ namespace Northwestern\SysDev\DynamicForms\Tests\Components\Inputs;
 use Northwestern\SysDev\DynamicForms\Components\CaseEnum;
 use Northwestern\SysDev\DynamicForms\Components\Inputs\Day;
 use Northwestern\SysDev\DynamicForms\Tests\Components\TestCases\InputComponentTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
  * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Components\Inputs\Day
  */
-class DayTest extends InputComponentTestCase
+final class DayTest extends InputComponentTestCase
 {
     protected string $componentClass = Day::class;
 
-    /**
-     * @dataProvider getDatePartsDataProvider
-     * @covers ::getDateParts
-     */
+    #[DataProvider('getDatePartsDataProvider')]
     public function testGetDateParts(string $value, array $expected): void
     {
         $reflection = new \ReflectionClass(Day::class);
@@ -29,7 +27,7 @@ class DayTest extends InputComponentTestCase
         );
     }
 
-    public function getDatePartsDataProvider(): array
+    public static function getDatePartsDataProvider(): array
     {
         $default = ['year' => null, 'month' => null, 'day' => null];
 
@@ -47,12 +45,8 @@ class DayTest extends InputComponentTestCase
      * Overwriting the parent method so we can pass validations to a different spot.
      *
      * @see getDay
-     *
-     * @dataProvider validationsProvider
-     * @covers ::processValidations
-     * @covers ::validate
-     * @covers ::makeDateFormatString
      */
+    #[DataProvider('validationsProvider')]
     public function testValidations(
         array $validations,
         mixed $submissionValue,
@@ -67,11 +61,7 @@ class DayTest extends InputComponentTestCase
         $this->assertEquals($passes, $bag->isEmpty(), $bag);
     }
 
-    /**
-     * @covers ::processValidations
-     * @covers ::validate
-     * @dataProvider validationsProvider
-     */
+    #[DataProvider('validationsProvider')]
     public function testValidationsOnMultipleValues(
         array $validations,
         mixed $submissionValue,
@@ -79,14 +69,14 @@ class DayTest extends InputComponentTestCase
         ?string $message = null,
         array $additional = [],
         ?string $errorLabel = null
-    ) {
+    ): void {
         $component = $this->getDay([$submissionValue], true, $validations, $errorLabel);
 
         $bag = $component->validate();
         $this->assertEquals($passes, $bag->isEmpty(), $bag);
     }
 
-    public function validationsProvider(): array
+    public static function validationsProvider(): array
     {
         $allRequired = [
             'year' => ['required' => true],
@@ -115,7 +105,7 @@ class DayTest extends InputComponentTestCase
         ];
     }
 
-    public function submissionValueProvider(): array
+    public static function submissionValueProvider(): array
     {
         $date = '01/01/2021';
 

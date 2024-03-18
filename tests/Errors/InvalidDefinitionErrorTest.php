@@ -8,12 +8,12 @@ use Orchestra\Testbench\TestCase;
 /**
  * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Errors\InvalidDefinitionError
  */
-class InvalidDefinitionErrorTest extends TestCase
+final class InvalidDefinitionErrorTest extends TestCase
 {
     /**
      * @covers ::__construct
      */
-    public function testConstruct()
+    public function testConstruct(): void
     {
         $this->expectException(InvalidDefinitionError::class);
         $this->expectExceptionMessage('[foo.bar] Test');

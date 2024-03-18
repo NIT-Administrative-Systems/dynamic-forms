@@ -4,27 +4,24 @@ namespace Northwestern\SysDev\DynamicForms\Tests\Rules;
 
 use Northwestern\SysDev\DynamicForms\Rules\CheckWordCount;
 use Orchestra\Testbench\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
  * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Rules\CheckWordCount
  */
-class CheckWordCountTest extends TestCase
+final class CheckWordCountTest extends TestCase
 {
     /**
      * @covers ::__construct
      */
-    public function testConstructThrowsInvalidMode()
+    public function testConstructThrowsInvalidMode(): void
     {
         $this->expectException(\TypeError::class);
 
         new CheckWordCount('dog', 10);
     }
 
-    /**
-     * @covers ::passes
-     * @covers ::message
-     * @dataProvider dataProvider
-     */
+    #[DataProvider('dataProvider')]
     public function testPasses(string $mode, int $length, string $submissionValue, bool $passes, string $message = null): void
     {
         $rule = new CheckWordCount($mode, $length);
@@ -33,7 +30,7 @@ class CheckWordCountTest extends TestCase
         $this->assertEquals($message, $rule->message());
     }
 
-    public function dataProvider(): array
+    public static function dataProvider(): array
     {
         $short = 'Short and sweet';
         $long = 'Short and sweet is not the point,  this is a  word counter  you know';

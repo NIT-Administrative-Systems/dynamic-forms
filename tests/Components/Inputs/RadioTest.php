@@ -9,7 +9,7 @@ use Northwestern\SysDev\DynamicForms\Tests\Components\TestCases\InputComponentTe
 /**
  * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Components\Inputs\Radio
  */
-class RadioTest extends InputComponentTestCase
+final class RadioTest extends InputComponentTestCase
 {
     protected string $componentClass = Radio::class;
     protected array $defaultAdditional = [
@@ -36,7 +36,7 @@ class RadioTest extends InputComponentTestCase
         $this->assertEquals(true, $bag->isEmpty());
     }
 
-    public function validationsProvider(): array
+    public static function validationsProvider(): array
     {
         return [
             'passes with no data' => [[], '', true],
@@ -48,7 +48,7 @@ class RadioTest extends InputComponentTestCase
         ];
     }
 
-    public function submissionValueProvider(): array
+    public static function submissionValueProvider(): array
     {
         $checkboxes = ['foo' => true, 'bar' => true];
 

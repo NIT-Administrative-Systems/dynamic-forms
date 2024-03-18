@@ -6,17 +6,14 @@ use Northwestern\SysDev\DynamicForms\Rules\FileExists;
 use Northwestern\SysDev\DynamicForms\Storage\FileDriver;
 use Northwestern\SysDev\DynamicForms\Storage\S3Driver;
 use Orchestra\Testbench\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
  * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Rules\FileExists
  */
-class FileExistsTest extends TestCase
+final class FileExistsTest extends TestCase
 {
-    /**
-     * @covers ::__construct
-     * @covers ::passes
-     * @dataProvider passesProvider
-     */
+    #[DataProvider('passesProvider')]
     public function testPasses(array $file, bool $shouldExist, bool $passes): void
     {
         $driver = $file['storage'] == S3Driver::STORAGE_S3 ? S3Driver::class : FileDriver::class;
@@ -33,7 +30,7 @@ class FileExistsTest extends TestCase
         $this->assertEquals($passes, $rule->passes('test', $file));
     }
 
-    public function passesProvider(): array
+    public static function passesProvider(): array
     {
         $validS3 = [
             'name' => 'foo1',

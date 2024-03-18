@@ -8,7 +8,7 @@ use Northwestern\SysDev\DynamicForms\Tests\Components\TestCases\BaseComponentTes
 /**
  * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Components\Layout\Table
  */
-class TableTest extends BaseComponentTestCase
+final class TableTest extends BaseComponentTestCase
 {
     protected string $componentClass = Table::class;
 

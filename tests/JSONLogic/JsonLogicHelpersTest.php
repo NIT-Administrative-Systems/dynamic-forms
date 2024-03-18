@@ -8,7 +8,7 @@ use Northwestern\SysDev\DynamicForms\JSONLogic\JsonLogicHelpers;
 /**
  * @coversDefaultClass \Northwestern\SysDev\DynamicForms\JSONLogic\JsonLogicHelpers
  */
-class JsonLogicHelpersTest extends TestCase
+final class JsonLogicHelpersTest extends TestCase
 {
     public function testConvertDataVars(): void
     {
