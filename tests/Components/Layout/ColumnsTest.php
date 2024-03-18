@@ -2,6 +2,7 @@
 
 namespace Northwestern\SysDev\DynamicForms\Tests\Components\Layout;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Northwestern\SysDev\DynamicForms\Components\Layout\Columns;
 use Northwestern\SysDev\DynamicForms\Tests\Components\TestCases\BaseComponentTestCase;
 
@@ -12,9 +13,7 @@ class ColumnsTest extends BaseComponentTestCase
 {
     protected string $componentClass = Columns::class;
 
-    /**
-     * @dataProvider pathsToChildrenDataProvider
-     */
+    #[DataProvider('pathsToChildrenDataProvider')]
     public function testPathsToChildren(array $component, array $expectedPaths): void
     {
         $this->assertEquals($expectedPaths, Columns::pathsToChildren($component));

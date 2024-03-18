@@ -2,6 +2,7 @@
 
 namespace Northwestern\SysDev\DynamicForms\Tests\Components\Inputs;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Illuminate\Support\Arr;
 use Northwestern\SysDev\DynamicForms\Components\Inputs\File;
 use Northwestern\SysDev\DynamicForms\Storage\S3Driver;
@@ -38,11 +39,7 @@ class FileTest extends InputComponentTestCase
         $this->assertEquals('cat/', $component->getStorageDirectory());
     }
 
-    /**
-     * @covers ::processValidations
-     * @covers ::validate
-     * @dataProvider validationsProvider
-     */
+    #[DataProvider('validationsProvider')]
     public function testValidations(
         array $validations,
         mixed $submissionValue,
@@ -56,11 +53,7 @@ class FileTest extends InputComponentTestCase
         parent::testValidations($validations, $submissionValue, $passes, $message, $additional, $errorLabel);
     }
 
-    /**
-     * @covers ::processValidations
-     * @covers ::validate
-     * @dataProvider validationsProvider
-     */
+    #[DataProvider('validationsProvider')]
     public function testValidationsOnMultipleValues(
         array $validations,
         mixed $submissionValue,

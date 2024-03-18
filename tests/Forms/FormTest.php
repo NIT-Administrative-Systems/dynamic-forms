@@ -2,6 +2,7 @@
 
 namespace Northwestern\SysDev\DynamicForms\Tests\Forms;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Northwestern\SysDev\DynamicForms\Forms\Form;
 use Orchestra\Testbench\TestCase;
 
@@ -10,15 +11,7 @@ use Orchestra\Testbench\TestCase;
  */
 class FormTest extends TestCase
 {
-    /**
-     * @dataProvider formDataProvider
-     * @covers ::setDefinition
-     * @covers ::__construct
-     * @covers ::processComponentDefinition
-     * @covers ::getCustomChildren
-     * @covers ::flattenComponents
-     * @covers ::flatComponents
-     */
+    #[DataProvider('formDataProvider')]
     public function testFormDeserialization(string $definition, int $componentCount): void
     {
         $form = new Form($definition);

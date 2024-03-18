@@ -2,6 +2,7 @@
 
 namespace Northwestern\SysDev\DynamicForms\Tests\Components\TestCases;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use function app;
 
 /**
@@ -17,11 +18,7 @@ abstract class InputComponentTestCase extends BaseComponentTestCase
         $this->assertTrue($this->getComponent()->canValidate());
     }
 
-    /**
-     * @covers ::processValidations
-     * @covers ::validate
-     * @dataProvider validationsProvider
-     */
+    #[DataProvider('validationsProvider')]
     public function testValidations(
         array $validations,
         mixed $submissionValue,
@@ -45,11 +42,7 @@ abstract class InputComponentTestCase extends BaseComponentTestCase
         }
     }
 
-    /**
-     * @covers ::processValidations
-     * @covers ::validate
-     * @dataProvider validationsProvider
-     */
+    #[DataProvider('validationsProvider')]
     public function testValidationsOnMultipleValues(
         array $validations,
         mixed $submissionValue,
@@ -89,10 +82,7 @@ abstract class InputComponentTestCase extends BaseComponentTestCase
         $this->assertTrue($bag->isEmpty());
     }
 
-    /**
-     * @covers ::submissionValue
-     * @dataProvider submissionValueProvider
-     */
+    #[DataProvider('submissionValueProvider')]
     public function testSubmissionValue(?string $case, mixed $submissionValue, mixed $expected): void
     {
         $component = $this->getComponent(case: $case ?? 'mixed');

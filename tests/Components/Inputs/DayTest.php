@@ -2,6 +2,7 @@
 
 namespace Northwestern\SysDev\DynamicForms\Tests\Components\Inputs;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Northwestern\SysDev\DynamicForms\Components\CaseEnum;
 use Northwestern\SysDev\DynamicForms\Components\Inputs\Day;
 use Northwestern\SysDev\DynamicForms\Tests\Components\TestCases\InputComponentTestCase;
@@ -13,10 +14,7 @@ class DayTest extends InputComponentTestCase
 {
     protected string $componentClass = Day::class;
 
-    /**
-     * @dataProvider getDatePartsDataProvider
-     * @covers ::getDateParts
-     */
+    #[DataProvider('getDatePartsDataProvider')]
     public function testGetDateParts(string $value, array $expected): void
     {
         $reflection = new \ReflectionClass(Day::class);
@@ -47,12 +45,8 @@ class DayTest extends InputComponentTestCase
      * Overwriting the parent method so we can pass validations to a different spot.
      *
      * @see getDay
-     *
-     * @dataProvider validationsProvider
-     * @covers ::processValidations
-     * @covers ::validate
-     * @covers ::makeDateFormatString
      */
+    #[DataProvider('validationsProvider')]
     public function testValidations(
         array $validations,
         mixed $submissionValue,
@@ -67,11 +61,7 @@ class DayTest extends InputComponentTestCase
         $this->assertEquals($passes, $bag->isEmpty(), $bag);
     }
 
-    /**
-     * @covers ::processValidations
-     * @covers ::validate
-     * @dataProvider validationsProvider
-     */
+    #[DataProvider('validationsProvider')]
     public function testValidationsOnMultipleValues(
         array $validations,
         mixed $submissionValue,

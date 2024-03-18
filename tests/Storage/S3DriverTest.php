@@ -2,6 +2,7 @@
 
 namespace Northwestern\SysDev\DynamicForms\Tests\Storage;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Aws\CommandInterface;
 use Aws\S3\Exception\S3Exception;
 use Aws\S3\S3Client;
@@ -35,10 +36,7 @@ class S3DriverTest extends TestCase
         $this->assertNotSame($origClient, $driver->storageClient());
     }
 
-    /**
-     * @covers ::findObject
-     * @dataProvider findObjectProvider
-     */
+    #[DataProvider('findObjectProvider')]
     public function testFindObject(S3Client $client, bool $expected): void
     {
         $driver = new S3Driver(self::DUMMY_S3_CONF, 'test');

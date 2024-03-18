@@ -2,6 +2,7 @@
 
 namespace Northwestern\SysDev\DynamicForms\Tests\Components\Inputs;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Northwestern\SysDev\DynamicForms\Components\Inputs\Button;
 use Northwestern\SysDev\DynamicForms\Tests\Components\TestCases\BaseComponentTestCase;
 
@@ -12,11 +13,7 @@ class ButtonTest extends BaseComponentTestCase
 {
     protected string $componentClass = Button::class;
 
-    /**
-     * @covers ::action
-     *
-     * @dataProvider actionProvider
-     */
+    #[DataProvider('actionProvider')]
     public function testAction(array $additional, string $expectedAction): void
     {
         /** @var Button $component */

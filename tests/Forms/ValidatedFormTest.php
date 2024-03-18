@@ -2,6 +2,7 @@
 
 namespace Northwestern\SysDev\DynamicForms\Tests\Forms;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Carbon\CarbonInterface;
 use Northwestern\SysDev\DynamicForms\Components\CaseEnum;
 use Northwestern\SysDev\DynamicForms\Components\Inputs\Textfield;
@@ -88,11 +89,7 @@ class ValidatedFormTest extends TestCase
         $this->assertTrue($validatedForm->errors()->isEmpty());
     }
 
-    /**
-     * @covers ::__construct
-     * @covers ::validatableComponents
-     * @dataProvider  validationDataProvider
-     */
+    #[DataProvider('validationDataProvider')]
     public function testValidation(array $flatComponents, array $submission, bool $passes, array $expectedValues): void
     {
         $validatedForm = new ValidatedForm($flatComponents, $submission);
@@ -229,10 +226,7 @@ class ValidatedFormTest extends TestCase
         ];
     }
 
-    /**
-     * @covers ::allFiles
-     * @dataProvider  filesDataProvider
-     */
+    #[DataProvider('filesDataProvider')]
     public function testAllFiles(callable $flatComponents, array $submission, array $expectedAllFiles): void
     {
         $this->app->singleton(S3Driver::class, function ($app) {

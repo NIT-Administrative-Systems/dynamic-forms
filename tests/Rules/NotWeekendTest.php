@@ -2,6 +2,7 @@
 
 namespace Northwestern\SysDev\DynamicForms\Tests\Rules;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Northwestern\SysDev\DynamicForms\Rules\NotWeekend;
 use Orchestra\Testbench\TestCase;
 
@@ -20,10 +21,7 @@ class NotWeekendTest extends TestCase
         $this->assertStringContainsString(':attribute', $rule->message());
     }
 
-    /**
-     * @dataProvider passesDataProvider
-     * @covers ::passes
-     */
+    #[DataProvider('passesDataProvider')]
     public function testPasses(string $value, bool $passes): void
     {
         $this->assertEquals($passes, (new NotWeekend)->passes('Test', $value));

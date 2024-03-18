@@ -2,6 +2,7 @@
 
 namespace Northwestern\SysDev\DynamicForms\Tests\Components\Inputs;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Northwestern\SysDev\DynamicForms\Components\CaseEnum;
 use Northwestern\SysDev\DynamicForms\Components\Inputs\Number;
 use Northwestern\SysDev\DynamicForms\Tests\Components\TestCases\InputComponentTestCase;
@@ -34,10 +35,7 @@ class NumberTest extends InputComponentTestCase
         ];
     }
 
-    /**
-     * @dataProvider submissionValueNumericsDataProvider
-     * @covers ::submissionValue
-     */
+    #[DataProvider('submissionValueNumericsDataProvider')]
     public function testSubmissionValueHandlesNumerics(mixed $submissionValue, bool $hasMultipleValues, mixed $expected, array $additionalSettings): void
     {
         $currency = $this->getComponent(

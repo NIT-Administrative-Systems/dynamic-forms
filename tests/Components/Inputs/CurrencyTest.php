@@ -2,6 +2,7 @@
 
 namespace Northwestern\SysDev\DynamicForms\Tests\Components\Inputs;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Northwestern\SysDev\DynamicForms\Components\CaseEnum;
 use Northwestern\SysDev\DynamicForms\Components\Inputs\Currency;
 use Northwestern\SysDev\DynamicForms\Tests\Components\TestCases\InputComponentTestCase;
@@ -22,10 +23,7 @@ class CurrencyTest extends InputComponentTestCase
         ];
     }
 
-    /**
-     * @dataProvider submissionValueNumericsDataProvider
-     * @covers ::submissionValue
-     */
+    #[DataProvider('submissionValueNumericsDataProvider')]
     public function testSubmissionValueHandlesNumerics(int | float | array $submissionValue, bool $hasMultipleValues, array | int | float $expected): void
     {
         $currency = $this->getComponent(hasMultipleValues: $hasMultipleValues, submissionValue: $submissionValue);

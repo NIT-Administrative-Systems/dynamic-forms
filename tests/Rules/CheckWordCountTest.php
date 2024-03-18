@@ -2,6 +2,7 @@
 
 namespace Northwestern\SysDev\DynamicForms\Tests\Rules;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Northwestern\SysDev\DynamicForms\Rules\CheckWordCount;
 use Orchestra\Testbench\TestCase;
 
@@ -20,11 +21,7 @@ class CheckWordCountTest extends TestCase
         new CheckWordCount('dog', 10);
     }
 
-    /**
-     * @covers ::passes
-     * @covers ::message
-     * @dataProvider dataProvider
-     */
+    #[DataProvider('dataProvider')]
     public function testPasses(string $mode, int $length, string $submissionValue, bool $passes, string $message = null): void
     {
         $rule = new CheckWordCount($mode, $length);

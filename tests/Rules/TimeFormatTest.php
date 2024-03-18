@@ -2,6 +2,7 @@
 
 namespace Northwestern\SysDev\DynamicForms\Tests\Rules;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Northwestern\SysDev\DynamicForms\Rules\TimeFormat;
 use Orchestra\Testbench\TestCase;
 
@@ -10,11 +11,7 @@ use Orchestra\Testbench\TestCase;
  */
 class TimeFormatTest extends TestCase
 {
-    /**
-     * @dataProvider passesDataProvider
-     * @covers ::__construct
-     * @covers ::passes
-     */
+    #[DataProvider('passesDataProvider')]
     public function testPasses(?string $format, string $value, bool $passes): void
     {
         $check = $format ? new TimeFormat($format) : new TimeFormat;

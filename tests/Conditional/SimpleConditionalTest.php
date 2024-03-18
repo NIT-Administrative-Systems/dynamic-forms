@@ -2,6 +2,7 @@
 
 namespace Northwestern\SysDev\DynamicForms\Tests\Conditional;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Northwestern\SysDev\DynamicForms\Conditional\SimpleConditional;
 use Orchestra\Testbench\TestCase;
 
@@ -10,11 +11,7 @@ use Orchestra\Testbench\TestCase;
  */
 class SimpleConditionalTest extends TestCase
 {
-    /**
-     * @covers ::__construct
-     * @covers ::__invoke
-     * @dataProvider invokeDataProvider
-     */
+    #[DataProvider('invokeDataProvider')]
     public function testInvoke(bool $show, string $when, string $equalTo, array $submissionValues, bool $expected): void
     {
         $condition = new SimpleConditional($show, $when, $equalTo);
