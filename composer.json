@@ -19,20 +19,20 @@
         }
     ],
     "require": {
-        "php": "^8",
-        "aws/aws-sdk-php": "^3.80",
-        "illuminate/support": "^8|^9|^10",
-        "illuminate/validation": "^8|^9|^10",
-        "illuminate/contracts": "^8|^9|^10",
-        "illuminate/http": "^8|^9|^10",
-        "symfony/finder": "^6",
+        "php": "^8.2",
+        "aws/aws-sdk-php": "^3.80|^4",
+        "illuminate/support": "^8|^9|^10|^11",
+        "illuminate/validation": "^8|^9|^10|^11",
+        "illuminate/contracts": "^8|^9|^10|^11",
+        "illuminate/http": "^8|^9|^10|^11",
+        "symfony/finder": "^6|^7",
         "nesbot/carbon": "^2",
         "jwadhams/json-logic-php": "^1.4",
         "northwestern-sysdev/lodash-php": "^1.0.0",
         "me-io/php-lodash": "^2.0"
     },
     "require-dev": {
-        "orchestra/testbench": "^8",
+        "orchestra/testbench": "^9",
         "phpunit/phpunit": "^10.0",
         "php-coveralls/php-coveralls": "^2.4"
     },
