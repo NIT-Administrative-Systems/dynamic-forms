@@ -15,7 +15,8 @@ final class DateTimeTest extends InputComponentTestCase
 {
     protected string $componentClass = DateTime::class;
 
-    #[TestWith(['', 'garbage'])]
+    #[TestWith([''])]
+    #[TestWith(['garbage'])]
     public function testSubmissionValueHandlesNulls(string $value): void
     {
         $date = $this->getComponent(submissionValue: $value);
