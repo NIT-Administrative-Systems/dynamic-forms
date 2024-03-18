@@ -14,7 +14,7 @@ class FileTest extends InputComponentTestCase
 {
     protected string $componentClass = File::class;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
