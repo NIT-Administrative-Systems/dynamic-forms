@@ -94,7 +94,7 @@ class FileTest extends InputComponentTestCase
         return $submissionValue;
     }
 
-    public function validationsProvider(): array
+    public static function validationsProvider(): array
     {
         $filePASS = json_decode('[{
             "storage": "s3",

@@ -27,7 +27,7 @@ class DayTest extends InputComponentTestCase
         );
     }
 
-    public function getDatePartsDataProvider(): array
+    public static function getDatePartsDataProvider(): array
     {
         $default = ['year' => null, 'month' => null, 'day' => null];
 
@@ -76,7 +76,7 @@ class DayTest extends InputComponentTestCase
         $this->assertEquals($passes, $bag->isEmpty(), $bag);
     }
 
-    public function validationsProvider(): array
+    public static function validationsProvider(): array
     {
         $allRequired = [
             'year' => ['required' => true],

@@ -19,7 +19,7 @@ class SimpleConditionalTest extends TestCase
         $this->assertEquals($expected, $condition($submissionValues));
     }
 
-    public function invokeDataProvider(): array
+    public static function invokeDataProvider(): array
     {
         return [
             'should show' => [

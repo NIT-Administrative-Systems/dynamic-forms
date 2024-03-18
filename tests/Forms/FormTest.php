@@ -19,7 +19,7 @@ class FormTest extends TestCase
         $this->assertEquals($componentCount, count($form->flatComponents()));
     }
 
-    public function formDataProvider(): array
+    public static function formDataProvider(): array
     {
         $json = fn (string $filename) => file_get_contents(implode(DIRECTORY_SEPARATOR, [__DIR__, '..', 'Fixtures', $filename]));
 

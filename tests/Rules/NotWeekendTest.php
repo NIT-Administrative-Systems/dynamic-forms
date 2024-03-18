@@ -27,7 +27,7 @@ class NotWeekendTest extends TestCase
         $this->assertEquals($passes, (new NotWeekend)->passes('Test', $value));
     }
 
-    public function passesDataProvider(): array
+    public static function passesDataProvider(): array
     {
         return [
             'tuesday passes' => ['2021-03-30', true],

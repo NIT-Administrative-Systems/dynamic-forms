@@ -31,7 +31,7 @@ class CurrencyTest extends InputComponentTestCase
         $this->assertEquals($expected, $currency->submissionValue());
     }
 
-    public function submissionValueNumericsDataProvider(): array
+    public static function submissionValueNumericsDataProvider(): array
     {
         return [
             'integer is untouched' => [100, false, 100],

@@ -45,7 +45,7 @@ class S3DriverTest extends TestCase
         $this->assertEquals($expected, $driver->findObject('foo'));
     }
 
-    public function findObjectProvider(): array
+    public static function findObjectProvider(): array
     {
         $cmd = $this->createStub(CommandInterface::class);
 

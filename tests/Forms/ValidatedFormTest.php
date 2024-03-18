@@ -108,7 +108,7 @@ class ValidatedFormTest extends TestCase
         $this->assertEquals($expectedValues, $values->all());
     }
 
-    public function validationDataProvider(): array
+    public static function validationDataProvider(): array
     {
         $json = fn (string $filename) => file_get_contents(implode(DIRECTORY_SEPARATOR, [__DIR__, '..', 'Fixtures', $filename]));
         $components = fn (string $filename) => (new Form($json($filename)))->flatComponents();
@@ -250,7 +250,7 @@ class ValidatedFormTest extends TestCase
         $this->assertEquals($expectedAllFiles, $allFilesActual->all());
     }
 
-    public function filesDataProvider(): array
+    public static function filesDataProvider(): array
     {
         $json = fn (string $filename) => file_get_contents(implode(DIRECTORY_SEPARATOR, [__DIR__, '..', 'Fixtures', $filename]));
         $components = fn (string $filename) => (new Form($json($filename)))->flatComponents();

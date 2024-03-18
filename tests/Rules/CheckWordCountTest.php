@@ -30,7 +30,7 @@ class CheckWordCountTest extends TestCase
         $this->assertEquals($message, $rule->message());
     }
 
-    public function dataProvider(): array
+    public static function dataProvider(): array
     {
         $short = 'Short and sweet';
         $long = 'Short and sweet is not the point,  this is a  word counter  you know';

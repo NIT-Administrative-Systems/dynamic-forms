@@ -22,7 +22,7 @@ class ButtonTest extends BaseComponentTestCase
         $this->assertEquals($expectedAction, $component->action());
     }
 
-    public function actionProvider(): array
+    public static function actionProvider(): array
     {
         return [
             'key not present' => [[], Button::ACTION_SUBMIT],

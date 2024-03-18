@@ -19,7 +19,7 @@ class TimeFormatTest extends TestCase
         $this->assertEquals($passes, $check->passes('test', $value));
     }
 
-    public function passesDataProvider(): array
+    public static function passesDataProvider(): array
     {
         return [
             'default format passes' => [null, '03:22:00', true],

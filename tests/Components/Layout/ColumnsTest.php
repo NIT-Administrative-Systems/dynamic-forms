@@ -19,7 +19,7 @@ class ColumnsTest extends BaseComponentTestCase
         $this->assertEquals($expectedPaths, Columns::pathsToChildren($component));
     }
 
-    public function pathsToChildrenDataProvider(): array
+    public static function pathsToChildrenDataProvider(): array
     {
         return [
             // component, expected paths

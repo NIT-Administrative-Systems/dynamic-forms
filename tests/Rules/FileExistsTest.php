@@ -30,7 +30,7 @@ class FileExistsTest extends TestCase
         $this->assertEquals($passes, $rule->passes('test', $file));
     }
 
-    public function passesProvider(): array
+    public static function passesProvider(): array
     {
         $validS3 = [
             'name' => 'foo1',
