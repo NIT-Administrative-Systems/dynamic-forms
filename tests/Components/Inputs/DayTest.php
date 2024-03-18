@@ -105,7 +105,7 @@ final class DayTest extends InputComponentTestCase
         ];
     }
 
-    public function submissionValueProvider(): array
+    public static function submissionValueProvider(): array
     {
         $date = '01/01/2021';
 

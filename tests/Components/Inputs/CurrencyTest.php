@@ -14,7 +14,7 @@ final class CurrencyTest extends InputComponentTestCase
 {
     protected string $componentClass = Currency::class;
 
-    public function validationsProvider(): array
+    public static function validationsProvider(): array
     {
         return [
             'passes with blank data' => [[], '', true],
@@ -41,7 +41,7 @@ final class CurrencyTest extends InputComponentTestCase
         ];
     }
 
-    public function submissionValueProvider(): array
+    public static function submissionValueProvider(): array
     {
         return [
             'no transformations' => [null, 1.00, 1.00],

@@ -13,7 +13,7 @@ class PhoneNumberTest extends InputComponentTestCase
 {
     protected string $componentClass = PhoneNumber::class;
 
-    public function validationsProvider(): array
+    public static function validationsProvider(): array
     {
         return [
             'passes when no value is supplied' => [[], '', true],
@@ -22,7 +22,7 @@ class PhoneNumberTest extends InputComponentTestCase
         ];
     }
 
-    public function submissionValueProvider(): array
+    public static function submissionValueProvider(): array
     {
         $number = '(203) 777-7777';
 

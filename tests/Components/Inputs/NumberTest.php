@@ -14,7 +14,7 @@ final class NumberTest extends InputComponentTestCase
 {
     protected string $componentClass = Number::class;
 
-    public function validationsProvider(): array
+    public static function validationsProvider(): array
     {
         return [
             'required passes' => [['required' => true], 1.0, true],
@@ -26,7 +26,7 @@ final class NumberTest extends InputComponentTestCase
         ];
     }
 
-    public function submissionValueProvider(): array
+    public static function submissionValueProvider(): array
     {
         return [
             'no transformations' => [null, 1, 1],

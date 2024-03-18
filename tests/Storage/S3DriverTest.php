@@ -36,9 +36,15 @@ final class S3DriverTest extends TestCase
         $this->assertNotSame($origClient, $driver->storageClient());
     }
 
+    /**
+     * @param Closure(): S3Client $client
+     */
     #[DataProvider('findObjectProvider')]
-    public function testFindObject(S3Client $client, bool $expected): void
+    public function testFindObject(callable $client, bool $expected): void
     {
+        // Rebind to current context for access to $this
+        $client = $client->bindTo($this)();
+
         $driver = new S3Driver(self::DUMMY_S3_CONF, 'test');
         $driver->setStorageClient($client);
 
@@ -47,20 +53,30 @@ final class S3DriverTest extends TestCase
 
     public static function findObjectProvider(): array
     {
-        $cmd = $this->createStub(CommandInterface::class);
+        $mock_s3_found_fn = function () {
+            $cmd = $this->createStub(CommandInterface::class);
 
-        $mock_s3_found = $this->createStub(S3Client::class);
-        $mock_s3_found->method('getCommand')->willReturn($cmd);
-        $mock_s3_found->method('execute')->willReturn(true);
+            $mock_s3_found = $this->createStub(S3Client::class);
+            $mock_s3_found->method('getCommand')->willReturn($cmd);
+            $mock_s3_found->method('execute')->willReturn(true);
 
-        $mock_s3_fail = $this->createStub(S3Client::class);
-        $mock_s3_fail->method('getCommand')->willReturn($cmd);
-        $mock_s3_fail->method('execute')
-            ->willThrowException($this->createStub(S3Exception::class));
+            return $mock_s3_found;
+        };
+
+        $mock_s3_fail_fn = function () {
+            $cmd = $this->createStub(CommandInterface::class);
+
+            $mock_s3_fail = $this->createStub(S3Client::class);
+            $mock_s3_fail->method('getCommand')->willReturn($cmd);
+            $mock_s3_fail->method('execute')
+                ->willThrowException($this->createStub(S3Exception::class));
+
+            return $mock_s3_fail;
+        };
 
         return [
-            'found' => [$mock_s3_found, true],
-            'not found' => [$mock_s3_fail, false],
+            'found' => [$mock_s3_found_fn, true],
+            'not found' => [$mock_s3_fail_fn, false],
         ];
     }
 

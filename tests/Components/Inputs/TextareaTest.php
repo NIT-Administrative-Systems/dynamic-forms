@@ -33,7 +33,7 @@ final class TextareaTest extends InputComponentTestCase
         $this->assertEquals(Textarea::EDITOR_QUILL, $component->additional('editor'));
     }
 
-    public function validationsProvider(): array
+    public static function validationsProvider(): array
     {
         return [
             'required passes' => [['required' => true], 'Present', true],
@@ -51,7 +51,7 @@ final class TextareaTest extends InputComponentTestCase
         ];
     }
 
-    public function submissionValueProvider(): array
+    public static function submissionValueProvider(): array
     {
         return [
             'no transformations' => [null, 'foo', 'foo'],

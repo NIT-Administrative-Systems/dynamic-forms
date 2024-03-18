@@ -13,7 +13,7 @@ class TimeTest extends InputComponentTestCase
 {
     protected string $componentClass = Time::class;
 
-    public function validationsProvider(): array
+    public static function validationsProvider(): array
     {
         return [
             'empty value passes' => [[], '', true],
@@ -24,7 +24,7 @@ class TimeTest extends InputComponentTestCase
         ];
     }
 
-    public function submissionValueProvider(): array
+    public static function submissionValueProvider(): array
     {
         $time = '12:00:00';
 

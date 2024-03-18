@@ -132,7 +132,7 @@ final class FileTest extends InputComponentTestCase
         ];
     }
 
-    public function submissionValueProvider(): array
+    public static function submissionValueProvider(): array
     {
         return [
             'empty passes through' => [null, [], []],

@@ -13,7 +13,7 @@ class CheckboxTest extends InputComponentTestCase
 {
     protected string $componentClass = Checkbox::class;
 
-    public function validationsProvider(): array
+    public static function validationsProvider(): array
     {
         return [
             'required passes' => [['required' => true], true, true],
@@ -21,7 +21,7 @@ class CheckboxTest extends InputComponentTestCase
         ];
     }
 
-    public function submissionValueProvider(): array
+    public static function submissionValueProvider(): array
     {
         return [
             'no transformations' => [null, true, true],

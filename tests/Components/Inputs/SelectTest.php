@@ -54,7 +54,7 @@ final class SelectTest extends InputComponentTestCase
         $this->assertEquals(true, $bag->isEmpty());
     }
 
-    public function validationsProvider(): array
+    public static function validationsProvider(): array
     {
         return [
             'not required passes' => [[], '', true],
@@ -66,7 +66,7 @@ final class SelectTest extends InputComponentTestCase
         ];
     }
 
-    public function submissionValueProvider(): array
+    public static function submissionValueProvider(): array
     {
         return [
             'no transformations' => [null, 'foo', 'foo'],
