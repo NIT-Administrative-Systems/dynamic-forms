@@ -50,7 +50,7 @@ abstract class InputComponentTestCase extends BaseComponentTestCase
         ?string $message = null,
         array $additional = [],
         ?string $errorLabel = null
-    ) {
+    ): void {
         $component = $this->getComponent(
             errorLabel: $errorLabel,
             validations: $validations,
@@ -71,7 +71,7 @@ abstract class InputComponentTestCase extends BaseComponentTestCase
      * @covers ::processValidations
      * @covers ::validate
      */
-    public function testValidationsOnMultipleValuesForNullSubmissionValue()
+    public function testValidationsOnMultipleValuesForNullSubmissionValue(): void
     {
         $component = $this->getComponent(
             hasMultipleValues: true,

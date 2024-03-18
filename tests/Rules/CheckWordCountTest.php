@@ -14,7 +14,7 @@ class CheckWordCountTest extends TestCase
     /**
      * @covers ::__construct
      */
-    public function testConstructThrowsInvalidMode()
+    public function testConstructThrowsInvalidMode(): void
     {
         $this->expectException(\TypeError::class);
 

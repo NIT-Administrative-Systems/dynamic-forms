@@ -13,7 +13,7 @@ class ValidationNotImplementedErrorTest extends TestCase
     /**
      * @covers ::__construct
      */
-    public function testConstruct()
+    public function testConstruct(): void
     {
         $this->expectException(ValidationNotImplementedError::class);
 

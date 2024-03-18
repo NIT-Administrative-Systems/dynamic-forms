@@ -13,7 +13,7 @@ class UnknownStorageDriverErrorTest extends TestCase
     /**
      * @covers ::__construct
      */
-    public function testConstruct()
+    public function testConstruct(): void
     {
         $this->expectException(UnknownStorageDriverError::class);
 

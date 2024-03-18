@@ -61,7 +61,7 @@ class FileTest extends InputComponentTestCase
         ?string $message = null,
         array $additional = [],
         ?string $errorLabel = null
-    ) {
+    ): void {
         $component = $this->getComponent(
             errorLabel: $errorLabel,
             validations: $validations,

@@ -53,7 +53,7 @@ class InstallTest extends TestCase
     /**
      * @covers ::updatePackages
      */
-    public function testUpdatePackages()
+    public function testUpdatePackages(): void
     {
         $cmd = $this->installCommand();
 

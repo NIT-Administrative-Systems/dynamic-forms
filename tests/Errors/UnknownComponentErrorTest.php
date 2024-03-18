@@ -13,7 +13,7 @@ class UnknownComponentErrorTest extends TestCase
     /**
      * @covers ::__construct
      */
-    public function testConstruct()
+    public function testConstruct(): void
     {
         $this->expectException(UnknownComponentError::class);
 

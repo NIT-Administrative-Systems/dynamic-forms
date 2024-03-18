@@ -69,7 +69,7 @@ class DayTest extends InputComponentTestCase
         ?string $message = null,
         array $additional = [],
         ?string $errorLabel = null
-    ) {
+    ): void {
         $component = $this->getDay([$submissionValue], true, $validations, $errorLabel);
 
         $bag = $component->validate();
