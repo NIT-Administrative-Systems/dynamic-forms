@@ -21,7 +21,7 @@ final class ValidatedFormTest extends TestCase
      * @covers ::messages
      * @covers ::isValid
      * @covers ::values
-     * @covers ::validatableComponents
+     * @covers ::flatValidatableComponents
      */
     public function testGetters(): void
     {
