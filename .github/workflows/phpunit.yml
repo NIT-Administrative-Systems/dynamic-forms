@@ -28,7 +28,7 @@ jobs:
           coverage: xdebug
 
       - name: Run php-cs-fixer
-        uses: OskarStark/php-cs-fixer-ga@3.13.0
+        uses: OskarStark/php-cs-fixer-ga@3.26.0
 
       - uses: stefanzweifel/git-auto-commit-action@v5
         with:
