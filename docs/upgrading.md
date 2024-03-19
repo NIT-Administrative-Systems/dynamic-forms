@@ -1,5 +1,12 @@
 # Upgrading
 
+## v1.0.0
+This version swaps to the Formiojs v5 release candidate and assumes Bootstrap v5 and FontAwesome 6 are in use. The package assumes Laravel Vite, which is the default, but older versions of the formio JS customizations were written with Mix in mind.
+
+To upgrade, ensure you are using `formiojs 5.0.0-rc.4`. You may be able to use a newer RC, but rc4 is what dynamic-forms has been tested with.
+
+The JS customizations have been updated. You should review the `dist/` folder against your own `resources/js/formio/` folder: [`dist/` in v1.0.0](https://github.com/NIT-Administrative-Systems/dynamic-forms/tree/v1.0.0/dist) and determine how to pull any customizations you made to the JS into the revised files.
+
 ## v0.15.0
 This version changes the `ResourceInterface::submissions()` method signature. There is a new parameter, `$context`:
 
