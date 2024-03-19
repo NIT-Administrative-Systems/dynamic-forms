@@ -26,7 +26,7 @@
         "illuminate/contracts": "^8|^9|^10|^11",
         "illuminate/http": "^8|^9|^10|^11",
         "symfony/finder": "^6|^7",
-        "nesbot/carbon": "^2",
+        "nesbot/carbon": "^2 || ^3",
         "jwadhams/json-logic-php": "^1.4",
         "northwestern-sysdev/lodash-php": "^1.0.0",
         "me-io/php-lodash": "^2.0"
