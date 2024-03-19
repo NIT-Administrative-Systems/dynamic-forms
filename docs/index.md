@@ -7,13 +7,13 @@ If you want to see it in action, here are some demo videos:
 
 ::: details Creating a form in the builder
 <video controls="controls" preload="none" width="100%">
-    <source src="./assets/builder_demo.webm" type="video/webm">
+    <source src="/builder_demo.webm" type="video/webm">
 </video>
 :::
 
 ::: details Filling out a dynamic form
 <video controls="controls" preload="none" width="100%">
-<source src="./assets/form_demo.webm" type="video/webm">
+<source src="/form_demo.webm" type="video/webm">
 </video>
 :::
 
