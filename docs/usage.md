@@ -156,7 +156,7 @@ class FormController extends Controller
     
     <div class="col-md-6 text-right">
         <!-- This form holds the values the user has entered, as a JSON document. -->
-        <form method="post" action="{{ route('form.store') }}">
+        <form method="post" action="{{ route('form.store') }}" id="submissionForm">
             @csrf
             
             <!-- State can be used to capture a Submit vs. Save Draft button -->

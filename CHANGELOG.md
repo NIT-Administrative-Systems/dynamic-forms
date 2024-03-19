@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## Unreleased
+### Changed
+- The minimum versions for dependencies have changed. The new requirements are:
+    - PHP 8.2
+    - Laravel 11
+    - Bootstrap 5
+    - FontAwesome 6
+
+- The JS file `default.js` references the `.env` value `VITE_STORAGE_DEFAULT_VALUE` instead of `MIX_STORAGE_DEFAULT_VALUE`. If you are using Laravel Mix or another build system, you may need to adjust this code.
+
+- The routes file now removes the `\Illuminate\Foundation\Http\Middleware\VerifyCsrfToken` middleware from the POSTs that formio makes, as `App\Http\Middleware\VerifyCsrfToken` is no longer part of the Laravel skeleton. If you are upgrading from Laravel 10 and have not removed your stock middleware, this does not need to be updated.
+
 ## [v0.15.1 - 2024-03-11]
 ### Fixes
 - `BaseComponent::submissionValue()`, which provides the method for most components, will handle multiple-value components more elegantly and should never return a `null` for them, even if this is what was represented in the submission JSON.

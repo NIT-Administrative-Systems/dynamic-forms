@@ -1,4 +1,52 @@
 import {Formio} from "formiojs";
+import _ from 'lodash-es';
+
+const mergeComponent = function (object, optionsToMerge) {
+    const components = object.components[0].components;
+
+    _.each(optionsToMerge, function (tab, idx) {
+        const tabIndex = _.findIndex(components, function (comp) {
+            return comp.key === tab.key;
+        });
+
+        if (tabIndex === -1) {
+            components.push(tab);
+            return;
+        }
+
+        // Remove ignored tabs; ignore doesn't work here, we're too late in processing.
+        if (tab.ignore === true) {
+            components.splice(tabIndex, 1);
+            return;
+        }
+
+        _.each(tab.components, function (configProp) {
+            const configIndex = _.findIndex(components[tabIndex].components, function (comp) {
+                return comp.key === configProp.key;
+            });
+
+            if (configIndex === -1) {
+                components[tabIndex].components.push(configProp);
+                return;
+            }
+
+            // Remove ignored props; ignore doesn't work here, we're too late in processing.
+            if (configProp.ignore === true) {
+                components[tabIndex].components.splice(configIndex, 1);
+
+                return;
+            }
+
+            components[tabIndex].components[configIndex] = _.merge(
+                components[tabIndex].components[configIndex],
+                configProp
+            );
+        });
+    });
+
+    object.components[0].components = components;
+    return object;
+};
 
 export default {
     /**
@@ -121,12 +169,22 @@ export default {
      * Defaults for specific field types
      */
     specificFields: {
+        textfield: [
+            {
+                key: 'display',
+                ignore: false,
+                components: [
+                    { key: 'widget.type', ignore: true },
+                ],
+            },
+        ],
         textarea: [
             {
                 key: 'display',
                 ignore: false,
                 components: [
-                    { key: 'editor', defaultValue: 'quill', disabled: true }, // do not set hidden, it won't change if you do that
+                    { key: 'widget', defaultValue: 'html5' },
+                    { key: 'editor', defaultValue: 'quill' },
                     { key: 'wysiwyg', ignore: true },
                 ],
             },
@@ -225,6 +283,7 @@ export default {
                 key: 'file',
                 ignore: false,
                 components: [
+                    { key: 'storage', defaultValue: 's3' },
                     { key: 'url', defaultValue: '/dynamic-forms/storage/url', disabled: true },
                     { key: 'fileKey', ignore: true },
                     { key: 'privateDownload', ignore: true },
@@ -262,7 +321,9 @@ export default {
         stateField.defaultValue = 'draft'
         stateField.type = 'hidden';
 
-        Formio.Components.components.button.editForm = function() { return editForm; };
+        Formio.Components.components.button.editForm = function(extend) {
+            return mergeComponent(editForm, extend);
+        };
     },
 
     /**
@@ -274,29 +335,39 @@ export default {
      */
     globalFileCustomization: () => {
         var editForm = Formio.Components.components.file.editForm();
-        var StorageValues = [
-            {label: "S3", value: "s3"},
-            {label: "Local", value: "url"}
-        ];
-        if(process.env.MIX_STORAGE_DEFAULT_VALUE === 's3')
-        {
-            StorageValues = [
-                {label: "S3", value: "s3"},
-            ];
-        }
-        if(process.env.MIX_STORAGE_DEFAULT_VALUE === 'url')
-        {
-            StorageValues = [
-                {label: "Local", value: "url"}
-            ];
-        }
 
-        Formio.Utils.getComponent(editForm.components, 'storage').data.values = StorageValues;
+        if(import.meta.env.VITE_STORAGE_DEFAULT_VALUE === 's3') {
+            Formio.Utils.getComponent(editForm.components, 'storage').data.values = [
+                { label: 'S3', value: 's3' },
+            ];
+        } else {
+            Formio.Utils.getComponent(editForm.components, 'storage').data.values = [
+                { label: 'Local', value: 'url' },
+            ];
+        }
 
         Formio.Utils.getComponent(editForm.components, 'storage').dataSrc = 'values';
+        Formio.Components.components.file.editForm = function(extend) {
+            return mergeComponent(editForm, extend);
+        };
+    },
 
-        Formio.Components.components.file.editForm = function() { return editForm; };
+    /**
+     * Builder dropdown values cannot be modified by overriding defaults, and in the case of the Quill/etc dropdown,
+     * we cannot force a value without leaving the dropdown enabled, so stripping out options we do not want users to
+     * pick is the best choice.
+     */
+    globalTextareaCustomizations: () => {
+        const editForm = Formio.Components.components.textarea.editForm();
+        const editorSelect = Formio.Utils.getComponent(editForm.components, 'editor');
 
+        editorSelect.data.values = [
+            { label: 'Quill', value: 'quill' },
+        ];
+
+        Formio.Components.components.textarea.editForm = function(extend) {
+            return mergeComponent(editForm, extend);
+        };
     },
 
     /**
@@ -304,25 +375,7 @@ export default {
      * Also restricts the dropdown for Select data source.
      */
     globalResourceCustomization: () => {
-        //project URL has to be set or it will redirect to https://form.io
-        //"add resource" button needs the base url to be set
-        Formio.setProjectUrl(process.env.MIX_APP_URL + '/dynamic-forms');
-        Formio.setBaseUrl(process.env.MIX_APP_URL + '/dynamic-forms');
-
-        //Limit options to only Resource and Values
-        var editForm = Formio.Components.components.select.editForm();
-
-        Formio.Utils.getComponent(editForm.components, 'select').data.values = [
-            { label: 'Values', value: 'values' },
-            //{ label: 'URL', value: 'url' },
-            { label: 'Resource', value: 'resource' },
-            //{ label: 'Custom', value: 'custom' },
-            //{ label: 'Raw JSON', value: 'json' },
-            //{ label: 'IndexedDB', value: 'indexeddb' },
-        ];
-
-
-        Formio.Components.components.select.editForm = function() { return editForm; };
+        // None at this time; reserved for future use.
     }
 
 }
