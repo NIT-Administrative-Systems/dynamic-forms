@@ -77,7 +77,7 @@ class DynamicFormsProvider extends ServiceProvider
         /** @var FileComponentRegistry $fileRegistry */
         $fileRegistry = $this->app->make(FileComponentRegistry::class);
 
-        Request::macro('validateDynamicForm', function (string $definitionJson, string $submissionJson, ?ResourceRegistry $resourceRegistry) {
+        Request::macro('validateDynamicForm', function (string $definitionJson, string $submissionJson, ?ResourceRegistry $resourceRegistry = null) {
             if (is_null($resourceRegistry)) {
                 $resourceRegistry = resolve(ResourceRegistry::class);
             }
