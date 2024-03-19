@@ -1,7 +1,7 @@
 # Upgrading
 
 ## v1.0.0
-This version swaps to the Formiojs v5 release candidate and assumes Bootstrap v5 and FontAwesome 6 are in use. The package assumes Laravel Vite, which is the default, but older versions of the formio JS customizations were written with Mix in mind.
+This version swaps to the Formiojs v5 release candidate and assumes Bootstrap v5 and FontAwesome 6 are in use. The package now assumes Laravel 11, Laravel Vite, and PHP 8.2+.
 
 To upgrade, ensure you are using `formiojs 5.0.0-rc.4`. You may be able to use a newer RC, but rc4 is what dynamic-forms has been tested with.
 
