@@ -22,3 +22,7 @@ yarn-error.log
 .vapor/
 /.idea
 composer.lock
+/docs/.vuepress/dist
+/docs/.vuepress/.cache
+/docs/.vuepress/.temp
+/docs/.build
