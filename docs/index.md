@@ -54,7 +54,6 @@ These components are not supported at all:
 - Tree
 - Tabs
 - ReCAPTCHA
-- Resource
 - Nested Form
 
 ### Scripting
