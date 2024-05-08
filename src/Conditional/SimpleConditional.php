@@ -20,7 +20,6 @@ class SimpleConditional implements ConditionalInterface
     {
         $value = Arr::get($submissionValues, $this->when);
 
-
         // Handle all regular cases
         if ($value === $this->equalTo) {
             return $this->show;
@@ -34,11 +33,11 @@ class SimpleConditional implements ConditionalInterface
             }
 
             /** Handles @see Select */
-            if (!isset($value[$this->equalTo]) && in_array($this->equalTo, $value)) {
+            if (! isset($value[$this->equalTo]) && in_array($this->equalTo, $value)) {
                 return $this->show;
             }
         }
 
-        return !$this->show;
+        return ! $this->show;
     }
 }

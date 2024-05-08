@@ -75,7 +75,7 @@ final class SimpleConditionalTest extends TestCase
                 'equalTo' => 'Yes',
                 'submissionValues' => [
                     'otherField' => [
-                        'Yes'
+                        'Yes',
                     ],
                 ],
                 'expected' => true,
