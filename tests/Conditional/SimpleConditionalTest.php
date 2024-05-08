@@ -57,6 +57,18 @@ final class SimpleConditionalTest extends TestCase
                 'submissionValues' => [],
                 'expected' => false,
             ],
+            'Custom values handled' => [
+                'show' => true,
+                'when' => 'otherField',
+                'equalTo' => 'Yes',
+                'submissionValues' => [
+                    'otherField' => [
+                        'Yes' => true,
+                        'No' => false
+                    ]
+                ],
+                'expected' => true,
+            ],
         ];
     }
 }
