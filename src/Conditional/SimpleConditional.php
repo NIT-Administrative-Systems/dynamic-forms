@@ -18,7 +18,7 @@ class SimpleConditional implements ConditionalInterface
     {
         $value = Arr::get($submissionValues, $this->when);
 
-        return ($value === $this->equalTo)
+        return ($value === $this->equalTo || $value[$this->equalTo])
             ? $this->show
             : ! $this->show;
     }
