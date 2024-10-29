@@ -11,12 +11,12 @@ use Northwestern\SysDev\DynamicForms\Calculation\JSONCalculation;
 use Northwestern\SysDev\DynamicForms\Conditional\ConditionalInterface;
 use Northwestern\SysDev\DynamicForms\Conditional\JSONConditional;
 use Northwestern\SysDev\DynamicForms\Conditional\SimpleConditional;
-use Northwestern\SysDev\DynamicForms\Validation\JSONValidation;
-use Northwestern\SysDev\DynamicForms\Validation\ValidationInterface;
 use Northwestern\SysDev\DynamicForms\Errors\CalculationNotImplemented;
 use Northwestern\SysDev\DynamicForms\Errors\ConditionalNotImplemented;
 use Northwestern\SysDev\DynamicForms\Errors\InvalidDefinitionError;
 use Northwestern\SysDev\DynamicForms\Errors\ValidationNotImplementedError;
+use Northwestern\SysDev\DynamicForms\Validation\JSONValidation;
+use Northwestern\SysDev\DynamicForms\Validation\ValidationInterface;
 
 /**
  * Implements common functionality for all components.
