@@ -33,7 +33,7 @@ There are a couple pieces to be aware of:
 - **Forms** are shown when you render a form definition. The form can be read-write or read-only (to display a submitted form). Forms produce submissions in the form of key:value JSON documents.
 
 ## Supported Features
-Formiojs offers a lot of functionality. Dynamic Forms for Laravel has implemented a limited subset of all its available features.
+Formiojs offers a lot of functionality. Dynamic Forms for Laravel has implemented a limited subset of all its available features, including JSON Logic support for complex conditions to show/hide fields, calculate values, and validate data.
 
 Most of the decisions not to include something were driven by what would give us a good minimum viable product. If there are missing features that you would like to see, please feel free to submit an issue to discuss including it.
 
