@@ -1,5 +1,14 @@
 # Upgrading
 
+## v1.1.0
+This version adds a new `advancedValidations()` method to the `ComponentInterface`.
+
+```php
+public function advancedValidations(): ?ValidationInterface;
+```
+
+If you have implemented this interface, you should update your implementations.
+
 ## v1.0.0
 This version swaps to the Formiojs v5 release candidate and assumes Bootstrap v5 and FontAwesome 6 are in use. The package now assumes Laravel 11, Laravel Vite, and PHP 8.2+.
 
