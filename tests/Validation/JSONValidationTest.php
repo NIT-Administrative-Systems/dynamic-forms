@@ -14,6 +14,9 @@ use PHPUnit\Framework\Attributes\DataProvider;
  */
 final class JSONValidationTest extends TestCase
 {
+    private const DATE_EXPECT_FAIL = true;
+    private const DATE_EXPECT_PASS = false;
+
     /**
      * @param  array|class-string  $expected
      *
@@ -56,6 +59,7 @@ final class JSONValidationTest extends TestCase
     public static function invokeDataProvider(): array
     {
         return [
+            ...self::dataFuzzerProvider(),
             'should throw exception when "if" parameter is missing' => [
                 'jsonValidation' => json_decode('{
                     "json": {
@@ -404,6 +408,69 @@ final class JSONValidationTest extends TestCase
                 'expected' => [],
             ],
         ];
+    }
+
+    public static function dataFuzzerProvider(): array
+    {
+        $rule = json_decode('{
+            "json": {
+                "if": [
+                    {
+                        "<=": [
+                            { "var": "startsAt" },
+                            { "var": "endsAt" }
+                        ]
+                    },
+                    true,
+                    "The absence end date cannot be earlier than the absence start date."
+                ]
+            }
+        }', true);
+
+        return collect([
+            // startsAt, endsAt, expectedToFail (bool)
+            'should handle dates like the client-side code, fail with custom error message' => [
+                '2024-10-05T05:00:00.000000Z',
+                '2024-10-01T05:00:00.000000Z',
+                self::DATE_EXPECT_FAIL,
+            ],
+            'should handle dates like the client-side code, pass' => [
+                '2024-10-01T05:00:00.000000Z',
+                '2024-10-05T05:00:00.000000Z',
+                self::DATE_EXPECT_PASS,
+            ],
+            ...collect(range(1, 12))->mapWithKeys(function (int $month) {
+                $month = str_pad($month, '0', STR_PAD_LEFT);
+
+                return [
+                    "should handle dates like the client-side code, pass with static low-end date vs 2024-{$month}-XX" => [
+                        '2024-01-01T05:00:00.000000Z',
+                        "2024-{$month}-05T05:00:00.000000Z",
+                        self::DATE_EXPECT_PASS,
+                    ],
+                    "should handle dates like the client-side code, fail with static low-end date vs 2024-{$month}-XX" => [
+                        '2024-01-05T05:00:00.000000Z',
+                        "2024-{$month}-02T05:00:00.000000Z",
+                        self::DATE_EXPECT_FAIL,
+                    ],
+                ];
+            })->all(),
+            'should handle dates like the client-side code, pass with high month' => [
+                '2024-01-01T05:00:00.000000Z',
+                '2024-10-05T05:00:00.000000Z',
+                self::DATE_EXPECT_PASS,
+            ],
+        ])->map(function (array $data) use ($rule): array {
+            [$startsAt, $endsAt, $expectedToFail] = $data;
+
+            return [
+                'jsonValidation' => $rule,
+                'submissionValues' => ['startsAt' => $startsAt, 'endsAt' => $endsAt],
+                'expected' => $expectedToFail
+                    ? ['The absence end date cannot be earlier than the absence start date.']
+                    : [],
+            ];
+        })->all();
     }
 
     private function getComponent(
