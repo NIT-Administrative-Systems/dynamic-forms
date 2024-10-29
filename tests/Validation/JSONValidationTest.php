@@ -440,7 +440,7 @@ final class JSONValidationTest extends TestCase
                 self::DATE_EXPECT_PASS,
             ],
             ...collect(range(1, 12))->mapWithKeys(function (int $month) {
-                $month = str_pad($month, '0', STR_PAD_LEFT);
+                $month = str_pad($month, '1', '0', STR_PAD_LEFT);
 
                 return [
                     "should handle dates like the client-side code, pass with static low-end date vs 2024-{$month}-XX" => [
@@ -448,9 +448,9 @@ final class JSONValidationTest extends TestCase
                         "2024-{$month}-05T05:00:00.000000Z",
                         self::DATE_EXPECT_PASS,
                     ],
-                    "should handle dates like the client-side code, fail with static low-end date vs 2024-{$month}-XX" => [
-                        '2024-01-05T05:00:00.000000Z',
+                    "should handle dates like the client-side code, fail with static high-end date vs 2024-{$month}-XX" => [
                         "2024-{$month}-02T05:00:00.000000Z",
+                        '2024-01-01T05:00:00.000000Z',
                         self::DATE_EXPECT_FAIL,
                     ],
                 ];
@@ -467,7 +467,7 @@ final class JSONValidationTest extends TestCase
                 'jsonValidation' => $rule,
                 'submissionValues' => ['startsAt' => $startsAt, 'endsAt' => $endsAt],
                 'expected' => $expectedToFail
-                    ? ['The absence end date cannot be earlier than the absence start date.']
+                    ? ['test' => ['The absence end date cannot be earlier than the absence start date.']]
                     : [],
             ];
         })->all();
