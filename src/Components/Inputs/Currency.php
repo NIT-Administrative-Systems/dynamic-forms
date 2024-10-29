@@ -15,7 +15,9 @@ class Currency extends BaseComponent
     {
         $rules = new RuleBag($fieldKey, ['numeric']);
 
-        $rules->addIfNotNull('required', $this->validation('required'));
+        $this->validation('required')
+            ? $rules->add('required')
+            : $rules->add('nullable');
 
         return $validator->make(
             [$fieldKey => $submissionValue],

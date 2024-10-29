@@ -20,6 +20,8 @@ final class CurrencyTest extends InputComponentTestCase
             'passes with blank data' => [[], '', true],
             'required passes' => [['required' => true], 100, true],
             'required fails' => [['required' => true], '', false],
+            'numeric passes when not required' => [['numeric' => true], null, true],
+            'required numeric fails with string' => [['required' => true, 'numeric' => true], 'abc', false],
         ];
     }
 
