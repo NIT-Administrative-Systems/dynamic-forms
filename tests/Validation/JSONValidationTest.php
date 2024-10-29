@@ -14,13 +14,14 @@ use PHPUnit\Framework\Attributes\DataProvider;
  */
 final class JSONValidationTest extends TestCase
 {
-    #[DataProvider('invokeDataProvider')]
     /**
      * @param  array|class-string  $expected
+     *
+     * @covers ::isValidCustomValidation
      */
+    #[DataProvider('invokeDataProvider')]
     public function testInvoke(array $jsonValidation, array $submissionValues, array|string $expected): void
     {
-        ray()->clearAll();
         new JSONLogicInitHelper;
 
         $component = $this->getComponent(validations: $jsonValidation);
