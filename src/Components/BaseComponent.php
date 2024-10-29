@@ -11,6 +11,8 @@ use Northwestern\SysDev\DynamicForms\Calculation\JSONCalculation;
 use Northwestern\SysDev\DynamicForms\Conditional\ConditionalInterface;
 use Northwestern\SysDev\DynamicForms\Conditional\JSONConditional;
 use Northwestern\SysDev\DynamicForms\Conditional\SimpleConditional;
+use Northwestern\SysDev\DynamicForms\Validation\JSONValidation;
+use Northwestern\SysDev\DynamicForms\Validation\ValidationInterface;
 use Northwestern\SysDev\DynamicForms\Errors\CalculationNotImplemented;
 use Northwestern\SysDev\DynamicForms\Errors\ConditionalNotImplemented;
 use Northwestern\SysDev\DynamicForms\Errors\InvalidDefinitionError;
@@ -280,6 +282,15 @@ abstract class BaseComponent implements ComponentInterface
     public function validations(): array
     {
         return $this->validations;
+    }
+
+    public function advancedValidations(): ?ValidationInterface
+    {
+        if ($this->validation('json')) {
+            return new JSONValidation($this->validation('json'));
+        }
+
+        return null;
     }
 
     public function additional(string $key): mixed
