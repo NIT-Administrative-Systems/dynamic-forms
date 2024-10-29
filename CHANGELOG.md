@@ -4,8 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
+### Breaking Change
+- The `ComponentInterface` has a new method, `advancedValidations()` which returns an invokable `ValidationInterface` instance.
+### Added
+- Support for JSON Logic into the component validation process.
 ### Fixes
 - Fixed an issue where the `Currency` component failed validation when not required and given null values.
+- Fixed an instance where the `$subject` parameter to `str_replace()` could have been null in `Textfield::processValidations()`, as this was deprecated in PHP 8.1.
 
 ## [v1.0.1] 2024-05-15
 ### Changed
