@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
+## [v1.1.0] - 2024-10-29
 ### Breaking Change
 - The `ComponentInterface` has a new method, `advancedValidations()` which returns an invokable `ValidationInterface` instance.
 ### Added
@@ -12,7 +13,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Fixed an issue where the `Currency` component failed validation when not required and given null values.
 - Fixed an instance where the `$subject` parameter to `str_replace()` could have been null in `Textfield::processValidations()`, as this was deprecated in PHP 8.1.
 
-## [v1.0.1] 2024-05-15
+## [v1.0.1] - 2024-05-15
 ### Changed
 - Carbon v3 is now compatible with the package.
 
@@ -214,7 +215,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ## [v0.1.0] - 2021-05-04
 - Initial release.
 
-[Unreleased]: https://github.com/NIT-Administrative-Systems/dynamic-forms/compare/v1.0.1...HEAD
+[Unreleased]: https://github.com/NIT-Administrative-Systems/dynamic-forms/compare/v1.1.0...HEAD
+[v1.1.0]: https://github.com/NIT-Administrative-Systems/dynamic-forms/compare/v1.0.1...v1.1.0
 [v1.0.1]: https://github.com/NIT-Administrative-Systems/dynamic-forms/compare/v1.0.0...v1.0.1
 [v1.0.0]: https://github.com/NIT-Administrative-Systems/dynamic-forms/compare/v0.15.1...v1.0.0
 [v0.15.1]: https://github.com/NIT-Administrative-Systems/dynamic-forms/compare/v0.15.0...v0.15.1
