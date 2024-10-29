@@ -43,6 +43,7 @@ abstract class BaseComponentTestCase extends TestCase
      * @covers ::defaultValue
      * @covers ::validation
      * @covers ::validations
+     * @covers ::advancedValidations
      */
     public function testGetters(): void
     {
@@ -62,6 +63,7 @@ abstract class BaseComponentTestCase extends TestCase
         $this->assertEquals('foo', $component->defaultValue());
         $this->assertNull($component->validation('required'));
         $this->assertEmpty($component->validations());
+        $this->assertNull($component->advancedValidations());
         $this->assertTrue($component->additional('disabled'));
     }
 

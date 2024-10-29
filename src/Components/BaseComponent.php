@@ -15,6 +15,8 @@ use Northwestern\SysDev\DynamicForms\Errors\CalculationNotImplemented;
 use Northwestern\SysDev\DynamicForms\Errors\ConditionalNotImplemented;
 use Northwestern\SysDev\DynamicForms\Errors\InvalidDefinitionError;
 use Northwestern\SysDev\DynamicForms\Errors\ValidationNotImplementedError;
+use Northwestern\SysDev\DynamicForms\Validation\JSONValidation;
+use Northwestern\SysDev\DynamicForms\Validation\ValidationInterface;
 
 /**
  * Implements common functionality for all components.
@@ -280,6 +282,15 @@ abstract class BaseComponent implements ComponentInterface
     public function validations(): array
     {
         return $this->validations;
+    }
+
+    public function advancedValidations(): ?ValidationInterface
+    {
+        if ($this->validation('json')) {
+            return new JSONValidation($this->validation('json'));
+        }
+
+        return null;
     }
 
     public function additional(string $key): mixed

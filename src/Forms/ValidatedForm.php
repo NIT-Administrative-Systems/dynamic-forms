@@ -39,6 +39,9 @@ class ValidatedForm implements Validator
 
         foreach ($this->flatComponents as $component) {
             $messageBag->merge($component->validate());
+            if ($component->advancedValidations()) {
+                $messageBag->merge($component->advancedValidations()($component, $this->valuesWhileProcessingForm()));
+            }
             $transformedValues->put($component->key(), $component->submissionValue());
         }
 

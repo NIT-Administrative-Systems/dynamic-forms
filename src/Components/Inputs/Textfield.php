@@ -27,9 +27,11 @@ class Textfield extends BaseComponent
             $rules->add(new CheckWordCount(CheckWordCount::MODE_MAXIMUM, $this->validation('maxWords')));
         }
 
-        // PHP needs the regexp armoured with slashes, so...
-        $pattern = sprintf('/%s/', str_replace('/', '\/', $this->validation('pattern')));
-        $rules->addIfNotNull(['regex', $pattern], $this->validation('pattern'));
+        if ($this->validation('pattern')) {
+            // PHP needs the regexp armoured with slashes, so...
+            $pattern = sprintf('/%s/', str_replace('/', '\/', $this->validation('pattern')));
+            $rules->add(['regex', $pattern], $this->validation('pattern'));
+        }
 
         return $validator->make(
             [$fieldKey => $submissionValue],
