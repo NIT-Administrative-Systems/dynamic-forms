@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
+## [v1.2.0] - 2025-01-28
+### Changed
+- Deprecation warnings from PHP 8.4 have been addressed.
+
 ## [v1.1.0] - 2024-10-29
 ### Breaking Change
 - The `ComponentInterface` has a new method, `advancedValidations()` which returns an invokable `ValidationInterface` instance.

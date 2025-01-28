@@ -33,11 +33,11 @@ final class S3StorageTest extends TestCase
             return $mock;
         });
 
-        $this->app['router']->post(__METHOD__, function (Request $request) {
+        $this->app['router']->post(__FUNCTION__, function (Request $request) {
             return $this->mock_controller()->storeS3($request);
         });
 
-        $response = $this->post(__METHOD__, ['name' => 'testFile.docx']);
+        $response = $this->post(__FUNCTION__, ['name' => 'testFile.docx']);
         $response->assertOk()->assertJsonStructure([
             'signed',
             'headers',
@@ -53,11 +53,11 @@ final class S3StorageTest extends TestCase
      */
     public function testUploadAuthorization(): void
     {
-        $this->app['router']->post(__METHOD__, function (Request $request) {
+        $this->app['router']->post(__FUNCTION__, function (Request $request) {
             return $this->mock_controller(fn () => throw new AuthorizationException('fail'))->storeS3($request);
         });
 
-        $response = $this->post(__METHOD__, ['name' => 'testFile.docx']);
+        $response = $this->post(__FUNCTION__, ['name' => 'testFile.docx']);
         $response->assertForbidden();
     }
 
@@ -66,11 +66,11 @@ final class S3StorageTest extends TestCase
      */
     public function testDownloadAuthorization(): void
     {
-        $this->app['router']->get(__METHOD__.'/{fileKey}', function (Request $request, $fileKey) {
+        $this->app['router']->get(__FUNCTION__.'/{fileKey}', function (Request $request, $fileKey) {
             return $this->mock_controller(fn () => throw new AuthorizationException('fail'))->showS3($request, $fileKey);
         });
 
-        $response = $this->get(__METHOD__.'/testFile.docx');
+        $response = $this->get(__FUNCTION__.'/testFile.docx');
         $response->assertForbidden();
     }
 
@@ -89,11 +89,11 @@ final class S3StorageTest extends TestCase
             return $mock;
         });
 
-        $this->app['router']->get(__METHOD__.'', function (Request $request) {
+        $this->app['router']->get(__FUNCTION__.'', function (Request $request) {
             return $this->mock_controller()->showS3($request, null);
         });
 
-        $response = $this->get(__METHOD__.'?key=testFile.docx');
+        $response = $this->get(__FUNCTION__.'?key=testFile.docx');
         $response->assertOk()->assertJson(['url' => $url]);
     }
 
@@ -112,11 +112,11 @@ final class S3StorageTest extends TestCase
             return $mock;
         });
 
-        $this->app['router']->get(__METHOD__.'/{fileKey}', function (Request $request, $fileKey) {
+        $this->app['router']->get(__FUNCTION__.'/{fileKey}', function (Request $request, $fileKey) {
             return $this->mock_controller()->showS3($request, $fileKey);
         });
 
-        $response = $this->get(__METHOD__.'/testFile.docx');
+        $response = $this->get(__FUNCTION__.'/testFile.docx');
         $response->assertRedirect($url);
     }
 

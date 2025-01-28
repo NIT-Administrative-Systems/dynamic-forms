@@ -22,7 +22,7 @@ final class CheckWordCountTest extends TestCase
     }
 
     #[DataProvider('dataProvider')]
-    public function testPasses(string $mode, int $length, string $submissionValue, bool $passes, string $message = null): void
+    public function testPasses(string $mode, int $length, string $submissionValue, bool $passes, ?string $message = null): void
     {
         $rule = new CheckWordCount($mode, $length);
 

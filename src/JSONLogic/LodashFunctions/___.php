@@ -9,5 +9,6 @@ class ___
     use Lang;
     use Math;
     use Objects;
+    use Strings;
     use Util;
 }

@@ -42,15 +42,6 @@ trait Objects
         return self::entries($object);
     }
 
-    public static function has(array $object, string | array $path): bool
-    {
-        if (is_array($path)) {
-            $path = implode('.', $path);
-        }
-
-        return \__\Traits\Collections::has($object, $path);
-    }
-
     public static function hasIn(array $object, string | array $path): bool
     {
         //This is the same as has since we do not support inherited properties for objects
@@ -87,7 +78,7 @@ trait Objects
 
     public static function omit(array $object, array $paths): array
     {
-        $picked = \__\Traits\Collections::pick($object, $paths);
+        $picked = self::pick($object, $paths);
         $ret = [];
         foreach ($object as $key => &$item) {
             if (! array_key_exists($key, $picked)) {
@@ -125,5 +116,20 @@ trait Objects
     {
         //This is the same as values since we do not support inherited properties for objects
         return self::values($object);
+    }
+
+    public static function isNull(mixed $value): bool
+    {
+        return is_null($value);
+    }
+
+    public static function isArray(mixed $value): bool
+    {
+        return is_array($value);
+    }
+
+    public static function isString(mixed $value): bool
+    {
+        return is_string($value);
     }
 }
