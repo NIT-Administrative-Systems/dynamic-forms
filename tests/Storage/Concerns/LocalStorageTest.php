@@ -17,11 +17,11 @@ final class LocalStorageTest extends \Orchestra\Testbench\TestCase
      */
     public function testUploadWorks(): void
     {
-        $this->app['router']->post(__METHOD__, function (Request $request) {
+        $this->app['router']->post(__FUNCTION__, function (Request $request) {
             return $this->mock_controller()->storeURL($request);
         });
 
-        $response = $this->postJson(__METHOD__, [
+        $response = $this->postJson(__FUNCTION__, [
             'file' => new UploadedFile(implode(DIRECTORY_SEPARATOR, [__DIR__, '../..', 'Fixtures', 'sample.pdf']), 'sample.pdf', null, null, true),
             'name' => 'sample.pdf',
         ]);
@@ -33,11 +33,11 @@ final class LocalStorageTest extends \Orchestra\Testbench\TestCase
      */
     public function testUploadAuthorization(): void
     {
-        $this->app['router']->post(__METHOD__, function (Request $request) {
+        $this->app['router']->post(__FUNCTION__, function (Request $request) {
             return $this->mock_controller(fn () => throw new AuthorizationException('fail'))->storeURL($request);
         });
 
-        $response = $this->post(__METHOD__, ['name' => 'testFile.docx']);
+        $response = $this->post(__FUNCTION__, ['name' => 'testFile.docx']);
         $response->assertForbidden();
     }
 
@@ -46,10 +46,10 @@ final class LocalStorageTest extends \Orchestra\Testbench\TestCase
      */
     public function testDownloadAuthorization(): void
     {
-        $this->app['router']->get(__METHOD__, function (Request $request) {
+        $this->app['router']->get(__FUNCTION__, function (Request $request) {
             return $this->mock_controller(fn () => throw new AuthorizationException('fail'))->showURL($request);
         });
-        $response = $this->call('GET', __METHOD__, ['form' => 'sample.pdf']);
+        $response = $this->call('GET', __FUNCTION__, ['form' => 'sample.pdf']);
         $response->assertForbidden();
     }
 
@@ -58,10 +58,10 @@ final class LocalStorageTest extends \Orchestra\Testbench\TestCase
      */
     public function testDeleteAuthorization(): void
     {
-        $this->app['router']->delete(__METHOD__, function (Request $request) {
+        $this->app['router']->delete(__FUNCTION__, function (Request $request) {
             return $this->mock_controller(fn () => throw new AuthorizationException('fail'))->deleteURL($request);
         });
-        $response = $this->call('DELETE', __METHOD__, ['form' => 'sample.pdf']);
+        $response = $this->call('DELETE', __FUNCTION__, ['form' => 'sample.pdf']);
         $response->assertForbidden();
     }
 
