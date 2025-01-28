@@ -55,7 +55,7 @@ trait Collection
      */
     public static function first(array $array, $take = null)
     {
-        if (!$take) {
+        if (! $take) {
             return array_shift($array);
         }
 
@@ -77,7 +77,7 @@ trait Collection
      */
     public static function isEmpty(mixed $value): bool
     {
-        return (!is_array($value) && !is_object($value)) || count((array)$value) === 0;
+        return (! is_array($value) && ! is_object($value)) || count((array) $value) === 0;
     }
 
     /**
@@ -212,7 +212,7 @@ trait Collection
      * @param array|object $collection The collection to iterate over.
      * @param \Closure     $iterateFn  The function to call for each value
      *
-     * @return boolean
+     * @return bool
      *
      * @license MIT
      * @url https://github.com/me-io/php-lodash/blob/2.0.0/src/Traits/Collections.php#L369
@@ -224,6 +224,7 @@ trait Collection
                 break;
             }
         }
+
         return true;
     }
 
@@ -264,9 +265,9 @@ trait Collection
         // want to set a string at 'foo.bar.fun'. We first set an object or array
         //  - following the current collection type - to 'for.bar' before setting
         // 'foo.bar.fun' to the specified value).
-        if (!self::has($collection, $key)
-            || (self::isObjectStrict($collection) && !self::isObjectStrict(self::get($collection, $key)))
-            || (self::isArray($collection) && !self::isArray(self::get($collection, $key)))
+        if (! self::has($collection, $key)
+            || (self::isObjectStrict($collection) && ! self::isObjectStrict(self::get($collection, $key)))
+            || (self::isArray($collection) && ! self::isArray(self::get($collection, $key)))
         ) {
             $collection = self::universalSet($collection, $key, self::isObjectStrict($collection) ? new stdClass : []);
         }
@@ -288,7 +289,7 @@ trait Collection
      * @param null|array|object $collection of key values pairs
      * @param string            $path       Path to look for.
      *
-     * @return boolean
+     * @return bool
      */
     public static function has(null|array|object $collection, string|array $path): bool
     {
@@ -300,7 +301,7 @@ trait Collection
         $key = $portions[0];
 
         if (count($portions) === 1) {
-            return array_key_exists($key, (array)$collection);
+            return array_key_exists($key, (array) $collection);
         }
 
         return self::has(self::get($collection, $key), $portions[1]);
@@ -335,7 +336,7 @@ trait Collection
     }
 
     /**
-     * Get item of an array by index, accepting nested index
+     * Get item of an array by index, accepting nested index.
      *
      * @usage __::get(['foo' => ['bar' => 'ter']], 'foo.bar');
      *        >> 'ter'
@@ -355,19 +356,19 @@ trait Collection
             return $collection;
         }
 
-        if (!self::isObjectStrict($collection) && isset($collection[$key])) {
+        if (! self::isObjectStrict($collection) && isset($collection[$key])) {
             return $collection[$key];
         }
 
         foreach (explode('.', $key) as $segment) {
             if (self::isObjectStrict($collection)) {
-                if (!isset($collection->{$segment})) {
+                if (! isset($collection->{$segment})) {
                     return $default instanceof Closure ? $default() : $default;
                 } else {
                     $collection = $collection->{$segment};
                 }
             } else {
-                if (!isset($collection[$segment])) {
+                if (! isset($collection[$segment])) {
                     return $default instanceof Closure ? $default() : $default;
                 } else {
                     $collection = $collection[$segment];
