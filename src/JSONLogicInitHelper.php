@@ -14,13 +14,6 @@ class JSONLogicInitHelper
     private const LIB_LODASH_PHP = 1;
 
     /**
-     * Implementation comes from me-io/lodash-php package.
-     *
-     * @deprecated
-     */
-    private const LIB_MEIO = 2;
-
-    /**
      * The function is implemented by this package, in the {@see ___} class.
      */
     private const IN_PACKAGE = 3;
@@ -51,7 +44,7 @@ class JSONLogicInitHelper
             ['dropWhile', self::NOT_IMPLEMENTED],
             ['findIndex', self::LIB_LODASH_PHP],
             ['findLastIndex', self::LIB_LODASH_PHP],
-            ['first', self::LIB_MEIO],
+            ['first', self::IN_PACKAGE],
             ['flatten', self::LIB_LODASH_PHP],
             ['flattenDeep', self::LIB_LODASH_PHP],
             ['flattenDepth', self::LIB_LODASH_PHP],
@@ -142,7 +135,7 @@ class JSONLogicInitHelper
             ['gt', self::IN_PACKAGE],
             ['gte', self::IN_PACKAGE],
             ['isArguments', self::NOT_IMPLEMENTED],
-            ['isArray', self::LIB_MEIO],
+            ['isArray', self::IN_PACKAGE],
             ['isArrayBuffer', self::NOT_IMPLEMENTED],
             ['isArrayLike', self::IN_PACKAGE],
             ['isArrayLikeObject', self::IN_PACKAGE],
@@ -150,7 +143,7 @@ class JSONLogicInitHelper
             ['isBuffer', self::NOT_IMPLEMENTED],
             ['isDate', self::NOT_IMPLEMENTED],
             ['isElement', self::NOT_IMPLEMENTED],
-            ['isEmpty', self::LIB_MEIO],
+            ['isEmpty', self::IN_PACKAGE],
             ['isEqual', self::LIB_LODASH_PHP],
             ['isEqualWith', self::NOT_IMPLEMENTED],
             ['isError', self::LIB_LODASH_PHP],
@@ -164,7 +157,7 @@ class JSONLogicInitHelper
             ['isNaN', self::IN_PACKAGE],
             ['isNative', self::NOT_IMPLEMENTED],
             ['isNil', self::NOT_IMPLEMENTED],
-            ['isNull', self::LIB_MEIO],
+            ['isNull', self::IN_PACKAGE],
             ['isNumber', self::IN_PACKAGE],
             ['isObject', self::IN_PACKAGE],
             ['isObjectLike', self::NOT_IMPLEMENTED],
@@ -172,7 +165,7 @@ class JSONLogicInitHelper
             ['isRegExp', self::NOT_IMPLEMENTED],
             ['isSafeInteger', self::NOT_IMPLEMENTED],
             ['isSet', self::NOT_IMPLEMENTED],
-            ['isString', self::LIB_MEIO],
+            ['isString', self::IN_PACKAGE],
             ['isSymbol', self::NOT_IMPLEMENTED],
             ['isTypedArray', self::NOT_IMPLEMENTED],
             ['isUndefined', self::NOT_IMPLEMENTED],
@@ -197,7 +190,7 @@ class JSONLogicInitHelper
             ['maxBy', self::LIB_LODASH_PHP],
             ['mean', self::IN_PACKAGE],
             ['meanBy', self::NOT_IMPLEMENTED],
-            ['min', self::LIB_MEIO],
+            ['min', self::IN_PACKAGE],
             ['minBy', self::NOT_IMPLEMENTED],
             ['multiply', self::IN_PACKAGE],
             ['round', self::IN_PACKAGE],
@@ -228,7 +221,7 @@ class JSONLogicInitHelper
             ['mapValues', self::NOT_IMPLEMENTED],
             ['omit', self::IN_PACKAGE],
             ['omitBy', self::NOT_IMPLEMENTED],
-            ['pick', self::LIB_MEIO],
+            ['pick', self::IN_PACKAGE],
             ['pickBy', self::NOT_IMPLEMENTED],
             ['result', self::IN_PACKAGE],
             ['toPairs', self::IN_PACKAGE],
@@ -300,9 +293,7 @@ class JSONLogicInitHelper
             if ($lodashfunct[1] == self::LIB_LODASH_PHP) {
                 JsonLogic::add_operation('_'.$lodashfunct[0], '_Lodash::'.$lodashfunct[0]);
             }
-            if ($lodashfunct[1] == self::LIB_MEIO) {
-                JsonLogic::add_operation('_'.$lodashfunct[0], '__::'.$lodashfunct[0]);
-            }
+
             if ($lodashfunct[1] == self::IN_PACKAGE) {
                 JsonLogic::add_operation('_'.$lodashfunct[0], [___::class, $lodashfunct[0]]);
             }

@@ -96,6 +96,11 @@ trait Lang
         return is_object($value) || is_array($value);
     }
 
+    public static function isObjectStrict(mixed $value): bool
+    {
+        return is_object($value);
+    }
+
     public static function toArray(mixed $value): array
     {
         if (self::isObject($value)) { //even if it is a js object it will be passed as an associative array
