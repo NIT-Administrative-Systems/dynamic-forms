@@ -1,5 +1,10 @@
 # Upgrading
 
+## v1.2.0
+There are no breaking changes in this version. 
+
+If you were relying on this package including Lodash functions, the `_` class has been renamed. Dynamic Forms v1.2.0 already accounts for this change, but if you were using these methods in your own code, [please review its changelog](https://github.com/NIT-Administrative-Systems/lodash-php/blob/master/CHANGELOG.md#v200---2025-01-28).
+
 ## v1.1.0
 This version adds a new `advancedValidations()` method to the `ComponentInterface`.
 
