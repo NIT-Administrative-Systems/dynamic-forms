@@ -4,9 +4,6 @@ namespace Northwestern\SysDev\DynamicForms\Tests\JSONLogic;
 
 use Monolog\Test\TestCase;
 use Northwestern\SysDev\DynamicForms\JSONLogic\JsonLogicHelpers;
-use Northwestern\SysDev\DynamicForms\JSONLogic\LodashFunctions\___;
-use Northwestern\SysDev\DynamicForms\JSONLogicInitHelper;
-use PHPUnit\Framework\Attributes\CoversClass;
 
 final class JsonLogicHelpersTest extends TestCase
 {
