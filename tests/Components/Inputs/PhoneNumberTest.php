@@ -6,9 +6,7 @@ use Northwestern\SysDev\DynamicForms\Components\CaseEnum;
 use Northwestern\SysDev\DynamicForms\Components\Inputs\PhoneNumber;
 use Northwestern\SysDev\DynamicForms\Tests\Components\TestCases\InputComponentTestCase;
 
-/**
- * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Components\Inputs\PhoneNumber
- */
+#[\PHPUnit\Framework\Attributes\CoversClass(\Northwestern\SysDev\DynamicForms\Components\Inputs\PhoneNumber::class)]
 class PhoneNumberTest extends InputComponentTestCase
 {
     protected string $componentClass = PhoneNumber::class;

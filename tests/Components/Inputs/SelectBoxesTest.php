@@ -6,9 +6,7 @@ use Northwestern\SysDev\DynamicForms\Components\CaseEnum;
 use Northwestern\SysDev\DynamicForms\Components\Inputs\SelectBoxes;
 use Northwestern\SysDev\DynamicForms\Tests\Components\TestCases\InputComponentTestCase;
 
-/**
- * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Components\Inputs\SelectBoxes
- */
+#[\PHPUnit\Framework\Attributes\CoversClass(\Northwestern\SysDev\DynamicForms\Components\Inputs\SelectBoxes::class)]
 final class SelectBoxesTest extends InputComponentTestCase
 {
     protected string $componentClass = SelectBoxes::class;
@@ -19,10 +17,6 @@ final class SelectBoxesTest extends InputComponentTestCase
         ],
     ];
 
-    /**
-     * @covers ::validate
-     * @covers ::submissionValue
-     */
     public function testInvalidOptionsAreExcluded(): void
     {
         // By setting the minimum to 1 and checking an invalid checkbox off,
@@ -43,9 +37,6 @@ final class SelectBoxesTest extends InputComponentTestCase
         $this->assertEquals(['foo' => false, 'bar' => false], $component->submissionValue());
     }
 
-    /**
-     * @covers ::submissionValue
-     */
     public function testMultipleSubmissionValues(): void
     {
         $component = $this->getComponent(

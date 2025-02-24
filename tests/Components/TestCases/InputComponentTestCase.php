@@ -5,14 +5,9 @@ namespace Northwestern\SysDev\DynamicForms\Tests\Components\TestCases;
 use function app;
 use PHPUnit\Framework\Attributes\DataProvider;
 
-/**
- * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Components\BaseComponent
- */
+#[\PHPUnit\Framework\Attributes\CoversClass(\Northwestern\SysDev\DynamicForms\Components\BaseComponent::class)]
 abstract class InputComponentTestCase extends BaseComponentTestCase
 {
-    /**
-     * @covers ::canValidate
-     */
     public function testCanValidate(): void
     {
         $this->assertTrue($this->getComponent()->canValidate());
@@ -67,10 +62,6 @@ abstract class InputComponentTestCase extends BaseComponentTestCase
         }
     }
 
-    /**
-     * @covers ::processValidations
-     * @covers ::validate
-     */
     public function testValidationsOnMultipleValuesForNullSubmissionValue(): void
     {
         $component = $this->getComponent(

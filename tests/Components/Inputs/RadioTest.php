@@ -6,9 +6,7 @@ use Northwestern\SysDev\DynamicForms\Components\CaseEnum;
 use Northwestern\SysDev\DynamicForms\Components\Inputs\Radio;
 use Northwestern\SysDev\DynamicForms\Tests\Components\TestCases\InputComponentTestCase;
 
-/**
- * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Components\Inputs\Radio
- */
+#[\PHPUnit\Framework\Attributes\CoversClass(\Northwestern\SysDev\DynamicForms\Components\Inputs\Radio::class)]
 final class RadioTest extends InputComponentTestCase
 {
     protected string $componentClass = Radio::class;
@@ -21,10 +19,6 @@ final class RadioTest extends InputComponentTestCase
         ],
     ];
 
-    /**
-     * @covers ::processValidations
-     * @covers ::validate
-     */
     public function testValidationInMultipleModeWithNull(): void
     {
         $component = $this->getComponent(

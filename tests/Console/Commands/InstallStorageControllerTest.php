@@ -6,16 +6,9 @@ use Northwestern\SysDev\DynamicForms\Console\Commands\InstallStorageController;
 use Orchestra\Testbench\TestCase;
 use ReflectionMethod;
 
-/**
- * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Console\Commands\InstallStorageController
- */
+#[\PHPUnit\Framework\Attributes\CoversClass(\Northwestern\SysDev\DynamicForms\Console\Commands\InstallStorageController::class)]
 final class InstallStorageControllerTest extends TestCase
 {
-    /**
-     * @covers ::getStub
-     * @covers ::getDefaultNamespace
-     * @covers ::getNameInput
-     */
     public function testGeneratorMethods(): void
     {
         $cmd = $this->app->make(InstallStorageController::class);

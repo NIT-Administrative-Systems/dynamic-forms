@@ -5,9 +5,7 @@ namespace Northwestern\SysDev\DynamicForms\Tests\Components\Layout;
 use Northwestern\SysDev\DynamicForms\Components\Layout\Fieldset;
 use Northwestern\SysDev\DynamicForms\Tests\Components\TestCases\BaseComponentTestCase;
 
-/**
- * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Components\Layout\Fieldset
- */
+#[\PHPUnit\Framework\Attributes\CoversClass(\Northwestern\SysDev\DynamicForms\Components\Layout\Fieldset::class)]
 class FieldsetTest extends BaseComponentTestCase
 {
     protected string $componentClass = Fieldset::class;

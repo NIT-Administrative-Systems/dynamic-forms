@@ -6,14 +6,9 @@ use Northwestern\SysDev\DynamicForms\Rules\NotWeekday;
 use Orchestra\Testbench\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 
-/**
- * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Rules\NotWeekday
- */
+#[\PHPUnit\Framework\Attributes\CoversClass(\Northwestern\SysDev\DynamicForms\Rules\NotWeekday::class)]
 final class NotWeekdayTest extends TestCase
 {
-    /**
-     * @covers ::message
-     */
     public function testMessage(): void
     {
         $rule = new NotWeekday;

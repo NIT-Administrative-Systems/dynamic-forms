@@ -11,18 +11,9 @@ use Northwestern\SysDev\DynamicForms\Storage\S3Driver;
 use Orchestra\Testbench\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 
-/**
- * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Forms\ValidatedForm
- */
+#[\PHPUnit\Framework\Attributes\CoversClass(\Northwestern\SysDev\DynamicForms\Forms\ValidatedForm::class)]
 final class ValidatedFormTest extends TestCase
 {
-    /**
-     * @covers ::__construct
-     * @covers ::messages
-     * @covers ::isValid
-     * @covers ::values
-     * @covers ::flatValidatableComponents
-     */
     public function testGetters(): void
     {
         $components = [
@@ -52,13 +43,6 @@ final class ValidatedFormTest extends TestCase
         $this->assertNotNull($validatedForm->getTranslator());
     }
 
-    /**
-     * @covers ::getMessageBag
-     * @covers ::validated
-     * @covers ::fails
-     * @covers ::failed
-     * @covers ::errors
-     */
     public function testInterfaceGetters(): void
     {
         $components = [

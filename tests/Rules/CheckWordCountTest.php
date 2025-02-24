@@ -6,14 +6,9 @@ use Northwestern\SysDev\DynamicForms\Rules\CheckWordCount;
 use Orchestra\Testbench\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 
-/**
- * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Rules\CheckWordCount
- */
+#[\PHPUnit\Framework\Attributes\CoversClass(\Northwestern\SysDev\DynamicForms\Rules\CheckWordCount::class)]
 final class CheckWordCountTest extends TestCase
 {
-    /**
-     * @covers ::__construct
-     */
     public function testConstructThrowsInvalidMode(): void
     {
         $this->expectException(\TypeError::class);

@@ -9,15 +9,9 @@ use Northwestern\SysDev\DynamicForms\Storage\Concerns\HandlesDynamicFormsStorage
 use Northwestern\SysDev\DynamicForms\Storage\S3Driver;
 use Orchestra\Testbench\TestCase;
 
-/**
- * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Storage\Concerns\S3Storage
- */
+#[\PHPUnit\Framework\Attributes\CoversClass(\Northwestern\SysDev\DynamicForms\Storage\Concerns\S3Storage::class)]
 final class S3StorageTest extends TestCase
 {
-    /**
-     * @covers ::storeS3
-     * @covers ::storageDriver
-     */
     public function testUploadWorks(): void
     {
         $this->app->singleton(S3Driver::class, function ($app) {
@@ -48,9 +42,6 @@ final class S3StorageTest extends TestCase
         ]);
     }
 
-    /**
-     * @covers ::storeS3
-     */
     public function testUploadAuthorization(): void
     {
         $this->app['router']->post(__FUNCTION__, function (Request $request) {
@@ -61,9 +52,6 @@ final class S3StorageTest extends TestCase
         $response->assertForbidden();
     }
 
-    /**
-     * @covers ::showS3
-     */
     public function testDownloadAuthorization(): void
     {
         $this->app['router']->get(__FUNCTION__.'/{fileKey}', function (Request $request, $fileKey) {
@@ -74,10 +62,6 @@ final class S3StorageTest extends TestCase
         $response->assertForbidden();
     }
 
-    /**
-     * @covers ::showS3
-     * @covers ::storageDriver
-     */
     public function testDownloadJsonResponse(): void
     {
         $url = 'https://download.example.com';
@@ -97,10 +81,6 @@ final class S3StorageTest extends TestCase
         $response->assertOk()->assertJson(['url' => $url]);
     }
 
-    /**
-     * @covers ::showS3
-     * @covers ::storageDriver
-     */
     public function testDownloadRedirect(): void
     {
         $url = 'https://download.example.com';

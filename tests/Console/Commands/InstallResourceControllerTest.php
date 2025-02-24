@@ -6,16 +6,9 @@ use Northwestern\SysDev\DynamicForms\Console\Commands\InstallResourceController;
 use Orchestra\Testbench\TestCase;
 use ReflectionMethod;
 
-/**
- * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Console\Commands\InstallResourceController
- */
+#[\PHPUnit\Framework\Attributes\CoversClass(\Northwestern\SysDev\DynamicForms\Console\Commands\InstallResourceController::class)]
 final class InstallResourceControllerTest extends TestCase
 {
-    /**
-     * @covers ::getStub
-     * @covers ::getDefaultNamespace
-     * @covers ::getNameInput
-     */
     public function testGeneratorMethods(): void
     {
         $cmd = $this->app->make(InstallResourceController::class);

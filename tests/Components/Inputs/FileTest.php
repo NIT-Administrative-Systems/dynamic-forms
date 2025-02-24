@@ -8,9 +8,7 @@ use Northwestern\SysDev\DynamicForms\Storage\S3Driver;
 use Northwestern\SysDev\DynamicForms\Tests\Components\TestCases\InputComponentTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 
-/**
- * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Components\Inputs\File
- */
+#[\PHPUnit\Framework\Attributes\CoversClass(\Northwestern\SysDev\DynamicForms\Components\Inputs\File::class)]
 final class FileTest extends InputComponentTestCase
 {
     protected string $componentClass = File::class;
@@ -24,10 +22,6 @@ final class FileTest extends InputComponentTestCase
             ->name('dynamic-forms.S3-file-redirect');
     }
 
-    /**
-     * @covers ::getStorageType
-     * @covers ::getStorageDirectory
-     */
     public function testFileGetters(): void
     {
         $component = $this->getComponent(additional: [

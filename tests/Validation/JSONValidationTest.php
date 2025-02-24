@@ -9,9 +9,7 @@ use Northwestern\SysDev\DynamicForms\JSONLogicInitHelper;
 use Orchestra\Testbench\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 
-/**
- * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Validation\JSONValidation
- */
+#[\PHPUnit\Framework\Attributes\CoversClass(\Northwestern\SysDev\DynamicForms\Validation\JSONValidation::class)]
 final class JSONValidationTest extends TestCase
 {
     private const DATE_EXPECT_FAIL = true;
@@ -19,8 +17,6 @@ final class JSONValidationTest extends TestCase
 
     /**
      * @param  array|class-string  $expected
-     *
-     * @covers ::isValidCustomValidation
      */
     #[DataProvider('invokeDataProvider')]
     public function testInvoke(array $jsonValidation, array $submissionValues, array|string $expected): void

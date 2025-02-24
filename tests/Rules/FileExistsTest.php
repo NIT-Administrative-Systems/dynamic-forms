@@ -8,9 +8,7 @@ use Northwestern\SysDev\DynamicForms\Storage\S3Driver;
 use Orchestra\Testbench\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 
-/**
- * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Rules\FileExists
- */
+#[\PHPUnit\Framework\Attributes\CoversClass(\Northwestern\SysDev\DynamicForms\Rules\FileExists::class)]
 final class FileExistsTest extends TestCase
 {
     #[DataProvider('passesProvider')]
@@ -69,9 +67,6 @@ final class FileExistsTest extends TestCase
         ];
     }
 
-    /**
-     * @covers ::message
-     */
     public function testMessage(): void
     {
         $rule = $this->rule(S3Driver::class, true);
