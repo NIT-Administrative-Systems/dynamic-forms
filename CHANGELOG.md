@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [v1.2.2] - 2025-02-24
+### Added
+- Updated composer requirements to support Laravel 12.
+
 ## [v1.2.1] - 2025-02-21
 ### Fixes
 - Corrected routes that needed their controllers' full class paths, by [@gauravmak](https://github.com/gauravmak) in [#447](https://github.com/NIT-Administrative-Systems/dynamic-forms/pull/477)
