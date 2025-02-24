@@ -10,7 +10,6 @@ use Orchestra\Testbench\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 
-#[CoversClass(Form::class), CoversClass(FileDriver::class), CoversClass(S3Driver::class), CoversClass(ResourceRegistry::class)]
 final class FormTest extends TestCase
 {
     #[DataProvider('formDataProvider')]

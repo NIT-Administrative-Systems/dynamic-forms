@@ -8,7 +8,6 @@ use Northwestern\SysDev\DynamicForms\JSONLogic\LodashFunctions\___;
 use Northwestern\SysDev\DynamicForms\JSONLogicInitHelper;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-#[CoversClass(JsonLogicHelpers::class), CoversClass(JSONLogicInitHelper::class), CoversClass(___::class)]
 final class JsonLogicHelpersTest extends TestCase
 {
     public function testConvertDataVars(): void
