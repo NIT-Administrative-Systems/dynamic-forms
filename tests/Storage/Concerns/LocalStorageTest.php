@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Northwestern\SysDev\DynamicForms\Storage\Concerns\HandlesDynamicFormsStorage;
 
-#[\PHPUnit\Framework\Attributes\CoversClass(\Northwestern\SysDev\DynamicForms\Storage\Concerns\LocalStorage::class)]
 final class LocalStorageTest extends \Orchestra\Testbench\TestCase
 {
     public function testUploadWorks(): void

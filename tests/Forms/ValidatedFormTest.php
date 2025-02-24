@@ -11,7 +11,6 @@ use Northwestern\SysDev\DynamicForms\Storage\S3Driver;
 use Orchestra\Testbench\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 
-#[\PHPUnit\Framework\Attributes\CoversClass(\Northwestern\SysDev\DynamicForms\Forms\ValidatedForm::class)]
 final class ValidatedFormTest extends TestCase
 {
     public function testGetters(): void

@@ -9,7 +9,6 @@ use Northwestern\SysDev\DynamicForms\Storage\Concerns\HandlesDynamicFormsStorage
 use Northwestern\SysDev\DynamicForms\Storage\S3Driver;
 use Orchestra\Testbench\TestCase;
 
-#[\PHPUnit\Framework\Attributes\CoversClass(\Northwestern\SysDev\DynamicForms\Storage\Concerns\S3Storage::class)]
 final class S3StorageTest extends TestCase
 {
     public function testUploadWorks(): void

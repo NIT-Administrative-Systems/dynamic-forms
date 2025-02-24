@@ -7,7 +7,6 @@ use Northwestern\SysDev\DynamicForms\JSONLogicInitHelper;
 use Orchestra\Testbench\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 
-#[\PHPUnit\Framework\Attributes\CoversClass(\Northwestern\SysDev\DynamicForms\Conditional\JSONConditional::class)]
 final class JSONConditionalTest extends TestCase
 {
     #[DataProvider('invokeDataProvider')]
