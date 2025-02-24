@@ -3,10 +3,14 @@
 namespace Northwestern\SysDev\DynamicForms\Tests\Forms;
 
 use Northwestern\SysDev\DynamicForms\Forms\Form;
+use Northwestern\SysDev\DynamicForms\ResourceRegistry;
+use Northwestern\SysDev\DynamicForms\Storage\FileDriver;
+use Northwestern\SysDev\DynamicForms\Storage\S3Driver;
 use Orchestra\Testbench\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 
-#[\PHPUnit\Framework\Attributes\CoversClass(\Northwestern\SysDev\DynamicForms\Forms\Form::class)]
+#[CoversClass(Form::class), CoversClass(FileDriver::class), CoversClass(S3Driver::class), CoversClass(ResourceRegistry::class)]
 final class FormTest extends TestCase
 {
     #[DataProvider('formDataProvider')]

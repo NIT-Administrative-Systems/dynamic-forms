@@ -4,8 +4,10 @@ namespace Northwestern\SysDev\DynamicForms\Tests\JSONLogic;
 
 use Monolog\Test\TestCase;
 use Northwestern\SysDev\DynamicForms\JSONLogic\JsonLogicHelpers;
+use Northwestern\SysDev\DynamicForms\JSONLogicInitHelper;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-#[\PHPUnit\Framework\Attributes\CoversClass(\Northwestern\SysDev\DynamicForms\JSONLogic\JsonLogicHelpers::class)]
+#[CoversClass(JsonLogicHelpers::class), CoversClass(JSONLogicInitHelper::class)]
 final class JsonLogicHelpersTest extends TestCase
 {
     public function testConvertDataVars(): void

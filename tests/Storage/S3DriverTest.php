@@ -7,9 +7,10 @@ use Aws\S3\Exception\S3Exception;
 use Aws\S3\S3Client;
 use Northwestern\SysDev\DynamicForms\Storage\S3Driver;
 use Orchestra\Testbench\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 
-#[\PHPUnit\Framework\Attributes\CoversClass(\Northwestern\SysDev\DynamicForms\Storage\S3Driver::class)]
+#[CoversClass(S3Driver::class)]
 final class S3DriverTest extends TestCase
 {
     const DUMMY_S3_CONF = [
