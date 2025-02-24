@@ -5,7 +5,6 @@ namespace Northwestern\SysDev\DynamicForms\Tests\Components\TestCases;
 use Northwestern\SysDev\DynamicForms\Components\ComponentInterface;
 use Orchestra\Testbench\TestCase;
 
-#[\PHPUnit\Framework\Attributes\CoversClass(\Northwestern\SysDev\DynamicForms\Components\BaseComponent::class)]
 abstract class BaseComponentTestCase extends TestCase
 {
     protected string $componentClass;
