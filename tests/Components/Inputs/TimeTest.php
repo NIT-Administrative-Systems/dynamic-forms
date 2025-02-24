@@ -6,9 +6,6 @@ use Northwestern\SysDev\DynamicForms\Components\CaseEnum;
 use Northwestern\SysDev\DynamicForms\Components\Inputs\Time;
 use Northwestern\SysDev\DynamicForms\Tests\Components\TestCases\InputComponentTestCase;
 
-/**
- * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Components\Inputs\Time
- */
 class TimeTest extends InputComponentTestCase
 {
     protected string $componentClass = Time::class;

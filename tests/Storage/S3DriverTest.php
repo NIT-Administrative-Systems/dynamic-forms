@@ -7,11 +7,10 @@ use Aws\S3\Exception\S3Exception;
 use Aws\S3\S3Client;
 use Northwestern\SysDev\DynamicForms\Storage\S3Driver;
 use Orchestra\Testbench\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 
-/**
- * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Storage\S3Driver
- */
+#[CoversClass(S3Driver::class)]
 final class S3DriverTest extends TestCase
 {
     const DUMMY_S3_CONF = [
@@ -19,11 +18,6 @@ final class S3DriverTest extends TestCase
         'version' => 'latest',
     ];
 
-    /**
-     * @covers ::__construct
-     * @covers ::storageClient
-     * @covers ::setStorageClient
-     */
     public function testConstructorAndAccessors(): void
     {
         $mock_s3 = $this->createStub(S3Client::class);
@@ -80,9 +74,6 @@ final class S3DriverTest extends TestCase
         ];
     }
 
-    /**
-     * @covers ::getDirectDownloadLink
-     */
     public function testGetDirectDownloadLink(): void
     {
         $driver = $this->mockPresignDriver();
@@ -90,9 +81,6 @@ final class S3DriverTest extends TestCase
         $this->assertEquals('https://test.com', $driver->getDirectDownloadLink('foo'));
     }
 
-    /**
-     * @covers ::getDownloadLink
-     */
     public function testGetDownloadLink(): void
     {
         $driver = $this->mockPresignDriver();
@@ -101,9 +89,6 @@ final class S3DriverTest extends TestCase
         $this->assertEquals($expected->getData(true), $driver->getDownloadLink('foo')->getData(true));
     }
 
-    /**
-     * @covers ::getUploadLink
-     */
     public function testGetUploadLink(): void
     {
         $this->app['router']->get('/dynamic-forms/storage/s3')->name('dynamic-forms.S3-file-download');

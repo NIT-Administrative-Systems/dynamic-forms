@@ -6,9 +6,6 @@ use Northwestern\SysDev\DynamicForms\Forms\Form;
 use Orchestra\Testbench\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 
-/**
- * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Forms\Form
- */
 final class FormTest extends TestCase
 {
     #[DataProvider('formDataProvider')]

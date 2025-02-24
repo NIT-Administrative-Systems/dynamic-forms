@@ -7,14 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Northwestern\SysDev\DynamicForms\Storage\Concerns\HandlesDynamicFormsStorage;
 
-/**
- * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Storage\Concerns\LocalStorage
- */
 final class LocalStorageTest extends \Orchestra\Testbench\TestCase
 {
-    /**
-     * @covers ::storeURL
-     */
     public function testUploadWorks(): void
     {
         $this->app['router']->post(__FUNCTION__, function (Request $request) {
@@ -28,9 +22,6 @@ final class LocalStorageTest extends \Orchestra\Testbench\TestCase
         $response->assertOk();
     }
 
-    /**
-     * @covers ::storeURL
-     */
     public function testUploadAuthorization(): void
     {
         $this->app['router']->post(__FUNCTION__, function (Request $request) {
@@ -41,9 +32,6 @@ final class LocalStorageTest extends \Orchestra\Testbench\TestCase
         $response->assertForbidden();
     }
 
-    /**
-     * @covers ::showURL
-     */
     public function testDownloadAuthorization(): void
     {
         $this->app['router']->get(__FUNCTION__, function (Request $request) {
@@ -53,9 +41,6 @@ final class LocalStorageTest extends \Orchestra\Testbench\TestCase
         $response->assertForbidden();
     }
 
-    /**
-     * @covers ::deleteURL
-     */
     public function testDeleteAuthorization(): void
     {
         $this->app['router']->delete(__FUNCTION__, function (Request $request) {

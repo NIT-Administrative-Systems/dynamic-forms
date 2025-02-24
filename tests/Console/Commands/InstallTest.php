@@ -6,14 +6,9 @@ use Northwestern\SysDev\DynamicForms\Console\Commands\Install;
 use Orchestra\Testbench\TestCase;
 use ReflectionMethod;
 
-/**
- * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Console\Commands\Install
- */
+#[\PHPUnit\Framework\Attributes\CoversClass(\Northwestern\SysDev\DynamicForms\Console\Commands\Install::class)]
 final class InstallTest extends TestCase
 {
-    /**
-     * @covers ::ejectRoutes
-     */
     public function testEjectRoutes(): void
     {
         $cmd = $this->installCommand();
@@ -24,9 +19,6 @@ final class InstallTest extends TestCase
         $this->assertNotEmpty(file_get_contents($file));
     }
 
-    /**
-     * @covers ::ejectJsInclude
-     */
     public function testEjectJsInclude(): void
     {
         $cmd = $this->installCommand();
@@ -37,9 +29,6 @@ final class InstallTest extends TestCase
         $this->assertNotEmpty(file_get_contents($file));
     }
 
-    /**
-     * @covers ::ejectCssInclude
-     */
     public function testEjectCssInclude(): void
     {
         $cmd = $this->installCommand();
@@ -50,9 +39,6 @@ final class InstallTest extends TestCase
         $this->assertNotEmpty(file_get_contents($file));
     }
 
-    /**
-     * @covers ::updatePackages
-     */
     public function testUpdatePackages(): void
     {
         $cmd = $this->installCommand();

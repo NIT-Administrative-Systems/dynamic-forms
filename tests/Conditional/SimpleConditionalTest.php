@@ -6,9 +6,7 @@ use Northwestern\SysDev\DynamicForms\Conditional\SimpleConditional;
 use Orchestra\Testbench\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 
-/**
- * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Conditional\SimpleConditional
- */
+#[\PHPUnit\Framework\Attributes\CoversClass(\Northwestern\SysDev\DynamicForms\Conditional\SimpleConditional::class)]
 final class SimpleConditionalTest extends TestCase
 {
     #[DataProvider('invokeDataProvider')]

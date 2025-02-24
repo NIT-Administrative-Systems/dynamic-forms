@@ -6,9 +6,6 @@ use Northwestern\SysDev\DynamicForms\Components\CaseEnum;
 use Northwestern\SysDev\DynamicForms\Components\Inputs\Signature;
 use Northwestern\SysDev\DynamicForms\Tests\Components\TestCases\InputComponentTestCase;
 
-/**
- * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Components\Inputs\Signature
- */
 class SignatureTest extends InputComponentTestCase
 {
     protected string $componentClass = Signature::class;

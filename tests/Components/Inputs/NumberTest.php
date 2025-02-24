@@ -7,9 +7,6 @@ use Northwestern\SysDev\DynamicForms\Components\Inputs\Number;
 use Northwestern\SysDev\DynamicForms\Tests\Components\TestCases\InputComponentTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 
-/**
- * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Components\Inputs\Number
- */
 final class NumberTest extends InputComponentTestCase
 {
     protected string $componentClass = Number::class;

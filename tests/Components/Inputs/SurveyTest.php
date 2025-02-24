@@ -6,9 +6,6 @@ use Northwestern\SysDev\DynamicForms\Components\CaseEnum;
 use Northwestern\SysDev\DynamicForms\Components\Inputs\Survey;
 use Northwestern\SysDev\DynamicForms\Tests\Components\TestCases\InputComponentTestCase;
 
-/**
- * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Components\Inputs\Survey
- */
 final class SurveyTest extends InputComponentTestCase
 {
     protected string $componentClass = Survey::class;
@@ -25,10 +22,6 @@ final class SurveyTest extends InputComponentTestCase
         ],
     ];
 
-    /**
-     * @covers ::questions
-     * @covers ::questionsWithLabels
-     */
     public function testQuestions(): void
     {
         $this->assertEquals(
@@ -42,10 +35,6 @@ final class SurveyTest extends InputComponentTestCase
         );
     }
 
-    /**
-     * @covers ::validChoices
-     * @covers ::choicesWithLabels
-     */
     public function testValidChoices(): void
     {
         $this->assertEquals(

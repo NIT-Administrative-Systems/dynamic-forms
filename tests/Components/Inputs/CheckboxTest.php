@@ -6,9 +6,6 @@ use Northwestern\SysDev\DynamicForms\Components\CaseEnum;
 use Northwestern\SysDev\DynamicForms\Components\Inputs\Checkbox;
 use Northwestern\SysDev\DynamicForms\Tests\Components\TestCases\InputComponentTestCase;
 
-/**
- * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Components\Inputs\Checkbox
- */
 class CheckboxTest extends InputComponentTestCase
 {
     protected string $componentClass = Checkbox::class;

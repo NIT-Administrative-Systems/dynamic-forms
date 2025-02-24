@@ -9,9 +9,6 @@ use Northwestern\SysDev\DynamicForms\ResourceRegistry;
 use Northwestern\SysDev\DynamicForms\Resources\ResourceInterface;
 use Northwestern\SysDev\DynamicForms\Tests\Components\TestCases\InputComponentTestCase;
 
-/**
- * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Components\Inputs\Select
- */
 final class SelectTest extends InputComponentTestCase
 {
     protected string $componentClass = Select::class;
@@ -28,9 +25,6 @@ final class SelectTest extends InputComponentTestCase
         ],
     ];
 
-    /**
-     * @covers ::validate
-     */
     public function testWithNoValuesProvided(): void
     {
         $component = $this->getComponent(additional: ['data' => null]);
@@ -39,10 +33,6 @@ final class SelectTest extends InputComponentTestCase
         $this->assertEquals(true, $bag->isEmpty());
     }
 
-    /**
-     * @covers ::processValidations
-     * @covers ::validate
-     */
     public function testValidationInMultipleModeWithNull(): void
     {
         $component = $this->getComponent(
@@ -76,25 +66,16 @@ final class SelectTest extends InputComponentTestCase
         ];
     }
 
-    /**
-     * @covers ::dataSource
-     */
     public function testDataSource(): void
     {
         $this->assertEquals(Select::DATA_SRC_VALUES, $this->getComponent()->dataSource());
     }
 
-    /**
-     * @covers ::optionValues
-     */
     public function testOptionValues(): void
     {
         $this->assertEquals(['foo', 'bar', 1, '{"foo":"bar"}', 'Notrim'], $this->getComponent()->optionValues());
     }
 
-    /**
-     * @covers ::options
-     */
     public function testOptions(): void
     {
         $expected = [
@@ -108,10 +89,6 @@ final class SelectTest extends InputComponentTestCase
         $this->assertEquals($expected, $this->getComponent()->options());
     }
 
-    /**
-     * @covers ::initSrcOther
-     * This will need to be updated every time support for a new data source is added
-     */
     public function testInitSrcOther(): void
     {
         $this->defaultAdditional['dataSrc'] = Select::DATA_SRC_URL;
@@ -140,10 +117,6 @@ final class SelectTest extends InputComponentTestCase
         $this->assertEquals(Select::DATA_SRC_RESOURCE, $valuesComponent->dataSource());
     }
 
-    /**
-     * @covers ::setResourceRegistry
-     * @covers ::initSrcValues
-     */
     public function testSetResourceRegistry_valuesDataSrc(): void
     {
         $valuesComponent = $this->getComponent();
@@ -159,11 +132,6 @@ final class SelectTest extends InputComponentTestCase
         $resourceRegistry->registered();
     }
 
-    /**
-     * @covers ::setResourceRegistry
-     * @covers ::initSrcResources
-     * @covers ::activateResources
-     */
     public function testSetResourceRegistry_resourcesDataSrc(): void
     {
         $resourcesComponent = new Select(

@@ -5,46 +5,21 @@ namespace Northwestern\SysDev\DynamicForms\Tests\Components\TestCases;
 use Northwestern\SysDev\DynamicForms\Components\ComponentInterface;
 use Orchestra\Testbench\TestCase;
 
-/**
- * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Components\BaseComponent
- */
 abstract class BaseComponentTestCase extends TestCase
 {
     protected string $componentClass;
     protected array $defaultAdditional = [];
 
-    /**
-     * @covers ::__construct
-     */
     public function testConstruct(): void
     {
         $this->assertInstanceOf($this->componentClass, $this->getComponent());
     }
 
-    /**
-     * @covers ::canValidate
-     */
     public function testCanValidate(): void
     {
         $this->assertFalse($this->getComponent()->canValidate());
     }
 
-    /**
-     * @covers ::key
-     * @covers ::label
-     * @covers ::type
-     * @covers ::components
-     * @covers ::hasMultipleValues
-     * @covers ::hasConditional
-     * @covers ::conditional
-     * @covers ::errorLabel
-     * @covers ::isCalculated
-     * @covers ::calculation
-     * @covers ::defaultValue
-     * @covers ::validation
-     * @covers ::validations
-     * @covers ::advancedValidations
-     */
     public function testGetters(): void
     {
         $ref = new \ReflectionClass($this->componentClass);

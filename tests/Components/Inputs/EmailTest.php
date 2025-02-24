@@ -6,9 +6,6 @@ use Northwestern\SysDev\DynamicForms\Components\CaseEnum;
 use Northwestern\SysDev\DynamicForms\Components\Inputs\Email;
 use Northwestern\SysDev\DynamicForms\Tests\Components\TestCases\InputComponentTestCase;
 
-/**
- * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Components\Inputs\Email
- */
 class EmailTest extends InputComponentTestCase
 {
     protected string $componentClass = Email::class;

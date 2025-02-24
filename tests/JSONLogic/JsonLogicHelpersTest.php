@@ -5,9 +5,6 @@ namespace Northwestern\SysDev\DynamicForms\Tests\JSONLogic;
 use Monolog\Test\TestCase;
 use Northwestern\SysDev\DynamicForms\JSONLogic\JsonLogicHelpers;
 
-/**
- * @coversDefaultClass \Northwestern\SysDev\DynamicForms\JSONLogic\JsonLogicHelpers
- */
 final class JsonLogicHelpersTest extends TestCase
 {
     public function testConvertDataVars(): void

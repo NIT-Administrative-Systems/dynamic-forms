@@ -8,9 +8,6 @@ use Northwestern\SysDev\DynamicForms\Components\Inputs\DateTime;
 use Northwestern\SysDev\DynamicForms\Tests\Components\TestCases\InputComponentTestCase;
 use PHPUnit\Framework\Attributes\TestWith;
 
-/**
- * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Components\Inputs\DateTime
- */
 final class DateTimeTest extends InputComponentTestCase
 {
     protected string $componentClass = DateTime::class;
@@ -23,9 +20,6 @@ final class DateTimeTest extends InputComponentTestCase
         $this->assertNull($date->submissionValue());
     }
 
-    /**
-     * @covers ::submissionValue
-     */
     public function testSubmissionValueHandlesDates(): void
     {
         $date = $this->getComponent(submissionValue: '2021-03-25T12:00:00-05:00');

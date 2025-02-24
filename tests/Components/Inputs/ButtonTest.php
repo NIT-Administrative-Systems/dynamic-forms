@@ -6,9 +6,6 @@ use Northwestern\SysDev\DynamicForms\Components\Inputs\Button;
 use Northwestern\SysDev\DynamicForms\Tests\Components\TestCases\BaseComponentTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 
-/**
- * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Components\Inputs\Button
- */
 final class ButtonTest extends BaseComponentTestCase
 {
     protected string $componentClass = Button::class;

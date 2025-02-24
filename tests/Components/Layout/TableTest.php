@@ -5,16 +5,10 @@ namespace Northwestern\SysDev\DynamicForms\Tests\Components\Layout;
 use Northwestern\SysDev\DynamicForms\Components\Layout\Table;
 use Northwestern\SysDev\DynamicForms\Tests\Components\TestCases\BaseComponentTestCase;
 
-/**
- * @coversDefaultClass \Northwestern\SysDev\DynamicForms\Components\Layout\Table
- */
 final class TableTest extends BaseComponentTestCase
 {
     protected string $componentClass = Table::class;
 
-    /**
-     * @covers ::pathsToChildren
-     */
     public function testPathsToChildren(): void
     {
         /** @var Table $table */
