@@ -8,7 +8,6 @@ use Northwestern\SysDev\DynamicForms\Components\Inputs\DateTime;
 use Northwestern\SysDev\DynamicForms\Tests\Components\TestCases\InputComponentTestCase;
 use PHPUnit\Framework\Attributes\TestWith;
 
-#[\PHPUnit\Framework\Attributes\CoversClass(\Northwestern\SysDev\DynamicForms\Components\Inputs\DateTime::class)]
 final class DateTimeTest extends InputComponentTestCase
 {
     protected string $componentClass = DateTime::class;

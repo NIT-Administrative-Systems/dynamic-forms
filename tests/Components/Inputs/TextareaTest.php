@@ -7,7 +7,6 @@ use Northwestern\SysDev\DynamicForms\Components\Inputs\Textarea;
 use Northwestern\SysDev\DynamicForms\Errors\InvalidDefinitionError;
 use Northwestern\SysDev\DynamicForms\Tests\Components\TestCases\InputComponentTestCase;
 
-#[\PHPUnit\Framework\Attributes\CoversClass(\Northwestern\SysDev\DynamicForms\Components\Inputs\Textarea::class)]
 final class TextareaTest extends InputComponentTestCase
 {
     protected string $componentClass = Textarea::class;

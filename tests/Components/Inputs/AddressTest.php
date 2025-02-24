@@ -7,7 +7,6 @@ use Northwestern\SysDev\DynamicForms\Components\Inputs\Address;
 use Northwestern\SysDev\DynamicForms\Errors\InvalidDefinitionError;
 use Northwestern\SysDev\DynamicForms\Tests\Components\TestCases\InputComponentTestCase;
 
-#[\PHPUnit\Framework\Attributes\CoversClass(\Northwestern\SysDev\DynamicForms\Components\Inputs\Address::class)]
 final class AddressTest extends InputComponentTestCase
 {
     public string $componentClass = Address::class;

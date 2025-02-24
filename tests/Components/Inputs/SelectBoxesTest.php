@@ -6,7 +6,6 @@ use Northwestern\SysDev\DynamicForms\Components\CaseEnum;
 use Northwestern\SysDev\DynamicForms\Components\Inputs\SelectBoxes;
 use Northwestern\SysDev\DynamicForms\Tests\Components\TestCases\InputComponentTestCase;
 
-#[\PHPUnit\Framework\Attributes\CoversClass(\Northwestern\SysDev\DynamicForms\Components\Inputs\SelectBoxes::class)]
 final class SelectBoxesTest extends InputComponentTestCase
 {
     protected string $componentClass = SelectBoxes::class;

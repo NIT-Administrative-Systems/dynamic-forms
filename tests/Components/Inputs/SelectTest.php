@@ -9,7 +9,6 @@ use Northwestern\SysDev\DynamicForms\ResourceRegistry;
 use Northwestern\SysDev\DynamicForms\Resources\ResourceInterface;
 use Northwestern\SysDev\DynamicForms\Tests\Components\TestCases\InputComponentTestCase;
 
-#[\PHPUnit\Framework\Attributes\CoversClass(\Northwestern\SysDev\DynamicForms\Components\Inputs\Select::class)]
 final class SelectTest extends InputComponentTestCase
 {
     protected string $componentClass = Select::class;

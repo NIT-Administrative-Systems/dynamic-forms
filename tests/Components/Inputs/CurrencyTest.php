@@ -7,7 +7,6 @@ use Northwestern\SysDev\DynamicForms\Components\Inputs\Currency;
 use Northwestern\SysDev\DynamicForms\Tests\Components\TestCases\InputComponentTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 
-#[\PHPUnit\Framework\Attributes\CoversClass(\Northwestern\SysDev\DynamicForms\Components\Inputs\Currency::class)]
 final class CurrencyTest extends InputComponentTestCase
 {
     protected string $componentClass = Currency::class;

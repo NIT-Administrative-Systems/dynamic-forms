@@ -7,7 +7,6 @@ use Northwestern\SysDev\DynamicForms\Components\Inputs\Day;
 use Northwestern\SysDev\DynamicForms\Tests\Components\TestCases\InputComponentTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 
-#[\PHPUnit\Framework\Attributes\CoversClass(\Northwestern\SysDev\DynamicForms\Components\Inputs\Day::class)]
 final class DayTest extends InputComponentTestCase
 {
     protected string $componentClass = Day::class;

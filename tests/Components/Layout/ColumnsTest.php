@@ -6,7 +6,6 @@ use Northwestern\SysDev\DynamicForms\Components\Layout\Columns;
 use Northwestern\SysDev\DynamicForms\Tests\Components\TestCases\BaseComponentTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 
-#[\PHPUnit\Framework\Attributes\CoversClass(\Northwestern\SysDev\DynamicForms\Components\Layout\Columns::class)]
 final class ColumnsTest extends BaseComponentTestCase
 {
     protected string $componentClass = Columns::class;
