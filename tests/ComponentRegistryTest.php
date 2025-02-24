@@ -5,8 +5,9 @@ namespace Northwestern\SysDev\DynamicForms\Tests;
 use Northwestern\SysDev\DynamicForms\ComponentRegistry;
 use Northwestern\SysDev\DynamicForms\Components\Inputs\Textfield;
 use Orchestra\Testbench\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-#[\PHPUnit\Framework\Attributes\CoversClass(\Northwestern\SysDev\DynamicForms\ComponentRegistry::class)]
+#[CoversClass(\Northwestern\SysDev\DynamicForms\ComponentRegistry::class)]
 final class ComponentRegistryTest extends TestCase
 {
     public function testsRegistration(): void
