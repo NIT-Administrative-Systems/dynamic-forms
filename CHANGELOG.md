@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [v2.0.0] - 2025-08-29
+### Changed
+- The minimum PHP version is now 8.3.
+
 ## [v1.2.2] - 2025-02-24
 ### Added
 - Updated composer requirements to support Laravel 12.
