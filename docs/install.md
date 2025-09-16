@@ -4,7 +4,7 @@ Dynamic Forms for Laravel is available via composer.
 ## Prerequisites
 You will need the following:
 
-- PHP 8.2+
+- PHP 8.3+
 - Laravel 11+
 - Bootstrap 5 
 - FontAwesome 6

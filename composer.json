@@ -19,7 +19,7 @@
         }
     ],
     "require": {
-        "php": "^8.2",
+        "php": "^8.3",
         "aws/aws-sdk-php": "^3.80|^4",
         "illuminate/support": "^8|^9|^10|^11|^12",
         "illuminate/validation": "^8|^9|^10|^11|^12",
@@ -28,7 +28,7 @@
         "symfony/finder": "^6|^7",
         "nesbot/carbon": "^3",
         "jwadhams/json-logic-php": "^1.4",
-        "northwestern-sysdev/lodash-php": "^2.0.0"
+        "northwestern-sysdev/lodash-php": "^3.0.0"
     },
     "require-dev": {
         "orchestra/testbench": "^10",
