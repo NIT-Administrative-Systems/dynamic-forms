@@ -28,5 +28,6 @@ jobs:
 
     - name: Install and Build 🔧
       run: |
+        cd docs
         pnpm install
         pnpm build
