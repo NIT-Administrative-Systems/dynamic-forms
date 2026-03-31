@@ -5,6 +5,7 @@ import northwesternTheme from "@nu-appdev/northwestern-starlight-theme";
 // https://astro.build/config
 export default defineConfig({
     site: "https://nit-administrative-systems.github.io/dynamic-forms/",
+    base: "/dynamic-forms/",
     integrations: [
         starlight({
             plugins: [northwesternTheme()],
