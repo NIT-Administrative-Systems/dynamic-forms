@@ -1,4 +1,10 @@
-# Installation
+---
+title: Installation
+description: Installation guide
+sidebar:
+    order: 1
+---
+
 Dynamic Forms for Laravel is available via composer.
 
 ## Prerequisites

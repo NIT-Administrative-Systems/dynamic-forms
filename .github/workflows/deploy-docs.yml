@@ -11,7 +11,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [20.x]
+        node-version: [24.x]
 
     steps:
     - uses: actions/checkout@v4
@@ -19,21 +19,23 @@ jobs:
     - name: Install pnpm
       uses: pnpm/action-setup@v4
       with:
-        version: 8.x.x
+        version: 10.x.x
 
     - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@v6
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'pnpm'
+        cache-dependency-path: docs/pnpm-lock.yaml
 
     - name: Install and Build 🔧
       run: |
+        cd docs
         pnpm install
-        pnpm docs:build
+        pnpm build
 
     - name: Deploy 🚀
       uses: JamesIves/github-pages-deploy-action@v4
       with:
         branch: gh-pages
-        folder: docs/.vuepress/dist
+        folder: docs/dist

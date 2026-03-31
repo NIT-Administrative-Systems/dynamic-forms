@@ -1,4 +1,5 @@
-/node_modules
+/docs/.astro
+/docs/node_modules
 /public/hot
 /public/storage
 /storage/*.key
@@ -22,7 +23,4 @@ yarn-error.log
 .vapor/
 /.idea
 composer.lock
-/docs/.vuepress/dist
-/docs/.vuepress/.cache
-/docs/.vuepress/.temp
-/docs/.build
+/docs/dist

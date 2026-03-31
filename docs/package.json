@@ -1,0 +1,21 @@
+{
+    "engines": {
+        "npm": "please-use-pnpm",
+        "yarn": "please-use-pnpm",
+        "pnpm": ">= 10.0.0",
+        "node": ">= 24.0.0"
+    },
+    "dependencies": {
+        "@astrojs/starlight": "^0.38.2",
+        "@nu-appdev/northwestern-starlight-theme": "^1.3.2",
+        "astro": "^6.1.2",
+        "sharp": "^0.34.5"
+    },
+    "scripts": {
+        "astro": "node_modules/.bin/astro",
+        "build": "node_modules/.bin/astro build",
+        "dev": "node_modules/.bin/astro dev",
+        "preview": "node_modules/.bin/astro preview",
+        "start": "node_modules/.bin/astro dev"
+    }
+}

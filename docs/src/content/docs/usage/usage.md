@@ -1,5 +1,9 @@
-# Using Dynamic Forms
-
+---
+title: Using Dynamic Forms
+description: Examples of how to use the library
+sidebar:
+    order: 1
+---
 
 ## Builder
 The Formiojs builder will create a JSON document containing all of the configuration the user has made for their dynamic form.

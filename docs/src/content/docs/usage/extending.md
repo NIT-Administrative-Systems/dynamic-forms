@@ -1,4 +1,10 @@
-# Extending
+---
+title: Extending
+description: Extending the library with more form components
+sidebar:
+    order: 3
+---
+
 There are several ways you can extend Dynamic Forms.
 
 ## Adjusting Global Settings

@@ -1,21 +1,31 @@
-# Dynamic Forms for Laravel
+---
+title: Overview
+description: What is Dynamic Forms for Laravel?
+sidebar:
+    order: 1
+---
+
 User-defined forms are a perennial problem for developers.
 
 Dynamic Forms for Laravel gives you an easy solution: a drag-and-drop builder, an easy way to display the forms, and back-end validation to ensure the submitted data is good.
 
 If you want to see it in action, here are some demo videos:
 
-::: details Creating a form in the builder
+<details><summary>Creating a form in the builder</summary>
+
 <video controls="controls" preload="none" width="100%">
     <source src="/builder_demo.webm" type="video/webm">
 </video>
-:::
 
-::: details Filling out a dynamic form
+</details>
+
+<details><summary>Filling out a dynamic form</summary>
+
 <video controls="controls" preload="none" width="100%">
 <source src="/form_demo.webm" type="video/webm">
 </video>
-:::
+
+</details>
 
 ## How does this work?
 The front-end is powered by the open source [Form.io](https://github.com/formio/formio.js) JavaScript library. This is an awesome library: the builder is user-friendly, you can adjust what's offered, and add your own custom form fields.
@@ -41,7 +51,7 @@ Most of the decisions not to include something were driven by what would give us
 Most of the Formiojs components are supported in some configuration. These components have limitations:
 
 - Address only supports Open Street Maps
-- File only supports Amazon S3 and local storage (base64, dropbox, azure, and indexeddb support can be [added](extending.md#adding-storage-backends))
+- File only supports Amazon S3 and local storage (base64, dropbox, azure, and indexeddb support can be [added](usage/extending.md#adding-storage-backends))
 - Select only supports values, and not API-backed resources
 
 These components are not supported at all:
