@@ -1,8 +1,0 @@
-{
-  "engines": {
-    "npm": "please-use-pnpm",
-    "yarn": "please-use-pnpm",
-    "pnpm": ">= 10.0.0",
-    "node": ">= 24.0.0"
-  }
-}

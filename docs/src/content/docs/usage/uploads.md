@@ -1,4 +1,10 @@
-# File Uploads
+---
+title: File Uploads
+description: Handling file uploads via S3 or direct POST
+sidebar:
+    order: 2
+---
+
 File uploads are supported via Amazon S3 or directly to local storage. By default both options are exposed to the Form builder in order to allow only one or the other set `VITE_STORAGE_DEFAULT_VALUE` to either `s3` or `url`.
 
 ## S3 Uploads

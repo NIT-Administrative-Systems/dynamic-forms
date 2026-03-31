@@ -1,4 +1,9 @@
-# Upgrading
+---
+title: Upgrading
+description: Upgrade guides, including breaking changes.
+sidebar:
+    order: 2
+---
 
 ## v1.2.0
 There are no breaking changes in this version. 
