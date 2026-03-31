@@ -30,10 +30,10 @@ jobs:
     - name: Install and Build 🔧
       run: |
         pnpm install
-        pnpm docs:build
+        pnpm build
 
     - name: Deploy 🚀
       uses: JamesIves/github-pages-deploy-action@v4
       with:
         branch: gh-pages
-        folder: docs/.vuepress/dist
+        folder: docs/dist
