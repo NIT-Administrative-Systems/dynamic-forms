@@ -7,10 +7,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [v3.0.0] - 2026-04-06
 ### Changed
-- The minimum PHP version is now 8.4.
 - Requires `northwestern-sysdev/lodash-php` ^4.0.0, which removes the global `__()` function that conflicted with Laravel's `__()` (trans) helper.
 ### Added
 - Updated composer requirements to support Laravel 13.
+- Added PHP 8.5 to CI test matrix.
 
 ## [v2.0.0] - 2025-08-29
 ### Changed

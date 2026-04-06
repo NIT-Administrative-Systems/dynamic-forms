@@ -19,7 +19,7 @@
         }
     ],
     "require": {
-        "php": "^8.4",
+        "php": "^8.3",
         "aws/aws-sdk-php": "^3.80|^4",
         "illuminate/support": "^8|^9|^10|^11|^12|^13",
         "illuminate/validation": "^8|^9|^10|^11|^12|^13",
