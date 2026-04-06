@@ -28,7 +28,7 @@
         "symfony/finder": "^6|^7|^8",
         "nesbot/carbon": "^3",
         "jwadhams/json-logic-php": "^1.4",
-        "northwestern-sysdev/lodash-php": "^3.0.0"
+        "northwestern-sysdev/lodash-php": "^4.0.0"
     },
     "require-dev": {
         "orchestra/testbench": "^11",
