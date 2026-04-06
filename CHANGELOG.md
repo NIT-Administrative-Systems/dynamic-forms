@@ -5,6 +5,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [v3.0.0] - 2026-04-06
+### Changed
+- The minimum PHP version is now 8.4.
+### Added
+- Updated composer requirements to support Laravel 13.
+
 ## [v2.0.0] - 2025-08-29
 ### Changed
 - The minimum PHP version is now 8.3.
@@ -232,7 +238,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ## [v0.1.0] - 2021-05-04
 - Initial release.
 
-[Unreleased]: https://github.com/NIT-Administrative-Systems/dynamic-forms/compare/v1.1.0...HEAD
+[Unreleased]: https://github.com/NIT-Administrative-Systems/dynamic-forms/compare/v3.0.0...HEAD
+[v3.0.0]: https://github.com/NIT-Administrative-Systems/dynamic-forms/compare/v2.0.0...v3.0.0
+[v2.0.0]: https://github.com/NIT-Administrative-Systems/dynamic-forms/compare/v1.2.2...v2.0.0
+[v1.2.2]: https://github.com/NIT-Administrative-Systems/dynamic-forms/compare/v1.2.1...v1.2.2
+[v1.2.1]: https://github.com/NIT-Administrative-Systems/dynamic-forms/compare/v1.2.0...v1.2.1
+[v1.2.0]: https://github.com/NIT-Administrative-Systems/dynamic-forms/compare/v1.1.0...v1.2.0
 [v1.1.0]: https://github.com/NIT-Administrative-Systems/dynamic-forms/compare/v1.0.1...v1.1.0
 [v1.0.1]: https://github.com/NIT-Administrative-Systems/dynamic-forms/compare/v1.0.0...v1.0.1
 [v1.0.0]: https://github.com/NIT-Administrative-Systems/dynamic-forms/compare/v0.15.1...v1.0.0
