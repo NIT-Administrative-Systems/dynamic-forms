@@ -7,7 +7,7 @@
     },
     "dependencies": {
         "@astrojs/starlight": "^0.38.2",
-        "@nu-appdev/northwestern-starlight-theme": "^1.3.2",
+        "@nu-appdev/northwestern-starlight-theme": "^1.5.0",
         "astro": "^6.1.2",
         "sharp": "^0.34.5"
     },
