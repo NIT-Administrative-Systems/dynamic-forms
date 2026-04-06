@@ -16,7 +16,7 @@ jobs:
         php-versions: ['8.3', '8.4']
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           ref: ${{ github.head_ref }}
 
@@ -28,9 +28,9 @@ jobs:
           coverage: xdebug
 
       - name: Run php-cs-fixer
-        uses: OskarStark/php-cs-fixer-ga@3.13.0
+        uses: OskarStark/php-cs-fixer-ga@3.26.0
 
-      - uses: stefanzweifel/git-auto-commit-action@v5
+      - uses: stefanzweifel/git-auto-commit-action@v7
         with:
           commit_message: Apply php-cs-fixer changes
 
