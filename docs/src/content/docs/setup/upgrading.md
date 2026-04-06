@@ -5,6 +5,11 @@ sidebar:
     order: 2
 ---
 
+## v3.0.0
+There are no direct breaking changes to the Dynamic Forms APIs in this version.
+
+If you were relying on this package including Lodash functions, the global `__()` function that conflicted with Laravel's `__()` (trans) helper has been removed.
+
 ## v1.2.0
 There are no breaking changes in this version. 
 
