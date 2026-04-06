@@ -8,6 +8,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ## [v3.0.0] - 2026-04-06
 ### Changed
 - Requires `northwestern-sysdev/lodash-php` ^4.0.0, which removes the global `__()` function that conflicted with Laravel's `__()` (trans) helper.
+- Dropped support for Laravel 8, 9, and 10 (incompatible with PHP ^8.3 and Carbon ^3).
+- Dropped support for Symfony Finder ^6.
 ### Added
 - Updated composer requirements to support Laravel 13.
 - Added PHP 8.5 to CI test matrix.

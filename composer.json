@@ -21,11 +21,11 @@
     "require": {
         "php": "^8.3",
         "aws/aws-sdk-php": "^3.80|^4",
-        "illuminate/support": "^8|^9|^10|^11|^12|^13",
-        "illuminate/validation": "^8|^9|^10|^11|^12|^13",
-        "illuminate/contracts": "^8|^9|^10|^11|^12|^13",
-        "illuminate/http": "^8|^9|^10|^11|^12|^13",
-        "symfony/finder": "^6|^7|^8",
+        "illuminate/support": "^11|^12|^13",
+        "illuminate/validation": "^11|^12|^13",
+        "illuminate/contracts": "^11|^12|^13",
+        "illuminate/http": "^11|^12|^13",
+        "symfony/finder": "^7|^8",
         "nesbot/carbon": "^3",
         "jwadhams/json-logic-php": "^1.4",
         "northwestern-sysdev/lodash-php": "^4.0.0"
