@@ -14,7 +14,7 @@ If you want to see it in action, here are some demo videos:
 <details><summary>Creating a form in the builder</summary>
 
 <video controls="controls" preload="none" width="100%">
-    <source src="/builder_demo.webm" type="video/webm">
+    <source src="/dynamic-forms/builder_demo.webm" type="video/webm">
 </video>
 
 </details>
@@ -22,7 +22,7 @@ If you want to see it in action, here are some demo videos:
 <details><summary>Filling out a dynamic form</summary>
 
 <video controls="controls" preload="none" width="100%">
-<source src="/form_demo.webm" type="video/webm">
+<source src="/dynamic-forms/form_demo.webm" type="video/webm">
 </video>
 
 </details>
