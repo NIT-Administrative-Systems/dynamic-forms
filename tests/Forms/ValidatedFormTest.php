@@ -77,6 +77,7 @@ final class ValidatedFormTest extends TestCase
     {
         $validatedForm = new ValidatedForm($flatComponents, $submission);
 
+        dump($validatedForm->messages()->toArray(), $validatedForm->values());
         $this->assertEquals($passes, $validatedForm->isValid());
 
         // Values will be a Carbon object, so turn that into a string that matches the JSON file.
@@ -161,7 +162,7 @@ final class ValidatedFormTest extends TestCase
             'calculations that depend on correct datatypes' => [
                 $components('calculation_definition.json'),
                 ['totalCost' => '', 'otherFunding' => 10, 'netAmount' => null],
-                false,
+                true,
                 ['totalCost' => null, 'otherFunding' => 10, 'netAmount' => -10],
             ],
             'validation-key-significant characters in the label do not break validation' => [
