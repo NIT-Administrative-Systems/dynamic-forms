@@ -5,6 +5,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [v3.0.1] - 2026-04-16
+### Fixes
+- Fixes some bugs in the `Number` component validations. Thank you [77media-creations](https://github.com/77media-creations)!
+  - The component incorrectly used the label as the validator key.
+  - A nullable rule was not applied to optional components, which could cause problems with other validation rules in the chain.
+
 ## [v3.0.0] - 2026-04-06
 ### Changed
 - Requires `northwestern-sysdev/lodash-php` ^4.0.0, which removes the global `__()` function that conflicted with Laravel's `__()` (trans) helper.
