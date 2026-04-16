@@ -20,7 +20,10 @@ final class NumberTest extends InputComponentTestCase
             'min passes' => [['min' => 10], 11, true],
             'max fails' => [['max' => 3], 4, false],
             'max passes' => [['max' => 3], 3, true],
-        ];
+            // Regression: optional number field should accept null without error
+            'optional empty passes' => [[], null, true],
+            'optional empty string passes' => [[], '', true],
+      ];
     }
 
     public static function submissionValueProvider(): array

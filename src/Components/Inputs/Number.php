@@ -14,21 +14,21 @@ class Number extends BaseComponent
 
     protected function processValidations(string $fieldKey, string $fieldLabel, mixed $submissionValue, Factory $validator): MessageBag
     {
-        $fieldKey = $this->label() ?? $this->key();
-
         $rules = new RuleBag($fieldKey, ['numeric']);
-        $rules->addIf('required', $this->validation('required') === true);
+
+        $this->validation('required')
+            ? $rules->add('required')
+            : $rules->add('nullable');
+
         $rules->addIfNotNull(sprintf('min:%s', $this->validation('min')), $this->validation('min'));
         $rules->addIfNotNull(sprintf('max:%s', $this->validation('max')), $this->validation('max'));
 
-        $validator = app()->make('validator')->make(
+        return $validator->make(
             [$fieldKey => $submissionValue],
             $rules->rules(),
             [],
             [$fieldKey => $fieldLabel]
-        );
-
-        return $validator->messages();
+        )->messages();
     }
 
     /**
