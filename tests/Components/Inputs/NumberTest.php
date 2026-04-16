@@ -23,7 +23,7 @@ final class NumberTest extends InputComponentTestCase
             // Regression: optional number field should accept null without error
             'optional empty passes' => [[], null, true],
             'optional empty string passes' => [[], '', true],
-      ];
+        ];
     }
 
     public static function submissionValueProvider(): array
