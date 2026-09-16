@@ -15,11 +15,11 @@ export default defineNorthwesternConfig({
             },
             {
                 label: "Setup",
-                autogenerate: { directory: "setup" },
+                items: [{ autogenerate: { directory: "setup" } }],
             },
             {
                 label: "Usage",
-                autogenerate: { directory: "usage" },
+                items: [{ autogenerate: { directory: "usage" } }],
             },
         ],
         social: [

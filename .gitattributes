@@ -2,4 +2,8 @@
 *.css linguist-vendored
 *.scss linguist-vendored
 *.js linguist-vendored
+
+/.build/ export-ignore
+/.github/ export-ignore
+/docs/ export-ignore
 CHANGELOG.md export-ignore
