@@ -31,7 +31,7 @@
         "northwestern-sysdev/lodash-php": "^4.0.0"
     },
     "require-dev": {
-        "orchestra/testbench": "^11",
+        "orchestra/testbench": "^10|^11",
         "phpunit/phpunit": "^11.0",
         "php-coveralls/php-coveralls": "^2.4"
     },

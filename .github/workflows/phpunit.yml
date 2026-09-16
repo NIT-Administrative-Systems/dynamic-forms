@@ -4,28 +4,37 @@ on:
   push:
     branches: [ develop ]
   pull_request:
-    branches: [ develop ]
 
 jobs:
-  build:
-
+  lint:
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        php-versions: ['8.3', '8.4', '8.5']
-
+    permissions:
+      contents: write
     steps:
-      - uses: actions/checkout@v6
-        with:
-          ref: ${{ github.head_ref }}
-
+      - uses: actions/checkout@v7
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: ${{ matrix.php-versions }}
+          php-version: '8.5'
           coverage: xdebug
+
+      - name: Validate composer.json and composer.lock
+        run: composer validate
+
+      - name: Get composer cache directory
+        id: composer-cache
+        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+
+      - name: Cache dependencies
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
+          restore-keys: ${{ runner.os }}-composer-
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress --no-suggest
 
       - name: Run php-cs-fixer
         uses: OskarStark/php-cs-fixer-ga@3.13.0
@@ -34,25 +43,53 @@ jobs:
         with:
           commit_message: Apply php-cs-fixer changes
 
-      - name: Validate composer.json and composer.lock
-        run: composer validate
+  build:
+    runs-on: ubuntu-latest
+    needs: [lint]
+    permissions:
+      contents: read
+    continue-on-error: ${{ matrix.experimental || false }}
+    strategy:
+      fail-fast: false
+      matrix:
+        php-versions: ['8.3', '8.4', '8.5', '8.6']
+        laravel: ['12.*', '13.*']
+        stability: ['prefer-stable']
+        include:
+          - php-versions: '8.6'
+            experimental: true
 
-      - name: Install dependencies
-        if: steps.composer-cache.outputs.cache-hit != 'true'
-        run: composer install --prefer-dist --no-progress --no-suggest
+    name: PHP ${{ matrix.php-versions }} - Laravel ${{ matrix.laravel }} (${{ matrix.stability }})
 
-      - name: Configure matchers
-        uses: mheap/phpunit-matcher-action@v1
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240 # v2
+        with:
+          php-version: ${{ matrix.php-versions }}
+          coverage: xdebug
+
+      - name: Get composer cache directory
+        id: composer-cache
+        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+
+      - name: Cache dependencies
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-php${{ matrix.php-versions }}-laravel${{ matrix.laravel }}-${{ matrix.stability }}-${{ hashFiles('**/composer.json') }}
+          restore-keys: ${{ runner.os }}-composer-php${{ matrix.php-versions }}-laravel${{ matrix.laravel }}-${{ matrix.stability }}-
+
+      - name: Install Laravel Framework Version
+        run: |
+          composer require "laravel/framework:${{ matrix.laravel }}" --no-interaction --no-update
+          composer install --prefer-dist --no-progress --no-suggest
 
       - name: Run Tests
-        run: php vendor/bin/phpunit --log-junit=.build/junit.xml --coverage-clover .build/clover.xml --teamcity
-      - uses: EnricoMi/publish-unit-test-result-action@v2
-        if: github.actor != 'dependabot[bot]' && always()
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          files: .build/junit.xml
+        run: php vendor/bin/phpunit --coverage-clover .build/clover.xml
 
       - name: Record Coverage
         env:
           COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: php vendor/bin/php-coveralls --coverage_clover=.build/clover.xml --json_path=.build/coveralls-upload.json
+        run: php vendor/bin/php-coveralls
