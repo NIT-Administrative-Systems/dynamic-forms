@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [v3.0.2] - 2026-09-16
+### Changed
+- The `docs/` folder is no longer included in published Packagist artifacts.
+
 ## [v3.0.1] - 2026-04-16
 ### Fixes
 - Fixes some bugs in the `Number` component validations. Thank you [77media-creations](https://github.com/77media-creations)!
