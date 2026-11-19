@@ -5,6 +5,7 @@ namespace Northwestern\SysDev\DynamicForms\Components;
 use Illuminate\Contracts\Support\MessageBag;
 use Northwestern\SysDev\DynamicForms\Calculation\CalculationInterface;
 use Northwestern\SysDev\DynamicForms\Conditional\ConditionalInterface;
+use Northwestern\SysDev\DynamicForms\Forms\FormWarnings;
 use Northwestern\SysDev\DynamicForms\Validation\ValidationInterface;
 
 interface ComponentInterface
@@ -145,6 +146,11 @@ interface ComponentInterface
      * Returns an invokable Validation instance.
      */
     public function advancedValidations(): ?ValidationInterface;
+
+    /**
+     * Potential issues in the definition of this component that may cause issues when validating submission data.
+     */
+    public function warnings(): FormWarnings;
 
     /**
      * Get other settings that are not used directly by the library, but may be present in the component schema.

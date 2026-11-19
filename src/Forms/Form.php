@@ -73,6 +73,21 @@ class Form
     }
 
     /**
+     * Warnings about potential issues with the form definition that will
+     * cause problems when validating submission data.
+     */
+    public function warnings(): FormWarnings
+    {
+        $warnings = [];
+
+        foreach ($this->flatComponents() as $component) {
+            $warnings += $component->warnings()->all();
+        }
+
+        return new FormWarnings($warnings);
+    }
+
+    /**
      * Runs validations & transformations, returning a ValidatedForm object.
      */
     public function validate(string $submissionJson): ValidatedForm
