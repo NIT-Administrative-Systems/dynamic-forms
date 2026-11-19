@@ -3,6 +3,7 @@
 namespace Northwestern\SysDev\DynamicForms\Tests\Components\TestCases;
 
 use Northwestern\SysDev\DynamicForms\Components\ComponentInterface;
+use Northwestern\SysDev\DynamicForms\Forms\FormWarningType;
 use Orchestra\Testbench\TestCase;
 
 abstract class BaseComponentTestCase extends TestCase
@@ -40,6 +41,37 @@ abstract class BaseComponentTestCase extends TestCase
         $this->assertEmpty($component->validations());
         $this->assertNull($component->advancedValidations());
         $this->assertTrue($component->additional('disabled'));
+    }
+
+    public function testWarningsWithoutAdvancedValidation(): void
+    {
+        $warnings = $this->getComponent()->warnings();
+
+        $this->assertTrue($warnings->isEmpty());
+        $this->assertSame([], $warnings->all());
+    }
+
+    public function testWarningsForJsonValidationMissingTrue(): void
+    {
+        $component = $this->getComponent(validations: [
+            'json' => ['if' => [true, 'Invalid', false]],
+        ]);
+
+        $warnings = $component->warnings()->all();
+
+        $this->assertSame(['test'], array_keys($warnings));
+        $this->assertSame('test', $warnings['test']->componentKey);
+        $this->assertSame('validate.json.if', $warnings['test']->jsonPath);
+        $this->assertSame(FormWarningType::JsonValidationMissingTrue, $warnings['test']->type);
+    }
+
+    public function testWarningsForJsonValidationWithTrue(): void
+    {
+        $component = $this->getComponent(validations: [
+            'json' => ['if' => [true, true, 'Invalid']],
+        ]);
+
+        $this->assertTrue($component->warnings()->isEmpty());
     }
 
     /**
