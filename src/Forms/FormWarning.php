@@ -8,7 +8,7 @@ final readonly class FormWarning
         public string $componentKey,
         public string $jsonPath,
         public FormWarningType $type,
-        public string $details,
+        public ?string $details = null,
     ) {
     }
 }

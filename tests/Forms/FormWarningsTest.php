@@ -23,7 +23,7 @@ final class FormWarningsTest extends TestCase
             componentKey: 'class',
             jsonPath: 'validate.json.if',
             type: FormWarningType::JsonValidationMissingTrue,
-            details: 'Neither output is literal true.',
+            details: 'Rule outputs: "Invalid" and false.',
         );
         $warnings = new FormWarnings(['class' => $warning]);
 
