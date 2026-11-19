@@ -32,6 +32,12 @@ class JSONValidation implements ValidationInterface
         $validationResult = JsonLogic::apply($this->jsonLogic, $submissionValues);
 
         if ($validationResult !== true) {
+            // There SHOULD be a true & error message case, but it's possible to screw it up.
+            // If the return value is false/null/0/"", provide *something* as a breadcrumb to help troubleshoot.
+            if (! $validationResult) {
+                $validationResult = "{$component->label()} was not valid.";
+            }
+
             $bag->add($component->key(), $validationResult);
         }
 
