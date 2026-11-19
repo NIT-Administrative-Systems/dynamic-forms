@@ -13,6 +13,35 @@ use PHPUnit\Framework\Attributes\DataProvider;
 
 final class ValidatedFormTest extends TestCase
 {
+    #[DataProvider('classEligibilityDataProvider')]
+    public function testClassEligibilityValidationErrors(string $class, array $expectedErrors): void
+    {
+        // This is an invalid JSONLogic validation rule, since it has no `true` return value. This
+        // SHOULDN'T work, but we still want to give people an error when it happens, as a breadcrumb to help
+        // them find what they broke.
+        //
+        // For this form, the `junior` value returns false instead of an error when it should return true.
+        $form = new Form(file_get_contents(__DIR__.'/../Fixtures/class_validation_definition.json'));
+
+        $validatedForm = $form->validate(json_encode(['class' => $class], JSON_THROW_ON_ERROR));
+
+        $this->assertSame($expectedErrors, $validatedForm->errors()->toArray());
+        $this->assertSame($expectedErrors === [], $validatedForm->isValid());
+    }
+
+    public static function classEligibilityDataProvider(): array
+    {
+        $configuredErrors = ['class' => ['Only junior students are eligible for this grant!']];
+        $falseErrors = ['class' => ['Class was not valid.']];
+
+        return [
+            'first year is ineligible' => ['firstYear', $configuredErrors],
+            'sophomore is ineligible' => ['sophomore', $configuredErrors],
+            'junior is eligible' => ['junior', $falseErrors],
+            'senior is ineligible' => ['senior', $configuredErrors],
+        ];
+    }
+
     public function testGetters(): void
     {
         $components = [
