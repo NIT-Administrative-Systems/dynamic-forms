@@ -239,6 +239,14 @@ class FormController extends Controller
 </script>
 ```
 
+## Form Definition Warnings
+
+The `Form::warnings()` method will return a list of warnings. These are things that are *probably* issues, like JSONLogic validation rules that will never pass.
+
+These are not necessarily errors. Dynamic Forms will attempt to process submission data.
+
+Presenting these errors in your application as problems that need to be investigated and resolved is recommended.
+
 ## Advanced Usage
 The examples above all rely on the user clicking a submit button. The code involved in this is in the examples -- a Formiojs event is bound to a callback, which is manipulating an HTML form. 
 
