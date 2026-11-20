@@ -61,7 +61,9 @@ class ValidFormDefinition implements ValidationRule
 
     protected function message(DefinitionIssue $issue): string
     {
-        $message = "{$issue->componentDisplayName()}: {$issue->description()}";
+        $message = $issue->isFormIssue()
+            ? $issue->description()
+            : "{$issue->componentDisplayName()}: {$issue->description()}";
 
         return $issue->details === null ? $message : "{$message} {$issue->details}";
     }

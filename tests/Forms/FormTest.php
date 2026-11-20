@@ -10,6 +10,7 @@ use Northwestern\SysDev\DynamicForms\Forms\Form;
 use Northwestern\SysDev\DynamicForms\Tests\Fixtures\Definition\CustomIssueType;
 use Northwestern\SysDev\DynamicForms\Tests\Fixtures\Definition\DuplicateLabelCheck;
 use Northwestern\SysDev\DynamicForms\Tests\Fixtures\Definition\FlaggedKeyCheck;
+use Northwestern\SysDev\DynamicForms\Tests\Fixtures\Definition\RequiresEmailCheck;
 use Northwestern\SysDev\DynamicForms\Tests\Fixtures\Definition\SelfCheckingTextfield;
 use Orchestra\Testbench\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -108,6 +109,7 @@ final class FormTest extends TestCase
         $checks = new DefinitionCheckRegistry;
         $checks->register(FlaggedKeyCheck::class);
         $checks->register(DuplicateLabelCheck::class);
+        $checks->register(RequiresEmailCheck::class);
         $this->app->instance(DefinitionCheckRegistry::class, $checks);
 
         $form = new Form(json_encode(['components' => [
@@ -126,6 +128,7 @@ final class FormTest extends TestCase
             ['flagged', DefinitionIssueType::JsonValidationInvalidStructure],
             ['flagged', CustomIssueType::AppWarning],
             ['other', CustomIssueType::AppError],
+            [null, CustomIssueType::AppError],
         ], $issues);
     }
 

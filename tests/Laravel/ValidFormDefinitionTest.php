@@ -14,6 +14,7 @@ use Northwestern\SysDev\DynamicForms\ResourceRegistry;
 use Northwestern\SysDev\DynamicForms\Laravel\ValidFormDefinition;
 use Northwestern\SysDev\DynamicForms\Tests\Fixtures\Definition\DuplicateLabelCheck;
 use Northwestern\SysDev\DynamicForms\Tests\Fixtures\Definition\FlaggedKeyCheck;
+use Northwestern\SysDev\DynamicForms\Tests\Fixtures\Definition\RequiresEmailCheck;
 use Orchestra\Testbench\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 
@@ -192,6 +193,19 @@ final class ValidFormDefinitionTest extends TestCase
             ['Name (name2): Application error.'],
             $this->messages($definition, new ValidFormDefinition(failOnWarnings: false)),
         );
+    }
+
+    public function testFormIssueMessageHasNoComponent(): void
+    {
+        $checks = new DefinitionCheckRegistry;
+        $checks->register(RequiresEmailCheck::class);
+        $this->app->instance(DefinitionCheckRegistry::class, $checks);
+
+        $this->assertSame(
+            ['Application error. Add an "email" component.'],
+            $this->messages($this->definition(['a' => self::VALID]), new ValidFormDefinition),
+        );
+        $this->assertSame([], $this->messages($this->definition(['email' => self::VALID]), new ValidFormDefinition));
     }
 
     public function testAcceptsResourceRegistry(): void

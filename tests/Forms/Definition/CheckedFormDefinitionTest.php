@@ -110,6 +110,38 @@ final class CheckedFormDefinitionTest extends TestCase
         $this->assertSame('app.app_error', $customError->type->code());
     }
 
+    public function testFormIssue(): void
+    {
+        $issue = DefinitionIssue::forForm('components', CustomIssueType::AppError, 'Details.');
+
+        $this->assertTrue($issue->isFormIssue());
+        $this->assertNull($issue->componentKey);
+        $this->assertNull($issue->componentLabel());
+        $this->assertNull($issue->componentDisplayName());
+        $this->assertSame('components', $issue->jsonPath);
+        $this->assertSame(CustomIssueType::AppError, $issue->type);
+        $this->assertSame('Details.', $issue->details);
+    }
+
+    public function testFormIssueIgnoresLabel(): void
+    {
+        $issue = new DefinitionIssue(
+            componentKey: null,
+            componentLabel: 'Stray label',
+            jsonPath: 'components',
+            type: CustomIssueType::AppError,
+        );
+
+        $this->assertTrue($issue->isFormIssue());
+        $this->assertNull($issue->componentLabel());
+        $this->assertNull($issue->componentDisplayName());
+    }
+
+    public function testComponentIssueIsNotFormIssue(): void
+    {
+        $this->assertFalse($this->issue('a', DefinitionIssueType::JsonValidationMissingTrue)->isFormIssue());
+    }
+
     #[DataProvider('componentLabelProvider')]
     public function testIssueComponentLabel(?string $label, string $expectedLabel, string $expectedDisplayName): void
     {
