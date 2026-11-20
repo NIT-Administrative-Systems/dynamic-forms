@@ -94,6 +94,12 @@ It is possible for the Formio builder to emit form definitions that are not usab
 
 **Errors** will reliably cause the form definition to error when used. For example, a JSONLogic validation rule on a component may be written incorrectly and will always cause an exception when validating form submission data.
 
+:::note
+The `The :attribute could not be loaded.` message will show if parsing the component fails or an exception is thrown during validation.
+
+When this happens, the exception is sent to the Laravel error log. Check that for more details.
+:::
+
 **Warnings** are problems that *may* cause problems, but Dynamic Forms either cannot reliably check them, or they are potentially valid for some use-cases. For example, a component JSONLogic validation rule with no `true` is *probably* an error, but it *could* be valid if the intention is to always block form submission in a tree of conditional components.
 
 The `Northwestern\SysDev\DynamicForms\Laravel\ValidFormDefinition` rule will perform the checks in the Laravel validator. Warnings can be ignored during validation by passing `failOnWarnings: false`, if the application would like to display these separately.
