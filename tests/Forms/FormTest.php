@@ -2,29 +2,57 @@
 
 namespace Northwestern\SysDev\DynamicForms\Tests\Forms;
 
+use Northwestern\SysDev\DynamicForms\Forms\Definition\DefinitionIssue;
+use Northwestern\SysDev\DynamicForms\Forms\Definition\DefinitionIssueType;
 use Northwestern\SysDev\DynamicForms\Forms\Form;
-use Northwestern\SysDev\DynamicForms\Forms\FormWarningType;
 use Orchestra\Testbench\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 
 final class FormTest extends TestCase
 {
-    public function testWarningsForClassValidationInsideColumns(): void
+    public function testCheckDefinitionForClassValidationInsideColumns(): void
     {
         $form = new Form(file_get_contents(__DIR__.'/../Fixtures/class_validation_definition.json'));
 
-        $warnings = $form->warnings();
+        $checked = $form->checkDefinition();
 
-        $this->assertFalse($warnings->isEmpty());
-        $this->assertSame(['class'], array_keys($warnings->all()));
-        $warning = $warnings->all()['class'];
+        $this->assertFalse($checked->isClean());
+        $this->assertFalse($checked->hasErrors());
+        $this->assertCount(1, $checked->warnings());
+        $warning = $checked->warnings()[0];
         $this->assertSame('class', $warning->componentKey);
         $this->assertSame('validate.json.if', $warning->jsonPath);
-        $this->assertSame(FormWarningType::JsonValidationMissingTrue, $warning->type);
-        $this->assertEquals($warnings->all(), $form->warnings()->all());
+        $this->assertSame(DefinitionIssueType::JsonValidationMissingTrue, $warning->type);
+        $this->assertEquals($checked->all(), $form->checkDefinition()->all());
     }
 
-    public function testWarningsIncludeConditionallyHiddenComponents(): void
+    public function testCheckDefinitionSeparatesErrorsFromWarnings(): void
+    {
+        $form = new Form(json_encode([
+            'components' => [
+                [
+                    'key' => 'broken',
+                    'type' => 'textfield',
+                    'validate' => ['json' => ['if' => [true, 'Invalid']]],
+                ],
+                [
+                    'key' => 'suspicious',
+                    'type' => 'textfield',
+                    'validate' => ['json' => ['if' => [true, 'Invalid', false]]],
+                ],
+            ],
+        ], JSON_THROW_ON_ERROR));
+
+        $checked = $form->checkDefinition();
+
+        $this->assertTrue($checked->hasErrors());
+        $this->assertTrue($checked->hasWarnings());
+        $this->assertSame(['broken'], $this->componentKeys($checked->errors()));
+        $this->assertSame(['suspicious'], $this->componentKeys($checked->warnings()));
+        $this->assertSame(['broken', 'suspicious'], $this->componentKeys($checked->all()));
+    }
+
+    public function testCheckDefinitionIncludesConditionallyHiddenComponents(): void
     {
         $component = [
             'key' => 'hidden',
@@ -40,18 +68,18 @@ final class FormTest extends TestCase
             ],
         ], JSON_THROW_ON_ERROR));
 
-        $this->assertSame(['hidden', 'other'], array_keys($form->warnings()->all()));
+        $this->assertSame(['hidden', 'other'], $this->componentKeys($form->checkDefinition()->all()));
     }
 
-    public function testWarningsAreEmptyWithoutJsonValidation(): void
+    public function testCheckDefinitionIsCleanWithoutJsonValidation(): void
     {
         $form = new Form(file_get_contents(__DIR__.'/../Fixtures/simple_definition.json'));
 
-        $this->assertTrue($form->warnings()->isEmpty());
-        $this->assertSame([], $form->warnings()->all());
+        $this->assertTrue($form->checkDefinition()->isClean());
+        $this->assertSame([], $form->checkDefinition()->all());
     }
 
-    public function testWarningsPreserveNumericComponentKeys(): void
+    public function testCheckDefinitionPreservesNumericComponentKeys(): void
     {
         $form = new Form(json_encode([
             'components' => [[
@@ -61,7 +89,16 @@ final class FormTest extends TestCase
             ]],
         ], JSON_THROW_ON_ERROR));
 
-        $this->assertSame('123', $form->warnings()->all()['123']->componentKey);
+        $this->assertSame('123', $form->checkDefinition()->all()[0]->componentKey);
+    }
+
+    /**
+     * @param  list<DefinitionIssue>  $issues
+     * @return list<string>
+     */
+    private function componentKeys(array $issues): array
+    {
+        return array_map(fn (DefinitionIssue $issue) => $issue->componentKey, $issues);
     }
 
     #[DataProvider('formDataProvider')]

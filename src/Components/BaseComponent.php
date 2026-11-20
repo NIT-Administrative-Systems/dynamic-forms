@@ -15,7 +15,7 @@ use Northwestern\SysDev\DynamicForms\Errors\CalculationNotImplemented;
 use Northwestern\SysDev\DynamicForms\Errors\ConditionalNotImplemented;
 use Northwestern\SysDev\DynamicForms\Errors\InvalidDefinitionError;
 use Northwestern\SysDev\DynamicForms\Errors\ValidationNotImplementedError;
-use Northwestern\SysDev\DynamicForms\Forms\FormWarnings;
+use Northwestern\SysDev\DynamicForms\Forms\Definition\CheckedFormDefinition;
 use Northwestern\SysDev\DynamicForms\Validation\JSONValidation;
 use Northwestern\SysDev\DynamicForms\Validation\ValidationInterface;
 
@@ -294,13 +294,13 @@ abstract class BaseComponent implements ComponentInterface
         return null;
     }
 
-    public function warnings(): FormWarnings
+    public function checkDefinition(): CheckedFormDefinition
     {
         $validation = $this->advancedValidations();
 
         return $validation instanceof JSONValidation
-            ? $validation->warnings($this)
-            : new FormWarnings;
+            ? $validation->checkDefinition($this)
+            : new CheckedFormDefinition;
     }
 
     public function additional(string $key): mixed

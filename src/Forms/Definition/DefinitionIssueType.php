@@ -1,14 +1,22 @@
 <?php
 
-namespace Northwestern\SysDev\DynamicForms\Forms;
+namespace Northwestern\SysDev\DynamicForms\Forms\Definition;
 
-enum FormWarningType: string
+enum DefinitionIssueType: string
 {
     case JsonValidationInvalidStructure = 'json_validation_invalid_structure';
     case JsonValidationMissingTrue = 'json_validation_missing_true';
 
+    public function severity(): DefinitionIssueSeverity
+    {
+        return match ($this) {
+            self::JsonValidationInvalidStructure => DefinitionIssueSeverity::Error,
+            self::JsonValidationMissingTrue => DefinitionIssueSeverity::Warning,
+        };
+    }
+
     /**
-     * Human-readable explanations for the warnings.
+     * Human-readable explanation of the issue.
      */
     public function description(): string
     {

@@ -5,7 +5,7 @@ namespace Northwestern\SysDev\DynamicForms\Components;
 use Illuminate\Contracts\Support\MessageBag;
 use Northwestern\SysDev\DynamicForms\Calculation\CalculationInterface;
 use Northwestern\SysDev\DynamicForms\Conditional\ConditionalInterface;
-use Northwestern\SysDev\DynamicForms\Forms\FormWarnings;
+use Northwestern\SysDev\DynamicForms\Forms\Definition\CheckedFormDefinition;
 use Northwestern\SysDev\DynamicForms\Validation\ValidationInterface;
 
 interface ComponentInterface
@@ -148,9 +148,10 @@ interface ComponentInterface
     public function advancedValidations(): ?ValidationInterface;
 
     /**
-     * Potential issues in the definition of this component that may cause issues when validating submission data.
+     * Check this component's definition for errors that will break submission processing,
+     * and warnings about things that are probably mistakes.
      */
-    public function warnings(): FormWarnings;
+    public function checkDefinition(): CheckedFormDefinition;
 
     /**
      * Get other settings that are not used directly by the library, but may be present in the component schema.

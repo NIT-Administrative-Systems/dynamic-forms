@@ -7,9 +7,9 @@ use Illuminate\Support\MessageBag as MessageBagImpl;
 use JWadhams\JsonLogic;
 use Northwestern\SysDev\DynamicForms\Components\ComponentInterface;
 use Northwestern\SysDev\DynamicForms\Errors\InvalidDefinitionError;
-use Northwestern\SysDev\DynamicForms\Forms\FormWarning;
-use Northwestern\SysDev\DynamicForms\Forms\FormWarnings;
-use Northwestern\SysDev\DynamicForms\Forms\FormWarningType;
+use Northwestern\SysDev\DynamicForms\Forms\Definition\CheckedFormDefinition;
+use Northwestern\SysDev\DynamicForms\Forms\Definition\DefinitionIssue;
+use Northwestern\SysDev\DynamicForms\Forms\Definition\DefinitionIssueType;
 use Northwestern\SysDev\DynamicForms\JSONLogic\JsonLogicHelpers;
 
 class JSONValidation implements ValidationInterface
@@ -27,7 +27,7 @@ class JSONValidation implements ValidationInterface
 
         if (! $this->isValidCustomValidation($this->jsonLogic)) {
             throw new InvalidDefinitionError(
-                'Custom JSON Logic validations must always use the "if" parameter. The first argument to the statement must be the "true" case, and the second should be the error to display if the validation fails.',
+                DefinitionIssueType::JsonValidationInvalidStructure->description(),
                 $component->key(),
             );
         }
@@ -47,30 +47,31 @@ class JSONValidation implements ValidationInterface
         return $bag;
     }
 
-    public function warnings(ComponentInterface $component): FormWarnings
+    public function checkDefinition(ComponentInterface $component): CheckedFormDefinition
     {
         if (! $this->isValidCustomValidation($this->jsonLogic)) {
-            return new FormWarnings([
-                $component->key() => new FormWarning(
-                    componentKey: $component->key(),
-                    jsonPath: 'validate.json.if',
-                    type: FormWarningType::JsonValidationInvalidStructure,
-                ),
+            return new CheckedFormDefinition([
+                $this->issue($component, DefinitionIssueType::JsonValidationInvalidStructure),
             ]);
         }
 
         $outputs = array_slice(array_values($this->jsonLogic['if']), 1);
         if (in_array(true, $outputs, true)) {
-            return new FormWarnings;
+            return new CheckedFormDefinition;
         }
 
-        return new FormWarnings([
-            $component->key() => new FormWarning(
-                componentKey: $component->key(),
-                jsonPath: 'validate.json.if',
-                type: FormWarningType::JsonValidationMissingTrue,
-            ),
+        return new CheckedFormDefinition([
+            $this->issue($component, DefinitionIssueType::JsonValidationMissingTrue),
         ]);
+    }
+
+    private function issue(ComponentInterface $component, DefinitionIssueType $type): DefinitionIssue
+    {
+        return new DefinitionIssue(
+            componentKey: $component->key(),
+            jsonPath: 'validate.json.if',
+            type: $type,
+        );
     }
 
     /**

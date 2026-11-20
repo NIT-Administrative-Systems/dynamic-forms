@@ -5,7 +5,7 @@ namespace Northwestern\SysDev\DynamicForms\Tests\Validation;
 use Northwestern\SysDev\DynamicForms\Components\ComponentInterface;
 use Northwestern\SysDev\DynamicForms\Components\Inputs\Textfield;
 use Northwestern\SysDev\DynamicForms\Errors\InvalidDefinitionError;
-use Northwestern\SysDev\DynamicForms\Forms\FormWarningType;
+use Northwestern\SysDev\DynamicForms\Forms\Definition\DefinitionIssueType;
 use Northwestern\SysDev\DynamicForms\JSONLogicInitHelper;
 use Northwestern\SysDev\DynamicForms\Validation\JSONValidation;
 use Orchestra\Testbench\TestCase;
@@ -17,28 +17,29 @@ final class JSONValidationTest extends TestCase
     private const DATE_EXPECT_FAIL = true;
     private const DATE_EXPECT_PASS = false;
 
-    #[DataProvider('warningsDataProvider')]
-    public function testWarnings(
+    #[DataProvider('checkDefinitionDataProvider')]
+    public function testCheckDefinition(
         array $rule,
-        bool $expectsWarning,
-        FormWarningType $expectedType = FormWarningType::JsonValidationMissingTrue,
+        bool $expectsIssue,
+        DefinitionIssueType $expectedType = DefinitionIssueType::JsonValidationMissingTrue,
     ): void {
         $validation = new JSONValidation($rule);
-        $warnings = $validation->warnings($this->getComponent());
+        $checked = $validation->checkDefinition($this->getComponent());
 
-        $this->assertSame(! $expectsWarning, $warnings->isEmpty());
-        $this->assertCount($expectsWarning ? 1 : 0, $warnings->all());
+        $this->assertSame(! $expectsIssue, $checked->isClean());
+        $this->assertCount($expectsIssue ? 1 : 0, $checked->all());
 
-        if ($expectsWarning) {
-            $warning = $warnings->all()['test'];
-            $this->assertSame('test', $warning->componentKey);
-            $this->assertSame('validate.json.if', $warning->jsonPath);
-            $this->assertSame($expectedType, $warning->type);
-            $this->assertNull($warning->details);
+        if ($expectsIssue) {
+            $issue = $checked->all()[0];
+            $this->assertSame('test', $issue->componentKey);
+            $this->assertSame('validate.json.if', $issue->jsonPath);
+            $this->assertSame($expectedType, $issue->type);
+            $this->assertSame($expectedType->severity(), $issue->severity());
+            $this->assertNull($issue->details);
         }
     }
 
-    public static function warningsDataProvider(): array
+    public static function checkDefinitionDataProvider(): array
     {
         $condition = ['!==' => [['var' => 'data.class'], 'junior']];
         $message = 'Only junior students are eligible for this grant!';
@@ -56,23 +57,23 @@ final class JSONValidationTest extends TestCase
                 ['if' => [$condition, ['if' => [$condition, true, $message]], $message]],
                 true,
             ],
-            'missing if' => [[], true, FormWarningType::JsonValidationInvalidStructure],
-            'null if' => [['if' => null], true, FormWarningType::JsonValidationInvalidStructure],
-            'non-array if' => [['if' => 'invalid'], true, FormWarningType::JsonValidationInvalidStructure],
+            'missing if' => [[], true, DefinitionIssueType::JsonValidationInvalidStructure],
+            'null if' => [['if' => null], true, DefinitionIssueType::JsonValidationInvalidStructure],
+            'non-array if' => [['if' => 'invalid'], true, DefinitionIssueType::JsonValidationInvalidStructure],
             'too few arguments' => [
                 ['if' => [$condition, $message]],
                 true,
-                FormWarningType::JsonValidationInvalidStructure,
+                DefinitionIssueType::JsonValidationInvalidStructure,
             ],
             'too many arguments' => [
                 ['if' => [$condition, $message, false, true]],
                 true,
-                FormWarningType::JsonValidationInvalidStructure,
+                DefinitionIssueType::JsonValidationInvalidStructure,
             ],
         ];
     }
 
-    public function testWarningsDoNotChangeValidation(): void
+    public function testCheckDefinitionDoesNotChangeValidation(): void
     {
         $component = $this->getComponent();
         $validation = new JSONValidation([
@@ -84,7 +85,7 @@ final class JSONValidationTest extends TestCase
         ]);
 
         $before = $validation($component, ['class' => 'senior'])->toArray();
-        $validation->warnings($component);
+        $validation->checkDefinition($component);
 
         $this->assertSame($before, $validation($component, ['class' => 'senior'])->toArray());
         $this->assertTrue($validation($component, ['class' => 'junior'])->isEmpty());

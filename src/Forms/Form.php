@@ -12,6 +12,7 @@ use Northwestern\SysDev\DynamicForms\Components\UploadInterface;
 use Northwestern\SysDev\DynamicForms\Errors\InvalidDefinitionError;
 use Northwestern\SysDev\DynamicForms\FileComponentRegistry;
 use Northwestern\SysDev\DynamicForms\Forms\Concerns\HandlesTree;
+use Northwestern\SysDev\DynamicForms\Forms\Definition\CheckedFormDefinition;
 use Northwestern\SysDev\DynamicForms\ResourceRegistry;
 
 class Form
@@ -73,18 +74,20 @@ class Form
     }
 
     /**
-     * Warnings about potential issues with the form definition that will
-     * cause problems when validating submission data.
+     * Check the form definition for errors that will break submission processing,
+     * and warnings about things that are probably mistakes.
+     *
+     * Every component is checked, including ones that are conditionally hidden.
      */
-    public function warnings(): FormWarnings
+    public function checkDefinition(): CheckedFormDefinition
     {
-        $warnings = [];
+        $checked = new CheckedFormDefinition;
 
         foreach ($this->flatComponents() as $component) {
-            $warnings += $component->warnings()->all();
+            $checked = $checked->merge($component->checkDefinition());
         }
 
-        return new FormWarnings($warnings);
+        return $checked;
     }
 
     /**
