@@ -6,7 +6,7 @@ sidebar:
 ---
 
 ## Builder
-The Formiojs builder will create a JSON document containing all of the configuration the user has made for their dynamic form.
+The Formiojs builder will create a JSON document containing all the configuration the user has made for their dynamic form.
 
 In the below example, whenever anything about the form configuration is added or updated, the JSON will be written to a normal HTML form's `<input type='hidden'>`. This form definition will be submitted to Laravel when the user hits the submit button on the form. Laravel can process this like any typical form submission.
 
@@ -76,9 +76,44 @@ class BuilderController extends Controller
                 // On change, update the above form w/ the latest dynamic form JSON
                 document.getElementById('definition').value = JSON.stringify(builder.schema);
             })
-        });;
+        });
     };
 </script>
+```
+
+### Checking Form Definitions
+
+It is possible for the builder to emit form definitions that are logically invalid. For example, a JSONLogic validation rule on a component may be written incorrectly and will always cause an exception when validating form submission data.
+
+The `Form::checkDefinition()` method will list errors and warnings.
+
+Errors are problems -- like the above example -- that will reliably cause the form definition to error when used. [TODO: Note these are checked by the laravel validation rule].
+
+Warnings are problems that *may* cause problems, but Dynamic Forms either cannot reliably check them, or they are potentially valid for some use-cases. For example, a component JSONLogic validation rule with no `true` is *probably* an error, but it *could* be valid if the intention is to always block form submission in a tree of conditional components.
+
+Dynamic Forms recommends showing warnings to end-users so they can decide if they require resolution, or outright blocking the saving/use of the form. 
+
+```php
+$form = new Form($definitionJson);
+$components = $form->flatComponents();
+$checked = $form->checkDefinition();
+                                                                                                                                
+if ($checked->hasErrors()) {
+    $checked->errors()->each(function ($issue) {
+        $label = $components[$issue->componentKey]?->label() ?? $issue->componentKey;
+    
+        echo "{$label}: {$issue->description()}";
+    });
+    
+    die("Form definition has errors, so your probably DON'T want to save/use it!");
+}
+                                                                                                                                                                             
+foreach ($checked->warnings() as $issue) {            
+    $label = $components[$issue->componentKey]?->label() ?? $issue->componentKey;                                                                                      
+    echo "{$label}: {$issue->description()}";
+    
+    echo "Are you SURE you want to save/use this forms?";
+}
 ```
 
 ### Customizing the Components Menu
@@ -238,14 +273,6 @@ class FormController extends Controller
     };
 </script>
 ```
-
-## Form Definition Warnings
-
-The `Form::warnings()` method will return a list of warnings. These are things that are *probably* issues, like JSONLogic validation rules that will never pass.
-
-These are not necessarily errors. Dynamic Forms will attempt to process submission data.
-
-Presenting these errors in your application as problems that need to be investigated and resolved is recommended.
 
 ## Advanced Usage
 The examples above all rely on the user clicking a submit button. The code involved in this is in the examples -- a Formiojs event is bound to a callback, which is manipulating an HTML form. 
