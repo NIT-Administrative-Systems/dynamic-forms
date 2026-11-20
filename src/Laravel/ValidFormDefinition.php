@@ -4,11 +4,10 @@ namespace Northwestern\SysDev\DynamicForms\Laravel;
 
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
-use Northwestern\SysDev\DynamicForms\Errors\CalculationNotImplemented;
-use Northwestern\SysDev\DynamicForms\Errors\ConditionalNotImplemented;
 use Northwestern\SysDev\DynamicForms\Errors\InvalidDefinitionError;
 use Northwestern\SysDev\DynamicForms\Errors\UnknownComponentError;
-use Northwestern\SysDev\DynamicForms\Errors\ValidationNotImplementedError;
+use Northwestern\SysDev\DynamicForms\Errors\UnknownResourceError;
+use Northwestern\SysDev\DynamicForms\Errors\UnknownStorageDriverError;
 use Northwestern\SysDev\DynamicForms\Forms\Definition\DefinitionIssue;
 use Northwestern\SysDev\DynamicForms\Forms\Form;
 use Northwestern\SysDev\DynamicForms\ResourceRegistry;
@@ -42,9 +41,8 @@ class ValidFormDefinition implements ValidationRule
         } catch (
             InvalidDefinitionError
             | UnknownComponentError
-            | ValidationNotImplementedError
-            | ConditionalNotImplemented
-            | CalculationNotImplemented $e
+            | UnknownResourceError
+            | UnknownStorageDriverError $e
         ) {
             // This SHOULDN'T happen if the Formio builder is configured per the package's defaults. It will fail, but
             // the exception will still be sent to the logger for follow-up.

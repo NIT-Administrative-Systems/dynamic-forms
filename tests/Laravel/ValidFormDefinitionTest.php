@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Exceptions;
 use Illuminate\Support\Facades\Validator;
 use Northwestern\SysDev\DynamicForms\Errors\InvalidDefinitionError;
 use Northwestern\SysDev\DynamicForms\Errors\UnknownComponentError;
+use Northwestern\SysDev\DynamicForms\Errors\UnknownResourceError;
+use Northwestern\SysDev\DynamicForms\Errors\UnknownStorageDriverError;
 use Northwestern\SysDev\DynamicForms\Forms\Definition\DefinitionIssueType;
 use Northwestern\SysDev\DynamicForms\ResourceRegistry;
 use Northwestern\SysDev\DynamicForms\Laravel\ValidFormDefinition;
@@ -137,6 +139,26 @@ final class ValidFormDefinitionTest extends TestCase
                 json_encode(['components' => [['type' => 'textfield']]]),
                 InvalidDefinitionError::class,
                 'required component props',
+            ],
+            'unsupported component setting' => [
+                json_encode(['components' => [['key' => 'a', 'type' => 'select', 'dataSrc' => 'url']]]),
+                InvalidDefinitionError::class,
+                'Unsupported dataSrc',
+            ],
+            'unknown resource' => [
+                json_encode(['components' => [[
+                    'key' => 'a',
+                    'type' => 'select',
+                    'dataSrc' => 'resource',
+                    'data' => ['resource' => 'nope'],
+                ]]]),
+                UnknownResourceError::class,
+                'nope',
+            ],
+            'unknown storage driver' => [
+                json_encode(['components' => [['key' => 'a', 'type' => 'file', 'storage' => 'nope']]]),
+                UnknownStorageDriverError::class,
+                'nope',
             ],
             'unknown component type' => [
                 json_encode(['components' => [['key' => 'a', 'type' => 'nope']]]),

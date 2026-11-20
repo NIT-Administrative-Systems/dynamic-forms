@@ -10,6 +10,9 @@ use Northwestern\SysDev\DynamicForms\Components\CustomSubcomponentDeserializatio
 use Northwestern\SysDev\DynamicForms\Components\ResourceValues;
 use Northwestern\SysDev\DynamicForms\Components\UploadInterface;
 use Northwestern\SysDev\DynamicForms\Errors\InvalidDefinitionError;
+use Northwestern\SysDev\DynamicForms\Errors\UnknownComponentError;
+use Northwestern\SysDev\DynamicForms\Errors\UnknownResourceError;
+use Northwestern\SysDev\DynamicForms\Errors\UnknownStorageDriverError;
 use Northwestern\SysDev\DynamicForms\FileComponentRegistry;
 use Northwestern\SysDev\DynamicForms\Forms\Concerns\HandlesTree;
 use Northwestern\SysDev\DynamicForms\Forms\Definition\CheckedFormDefinition;
@@ -39,6 +42,12 @@ class Form
 
     protected ?ResourceRegistry $resourceRegistry;
 
+    /**
+     * @throws InvalidDefinitionError The JSON is malformed, is missing required properties, or uses unsupported component settings.
+     * @throws UnknownComponentError A component type is not registered in the {@see ComponentRegistry}.
+     * @throws UnknownResourceError A select component uses a resource that is not registered in the {@see ResourceRegistry}.
+     * @throws UnknownStorageDriverError A file component uses a storage driver that is not registered in the {@see FileComponentRegistry}.
+     */
     public function __construct(string $definitionJson, ?ResourceRegistry $resourceRegistry = null)
     {
         $this->componentRegistry = resolve(ComponentRegistry::class);

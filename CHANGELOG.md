@@ -19,6 +19,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Fixed
 
 - Component JSONLogic validation rules that return `false`, `null`, `0`, or `""` will get a default error message indicating which component failed validation instead of an empty error.
+- Select components with a resource data source will no longer crash when no resources have been registered.
 
 ## [v3.0.2] - 2026-09-16
 ### Changed
