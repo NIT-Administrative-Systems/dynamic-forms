@@ -3,6 +3,7 @@
 namespace Northwestern\SysDev\DynamicForms\Tests\Components\TestCases;
 
 use Northwestern\SysDev\DynamicForms\Components\ComponentInterface;
+use Northwestern\SysDev\DynamicForms\Forms\Definition\Checks\JsonValidationCheck;
 use Northwestern\SysDev\DynamicForms\Forms\Definition\DefinitionIssueType;
 use Orchestra\Testbench\TestCase;
 
@@ -43,21 +44,30 @@ abstract class BaseComponentTestCase extends TestCase
         $this->assertTrue($component->additional('disabled'));
     }
 
-    public function testCheckDefinitionWithoutAdvancedValidation(): void
+    public function testCheckDefinitionHasNoChecksByDefault(): void
     {
-        $checked = $this->getComponent()->checkDefinition();
+        $component = $this->getComponent(validations: [
+            'json' => ['if' => [true, 'Invalid']],
+        ]);
+
+        $this->assertTrue($component->checkDefinition()->isClean());
+    }
+
+    public function testJsonValidationCheckWithoutAdvancedValidation(): void
+    {
+        $checked = (new JsonValidationCheck)->check($this->getComponent());
 
         $this->assertTrue($checked->isClean());
         $this->assertSame([], $checked->all());
     }
 
-    public function testCheckDefinitionForJsonValidationMissingTrue(): void
+    public function testJsonValidationCheckForMissingTrue(): void
     {
         $component = $this->getComponent(validations: [
             'json' => ['if' => [true, 'Invalid', false]],
         ]);
 
-        $checked = $component->checkDefinition();
+        $checked = (new JsonValidationCheck)->check($component);
 
         $this->assertFalse($checked->hasErrors());
         $this->assertCount(1, $checked->warnings());
@@ -68,26 +78,26 @@ abstract class BaseComponentTestCase extends TestCase
         $this->assertSame(DefinitionIssueType::JsonValidationMissingTrue, $warning->type);
     }
 
-    public function testCheckDefinitionForJsonValidationInvalidStructure(): void
+    public function testJsonValidationCheckForInvalidStructure(): void
     {
         $component = $this->getComponent(validations: [
             'json' => ['if' => [true, 'Invalid']],
         ]);
 
-        $checked = $component->checkDefinition();
+        $checked = (new JsonValidationCheck)->check($component);
 
         $this->assertFalse($checked->hasWarnings());
         $this->assertCount(1, $checked->errors());
         $this->assertSame(DefinitionIssueType::JsonValidationInvalidStructure, $checked->errors()[0]->type);
     }
 
-    public function testCheckDefinitionForJsonValidationWithTrue(): void
+    public function testJsonValidationCheckWithTrue(): void
     {
         $component = $this->getComponent(validations: [
             'json' => ['if' => [true, true, 'Invalid']],
         ]);
 
-        $this->assertTrue($component->checkDefinition()->isClean());
+        $this->assertTrue((new JsonValidationCheck)->check($component)->isClean());
     }
 
     /**

@@ -2,9 +2,15 @@
 
 namespace Northwestern\SysDev\DynamicForms\Tests\Forms;
 
+use Northwestern\SysDev\DynamicForms\ComponentRegistry;
+use Northwestern\SysDev\DynamicForms\DefinitionCheckRegistry;
 use Northwestern\SysDev\DynamicForms\Forms\Definition\DefinitionIssue;
 use Northwestern\SysDev\DynamicForms\Forms\Definition\DefinitionIssueType;
 use Northwestern\SysDev\DynamicForms\Forms\Form;
+use Northwestern\SysDev\DynamicForms\Tests\Fixtures\Definition\CustomIssueType;
+use Northwestern\SysDev\DynamicForms\Tests\Fixtures\Definition\DuplicateLabelCheck;
+use Northwestern\SysDev\DynamicForms\Tests\Fixtures\Definition\FlaggedKeyCheck;
+use Northwestern\SysDev\DynamicForms\Tests\Fixtures\Definition\SelfCheckingTextfield;
 use Orchestra\Testbench\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 
@@ -91,6 +97,36 @@ final class FormTest extends TestCase
         ], JSON_THROW_ON_ERROR));
 
         $this->assertSame('123', $form->checkDefinition()->all()[0]->componentKey);
+    }
+
+    public function testCheckDefinitionRunsComponentAndRegisteredChecks(): void
+    {
+        $components = new ComponentRegistry;
+        $components->register(SelfCheckingTextfield::class);
+        $this->app->instance(ComponentRegistry::class, $components);
+
+        $checks = new DefinitionCheckRegistry;
+        $checks->register(FlaggedKeyCheck::class);
+        $checks->register(DuplicateLabelCheck::class);
+        $this->app->instance(DefinitionCheckRegistry::class, $checks);
+
+        $form = new Form(json_encode(['components' => [
+            ['key' => 'self', 'label' => 'Name', 'type' => SelfCheckingTextfield::TYPE],
+            ['key' => 'flagged', 'type' => 'textfield', 'validate' => ['json' => ['if' => [true, 'Invalid']]]],
+            ['key' => 'other', 'label' => 'Name', 'type' => 'textfield'],
+        ]]));
+
+        $issues = array_map(
+            fn (DefinitionIssue $issue) => [$issue->componentKey, $issue->type],
+            $form->checkDefinition()->all(),
+        );
+
+        $this->assertSame([
+            ['self', CustomIssueType::AppWarning],
+            ['flagged', DefinitionIssueType::JsonValidationInvalidStructure],
+            ['flagged', CustomIssueType::AppWarning],
+            ['other', CustomIssueType::AppError],
+        ], $issues);
     }
 
     /**

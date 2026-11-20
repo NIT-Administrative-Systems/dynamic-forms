@@ -4,6 +4,7 @@ namespace Northwestern\SysDev\DynamicForms\Tests\Laravel;
 
 use Illuminate\Support\Facades\Exceptions;
 use Illuminate\Support\Facades\Validator;
+use Northwestern\SysDev\DynamicForms\DefinitionCheckRegistry;
 use Northwestern\SysDev\DynamicForms\Errors\InvalidDefinitionError;
 use Northwestern\SysDev\DynamicForms\Errors\UnknownComponentError;
 use Northwestern\SysDev\DynamicForms\Errors\UnknownResourceError;
@@ -11,6 +12,8 @@ use Northwestern\SysDev\DynamicForms\Errors\UnknownStorageDriverError;
 use Northwestern\SysDev\DynamicForms\Forms\Definition\DefinitionIssueType;
 use Northwestern\SysDev\DynamicForms\ResourceRegistry;
 use Northwestern\SysDev\DynamicForms\Laravel\ValidFormDefinition;
+use Northwestern\SysDev\DynamicForms\Tests\Fixtures\Definition\DuplicateLabelCheck;
+use Northwestern\SysDev\DynamicForms\Tests\Fixtures\Definition\FlaggedKeyCheck;
 use Orchestra\Testbench\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 
@@ -166,6 +169,29 @@ final class ValidFormDefinitionTest extends TestCase
                 'Component "nope" is unknown',
             ],
         ];
+    }
+
+    public function testCustomIssueTypesFromRegisteredChecks(): void
+    {
+        $checks = new DefinitionCheckRegistry;
+        $checks->register(FlaggedKeyCheck::class);
+        $checks->register(DuplicateLabelCheck::class);
+        $this->app->instance(DefinitionCheckRegistry::class, $checks);
+
+        $definition = json_encode(['components' => [
+            ['key' => 'flagged', 'label' => 'Flagged', 'type' => 'textfield'],
+            ['key' => 'name', 'label' => 'Name', 'type' => 'textfield'],
+            ['key' => 'name2', 'label' => 'Name', 'type' => 'textfield'],
+        ]]);
+
+        $this->assertSame(
+            ['Flagged (flagged): Application warning.', 'Name (name2): Application error.'],
+            $this->messages($definition, new ValidFormDefinition),
+        );
+        $this->assertSame(
+            ['Name (name2): Application error.'],
+            $this->messages($definition, new ValidFormDefinition(failOnWarnings: false)),
+        );
     }
 
     public function testAcceptsResourceRegistry(): void

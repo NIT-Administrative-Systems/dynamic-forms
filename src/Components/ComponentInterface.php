@@ -150,6 +150,9 @@ interface ComponentInterface
     /**
      * Check this component's definition for errors that will break submission processing,
      * and warnings about things that are probably mistakes.
+     *
+     * This is for checks specific to this type of component. Checks for every component are registered in
+     * the {@see \Northwestern\SysDev\DynamicForms\DefinitionCheckRegistry} instead.
      */
     public function checkDefinition(): CheckedFormDefinition;
 

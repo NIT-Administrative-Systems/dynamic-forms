@@ -34,6 +34,10 @@ class DynamicFormsProvider extends ServiceProvider
             return new FileComponentRegistry;
         });
 
+        $this->app->singleton(DefinitionCheckRegistry::class, function ($app) {
+            return new DefinitionCheckRegistry;
+        });
+
         $this->app->singleton(S3Driver::class, function ($app) {
             $clientConfig = [
                 'region' => config('filesystems.disks.s3.region', Arr::get($_ENV, 'AWS_DEFAULT_REGION')),

@@ -4,6 +4,7 @@ namespace Northwestern\SysDev\DynamicForms\Forms;
 
 use Illuminate\Support\Arr;
 use Northwestern\SysDev\DynamicForms\ComponentRegistry;
+use Northwestern\SysDev\DynamicForms\DefinitionCheckRegistry;
 use Northwestern\SysDev\DynamicForms\Components\BaseComponent;
 use Northwestern\SysDev\DynamicForms\Components\ComponentInterface;
 use Northwestern\SysDev\DynamicForms\Components\CustomSubcomponentDeserialization;
@@ -86,14 +87,27 @@ class Form
      * Check the form definition for errors that will break submission processing,
      * and warnings about things that are probably mistakes.
      *
-     * Every component is checked, including ones that are conditionally hidden.
+     * Every component is checked, including ones that are conditionally hidden. This runs each component's own
+     * checks, then the checks registered in the {@see DefinitionCheckRegistry}.
      */
     public function checkDefinition(): CheckedFormDefinition
     {
+        /** @var DefinitionCheckRegistry $registry */
+        $registry = resolve(DefinitionCheckRegistry::class);
+        $componentChecks = $registry->componentChecks();
+
         $checked = new CheckedFormDefinition;
 
         foreach ($this->flatComponents() as $component) {
             $checked = $checked->merge($component->checkDefinition());
+
+            foreach ($componentChecks as $check) {
+                $checked = $checked->merge($check->check($component));
+            }
+        }
+
+        foreach ($registry->formChecks() as $check) {
+            $checked = $checked->merge($check->check($this));
         }
 
         return $checked;
