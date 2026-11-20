@@ -6,6 +6,7 @@ use Northwestern\SysDev\DynamicForms\Forms\Definition\CheckedFormDefinition;
 use Northwestern\SysDev\DynamicForms\Forms\Definition\DefinitionIssue;
 use Northwestern\SysDev\DynamicForms\Forms\Definition\DefinitionIssueSeverity;
 use Northwestern\SysDev\DynamicForms\Forms\Definition\DefinitionIssueType;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 final class CheckedFormDefinitionTest extends TestCase
@@ -88,8 +89,32 @@ final class CheckedFormDefinitionTest extends TestCase
         $this->assertSame(DefinitionIssueType::JsonValidationInvalidStructure->description(), $issue->description());
     }
 
+    #[DataProvider('componentLabelProvider')]
+    public function testIssueComponentLabel(?string $label, string $expectedLabel, string $expectedDisplayName): void
+    {
+        $issue = new DefinitionIssue(
+            componentKey: 'class',
+            componentLabel: $label,
+            jsonPath: 'validate.json.if',
+            type: DefinitionIssueType::JsonValidationMissingTrue,
+        );
+
+        $this->assertSame($expectedLabel, $issue->componentLabel());
+        $this->assertSame($expectedDisplayName, $issue->componentDisplayName());
+    }
+
+    public static function componentLabelProvider(): array
+    {
+        return [
+            'label' => ['Class Year', 'Class Year', 'Class Year (class)'],
+            'null label falls back to key' => [null, 'class', 'class'],
+            'empty label falls back to key' => ['', 'class', 'class'],
+            'label same as key' => ['class', 'class', 'class'],
+        ];
+    }
+
     private function issue(string $key, DefinitionIssueType $type): DefinitionIssue
     {
-        return new DefinitionIssue(componentKey: $key, jsonPath: 'validate.json.if', type: $type);
+        return new DefinitionIssue(componentKey: $key, componentLabel: null, jsonPath: 'validate.json.if', type: $type);
     }
 }

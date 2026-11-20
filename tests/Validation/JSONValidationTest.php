@@ -32,6 +32,7 @@ final class JSONValidationTest extends TestCase
         if ($expectsIssue) {
             $issue = $checked->all()[0];
             $this->assertSame('test', $issue->componentKey);
+            $this->assertSame('Test', $issue->componentLabel());
             $this->assertSame('validate.json.if', $issue->jsonPath);
             $this->assertSame($expectedType, $issue->type);
             $this->assertSame($expectedType->severity(), $issue->severity());

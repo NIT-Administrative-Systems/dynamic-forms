@@ -65,9 +65,25 @@ final class ValidFormDefinitionTest extends TestCase
         );
     }
 
-    public function testMessageFallsBackToKeyWhenComponentLookupMisses(): void
+    public function testMessageFallsBackToKeyForEmptyLabel(): void
     {
-        // Nested numeric keys are renumbered when the component tree is flattened, so the lookup by key misses.
+        $definition = json_encode(['components' => [[
+            'key' => 'a',
+            'label' => '',
+            'type' => 'textfield',
+            'validate' => ['json' => self::MISSING_TRUE],
+        ]]]);
+
+        $this->assertSame(
+            ['a: '.DefinitionIssueType::JsonValidationMissingTrue->description()],
+            $this->messages($definition, new ValidFormDefinition),
+        );
+    }
+
+    public function testMessageUsesLabelForNestedNumericKeys(): void
+    {
+        // Nested numeric keys are renumbered when the component tree is flattened, so looking the component
+        // up by key would miss. The label comes from the issue itself instead.
         $definition = json_encode(['components' => [[
             'key' => 'panel',
             'type' => 'panel',
@@ -80,7 +96,7 @@ final class ValidFormDefinitionTest extends TestCase
         ]]]);
 
         $this->assertSame(
-            ['5: '.DefinitionIssueType::JsonValidationMissingTrue->description()],
+            ['Five (5): '.DefinitionIssueType::JsonValidationMissingTrue->description()],
             $this->messages($definition, new ValidFormDefinition),
         );
     }

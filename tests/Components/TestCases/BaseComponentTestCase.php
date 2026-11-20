@@ -63,6 +63,7 @@ abstract class BaseComponentTestCase extends TestCase
         $this->assertCount(1, $checked->warnings());
         $warning = $checked->warnings()[0];
         $this->assertSame('test', $warning->componentKey);
+        $this->assertSame('Test', $warning->componentLabel());
         $this->assertSame('validate.json.if', $warning->jsonPath);
         $this->assertSame(DefinitionIssueType::JsonValidationMissingTrue, $warning->type);
     }

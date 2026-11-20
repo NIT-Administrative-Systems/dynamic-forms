@@ -106,24 +106,18 @@ The issues can be accessed by calling `Form::checkDefinition()`:
 
 ```php
 $form = new Form($definitionJson);
-$components = $form->flatComponents();
+
 $checked = $form->checkDefinition();
-                                                                                                                                
-if ($checked->hasErrors()) {
-    $checked->errors()->each(function ($issue) {
-        $label = $components[$issue->componentKey]?->label() ?? $issue->componentKey;
+if (! $checked->isClean()) {
+    foreach ($checked->errors() as $issue) {
+        echo "{$issue->componentDisplayName()}: {$issue->description()}";
+    }
     
-        echo "{$label}: {$issue->description()}";
-    });
-    
-    die("Form definition has errors, so your probably DON'T want to save/use it!");
-}
-                                                                                                                                                                             
-foreach ($checked->warnings() as $issue) {            
-    $label = $components[$issue->componentKey]?->label() ?? $issue->componentKey;                                                                                      
-    echo "{$label}: {$issue->description()}";
-    
-    echo "Are you SURE you want to save/use this forms?";
+    foreach ($checked->warnings() as $issue) {
+        echo "{$issue->componentDisplayName()}: {$issue->description()}";
+    }
+   
+    // Or use $checked->all() and examine the $issue->severity()
 }
 ```
 

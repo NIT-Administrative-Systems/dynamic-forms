@@ -21,6 +21,7 @@ final class FormTest extends TestCase
         $this->assertCount(1, $checked->warnings());
         $warning = $checked->warnings()[0];
         $this->assertSame('class', $warning->componentKey);
+        $this->assertSame('Class', $warning->componentLabel());
         $this->assertSame('validate.json.if', $warning->jsonPath);
         $this->assertSame(DefinitionIssueType::JsonValidationMissingTrue, $warning->type);
         $this->assertEquals($checked->all(), $form->checkDefinition()->all());

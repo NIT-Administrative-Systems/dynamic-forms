@@ -69,6 +69,7 @@ class JSONValidation implements ValidationInterface
     {
         return new DefinitionIssue(
             componentKey: $component->key(),
+            componentLabel: $component->label(),
             jsonPath: 'validate.json.if',
             type: $type,
         );

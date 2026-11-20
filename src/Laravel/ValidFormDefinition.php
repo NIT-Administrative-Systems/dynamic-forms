@@ -55,22 +55,15 @@ class ValidFormDefinition implements ValidationRule
         }
 
         $checked = $form->checkDefinition();
-        $components = $form->flatComponents();
 
         foreach ($this->failOnWarnings ? $checked->all() : $checked->errors() as $issue) {
-            $label = ($components[$issue->componentKey] ?? null)?->label();
-
-            $fail($this->message($issue, $label));
+            $fail($this->message($issue));
         }
     }
 
-    protected function message(DefinitionIssue $issue, ?string $label): string
+    protected function message(DefinitionIssue $issue): string
     {
-        $component = $label === null || $label === ''
-            ? $issue->componentKey
-            : "{$label} ({$issue->componentKey})";
-
-        $message = "{$component}: {$issue->description()}";
+        $message = "{$issue->componentDisplayName()}: {$issue->description()}";
 
         return $issue->details === null ? $message : "{$message} {$issue->details}";
     }
