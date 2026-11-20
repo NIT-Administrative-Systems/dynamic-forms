@@ -13,6 +13,8 @@ In the below example, whenever anything about the form configuration is added or
 ```php
 // App\Http\Controllers\BuilderController
 
+use Northwestern\SysDev\DynamicForms\Laravel\ValidFormDefinition;
+
 class BuilderController extends Controller
 {
     public function create()
@@ -26,7 +28,11 @@ class BuilderController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'definition' => 'required|json'
+            'definition' => [
+                'required', 
+                'json', 
+                new ValidFormDefinition(failOnWarnings: true),
+            ],
         ]);
         
         // You can then save this to your DB, a file,
@@ -81,17 +87,22 @@ class BuilderController extends Controller
 </script>
 ```
 
-### Checking Form Definitions
+### Validation Form Definitions
 
-It is possible for the builder to emit form definitions that are logically invalid. For example, a JSONLogic validation rule on a component may be written incorrectly and will always cause an exception when validating form submission data.
+It is possible for the Formio builder to emit form definitions that are not usable with Dynamic Forms.
 
-The `Form::checkDefinition()` method will list errors and warnings.
+**Errors** will reliably cause the form definition to error when used. For example, a JSONLogic validation rule on a component may be written incorrectly and will always cause an exception when validating form submission data.
 
-Errors are problems -- like the above example -- that will reliably cause the form definition to error when used. [TODO: Note these are checked by the laravel validation rule].
+**Warnings** are problems that *may* cause problems, but Dynamic Forms either cannot reliably check them, or they are potentially valid for some use-cases. For example, a component JSONLogic validation rule with no `true` is *probably* an error, but it *could* be valid if the intention is to always block form submission in a tree of conditional components.
 
-Warnings are problems that *may* cause problems, but Dynamic Forms either cannot reliably check them, or they are potentially valid for some use-cases. For example, a component JSONLogic validation rule with no `true` is *probably* an error, but it *could* be valid if the intention is to always block form submission in a tree of conditional components.
+The `Northwestern\SysDev\DynamicForms\Laravel\ValidFormDefinition` rule will perform the checks in the Laravel validator. Warnings can be ignored during validation by passing `failOnWarnings: false`, if the application would like to display these separately.
 
-Dynamic Forms recommends showing warnings to end-users so they can decide if they require resolution, or outright blocking the saving/use of the form. 
+Dynamic Forms recommends either:
+
+1. Blocking saving/using form definitions with warnings.
+1. Presenting the warnings to end-users to confirm/troubleshoot, with an explicit confirmation before the form definition is saved/used.
+
+The issues can be accessed by calling `Form::checkDefinition()`: 
 
 ```php
 $form = new Form($definitionJson);

@@ -17,14 +17,14 @@ use Northwestern\SysDev\DynamicForms\ResourceRegistry;
  * Laravel validation rule for a Form.io form definition JSON string.
  *
  * The definition fails if it cannot be loaded, or if {@see Form::checkDefinition()} finds any issues. Pass
- * `errorsOnly: true` to allow definitions that only have warnings to pass validation.
+ * `failOnWarnings: false` to allow definitions that only have warnings to pass validation.
  *
  * Applications *should* still show warnings to users when allowing warnings through the validation.
  */
 class ValidFormDefinition implements ValidationRule
 {
     public function __construct(
-        protected bool $errorsOnly = false,
+        protected bool $failOnWarnings = true,
         protected ?ResourceRegistry $resourceRegistry = null,
     ) {
     }
@@ -57,7 +57,7 @@ class ValidFormDefinition implements ValidationRule
         $checked = $form->checkDefinition();
         $components = $form->flatComponents();
 
-        foreach ($this->errorsOnly ? $checked->errors() : $checked->all() as $issue) {
+        foreach ($this->failOnWarnings ? $checked->all() : $checked->errors() as $issue) {
             $label = ($components[$issue->componentKey] ?? null)?->label();
 
             $fail($this->message($issue, $label));

@@ -20,9 +20,9 @@ final class ValidFormDefinitionTest extends TestCase
     private const VALID = ['if' => [true, true, 'Invalid']];
 
     #[DataProvider('issuesProvider')]
-    public function testIssues(array $rules, bool $errorsOnly, int $expectedMessages): void
+    public function testIssues(array $rules, bool $failOnWarnings, int $expectedMessages): void
     {
-        $messages = $this->messages($this->definition($rules), new ValidFormDefinition(errorsOnly: $errorsOnly));
+        $messages = $this->messages($this->definition($rules), new ValidFormDefinition(failOnWarnings: $failOnWarnings));
 
         $this->assertCount($expectedMessages, $messages);
     }
@@ -30,15 +30,15 @@ final class ValidFormDefinitionTest extends TestCase
     public static function issuesProvider(): array
     {
         return [
-            'clean' => [['a' => self::VALID], false, 0],
-            'clean with errorsOnly' => [['a' => self::VALID], true, 0],
-            'no components with rules' => [[], false, 0],
-            'warning fails by default' => [['a' => self::MISSING_TRUE], false, 1],
-            'warning passes with errorsOnly' => [['a' => self::MISSING_TRUE], true, 0],
-            'error fails by default' => [['a' => self::INVALID_STRUCTURE], false, 1],
-            'error fails with errorsOnly' => [['a' => self::INVALID_STRUCTURE], true, 1],
-            'one message per issue' => [['a' => self::INVALID_STRUCTURE, 'b' => self::MISSING_TRUE], false, 2],
-            'only errors with errorsOnly' => [['a' => self::INVALID_STRUCTURE, 'b' => self::MISSING_TRUE], true, 1],
+            'clean' => [['a' => self::VALID], true, 0],
+            'clean without failOnWarnings' => [['a' => self::VALID], false, 0],
+            'no components with rules' => [[], true, 0],
+            'warning fails by default' => [['a' => self::MISSING_TRUE], true, 1],
+            'warning passes without failOnWarnings' => [['a' => self::MISSING_TRUE], false, 0],
+            'error fails by default' => [['a' => self::INVALID_STRUCTURE], true, 1],
+            'error fails without failOnWarnings' => [['a' => self::INVALID_STRUCTURE], false, 1],
+            'one message per issue' => [['a' => self::INVALID_STRUCTURE, 'b' => self::MISSING_TRUE], true, 2],
+            'only errors without failOnWarnings' => [['a' => self::INVALID_STRUCTURE, 'b' => self::MISSING_TRUE], false, 1],
         ];
     }
 
