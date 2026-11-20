@@ -29,8 +29,9 @@ class BuilderController extends Controller
     {
         $data = $request->validate([
             'definition' => [
-                'required', 
-                'json', 
+                'bail',
+                'required',
+                'json',
                 new ValidFormDefinition(failOnWarnings: true),
             ],
         ]);
@@ -87,7 +88,7 @@ class BuilderController extends Controller
 </script>
 ```
 
-### Validation Form Definitions
+### Validating Form Definitions
 
 It is possible for the Formio builder to emit form definitions that are not usable with Dynamic Forms.
 
@@ -105,6 +106,8 @@ Dynamic Forms recommends either:
 The issues can be accessed by calling `Form::checkDefinition()`: 
 
 ```php
+use Northwestern\SysDev\DynamicForms\Forms\Form;
+
 $form = new Form($definitionJson);
 
 $checked = $form->checkDefinition();
