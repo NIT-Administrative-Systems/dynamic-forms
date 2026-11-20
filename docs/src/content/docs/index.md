@@ -51,7 +51,7 @@ Most of the decisions not to include something were driven by what would give us
 Most of the Formiojs components are supported in some configuration. These components have limitations:
 
 - Address only supports Open Street Maps
-- File only supports Amazon S3 and local storage (base64, dropbox, azure, and indexeddb support can be [added](usage/extending.md#adding-storage-backends))
+- File only supports Amazon S3 and local storage (base64, dropbox, azure, and indexeddb support can be [added](/dynamic-forms/usage/extending/#adding-storage-backends))
 - Select only supports values, and not API-backed resources
 
 These components are not supported at all:

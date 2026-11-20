@@ -119,11 +119,15 @@ $form = new Form($definitionJson);
 $checked = $form->checkDefinition();
 if (! $checked->isClean()) {
     foreach ($checked->errors() as $issue) {
-        echo "{$issue->componentDisplayName()}: {$issue->description()}";
+        if ($issue->isFormIssue()) {
+            echo "Form-level issue: {$issue->description()}";
+        } else {
+            echo "{$issue->componentDisplayName()}: {$issue->description()}";
+        }
     }
     
     foreach ($checked->warnings() as $issue) {
-        echo "{$issue->componentDisplayName()}: {$issue->description()}";
+        // . . . same as above . . .
     }
    
     // Or use $checked->all() and examine the $issue->severity()
