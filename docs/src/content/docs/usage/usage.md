@@ -109,7 +109,7 @@ Dynamic Forms recommends either:
 1. Blocking saving/using form definitions with warnings.
 1. Presenting the warnings to end-users to confirm/troubleshoot, with an explicit confirmation before the form definition is saved/used.
 
-The issues can be accessed by calling `Form::checkDefinition()`: 
+The issues can be accessed by calling `Form::checkDefinition()`:
 
 ```php
 use Northwestern\SysDev\DynamicForms\Forms\Form;
