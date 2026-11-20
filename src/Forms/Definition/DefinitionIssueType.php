@@ -2,10 +2,15 @@
 
 namespace Northwestern\SysDev\DynamicForms\Forms\Definition;
 
-enum DefinitionIssueType: string
+enum DefinitionIssueType: string implements DefinitionIssueTypeInterface
 {
     case JsonValidationInvalidStructure = 'json_validation_invalid_structure';
     case JsonValidationMissingTrue = 'json_validation_missing_true';
+
+    public function code(): string
+    {
+        return $this->value;
+    }
 
     public function severity(): DefinitionIssueSeverity
     {
@@ -15,9 +20,6 @@ enum DefinitionIssueType: string
         };
     }
 
-    /**
-     * Human-readable explanation of the issue.
-     */
     public function description(): string
     {
         return match ($this) {

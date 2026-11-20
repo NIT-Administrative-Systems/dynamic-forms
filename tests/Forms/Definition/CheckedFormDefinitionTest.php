@@ -6,6 +6,8 @@ use Northwestern\SysDev\DynamicForms\Forms\Definition\CheckedFormDefinition;
 use Northwestern\SysDev\DynamicForms\Forms\Definition\DefinitionIssue;
 use Northwestern\SysDev\DynamicForms\Forms\Definition\DefinitionIssueSeverity;
 use Northwestern\SysDev\DynamicForms\Forms\Definition\DefinitionIssueType;
+use Northwestern\SysDev\DynamicForms\Forms\Definition\DefinitionIssueTypeInterface;
+use Northwestern\SysDev\DynamicForms\Tests\Fixtures\Definition\CustomIssueType;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
@@ -89,6 +91,25 @@ final class CheckedFormDefinitionTest extends TestCase
         $this->assertSame(DefinitionIssueType::JsonValidationInvalidStructure->description(), $issue->description());
     }
 
+    public function testBuiltInIssueTypeCodeIsBackingValue(): void
+    {
+        $this->assertSame('json_validation_missing_true', DefinitionIssueType::JsonValidationMissingTrue->code());
+    }
+
+    public function testCustomIssueTypesAreSeparatedBySeverity(): void
+    {
+        $customError = $this->issue('a', CustomIssueType::AppError);
+        $customWarning = $this->issue('b', CustomIssueType::AppWarning);
+        $builtInWarning = $this->issue('c', DefinitionIssueType::JsonValidationMissingTrue);
+
+        $checked = new CheckedFormDefinition([$customError, $customWarning, $builtInWarning]);
+
+        $this->assertSame([$customError], $checked->errors());
+        $this->assertSame([$customWarning, $builtInWarning], $checked->warnings());
+        $this->assertSame('Application error.', $customError->description());
+        $this->assertSame('app.app_error', $customError->type->code());
+    }
+
     #[DataProvider('componentLabelProvider')]
     public function testIssueComponentLabel(?string $label, string $expectedLabel, string $expectedDisplayName): void
     {
@@ -113,7 +134,7 @@ final class CheckedFormDefinitionTest extends TestCase
         ];
     }
 
-    private function issue(string $key, DefinitionIssueType $type): DefinitionIssue
+    private function issue(string $key, DefinitionIssueTypeInterface $type): DefinitionIssue
     {
         return new DefinitionIssue(componentKey: $key, componentLabel: null, jsonPath: 'validate.json.if', type: $type);
     }

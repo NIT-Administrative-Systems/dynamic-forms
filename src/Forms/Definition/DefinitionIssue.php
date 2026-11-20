@@ -8,7 +8,7 @@ final readonly class DefinitionIssue
         public string $componentKey,
         private ?string $componentLabel,
         public string $jsonPath,
-        public DefinitionIssueType $type,
+        public DefinitionIssueTypeInterface $type,
         public ?string $details = null,
     ) {
     }
