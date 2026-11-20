@@ -3,14 +3,12 @@
 namespace Northwestern\SysDev\DynamicForms;
 
 use Illuminate\Http\Request;
-use Illuminate\Routing\Redirector;
 use Illuminate\Support\Arr;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Validation\ValidationException;
 use Northwestern\SysDev\DynamicForms\Console\Commands\Install;
 use Northwestern\SysDev\DynamicForms\Console\Commands\InstallResourceController;
 use Northwestern\SysDev\DynamicForms\Console\Commands\InstallStorageController;
-use Northwestern\SysDev\DynamicForms\Forms\Form;
+use Northwestern\SysDev\DynamicForms\Laravel\ValidateDynamicForm;
 use Northwestern\SysDev\DynamicForms\Storage\S3Driver;
 
 class DynamicFormsProvider extends ServiceProvider
@@ -34,6 +32,10 @@ class DynamicFormsProvider extends ServiceProvider
 
         $this->app->singleton(FileComponentRegistry::class, function ($app) {
             return new FileComponentRegistry;
+        });
+
+        $this->app->singleton(DefinitionCheckRegistry::class, function ($app) {
+            return new DefinitionCheckRegistry;
         });
 
         $this->app->singleton(S3Driver::class, function ($app) {
@@ -70,31 +72,11 @@ class DynamicFormsProvider extends ServiceProvider
         $this->registerCommands();
         $this->registerPublishing();
 
-        /** @var ComponentRegistry $registry */
-        $registry = $this->app->make(ComponentRegistry::class);
-        /** @var JSONLogicInitHelper $jsonHelper */
-        $jsonHelper = $this->app->make(JSONLogicInitHelper::class);
-        /** @var FileComponentRegistry $fileRegistry */
-        $fileRegistry = $this->app->make(FileComponentRegistry::class);
+        // Initializing the helper registers the Lodash operations with JsonLogic, and we want that to happen in boot
+        // just in case someone is using JsonLogic for other, non-dynamic-forms stuff.
+        $this->app->make(JSONLogicInitHelper::class);
 
-        Request::macro('validateDynamicForm', function (string $definitionJson, string $submissionJson, ?ResourceRegistry $resourceRegistry = null) {
-            if (is_null($resourceRegistry)) {
-                $resourceRegistry = resolve(ResourceRegistry::class);
-            }
-
-            $formDefinition = new Form($definitionJson, $resourceRegistry); // @TODO pass registry
-            $validator = $formDefinition->validate($submissionJson);
-
-            if (! $validator->isValid()) {
-                /** @var Redirector $redirector */
-                $redirector = resolve(Redirector::class);
-
-                throw (new ValidationException($validator))
-                    ->redirectTo($redirector->getUrlGenerator()->previous());
-            }
-
-            return $validator->values();
-        });
+        Request::macro('validateDynamicForm', new ValidateDynamicForm);
     }
 
     /**

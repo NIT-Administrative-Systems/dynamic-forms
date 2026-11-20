@@ -6,12 +6,14 @@ sidebar:
 ---
 
 ## Builder
-The Formiojs builder will create a JSON document containing all of the configuration the user has made for their dynamic form.
+The Formiojs builder will create a JSON document containing all the configuration the user has made for their dynamic form.
 
 In the below example, whenever anything about the form configuration is added or updated, the JSON will be written to a normal HTML form's `<input type='hidden'>`. This form definition will be submitted to Laravel when the user hits the submit button on the form. Laravel can process this like any typical form submission.
 
 ```php
 // App\Http\Controllers\BuilderController
+
+use Northwestern\SysDev\DynamicForms\Laravel\ValidFormDefinition;
 
 class BuilderController extends Controller
 {
@@ -26,7 +28,12 @@ class BuilderController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'definition' => 'required|json'
+            'definition' => [
+                'bail',
+                'required',
+                'json',
+                new ValidFormDefinition(failOnWarnings: true),
+            ],
         ]);
         
         // You can then save this to your DB, a file,
@@ -76,9 +83,55 @@ class BuilderController extends Controller
                 // On change, update the above form w/ the latest dynamic form JSON
                 document.getElementById('definition').value = JSON.stringify(builder.schema);
             })
-        });;
+        });
     };
 </script>
+```
+
+### Validating Form Definitions
+
+It is possible for the Formio builder to emit form definitions that are not usable with Dynamic Forms.
+
+**Errors** will reliably cause the form definition to error when used. For example, a JSONLogic validation rule on a component may be written incorrectly and will always cause an exception when validating form submission data.
+
+:::note
+The `The :attribute could not be loaded.` message will show if parsing the component fails or an exception is thrown during validation.
+
+When this happens, the exception is sent to the Laravel error log. Check that for more details.
+:::
+
+**Warnings** are problems that *may* cause problems, but Dynamic Forms either cannot reliably check them, or they are potentially valid for some use-cases. For example, a component JSONLogic validation rule with no `true` is *probably* an error, but it *could* be valid if the intention is to always block form submission in a tree of conditional components.
+
+The `Northwestern\SysDev\DynamicForms\Laravel\ValidFormDefinition` rule will perform the checks in the Laravel validator. Warnings can be ignored during validation by passing `failOnWarnings: false`, if the application would like to display these separately.
+
+Dynamic Forms recommends either:
+
+1. Blocking saving/using form definitions with warnings.
+1. Presenting the warnings to end-users to confirm/troubleshoot, with an explicit confirmation before the form definition is saved/used.
+
+The issues can be accessed by calling `Form::checkDefinition()`:
+
+```php
+use Northwestern\SysDev\DynamicForms\Forms\Form;
+
+$form = new Form($definitionJson);
+
+$checked = $form->checkDefinition();
+if (! $checked->isClean()) {
+    foreach ($checked->errors() as $issue) {
+        if ($issue->isFormIssue()) {
+            echo "Form-level issue: {$issue->description()}";
+        } else {
+            echo "{$issue->componentDisplayName()}: {$issue->description()}";
+        }
+    }
+    
+    foreach ($checked->warnings() as $issue) {
+        // . . . same as above . . .
+    }
+   
+    // Or use $checked->all() and examine the $issue->severity()
+}
 ```
 
 ### Customizing the Components Menu

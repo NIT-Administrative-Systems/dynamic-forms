@@ -4,14 +4,19 @@ namespace Northwestern\SysDev\DynamicForms\Forms;
 
 use Illuminate\Support\Arr;
 use Northwestern\SysDev\DynamicForms\ComponentRegistry;
+use Northwestern\SysDev\DynamicForms\DefinitionCheckRegistry;
 use Northwestern\SysDev\DynamicForms\Components\BaseComponent;
 use Northwestern\SysDev\DynamicForms\Components\ComponentInterface;
 use Northwestern\SysDev\DynamicForms\Components\CustomSubcomponentDeserialization;
 use Northwestern\SysDev\DynamicForms\Components\ResourceValues;
 use Northwestern\SysDev\DynamicForms\Components\UploadInterface;
 use Northwestern\SysDev\DynamicForms\Errors\InvalidDefinitionError;
+use Northwestern\SysDev\DynamicForms\Errors\UnknownComponentError;
+use Northwestern\SysDev\DynamicForms\Errors\UnknownResourceError;
+use Northwestern\SysDev\DynamicForms\Errors\UnknownStorageDriverError;
 use Northwestern\SysDev\DynamicForms\FileComponentRegistry;
 use Northwestern\SysDev\DynamicForms\Forms\Concerns\HandlesTree;
+use Northwestern\SysDev\DynamicForms\Forms\Definition\CheckedFormDefinition;
 use Northwestern\SysDev\DynamicForms\ResourceRegistry;
 
 class Form
@@ -38,6 +43,12 @@ class Form
 
     protected ?ResourceRegistry $resourceRegistry;
 
+    /**
+     * @throws InvalidDefinitionError The JSON is malformed, is missing required properties, or uses unsupported component settings.
+     * @throws UnknownComponentError A component type is not registered in the {@see ComponentRegistry}.
+     * @throws UnknownResourceError A select component uses a resource that is not registered in the {@see ResourceRegistry}.
+     * @throws UnknownStorageDriverError A file component uses a storage driver that is not registered in the {@see FileComponentRegistry}.
+     */
     public function __construct(string $definitionJson, ?ResourceRegistry $resourceRegistry = null)
     {
         $this->componentRegistry = resolve(ComponentRegistry::class);
@@ -70,6 +81,36 @@ class Form
     public function flatComponents(): array
     {
         return $this->flatComponents;
+    }
+
+    /**
+     * Check the form definition for errors that will break submission processing,
+     * and warnings about things that are probably mistakes.
+     *
+     * Every component is checked, including ones that are conditionally hidden. This runs each component's own
+     * checks, then the checks registered in the {@see DefinitionCheckRegistry}.
+     */
+    public function checkDefinition(): CheckedFormDefinition
+    {
+        /** @var DefinitionCheckRegistry $registry */
+        $registry = resolve(DefinitionCheckRegistry::class);
+        $componentChecks = $registry->componentChecks();
+
+        $checked = new CheckedFormDefinition;
+
+        foreach ($this->flatComponents() as $component) {
+            $checked = $checked->merge($component->checkDefinition());
+
+            foreach ($componentChecks as $check) {
+                $checked = $checked->merge($check->check($component));
+            }
+        }
+
+        foreach ($registry->formChecks() as $check) {
+            $checked = $checked->merge($check->check($this));
+        }
+
+        return $checked;
     }
 
     /**

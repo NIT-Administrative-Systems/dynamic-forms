@@ -5,7 +5,9 @@ namespace Northwestern\SysDev\DynamicForms\Tests\Validation;
 use Northwestern\SysDev\DynamicForms\Components\ComponentInterface;
 use Northwestern\SysDev\DynamicForms\Components\Inputs\Textfield;
 use Northwestern\SysDev\DynamicForms\Errors\InvalidDefinitionError;
+use Northwestern\SysDev\DynamicForms\Forms\Definition\DefinitionIssueType;
 use Northwestern\SysDev\DynamicForms\JSONLogicInitHelper;
+use Northwestern\SysDev\DynamicForms\Validation\JSONValidation;
 use Orchestra\Testbench\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 
@@ -14,6 +16,81 @@ final class JSONValidationTest extends TestCase
 {
     private const DATE_EXPECT_FAIL = true;
     private const DATE_EXPECT_PASS = false;
+
+    #[DataProvider('checkDefinitionDataProvider')]
+    public function testCheckDefinition(
+        array $rule,
+        bool $expectsIssue,
+        DefinitionIssueType $expectedType = DefinitionIssueType::JsonValidationMissingTrue,
+    ): void {
+        $validation = new JSONValidation($rule);
+        $checked = $validation->checkDefinition($this->getComponent());
+
+        $this->assertSame(! $expectsIssue, $checked->isClean());
+        $this->assertCount($expectsIssue ? 1 : 0, $checked->all());
+
+        if ($expectsIssue) {
+            $issue = $checked->all()[0];
+            $this->assertSame('test', $issue->componentKey);
+            $this->assertSame('Test', $issue->componentLabel());
+            $this->assertSame('validate.json.if', $issue->jsonPath);
+            $this->assertSame($expectedType, $issue->type);
+            $this->assertSame($expectedType->severity(), $issue->severity());
+            $this->assertNull($issue->details);
+        }
+    }
+
+    public static function checkDefinitionDataProvider(): array
+    {
+        $condition = ['!==' => [['var' => 'data.class'], 'junior']];
+        $message = 'Only junior students are eligible for this grant!';
+
+        return [
+            'true in first output' => [['if' => [$condition, true, $message]], false],
+            'true in second output' => [['if' => [$condition, $message, true]], false],
+            'both outputs true' => [['if' => [$condition, true, true]], false],
+            'original class rule' => [['if' => [$condition, $message, false]], true],
+            'true only in condition' => [['if' => [true, $message, false]], true],
+            'truthy string is not true' => [['if' => [$condition, 'true', $message]], true],
+            'truthy number is not true' => [['if' => [$condition, 1, $message]], true],
+            'null output' => [['if' => [$condition, null, $message]], true],
+            'nested expression is not literal true' => [
+                ['if' => [$condition, ['if' => [$condition, true, $message]], $message]],
+                true,
+            ],
+            'missing if' => [[], true, DefinitionIssueType::JsonValidationInvalidStructure],
+            'null if' => [['if' => null], true, DefinitionIssueType::JsonValidationInvalidStructure],
+            'non-array if' => [['if' => 'invalid'], true, DefinitionIssueType::JsonValidationInvalidStructure],
+            'too few arguments' => [
+                ['if' => [$condition, $message]],
+                true,
+                DefinitionIssueType::JsonValidationInvalidStructure,
+            ],
+            'too many arguments' => [
+                ['if' => [$condition, $message, false, true]],
+                true,
+                DefinitionIssueType::JsonValidationInvalidStructure,
+            ],
+        ];
+    }
+
+    public function testCheckDefinitionDoesNotChangeValidation(): void
+    {
+        $component = $this->getComponent();
+        $validation = new JSONValidation([
+            'if' => [
+                ['===' => [['var' => 'data.class'], 'junior']],
+                true,
+                'Only juniors are eligible.',
+            ],
+        ]);
+
+        $before = $validation($component, ['class' => 'senior'])->toArray();
+        $validation->checkDefinition($component);
+
+        $this->assertSame($before, $validation($component, ['class' => 'senior'])->toArray());
+        $this->assertTrue($validation($component, ['class' => 'junior'])->isEmpty());
+    }
 
     /**
      * @param  array|class-string  $expected

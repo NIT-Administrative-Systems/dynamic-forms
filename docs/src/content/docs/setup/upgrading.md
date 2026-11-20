@@ -5,6 +5,23 @@ sidebar:
     order: 2
 ---
 
+## v4.0.0
+
+Dynamic Forms v4 adds form definition validation and an associated Laravel validation rule. 
+
+Existing implementations of Dynamic Forms will continue to work, but it is recommended to start using the new validation feature. 
+
+Take a look at the Laravel validation example in the [Using Dynamic Forms -> Builder](/dynamic-forms/usage/usage/#builder) section, and learn more in the [Validating Form Definitions](/dynamic-forms/usage/usage/#validating-form-definitions) section.
+
+There is a change to the `ComponentInterface`. **If you have developed your own components that do not extend `BaseComponent`, this is a breaking change**.
+
+```php
+interface ComponentInterface
+{
+    public function checkDefinition(): CheckedFormDefinition;
+}
+```
+
 ## v3.0.0
 There are no direct breaking changes to the Dynamic Forms APIs in this version.
 
