@@ -11,6 +11,7 @@ use Northwestern\SysDev\DynamicForms\Forms\Definition\DefinitionCheckResult;
 use Northwestern\SysDev\DynamicForms\Forms\Definition\DefinitionIssue;
 use Northwestern\SysDev\DynamicForms\Forms\Definition\DefinitionIssueType;
 use Northwestern\SysDev\DynamicForms\JSONLogic\JsonLogicHelpers;
+use Northwestern\SysDev\DynamicForms\JSONLogic\JsonLogicIfOperationAnalysis;
 
 class JSONValidation implements ValidationInterface
 {
@@ -56,8 +57,13 @@ class JSONValidation implements ValidationInterface
             ]);
         }
 
+        // The top-level "if" is always [condition, output, output], but outputs can be more operations instead of
+        // scalars, so we need to walk the tree.
         $outputs = array_slice(array_values($this->jsonLogic['if']), 1);
-        if (in_array(true, $outputs, true)) {
+        $mayPass = collect($outputs)->contains(
+            fn (mixed $output) => JsonLogicIfOperationAnalysis::mayReturnTrue($output),
+        );
+        if ($mayPass) {
             return new DefinitionCheckResult;
         }
 

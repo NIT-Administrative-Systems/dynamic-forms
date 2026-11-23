@@ -54,10 +54,15 @@ final class JSONValidationTest extends TestCase
             'truthy string is not true' => [['if' => [$condition, 'true', $message]], true],
             'truthy number is not true' => [['if' => [$condition, 1, $message]], true],
             'null output' => [['if' => [$condition, null, $message]], true],
-            'nested expression is not literal true' => [
+            'nested if that can return true' => [
                 ['if' => [$condition, ['if' => [$condition, true, $message]], $message]],
+                false,
+            ],
+            'nested if that only returns messages' => [
+                ['if' => [$condition, ['if' => [$condition, $message, 'Another message']], $message]],
                 true,
             ],
+            'comparison output can return true' => [['if' => [$condition, ['==' => [1, 1]], $message]], false],
             'missing if' => [[], true, DefinitionIssueType::JsonValidationInvalidStructure],
             'null if' => [['if' => null], true, DefinitionIssueType::JsonValidationInvalidStructure],
             'non-array if' => [['if' => 'invalid'], true, DefinitionIssueType::JsonValidationInvalidStructure],
@@ -546,14 +551,104 @@ final class JSONValidationTest extends TestCase
         })->all();
     }
 
+    #[DataProvider('fallbackMessageProvider')]
+    public function testFallbackMessageForFalsyResult(?string $label, ?string $errorLabel, string $expected): void
+    {
+        $component = $this->getComponent(
+            validations: ['json' => ['if' => [true, false, 'Unused']]],
+            label: $label,
+            errorLabel: $errorLabel,
+        );
+
+        $result = $component->advancedValidations()($component, []);
+
+        $this->assertSame(['test' => [$expected]], $result->toArray());
+    }
+
+    public static function fallbackMessageProvider(): array
+    {
+        // label, errorLabel, expected message
+        return [
+            'uses label' => ['Test', null, 'Test was not valid.'],
+            'prefers error label' => ['Test', 'Test Field', 'Test Field was not valid.'],
+            'falls back to key for null label' => [null, null, 'test was not valid.'],
+            'falls back to key for empty label' => ['', null, 'test was not valid.'],
+            'falls back to label for empty error label' => ['Test', '', 'Test was not valid.'],
+        ];
+    }
+
+    /**
+     * Adapted from a real-world rule for a leave-of-absence form's "End of Leave Date" component.
+     *
+     * Neither output of the top-level "if" is a literal true, but both are nested "if"s that can return true.
+     */
+    private static function nestedIfOutputsRule(): array
+    {
+        return json_decode(
+            file_get_contents(__DIR__.'/../Fixtures/leave_dates_nested_if_validation.json'),
+            true,
+            flags: JSON_THROW_ON_ERROR,
+        );
+    }
+
+    public function testCheckDefinitionWithNestedIfOutputsIsClean(): void
+    {
+        $validation = new JSONValidation(self::nestedIfOutputsRule());
+
+        $checked = $validation->checkDefinition($this->getComponent());
+
+        $this->assertSame([], $checked->all(), 'Nested "if" outputs can return true, so they should not be flagged.');
+    }
+
+    #[DataProvider('nestedIfOutputsProvider')]
+    public function testInvokeWithNestedIfOutputs(?string $startOfLeaveDate, ?string $endOfLeaveDate, ?string $expectedError): void
+    {
+        new JSONLogicInitHelper;
+
+        $component = $this->getComponent(validations: ['json' => self::nestedIfOutputsRule()]);
+
+        $result = $component->advancedValidations()($component, [
+            'startOfLeaveDate' => $startOfLeaveDate,
+            'endOfLeaveDate' => $endOfLeaveDate,
+        ]);
+
+        $this->assertSame($expectedError === null ? [] : ['test' => [$expectedError]], $result->toArray());
+    }
+
+    public static function nestedIfOutputsProvider(): array
+    {
+        $missingStart = 'Enter a start date before entering an end date.';
+        $tooEarly = 'The absence end date cannot be earlier than the absence start date.';
+        $tooLong = 'The leave period cannot exceed one year.';
+
+        // startOfLeaveDate, endOfLeaveDate, expected error
+        return [
+            'both dates missing' => [null, null, null],
+            'start date missing' => [null, '2024-10-05T05:00:00.000000Z', $missingStart],
+            'end date missing' => ['2024-10-05T05:00:00.000000Z', null, null],
+            'end before start' => ['2024-10-05T05:00:00.000000Z', '2024-10-01T05:00:00.000000Z', $tooEarly],
+            'end before start, previous year' => ['2025-01-05T06:00:00.000000Z', '2024-12-20T06:00:00.000000Z', $tooEarly],
+            'same day' => ['2024-10-05T05:00:00.000000Z', '2024-10-05T05:00:00.000000Z', null],
+            'a few days' => ['2024-10-01T05:00:00.000000Z', '2024-10-05T05:00:00.000000Z', null],
+            'crosses into next year' => ['2024-11-01T05:00:00.000000Z', '2025-03-01T06:00:00.000000Z', null],
+            'one day short of a year' => ['2024-11-01T05:00:00.000000Z', '2025-10-31T05:00:00.000000Z', null],
+            'exactly one year' => ['2024-11-01T05:00:00.000000Z', '2025-11-01T05:00:00.000000Z', null],
+            'one year and a day' => ['2024-11-01T05:00:00.000000Z', '2025-11-02T05:00:00.000000Z', $tooLong],
+            'two years' => ['2024-11-01T05:00:00.000000Z', '2026-11-01T05:00:00.000000Z', $tooLong],
+            'single-digit month' => ['2024-03-15T05:00:00.000000Z', '2025-03-16T05:00:00.000000Z', $tooLong],
+        ];
+    }
+
     private function getComponent(
         array $validations = [],
+        ?string $label = 'Test',
+        ?string $errorLabel = null,
     ): ComponentInterface {
         /** @var ComponentInterface $component */
         return new Textfield(
             key: 'test',
-            label: 'Test',
-            errorLabel: null,
+            label: $label,
+            errorLabel: $errorLabel,
             components: [],
             validations: $validations,
             hasMultipleValues: false,
