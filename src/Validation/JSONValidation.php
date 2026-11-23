@@ -7,7 +7,11 @@ use Illuminate\Support\MessageBag as MessageBagImpl;
 use JWadhams\JsonLogic;
 use Northwestern\SysDev\DynamicForms\Components\ComponentInterface;
 use Northwestern\SysDev\DynamicForms\Errors\InvalidDefinitionError;
+use Northwestern\SysDev\DynamicForms\Forms\Definition\DefinitionCheckResult;
+use Northwestern\SysDev\DynamicForms\Forms\Definition\DefinitionIssue;
+use Northwestern\SysDev\DynamicForms\Forms\Definition\DefinitionIssueType;
 use Northwestern\SysDev\DynamicForms\JSONLogic\JsonLogicHelpers;
+use Northwestern\SysDev\DynamicForms\JSONLogic\JsonLogicIfOperationAnalysis;
 
 class JSONValidation implements ValidationInterface
 {
@@ -24,7 +28,7 @@ class JSONValidation implements ValidationInterface
 
         if (! $this->isValidCustomValidation($this->jsonLogic)) {
             throw new InvalidDefinitionError(
-                'Custom JSON Logic validations must always use the "if" parameter. The first argument to the statement must be the "true" case, and the second should be the error to display if the validation fails.',
+                DefinitionIssueType::JsonValidationInvalidStructure->description(),
                 $component->key(),
             );
         }
@@ -35,13 +39,47 @@ class JSONValidation implements ValidationInterface
             // There SHOULD be a true & error message case, but it's possible to screw it up.
             // If the return value is false/null/0/"", provide *something* as a breadcrumb to help troubleshoot.
             if (! $validationResult) {
-                $validationResult = "{$component->label()} was not valid.";
+                $fieldLabel = $component->errorLabel() ?: $component->label() ?: $component->key();
+                $validationResult = "{$fieldLabel} was not valid.";
             }
 
             $bag->add($component->key(), $validationResult);
         }
 
         return $bag;
+    }
+
+    public function checkDefinition(ComponentInterface $component): DefinitionCheckResult
+    {
+        if (! $this->isValidCustomValidation($this->jsonLogic)) {
+            return new DefinitionCheckResult([
+                $this->issue($component, DefinitionIssueType::JsonValidationInvalidStructure),
+            ]);
+        }
+
+        // The top-level "if" is always [condition, output, output], but outputs can be more operations instead of
+        // scalars, so we need to walk the tree.
+        $outputs = array_slice(array_values($this->jsonLogic['if']), 1);
+        $mayPass = collect($outputs)->contains(
+            fn (mixed $output) => JsonLogicIfOperationAnalysis::mayReturnTrue($output),
+        );
+        if ($mayPass) {
+            return new DefinitionCheckResult;
+        }
+
+        return new DefinitionCheckResult([
+            $this->issue($component, DefinitionIssueType::JsonValidationMissingTrue),
+        ]);
+    }
+
+    private function issue(ComponentInterface $component, DefinitionIssueType $type): DefinitionIssue
+    {
+        return new DefinitionIssue(
+            componentKey: $component->key(),
+            componentLabel: $component->label(),
+            jsonPath: 'validate.json.if',
+            type: $type,
+        );
     }
 
     /**

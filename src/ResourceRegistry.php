@@ -8,7 +8,7 @@ use Northwestern\SysDev\DynamicForms\Resources\ResourceInterface;
 
 class ResourceRegistry
 {
-    protected array $resources;
+    protected array $resources = [];
 
     public function __construct()
     {

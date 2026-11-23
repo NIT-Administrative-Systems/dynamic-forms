@@ -120,16 +120,16 @@ final class SelectTest extends InputComponentTestCase
     public function testSetResourceRegistry_valuesDataSrc(): void
     {
         $valuesComponent = $this->getComponent();
-        $resourceRegistry = $this->app->make(ResourceRegistry::class);
+
+        // Ensure that activateResources() is not called, since it reads the registered resources
+        $resourceRegistry = $this->createMock(ResourceRegistry::class);
+        $resourceRegistry->expects($this->never())->method('registered');
+
         $valuesComponent->setResourceRegistry($resourceRegistry);
 
-        $this->assertNotNull($valuesComponent->getResourceRegistry());
+        $this->assertSame($resourceRegistry, $valuesComponent->getResourceRegistry());
         $this->assertNotNull($valuesComponent->optionValues());
         $this->assertEquals(Select::DATA_SRC_VALUES, $valuesComponent->dataSource());
-
-//        Ensure that activateResources() was not called
-        $this->expectException(\Error::class);
-        $resourceRegistry->registered();
     }
 
     public function testSetResourceRegistry_resourcesDataSrc(): void

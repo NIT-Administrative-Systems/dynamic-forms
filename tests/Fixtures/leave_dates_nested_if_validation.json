@@ -1,0 +1,115 @@
+{
+    "if": [
+        {
+            "or": [
+                {
+                    "!": [
+                        {
+                            "var": "data.startOfLeaveDate"
+                        }
+                    ]
+                },
+                {
+                    "!": [
+                        {
+                            "var": "data.endOfLeaveDate"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "if": [
+                {
+                    "and": [
+                        {
+                            "!": [
+                                {
+                                    "var": "data.startOfLeaveDate"
+                                }
+                            ]
+                        },
+                        {
+                            "var": "data.endOfLeaveDate"
+                        }
+                    ]
+                },
+                "Enter a start date before entering an end date.",
+                true
+            ]
+        },
+        {
+            "if": [
+                {
+                    "<": [
+                        {
+                            "substr": [
+                                {
+                                    "var": "data.endOfLeaveDate"
+                                },
+                                0,
+                                10
+                            ]
+                        },
+                        {
+                            "substr": [
+                                {
+                                    "var": "data.startOfLeaveDate"
+                                },
+                                0,
+                                10
+                            ]
+                        }
+                    ]
+                },
+                "The absence end date cannot be earlier than the absence start date.",
+                {
+                    "if": [
+                        {
+                            "<=": [
+                                {
+                                    "substr": [
+                                        {
+                                            "var": "data.endOfLeaveDate"
+                                        },
+                                        0,
+                                        10
+                                    ]
+                                },
+                                {
+                                    "cat": [
+                                        {
+                                            "+": [
+                                                {
+                                                    "substr": [
+                                                        {
+                                                            "var": "data.startOfLeaveDate"
+                                                        },
+                                                        0,
+                                                        4
+                                                    ]
+                                                },
+                                                1
+                                            ]
+                                        },
+                                        {
+                                            "substr": [
+                                                {
+                                                    "var": "data.startOfLeaveDate"
+                                                },
+                                                4,
+                                                6
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        true,
+                        "The leave period cannot exceed one year."
+                    ]
+                }
+            ]
+        }
+    ]
+}
