@@ -4,9 +4,11 @@ namespace Northwestern\SysDev\DynamicForms\Tests\Forms;
 
 use Northwestern\SysDev\DynamicForms\ComponentRegistry;
 use Northwestern\SysDev\DynamicForms\DefinitionCheckRegistry;
+use Northwestern\SysDev\DynamicForms\FileComponentRegistry;
 use Northwestern\SysDev\DynamicForms\Forms\Definition\DefinitionIssue;
 use Northwestern\SysDev\DynamicForms\Forms\Definition\DefinitionIssueType;
 use Northwestern\SysDev\DynamicForms\Forms\Form;
+use Northwestern\SysDev\DynamicForms\Storage\StorageInterface;
 use Northwestern\SysDev\DynamicForms\Tests\Fixtures\Definition\CustomIssueType;
 use Northwestern\SysDev\DynamicForms\Tests\Fixtures\Definition\DuplicateLabelCheck;
 use Northwestern\SysDev\DynamicForms\Tests\Fixtures\Definition\FlaggedKeyCheck;
@@ -130,6 +132,54 @@ final class FormTest extends TestCase
             ['other', CustomIssueType::AppError],
             [null, CustomIssueType::AppError],
         ], $issues);
+    }
+
+    public function testUsesComponentRegistryFromConstructor(): void
+    {
+        $components = new ComponentRegistry;
+        $components->register(SelfCheckingTextfield::class);
+
+        // Not registered in the container's ComponentRegistry, so this would throw if it were used
+        $form = new Form(json_encode(['components' => [
+            ['key' => 'self', 'type' => SelfCheckingTextfield::TYPE],
+        ]]), componentRegistry: $components);
+
+        $this->assertInstanceOf(SelfCheckingTextfield::class, $form->flatComponents()['self']);
+    }
+
+    public function testUsesFileComponentRegistryFromConstructor(): void
+    {
+        $driver = $this->createMock(StorageInterface::class);
+        $this->app->instance('test-storage-driver', $driver);
+
+        $files = $this->createMock(FileComponentRegistry::class);
+        $files->expects($this->once())->method('get')->with('custom')->willReturn('test-storage-driver');
+
+        $form = new Form(json_encode(['components' => [
+            ['key' => 'upload', 'type' => 'file', 'storage' => 'custom'],
+        ]]), fileComponentRegistry: $files);
+
+        $this->assertSame($driver, $form->flatComponents()['upload']->getStorageDriver());
+    }
+
+    public function testCheckDefinitionUsesRegistryFromConstructor(): void
+    {
+        // The container's registry has the defaults, which would flag the invalid JSON validation
+        $this->app->instance(DefinitionCheckRegistry::class, new DefinitionCheckRegistry);
+
+        $checks = $this->createMock(DefinitionCheckRegistry::class);
+        $checks->method('componentChecks')->willReturn([]);
+        $checks->method('formChecks')->willReturn([new RequiresEmailCheck]);
+
+        $form = new Form(json_encode(['components' => [
+            ['key' => 'broken', 'type' => 'textfield', 'validate' => ['json' => ['if' => [true, 'Invalid']]]],
+        ]]), definitionCheckRegistry: $checks);
+
+        $issues = $form->checkDefinition()->all();
+
+        $this->assertCount(1, $issues);
+        $this->assertTrue($issues[0]->isFormIssue());
+        $this->assertSame(CustomIssueType::AppError, $issues[0]->type);
     }
 
     /**

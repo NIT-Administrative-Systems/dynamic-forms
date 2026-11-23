@@ -41,7 +41,9 @@ class Form
 
     protected FileComponentRegistry $fileComponentRegistry;
 
-    protected ?ResourceRegistry $resourceRegistry;
+    protected ResourceRegistry $resourceRegistry;
+
+    protected DefinitionCheckRegistry $definitionCheckRegistry;
 
     /**
      * @throws InvalidDefinitionError The JSON is malformed, is missing required properties, or uses unsupported component settings.
@@ -49,16 +51,17 @@ class Form
      * @throws UnknownResourceError A select component uses a resource that is not registered in the {@see ResourceRegistry}.
      * @throws UnknownStorageDriverError A file component uses a storage driver that is not registered in the {@see FileComponentRegistry}.
      */
-    public function __construct(string $definitionJson, ?ResourceRegistry $resourceRegistry = null)
-    {
-        $this->componentRegistry = resolve(ComponentRegistry::class);
-        $this->fileComponentRegistry = resolve(FileComponentRegistry::class);
-
-        if (! isset($resourceRegistry)) {
-            $this->resourceRegistry = resolve(ResourceRegistry::class);
-        } else {
-            $this->resourceRegistry = $resourceRegistry;
-        }
+    public function __construct(
+        string $definitionJson,
+        ?ResourceRegistry $resourceRegistry = null,
+        ?ComponentRegistry $componentRegistry = null,
+        ?FileComponentRegistry $fileComponentRegistry = null,
+        ?DefinitionCheckRegistry $definitionCheckRegistry = null,
+    ) {
+        $this->resourceRegistry = $resourceRegistry ?? resolve(ResourceRegistry::class);
+        $this->componentRegistry = $componentRegistry ?? resolve(ComponentRegistry::class);
+        $this->fileComponentRegistry = $fileComponentRegistry ?? resolve(FileComponentRegistry::class);
+        $this->definitionCheckRegistry = $definitionCheckRegistry ?? resolve(DefinitionCheckRegistry::class);
 
         $this->setDefinition($definitionJson);
     }
@@ -92,9 +95,7 @@ class Form
      */
     public function checkDefinition(): DefinitionCheckResult
     {
-        /** @var DefinitionCheckRegistry $registry */
-        $registry = resolve(DefinitionCheckRegistry::class);
-        $componentChecks = $registry->componentChecks();
+        $componentChecks = $this->definitionCheckRegistry->componentChecks();
 
         $checked = new DefinitionCheckResult;
 
@@ -106,7 +107,7 @@ class Form
             }
         }
 
-        foreach ($registry->formChecks() as $check) {
+        foreach ($this->definitionCheckRegistry->formChecks() as $check) {
             $checked = $checked->merge($check->check($this));
         }
 
