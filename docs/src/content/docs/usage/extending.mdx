@@ -75,7 +75,7 @@ Here is an example of creating and registering a layout component for tabs.
 namespace App;
 
 use Northwestern\SysDev\DynamicForms\Components\ComponentInterface;
-use Northwestern\SysDev\DynamicForms\Components\BaseComponent
+use Northwestern\SysDev\DynamicForms\Components\BaseComponent;
 
 // You can extend BaseComponent for a lot of functionality, or implement
 // the ComponentInterface if you need to go totally outside the box.
@@ -185,7 +185,9 @@ class AppServiceProvider extends ServiceProvider
 
 ## Adding Form Definition Checks
 
-You can customize the [form definition checks](/dynamic-forms/usage/usage/#checking-form-definitions) in two ways:
+The [form definition checks](/dynamic-forms/usage/usage/#checking-form-definitions) enable you to run validations on the form schema. Dynamic Forms does this to ensure schemas will work with the library, but you can extend this with your own checks too.
+
+There are two ways to customize the checks:
 
 1. Custom components can implement their own checks in `checkDefinition()`.
 1. Checks can be registered globally, for components and the form as a whole, using the `DefinitionCheckRegistry` service.
@@ -367,3 +369,16 @@ class AppServiceProvider extends ServiceProvider
 </TabItem>
 </Tabs>
 
+### Custom Definition Check Registry
+
+By default, Dynamic Forms creates a single `DefinitionCheckRegistry` with the checks, and this will be used for all forms.
+
+If you want certain checks to run only on specific types of form definitions, you can pass your own instance of the definition check registry to the `Form` constructor:
+
+```php
+$myChecks = new DefinitionCheckRegistry();
+$myChecks->register(new RequiredFieldsExistCheck());
+
+$form = new Form($jsonDefinition, definitionCheckRegistry: $myChecks);
+$form->checkDefinition();
+```

@@ -22,6 +22,21 @@ interface ComponentInterface
 }
 ```
 
+There are three new arguments for the `Form::__construct(...)` method. The new arguments default to null. Existing `new Form(...)` will continue to work. **If you have extended `Form` and overwritten the constructor, this is a breaking change.**
+
+```php
+class Form
+{
+    public function __construct(
+        string $definitionJson,
+        ?ResourceRegistry $resourceRegistry = null,
+        ?ComponentRegistry $componentRegistry = null,
+        ?FileComponentRegistry $fileComponentRegistry = null,
+        ?DefinitionCheckRegistry $definitionCheckRegistry = null,
+    );
+}
+```
+
 ## v3.0.0
 There are no direct breaking changes to the Dynamic Forms APIs in this version.
 

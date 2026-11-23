@@ -5,7 +5,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
-## [v4.0.0] - 2026-11-20
+## [v4.0.0] - 2026-11-23
 
 ### Added
 
@@ -15,6 +15,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Changed
 
 - The `ComponentInterface` has a new method: `public function checkDefinition(): DefinitionCheckResult`.
+- Additional default-null parameters have been added to `Form::__construct(...)`.
 
 ### Fixed
 
