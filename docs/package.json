@@ -9,7 +9,7 @@
         "@astrojs/starlight": "^0.42.1",
         "@nu-appdev/northwestern-starlight-theme": "^1.6.3",
         "astro": "^7.3.2",
-        "sharp": "^0.35.4"
+        "sharp": "^0.35.5"
     },
     "scripts": {
         "astro": "node_modules/.bin/astro",
