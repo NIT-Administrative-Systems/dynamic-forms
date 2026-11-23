@@ -2,8 +2,8 @@
 
 namespace Northwestern\SysDev\DynamicForms\Tests\Fixtures\Definition;
 
-use Northwestern\SysDev\DynamicForms\Forms\Definition\CheckedFormDefinition;
 use Northwestern\SysDev\DynamicForms\Forms\Definition\Checks\FormDefinitionCheck;
+use Northwestern\SysDev\DynamicForms\Forms\Definition\DefinitionCheckResult;
 use Northwestern\SysDev\DynamicForms\Forms\Definition\DefinitionIssue;
 use Northwestern\SysDev\DynamicForms\Forms\Form;
 
@@ -12,7 +12,7 @@ use Northwestern\SysDev\DynamicForms\Forms\Form;
  */
 final class DuplicateLabelCheck implements FormDefinitionCheck
 {
-    public function check(Form $form): CheckedFormDefinition
+    public function check(Form $form): DefinitionCheckResult
     {
         $seen = [];
         $issues = [];
@@ -35,6 +35,6 @@ final class DuplicateLabelCheck implements FormDefinitionCheck
             $seen[$label] = true;
         }
 
-        return new CheckedFormDefinition($issues);
+        return new DefinitionCheckResult($issues);
     }
 }

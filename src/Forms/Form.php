@@ -4,19 +4,19 @@ namespace Northwestern\SysDev\DynamicForms\Forms;
 
 use Illuminate\Support\Arr;
 use Northwestern\SysDev\DynamicForms\ComponentRegistry;
-use Northwestern\SysDev\DynamicForms\DefinitionCheckRegistry;
 use Northwestern\SysDev\DynamicForms\Components\BaseComponent;
 use Northwestern\SysDev\DynamicForms\Components\ComponentInterface;
 use Northwestern\SysDev\DynamicForms\Components\CustomSubcomponentDeserialization;
 use Northwestern\SysDev\DynamicForms\Components\ResourceValues;
 use Northwestern\SysDev\DynamicForms\Components\UploadInterface;
+use Northwestern\SysDev\DynamicForms\DefinitionCheckRegistry;
 use Northwestern\SysDev\DynamicForms\Errors\InvalidDefinitionError;
 use Northwestern\SysDev\DynamicForms\Errors\UnknownComponentError;
 use Northwestern\SysDev\DynamicForms\Errors\UnknownResourceError;
 use Northwestern\SysDev\DynamicForms\Errors\UnknownStorageDriverError;
 use Northwestern\SysDev\DynamicForms\FileComponentRegistry;
 use Northwestern\SysDev\DynamicForms\Forms\Concerns\HandlesTree;
-use Northwestern\SysDev\DynamicForms\Forms\Definition\CheckedFormDefinition;
+use Northwestern\SysDev\DynamicForms\Forms\Definition\DefinitionCheckResult;
 use Northwestern\SysDev\DynamicForms\ResourceRegistry;
 
 class Form
@@ -90,13 +90,13 @@ class Form
      * Every component is checked, including ones that are conditionally hidden. This runs each component's own
      * checks, then the checks registered in the {@see DefinitionCheckRegistry}.
      */
-    public function checkDefinition(): CheckedFormDefinition
+    public function checkDefinition(): DefinitionCheckResult
     {
         /** @var DefinitionCheckRegistry $registry */
         $registry = resolve(DefinitionCheckRegistry::class);
         $componentChecks = $registry->componentChecks();
 
-        $checked = new CheckedFormDefinition;
+        $checked = new DefinitionCheckResult;
 
         foreach ($this->flatComponents() as $component) {
             $checked = $checked->merge($component->checkDefinition());

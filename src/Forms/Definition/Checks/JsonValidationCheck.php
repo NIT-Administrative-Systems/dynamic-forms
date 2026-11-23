@@ -3,7 +3,7 @@
 namespace Northwestern\SysDev\DynamicForms\Forms\Definition\Checks;
 
 use Northwestern\SysDev\DynamicForms\Components\ComponentInterface;
-use Northwestern\SysDev\DynamicForms\Forms\Definition\CheckedFormDefinition;
+use Northwestern\SysDev\DynamicForms\Forms\Definition\DefinitionCheckResult;
 use Northwestern\SysDev\DynamicForms\Validation\JSONValidation;
 
 /**
@@ -11,12 +11,12 @@ use Northwestern\SysDev\DynamicForms\Validation\JSONValidation;
  */
 final class JsonValidationCheck implements ComponentDefinitionCheck
 {
-    public function check(ComponentInterface $component): CheckedFormDefinition
+    public function check(ComponentInterface $component): DefinitionCheckResult
     {
         $validation = $component->advancedValidations();
 
         return $validation instanceof JSONValidation
             ? $validation->checkDefinition($component)
-            : new CheckedFormDefinition;
+            : new DefinitionCheckResult;
     }
 }

@@ -239,17 +239,17 @@ namespace App\Forms;
 
 use App\Forms\MyAppDefinitionIssueType;
 use Northwestern\SysDev\DynamicForms\Components\BaseComponent;
-use Northwestern\SysDev\DynamicForms\Forms\Definition\CheckedFormDefinition;
+use Northwestern\SysDev\DynamicForms\Forms\Definition\DefinitionCheckResult;
 use Northwestern\SysDev\DynamicForms\Forms\Definition\DefinitionIssue;
 
 class Tabs extends BaseComponent
 {
     // . . . from above example . . .
 
-    public function checkDefinition(): CheckedFormDefinition
+    public function checkDefinition(): DefinitionCheckResult
     {
         if ($somethingIsWrong) {
-            return new CheckedFormDefinition(issues: [
+            return new DefinitionCheckResult(issues: [
                 new DefinitionIssue(
                     componentKey: $this->key(),
                     componentLabel: $this->label(),
@@ -260,7 +260,7 @@ class Tabs extends BaseComponent
             ]);
         }
 
-        return new CheckedFormDefinition;
+        return new DefinitionCheckResult;
     }
 }
 ```
@@ -279,20 +279,20 @@ namespace App\Forms\Checks;
 
 use App\Forms\MyAppDefinitionIssueType;
 use Northwestern\SysDev\DynamicForms\Components\ComponentInterface;
-use Northwestern\SysDev\DynamicForms\Forms\Definition\CheckedFormDefinition;
 use Northwestern\SysDev\DynamicForms\Forms\Definition\Checks\ComponentDefinitionCheck;
+use Northwestern\SysDev\DynamicForms\Forms\Definition\DefinitionCheckResult;
 use Northwestern\SysDev\DynamicForms\Forms\Definition\DefinitionIssue;
 
 class DescriptionCheck implements ComponentDefinitionCheck
 {
-    public function check(ComponentInterface $component): CheckedFormDefinition
+    public function check(ComponentInterface $component): DefinitionCheckResult
     {
         // Layout components don't take input, so they don't need a description
         if (! $component->canValidate() || filled($component->additional('description'))) {
-            return new CheckedFormDefinition;
+            return new DefinitionCheckResult;
         }
 
-        return new CheckedFormDefinition([
+        return new DefinitionCheckResult([
             new DefinitionIssue(
                 componentKey: $component->key(),
                 componentLabel: $component->label(),
@@ -311,21 +311,21 @@ class DescriptionCheck implements ComponentDefinitionCheck
 namespace App\Forms\Checks;
 
 use App\Forms\MyAppDefinitionIssueType;
-use Northwestern\SysDev\DynamicForms\Forms\Definition\CheckedFormDefinition;
 use Northwestern\SysDev\DynamicForms\Forms\Definition\Checks\FormDefinitionCheck;
+use Northwestern\SysDev\DynamicForms\Forms\Definition\DefinitionCheckResult;
 use Northwestern\SysDev\DynamicForms\Forms\Definition\DefinitionIssue;
 use Northwestern\SysDev\DynamicForms\Forms\Form;
 
 class SuggestedFieldsCheck implements FormDefinitionCheck
 {
-    public function check(Form $form): CheckedFormDefinition
+    public function check(Form $form): DefinitionCheckResult
     {
         // flatComponents() includes components nested in layout components, keyed by component key
         if (array_key_exists('iAgree', $form->flatComponents())) {
-            return new CheckedFormDefinition;
+            return new DefinitionCheckResult;
         }
 
-        return new CheckedFormDefinition([
+        return new DefinitionCheckResult([
             DefinitionIssue::forForm(
                 jsonPath: 'components',
                 type: MyAppDefinitionIssueType::MissingSuggestedField,

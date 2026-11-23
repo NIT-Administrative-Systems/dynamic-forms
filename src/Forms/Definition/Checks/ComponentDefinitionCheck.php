@@ -4,7 +4,7 @@ namespace Northwestern\SysDev\DynamicForms\Forms\Definition\Checks;
 
 use Northwestern\SysDev\DynamicForms\Components\ComponentInterface;
 use Northwestern\SysDev\DynamicForms\DefinitionCheckRegistry;
-use Northwestern\SysDev\DynamicForms\Forms\Definition\CheckedFormDefinition;
+use Northwestern\SysDev\DynamicForms\Forms\Definition\DefinitionCheckResult;
 
 /**
  * A definition check that runs against every component in a form, regardless of the component's type.
@@ -14,5 +14,5 @@ use Northwestern\SysDev\DynamicForms\Forms\Definition\CheckedFormDefinition;
  */
 interface ComponentDefinitionCheck
 {
-    public function check(ComponentInterface $component): CheckedFormDefinition;
+    public function check(ComponentInterface $component): DefinitionCheckResult;
 }

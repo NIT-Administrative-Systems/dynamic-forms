@@ -18,7 +18,7 @@ There is a change to the `ComponentInterface`. **If you have developed your own 
 ```php
 interface ComponentInterface
 {
-    public function checkDefinition(): CheckedFormDefinition;
+    public function checkDefinition(): DefinitionCheckResult;
 }
 ```
 

@@ -2,8 +2,8 @@
 
 namespace Northwestern\SysDev\DynamicForms\Tests\Fixtures\Definition;
 
-use Northwestern\SysDev\DynamicForms\Forms\Definition\CheckedFormDefinition;
 use Northwestern\SysDev\DynamicForms\Forms\Definition\Checks\FormDefinitionCheck;
+use Northwestern\SysDev\DynamicForms\Forms\Definition\DefinitionCheckResult;
 use Northwestern\SysDev\DynamicForms\Forms\Definition\DefinitionIssue;
 use Northwestern\SysDev\DynamicForms\Forms\Form;
 
@@ -12,13 +12,13 @@ use Northwestern\SysDev\DynamicForms\Forms\Form;
  */
 final class RequiresEmailCheck implements FormDefinitionCheck
 {
-    public function check(Form $form): CheckedFormDefinition
+    public function check(Form $form): DefinitionCheckResult
     {
         if (array_key_exists('email', $form->flatComponents())) {
-            return new CheckedFormDefinition;
+            return new DefinitionCheckResult;
         }
 
-        return new CheckedFormDefinition([
+        return new DefinitionCheckResult([
             DefinitionIssue::forForm('components', CustomIssueType::AppError, 'Add an "email" component.'),
         ]);
     }

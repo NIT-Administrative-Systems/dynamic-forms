@@ -2,7 +2,7 @@
 
 namespace Northwestern\SysDev\DynamicForms\Tests\Forms\Definition;
 
-use Northwestern\SysDev\DynamicForms\Forms\Definition\CheckedFormDefinition;
+use Northwestern\SysDev\DynamicForms\Forms\Definition\DefinitionCheckResult;
 use Northwestern\SysDev\DynamicForms\Forms\Definition\DefinitionIssue;
 use Northwestern\SysDev\DynamicForms\Forms\Definition\DefinitionIssueSeverity;
 use Northwestern\SysDev\DynamicForms\Forms\Definition\DefinitionIssueType;
@@ -11,11 +11,11 @@ use Northwestern\SysDev\DynamicForms\Tests\Fixtures\Definition\CustomIssueType;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
-final class CheckedFormDefinitionTest extends TestCase
+final class DefinitionCheckResultTest extends TestCase
 {
     public function testEmpty(): void
     {
-        $checked = new CheckedFormDefinition;
+        $checked = new DefinitionCheckResult;
 
         $this->assertTrue($checked->isClean());
         $this->assertFalse($checked->hasErrors());
@@ -30,7 +30,7 @@ final class CheckedFormDefinitionTest extends TestCase
         $error = $this->issue('a', DefinitionIssueType::JsonValidationInvalidStructure);
         $warning = $this->issue('b', DefinitionIssueType::JsonValidationMissingTrue);
 
-        $checked = new CheckedFormDefinition([$warning, $error]);
+        $checked = new DefinitionCheckResult([$warning, $error]);
 
         $this->assertFalse($checked->isClean());
         $this->assertTrue($checked->hasErrors());
@@ -42,7 +42,7 @@ final class CheckedFormDefinitionTest extends TestCase
 
     public function testOnlyWarnings(): void
     {
-        $checked = new CheckedFormDefinition([$this->issue('a', DefinitionIssueType::JsonValidationMissingTrue)]);
+        $checked = new DefinitionCheckResult([$this->issue('a', DefinitionIssueType::JsonValidationMissingTrue)]);
 
         $this->assertFalse($checked->isClean());
         $this->assertFalse($checked->hasErrors());
@@ -54,8 +54,8 @@ final class CheckedFormDefinitionTest extends TestCase
         $first = $this->issue('same', DefinitionIssueType::JsonValidationInvalidStructure);
         $second = $this->issue('same', DefinitionIssueType::JsonValidationMissingTrue);
 
-        $left = new CheckedFormDefinition([$first]);
-        $right = new CheckedFormDefinition([$second]);
+        $left = new DefinitionCheckResult([$first]);
+        $right = new DefinitionCheckResult([$second]);
         $merged = $left->merge($right);
 
         $this->assertSame([$first, $second], $merged->all());
@@ -67,7 +67,7 @@ final class CheckedFormDefinitionTest extends TestCase
     {
         $issue = $this->issue('a', DefinitionIssueType::JsonValidationMissingTrue);
 
-        $checked = new CheckedFormDefinition(['a' => $issue]);
+        $checked = new DefinitionCheckResult(['a' => $issue]);
 
         $this->assertSame([$issue], $checked->all());
     }
@@ -75,7 +75,7 @@ final class CheckedFormDefinitionTest extends TestCase
     public function testReturnedIssuesCannotMutateCollection(): void
     {
         $issue = $this->issue('a', DefinitionIssueType::JsonValidationMissingTrue);
-        $checked = new CheckedFormDefinition([$issue]);
+        $checked = new DefinitionCheckResult([$issue]);
 
         $copy = $checked->all();
         unset($copy[0]);
@@ -102,7 +102,7 @@ final class CheckedFormDefinitionTest extends TestCase
         $customWarning = $this->issue('b', CustomIssueType::AppWarning);
         $builtInWarning = $this->issue('c', DefinitionIssueType::JsonValidationMissingTrue);
 
-        $checked = new CheckedFormDefinition([$customError, $customWarning, $builtInWarning]);
+        $checked = new DefinitionCheckResult([$customError, $customWarning, $builtInWarning]);
 
         $this->assertSame([$customError], $checked->errors());
         $this->assertSame([$customWarning, $builtInWarning], $checked->warnings());

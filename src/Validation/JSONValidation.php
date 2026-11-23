@@ -7,7 +7,7 @@ use Illuminate\Support\MessageBag as MessageBagImpl;
 use JWadhams\JsonLogic;
 use Northwestern\SysDev\DynamicForms\Components\ComponentInterface;
 use Northwestern\SysDev\DynamicForms\Errors\InvalidDefinitionError;
-use Northwestern\SysDev\DynamicForms\Forms\Definition\CheckedFormDefinition;
+use Northwestern\SysDev\DynamicForms\Forms\Definition\DefinitionCheckResult;
 use Northwestern\SysDev\DynamicForms\Forms\Definition\DefinitionIssue;
 use Northwestern\SysDev\DynamicForms\Forms\Definition\DefinitionIssueType;
 use Northwestern\SysDev\DynamicForms\JSONLogic\JsonLogicHelpers;
@@ -47,20 +47,20 @@ class JSONValidation implements ValidationInterface
         return $bag;
     }
 
-    public function checkDefinition(ComponentInterface $component): CheckedFormDefinition
+    public function checkDefinition(ComponentInterface $component): DefinitionCheckResult
     {
         if (! $this->isValidCustomValidation($this->jsonLogic)) {
-            return new CheckedFormDefinition([
+            return new DefinitionCheckResult([
                 $this->issue($component, DefinitionIssueType::JsonValidationInvalidStructure),
             ]);
         }
 
         $outputs = array_slice(array_values($this->jsonLogic['if']), 1);
         if (in_array(true, $outputs, true)) {
-            return new CheckedFormDefinition;
+            return new DefinitionCheckResult;
         }
 
-        return new CheckedFormDefinition([
+        return new DefinitionCheckResult([
             $this->issue($component, DefinitionIssueType::JsonValidationMissingTrue),
         ]);
     }

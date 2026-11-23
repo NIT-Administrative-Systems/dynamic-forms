@@ -11,13 +11,13 @@ use Northwestern\SysDev\DynamicForms\Calculation\JSONCalculation;
 use Northwestern\SysDev\DynamicForms\Conditional\ConditionalInterface;
 use Northwestern\SysDev\DynamicForms\Conditional\JSONConditional;
 use Northwestern\SysDev\DynamicForms\Conditional\SimpleConditional;
+use Northwestern\SysDev\DynamicForms\DefinitionCheckRegistry;
 use Northwestern\SysDev\DynamicForms\Errors\CalculationNotImplemented;
 use Northwestern\SysDev\DynamicForms\Errors\ConditionalNotImplemented;
 use Northwestern\SysDev\DynamicForms\Errors\InvalidDefinitionError;
 use Northwestern\SysDev\DynamicForms\Errors\ValidationNotImplementedError;
-use Northwestern\SysDev\DynamicForms\DefinitionCheckRegistry;
-use Northwestern\SysDev\DynamicForms\Forms\Definition\CheckedFormDefinition;
 use Northwestern\SysDev\DynamicForms\Forms\Definition\Checks\JsonValidationCheck;
+use Northwestern\SysDev\DynamicForms\Forms\Definition\DefinitionCheckResult;
 use Northwestern\SysDev\DynamicForms\Validation\JSONValidation;
 use Northwestern\SysDev\DynamicForms\Validation\ValidationInterface;
 
@@ -300,9 +300,9 @@ abstract class BaseComponent implements ComponentInterface
      * Components have no checks of their own by default. Checks that apply to every component,
      * like {@see JsonValidationCheck}, are registered in the {@see DefinitionCheckRegistry}.
      */
-    public function checkDefinition(): CheckedFormDefinition
+    public function checkDefinition(): DefinitionCheckResult
     {
-        return new CheckedFormDefinition;
+        return new DefinitionCheckResult;
     }
 
     public function additional(string $key): mixed

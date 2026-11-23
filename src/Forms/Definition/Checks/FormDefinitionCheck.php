@@ -3,7 +3,7 @@
 namespace Northwestern\SysDev\DynamicForms\Forms\Definition\Checks;
 
 use Northwestern\SysDev\DynamicForms\DefinitionCheckRegistry;
-use Northwestern\SysDev\DynamicForms\Forms\Definition\CheckedFormDefinition;
+use Northwestern\SysDev\DynamicForms\Forms\Definition\DefinitionCheckResult;
 use Northwestern\SysDev\DynamicForms\Forms\Form;
 
 /**
@@ -13,5 +13,5 @@ use Northwestern\SysDev\DynamicForms\Forms\Form;
  */
 interface FormDefinitionCheck
 {
-    public function check(Form $form): CheckedFormDefinition;
+    public function check(Form $form): DefinitionCheckResult;
 }

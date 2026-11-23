@@ -3,12 +3,12 @@
 namespace Northwestern\SysDev\DynamicForms\Forms\Definition;
 
 /**
- * Results of checking a form definition for problems.
+ * Results of checking a form definition, or a single component's definition, for problems.
  *
  * Issues with {@see DefinitionIssueSeverity::Error} severity will cause submissions to fail. Issues with
  * {@see DefinitionIssueSeverity::Warning} severity are probably mistakes, but submissions will still be processed.
  */
-final readonly class CheckedFormDefinition
+final readonly class DefinitionCheckResult
 {
     /**
      * @var list<DefinitionIssue>
@@ -62,7 +62,7 @@ final readonly class CheckedFormDefinition
         return $this->issues === [];
     }
 
-    public function merge(CheckedFormDefinition $other): self
+    public function merge(DefinitionCheckResult $other): self
     {
         return new self([...$this->issues, ...$other->issues]);
     }
