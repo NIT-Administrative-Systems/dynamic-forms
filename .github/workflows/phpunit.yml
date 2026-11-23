@@ -10,16 +10,16 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-    continue-on-error: ${{ matrix.experimental || false }}
     strategy:
       fail-fast: false
       matrix:
         php-versions: ['8.3', '8.4', '8.5', '8.6']
         laravel: ['12.*', '13.*']
         stability: ['prefer-stable']
-        include:
+        exclude:
+          # Laravel 12 does not support PHP 8.6
           - php-versions: '8.6'
-            experimental: true
+            laravel: '12.*'
 
     name: PHP ${{ matrix.php-versions }} - Laravel ${{ matrix.laravel }} (${{ matrix.stability }})
 
