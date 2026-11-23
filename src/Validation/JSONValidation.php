@@ -38,7 +38,8 @@ class JSONValidation implements ValidationInterface
             // There SHOULD be a true & error message case, but it's possible to screw it up.
             // If the return value is false/null/0/"", provide *something* as a breadcrumb to help troubleshoot.
             if (! $validationResult) {
-                $validationResult = "{$component->label()} was not valid.";
+                $fieldLabel = $component->errorLabel() ?: $component->label() ?: $component->key();
+                $validationResult = "{$fieldLabel} was not valid.";
             }
 
             $bag->add($component->key(), $validationResult);
