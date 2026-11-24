@@ -12,14 +12,14 @@ final class ValidateDynamicFormTest extends TestCase
 {
     public function testReturnsValuesWhenValid(): void
     {
-        $values = (new ValidateDynamicForm)($this->definition(), json_encode(['name' => 'Nick']));
+        $values = ValidateDynamicForm::macro()($this->definition(), json_encode(['name' => 'Nick']));
 
         $this->assertSame('Nick', $values['name']);
     }
 
     public function testAcceptsResourceRegistry(): void
     {
-        $values = (new ValidateDynamicForm)($this->definition(), json_encode(['name' => 'Nick']), new ResourceRegistry);
+        $values = ValidateDynamicForm::macro()($this->definition(), json_encode(['name' => 'Nick']), new ResourceRegistry);
 
         $this->assertSame('Nick', $values['name']);
     }
@@ -29,7 +29,7 @@ final class ValidateDynamicFormTest extends TestCase
         $this->app['request']->headers->set('referer', 'http://localhost/previous');
 
         try {
-            (new ValidateDynamicForm)($this->definition(), json_encode(['name' => '']));
+            ValidateDynamicForm::macro()($this->definition(), json_encode(['name' => '']));
             $this->fail('Expected a ValidationException.');
         } catch (ValidationException $e) {
             $this->assertArrayHasKey('name', $e->errors());

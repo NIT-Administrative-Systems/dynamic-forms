@@ -76,12 +76,7 @@ class DynamicFormsProvider extends ServiceProvider
         // just in case someone is using JsonLogic for other, non-dynamic-forms stuff.
         $this->app->make(JSONLogicInitHelper::class);
 
-        // A plain closure, not the invokable itself: Larastan can only analyse closure macros, and Laravel rebinds
-        // macros to the request, which a closure made with Closure::fromCallable() can't be.
-        Request::macro(
-            'validateDynamicForm',
-            fn (string $definitionJson, string $submissionJson, ?ResourceRegistry $resourceRegistry = null): array => (new ValidateDynamicForm)($definitionJson, $submissionJson, $resourceRegistry),
-        );
+        Request::macro('validateDynamicForm', ValidateDynamicForm::macro());
     }
 
     /**
