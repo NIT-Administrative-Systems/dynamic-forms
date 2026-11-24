@@ -5,9 +5,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [v4.0.1] - 2026-11-24
+
 ### Fixed
 
-- The `validateDynamicForm` request macro is registered as a closure again. Since v4.0.0 it was an invokable object, which crashes Larastan when it analyses code that calls the macro.
+- The `Request::validateDynamicForm(...)` macro is registered as a closure again, working around a Larastan crash.
+- The `Request::validateDynamicForm(...)` macro now accepts optional parameters for `ResourceRegistry`, `ComponentRegistry`, `FileComponentRegistry`, and `DefinitionCheckRegistry`.
 
 ## [v4.0.0] - 2026-11-23
 
