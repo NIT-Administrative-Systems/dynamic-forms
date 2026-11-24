@@ -2,8 +2,12 @@
 
 namespace Northwestern\SysDev\DynamicForms\Laravel;
 
+use Closure;
 use Illuminate\Routing\Redirector;
 use Illuminate\Validation\ValidationException;
+use Northwestern\SysDev\DynamicForms\ComponentRegistry;
+use Northwestern\SysDev\DynamicForms\DefinitionCheckRegistry;
+use Northwestern\SysDev\DynamicForms\FileComponentRegistry;
 use Northwestern\SysDev\DynamicForms\Forms\Form;
 use Northwestern\SysDev\DynamicForms\ResourceRegistry;
 
@@ -15,22 +19,35 @@ use Northwestern\SysDev\DynamicForms\ResourceRegistry;
  */
 class ValidateDynamicForm
 {
-    public function __invoke(
-        string $definitionJson,
-        string $submissionJson,
-        ?ResourceRegistry $resourceRegistry = null,
-    ): array {
-        $form = new Form($definitionJson, $resourceRegistry ?? resolve(ResourceRegistry::class));
-        $validator = $form->validate($submissionJson);
+    public static function macro(): Closure
+    {
+        return function (
+            string $definitionJson,
+            string $submissionJson,
+            ?ResourceRegistry $resourceRegistry = null,
+            ?ComponentRegistry $componentRegistry = null,
+            ?FileComponentRegistry $fileComponentRegistry = null,
+            ?DefinitionCheckRegistry $definitionCheckRegistry = null,
+        ): array {
+            $form = new Form(
+                definitionJson: $definitionJson,
+                resourceRegistry: $resourceRegistry,
+                componentRegistry: $componentRegistry,
+                fileComponentRegistry: $fileComponentRegistry,
+                definitionCheckRegistry: $definitionCheckRegistry,
+            );
 
-        if (! $validator->isValid()) {
-            /** @var Redirector $redirector */
-            $redirector = resolve(Redirector::class);
+            $validator = $form->validate(submissionJson: $submissionJson);
 
-            throw (new ValidationException($validator))
-                ->redirectTo($redirector->getUrlGenerator()->previous());
-        }
+            if (! $validator->isValid()) {
+                /** @var Redirector $redirector */
+                $redirector = resolve(Redirector::class);
 
-        return $validator->values();
+                throw (new ValidationException($validator))
+                    ->redirectTo($redirector->getUrlGenerator()->previous());
+            }
+
+            return $validator->values();
+        };
     }
 }

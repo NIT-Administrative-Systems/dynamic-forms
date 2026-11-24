@@ -76,7 +76,7 @@ class DynamicFormsProvider extends ServiceProvider
         // just in case someone is using JsonLogic for other, non-dynamic-forms stuff.
         $this->app->make(JSONLogicInitHelper::class);
 
-        Request::macro('validateDynamicForm', new ValidateDynamicForm);
+        Request::macro('validateDynamicForm', ValidateDynamicForm::macro());
     }
 
     /**

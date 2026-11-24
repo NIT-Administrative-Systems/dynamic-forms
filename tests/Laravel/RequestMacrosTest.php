@@ -24,4 +24,14 @@ final class RequestMacrosTest extends TestCase
 
         $this->assertSame('Nick', $values['name']);
     }
+
+    /**
+     * Larastan can only analyse macros registered as closures, and crashes on any other callable.
+     */
+    public function testValidateDynamicFormIsRegisteredAsAClosure(): void
+    {
+        $macros = (new \ReflectionProperty(Request::class, 'macros'))->getValue();
+
+        $this->assertInstanceOf(\Closure::class, $macros['validateDynamicForm']);
+    }
 }
